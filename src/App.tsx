@@ -1,11 +1,12 @@
 import React from 'react';
-import { Header } from './components'
+import './_app.scss';
 
+import { HomeScreen } from './pages'
 
 function App() {
   return (
-    <div>
-      <Header />
+    <div className='app_container'>
+      <HomeScreen />
     </div>
   );
 }
