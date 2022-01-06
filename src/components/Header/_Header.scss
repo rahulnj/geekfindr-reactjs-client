@@ -13,6 +13,11 @@
   max-width:100%;
   height: 10vh;
 
+  &_toggle{
+    display: none;
+  }
+
+
   &_logo{
     width: 180px;
     margin-right: 45px;
@@ -70,7 +75,16 @@
 @media (max-width:$breakpoint-small){
     .header{
         padding: 1.5rem;
+        &_nav-right{
+          padding:.2rem;
+        }
+        &_toggle{
+          display: block;
+          align-items: center;
+          justify-content: center;
+        }
     }
+   
 }
 
 @media (max-width:$breakpoint-medium){
@@ -85,3 +99,5 @@ display: block;
     }
 }
 }
+
+

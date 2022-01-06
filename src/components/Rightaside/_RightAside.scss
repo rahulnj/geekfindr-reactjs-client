@@ -1,3 +1,5 @@
+@import '../../_base.scss';
+
 .rightaside{
     flex: 3.5;
     border: solid red;
@@ -5,4 +7,11 @@
     &_wrapper{
         padding: 20px 20px 0 0;
     }
+}
+
+
+@media only screen and (max-width:$breakpoint-large ){
+.rightaside{
+    display: none;
+}
 }

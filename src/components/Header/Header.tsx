@@ -3,11 +3,16 @@ import logo from '../../images/logo.png'
 import sublogo from '../../images/sublogo.png'
 import search from '../../images/search.png'
 import profile from '../../images/profile-pic.png'
+import { GiHamburgerMenu } from 'react-icons/gi'
 import './_Header.scss'
 
 const Header = () => {
     return (
         <div className="header">
+            <div className='header_toggle'>
+                <GiHamburgerMenu size={26} />
+            </div>
+
             <img className='header_logo' src={logo} alt="" />
             <img className='header_sublogo' src={sublogo} alt="" />
 

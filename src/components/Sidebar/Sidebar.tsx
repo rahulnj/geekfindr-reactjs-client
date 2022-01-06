@@ -8,19 +8,19 @@ const Sidebar = () => {
                 <ul className="sidebar_list">
 
                     <li className="sidebar_listItem">
-                        <BiGroup className="sidebar_icon" />
+                        <BiGroup size={32} className="sidebar_icon" />
                         <span className="sidebar_listItemText">Groups</span>
                     </li>
                     <li className="sidebar_listItem">
-                        <BiGroup className="sidebar_icon" />
+                        <BiGroup size={32} className="sidebar_icon" />
                         <span className="sidebar_listItemText">Groups</span>
                     </li>
                     <li className="sidebar_listItem">
-                        <BiGroup className="sidebar_icon" />
+                        <BiGroup size={32} className="sidebar_icon" />
                         <span className="sidebar_listItemText">Groups</span>
                     </li>
                     <li className="sidebar_listItem">
-                        <BiGroup className="sidebar_icon" />
+                        <BiGroup size={32} className="sidebar_icon" />
                         <span className="sidebar_listItemText">Groups</span>
                     </li>
 

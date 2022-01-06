@@ -1,3 +1,5 @@
+@import '../../_base.scss';
+
 .sidebar{
     flex: 3;
     height: calc(100vh-10vh);
@@ -21,6 +23,7 @@ margin-bottom: 20px;
 
 &_icon{
     margin-right: 15px;
+
 }
 
     }
@@ -37,3 +40,25 @@ hr{
 }
     }
 }
+
+@media only screen and (max-width: $breakpoint-medium){
+.sidebar{
+    flex: 1;
+     li{
+        justify-content: center;
+    }
+    span{
+        display: none;
+    }
+ }
+}
+
+@media (max-width:$breakpoint-small){
+    .sidebar{
+    transform: translate(-100%);
+    position: fixed;
+    z-index: 999;
+      }
+    }
+
+
