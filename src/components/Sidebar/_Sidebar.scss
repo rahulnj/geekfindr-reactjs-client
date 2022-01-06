@@ -1,0 +1,39 @@
+.sidebar{
+    flex: 3;
+    height: calc(100vh-10vh);
+    overflow-y: scroll;
+    position: sticky;
+    top: 50px;
+    border: solid green;
+    
+    &_wrapper{
+    padding: 20px;
+
+  ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+  li{
+display: flex;
+align-items: center;
+margin-bottom: 20px;
+
+&_icon{
+    margin-right: 15px;
+}
+
+    }
+}
+button{
+    width: 150px;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+hr{
+    margin: 20px 0;
+}
+    }
+}
