@@ -1,13 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './_app.scss';
 
 import { HomeScreen } from './pages'
+import { Header, Sidebar } from './components';
+import { Route, Routes } from 'react-router-dom';
 
-function App() {
+interface Props {
+  children: JSX.Element[] | JSX.Element
+
+}
+
+
+
+const Layout = ({ children }: Props) => {
+
+  const [sidebar, setSidebar] = useState<boolean>(false)
+
+  const handleToggleSidebar = () => {
+    setSidebar(value => !value)
+  }
   return (
-    <div className='app_container'>
-      <HomeScreen />
-    </div>
+    <>
+      <Header />
+      <div className='app_container'>
+        <Sidebar />
+        {children}
+      </div>
+    </>
+  )
+
+}
+
+
+const App = () => {
+  return (
+    <>
+      <Routes>
+        <Route path='/' element={
+          <Layout>
+            <HomeScreen />
+          </Layout>
+        }>
+        </Route>
+      </Routes>
+    </>
   );
 }
 

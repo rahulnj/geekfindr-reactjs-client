@@ -6,7 +6,7 @@ const HomeScreen = () => {
         <>
             <Header />
             <div className="home_container">
-                <Sidebar />
+                {/* <Sidebar /> */}
                 <Feed />
                 <RightAside />
             </div>
