@@ -3,7 +3,7 @@ import './_app.scss';
 
 import { HomeScreen } from './pages'
 import { Header, Sidebar } from './components';
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 interface Props {
   children: JSX.Element[] | JSX.Element
@@ -35,14 +35,16 @@ const Layout = ({ children }: Props) => {
 const App = () => {
   return (
     <>
-      <Routes>
-        <Route path='/' element={
-          <Layout>
-            <HomeScreen />
-          </Layout>
-        }>
-        </Route>
-      </Routes>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={
+            <Layout>
+              <HomeScreen />
+            </Layout>
+          }>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
