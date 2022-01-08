@@ -32,7 +32,7 @@ const Layout = ({ children }: Props) => {
 }
 
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <>
       <BrowserRouter>

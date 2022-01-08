@@ -1,6 +1,6 @@
 import React from 'react'
 import './_Feed.scss'
-const Feed = () => {
+const Feed: React.FC = () => {
     return (
         <div className='feed'>
             <div className="feed_wrapper">

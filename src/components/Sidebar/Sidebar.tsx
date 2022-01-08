@@ -1,7 +1,7 @@
 import React from 'react'
 import './_Sidebar.scss'
 import { BiGroup } from 'react-icons/bi'
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
     return (
         <div className="sidebar">
             <div className="sidebar_wrapper">

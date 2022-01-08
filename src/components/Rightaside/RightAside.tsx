@@ -1,6 +1,6 @@
 import React from 'react'
 import './_RightAside.scss'
-const RightAside = () => {
+const RightAside: React.FC = () => {
     return (
         <div className='rightaside'>
             <div className="rightaside_wrapper">
