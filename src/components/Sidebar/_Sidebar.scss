@@ -39,6 +39,9 @@ hr{
     margin: 20px 0;
 }
     }
+    &.close{
+        transform: translate(0);
+    }
 }
 
 @media only screen and (max-width: $breakpoint-medium){

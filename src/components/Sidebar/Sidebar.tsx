@@ -1,9 +1,14 @@
 import React from 'react'
 import './_Sidebar.scss'
 import { BiGroup } from 'react-icons/bi'
-const Sidebar: React.FC = () => {
+import { Handle } from '../../models/Model'
+
+
+
+const Sidebar: React.FC<Handle> = ({ sidebar, handleToggleSidebar }) => {
     return (
-        <div className="sidebar">
+        <div className={sidebar ? "sidebar close" : "sidebar"}
+            onClick={() => handleToggleSidebar(false)}>
             <div className="sidebar_wrapper">
                 <ul className="sidebar_list">
 
@@ -33,7 +38,7 @@ const Sidebar: React.FC = () => {
                     ))}
                 </ul> */}
             </div>
-        </div>
+        </div >
     )
 }
 

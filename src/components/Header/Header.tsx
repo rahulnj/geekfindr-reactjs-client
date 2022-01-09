@@ -5,12 +5,21 @@ import search from '../../images/search.png'
 import profile from '../../images/profile-pic.png'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import './_Header.scss'
+import { Handle } from '../../models/Model'
 
-const Header: React.FC = () => {
+
+
+
+
+
+const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
+
+
+
     return (
         <div className="header">
             <div className='header_toggle'>
-                <GiHamburgerMenu size={26} />
+                <GiHamburgerMenu size={26} onClick={() => handleToggleSidebar()} />
             </div>
 
             <img className='header_logo' src={logo} alt="" />

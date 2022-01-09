@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ChatScreen = () => {
+const ChatScreen: React.FC = () => {
     return (
         <div>
 

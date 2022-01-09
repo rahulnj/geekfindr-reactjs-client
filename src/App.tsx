@@ -4,15 +4,13 @@ import './_app.scss';
 import { HomeScreen } from './pages'
 import { Header, Sidebar } from './components';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-interface Props {
-  children: JSX.Element[] | JSX.Element
-
-}
+import { Children } from './models/Model';
 
 
 
-const Layout = ({ children }: Props) => {
+
+
+const Layout = ({ children }: Children) => {
 
   const [sidebar, setSidebar] = useState<boolean>(false)
 
@@ -21,14 +19,13 @@ const Layout = ({ children }: Props) => {
   }
   return (
     <>
-      <Header />
+      <Header handleToggleSidebar={handleToggleSidebar} />
       <div className='app_container'>
-        <Sidebar />
+        <Sidebar sidebar={sidebar} handleToggleSidebar={handleToggleSidebar} />
         {children}
       </div>
     </>
   )
-
 }
 
 
