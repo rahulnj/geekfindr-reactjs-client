@@ -1,6 +1,9 @@
 import React from 'react'
 import './_Sidebar.scss'
-import { BiGroup } from 'react-icons/bi'
+import { FiHome, FiSettings } from 'react-icons/fi'
+import { BsChatLeft } from 'react-icons/bs'
+import { GrProjects } from 'react-icons/gr'
+
 import { Handle } from '../../models/Model'
 
 
@@ -16,22 +19,29 @@ const Sidebar: React.FC<Handle> = ({ sidebar, handleToggleSidebar }) => {
                 </div>
                 <ul className="sidebar_list">
                     <li className="sidebar_listItem">
-                        <BiGroup size={32} className="sidebar_icon" />
-                        <span className="sidebar_listItemText">project1</span>
+                        <a href="#" className='sidebar_link'>
+                            <FiHome size={24} className="sidebar_icon" />
+                            <span className="sidebar_listItemText">Home</span>
+                        </a>
                     </li>
                     <li className="sidebar_listItem">
-                        <BiGroup size={32} className="sidebar_icon" />
-                        <span className="sidebar_listItemText">Groups</span>
+                        <a href="#" className='sidebar_link'>
+                            <BsChatLeft size={24} className="sidebar_icon" />
+                            <span className="sidebar_listItemText">Chats</span>
+                        </a>
                     </li>
                     <li className="sidebar_listItem">
-                        <BiGroup size={32} className="sidebar_icon" />
-                        <span className="sidebar_listItemText">Groups</span>
+                        <a href="#" className='sidebar_link'>
+                            <GrProjects size={24} className="sidebar_icon" />
+                            <span className="sidebar_listItemText">Projects</span>
+                        </a>
                     </li>
                     <li className="sidebar_listItem">
-                        <BiGroup size={32} className="sidebar_icon" />
-                        <span className="sidebar_listItemText">Groups</span>
+                        <a href="#" className='sidebar_link'>
+                            <FiSettings size={24} className="sidebar_icon" />
+                            <span className="sidebar_listItemText">Settings</span>
+                        </a>
                     </li>
-
                 </ul>
                 {/* <button className="sidebar_button">Show More</button>
                 <hr className="sidebar_hr" /> */}

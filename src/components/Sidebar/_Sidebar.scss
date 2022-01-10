@@ -62,6 +62,9 @@
     .sidebar {
         flex: 1;
         margin-top: 0;
+        &_link {
+            height: 3.5rem;
+        }
         &_heading {
             span {
                 display: none;
