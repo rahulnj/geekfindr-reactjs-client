@@ -2,13 +2,13 @@
 
 .sidebar {
     flex: 3;
-    height: calc(100vh-10vh);
+    // height: calc(100vh-10vh);
+    height: 90vh;
     margin-top: 20px;
     margin-left: 10px;
-    overflow-y: scroll;
+    // overflow-y: scroll;
     position: sticky;
-    top: 50px;
-    margin-top: 20px;
+    top: 90px;
     border-radius: 10px;
     box-shadow: $main-shadow;
     background-color: $background-color;

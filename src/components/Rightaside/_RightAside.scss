@@ -2,8 +2,16 @@
 
 .rightaside {
     flex: 3.5;
-    border: solid red;
-
+    // border: solid red;
+    height: 90vh;
+    margin-top: 20px;
+    margin-right: 10px;
+    position: sticky;
+    top: 90px;
+    border-radius: 10px;
+    box-shadow: $main-shadow;
+    background-color: $background-color;
+    transition: transform 0.2s ease-in;
     &_wrapper {
         padding: 20px 20px 0 0;
     }
