@@ -4,13 +4,14 @@
     flex: 3;
     height: calc(100vh-10vh);
     margin-top: 20px;
+    margin-left: 10px;
     overflow-y: scroll;
     position: sticky;
     top: 50px;
     margin-top: 20px;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    background-color: #fdfdfd;
+    box-shadow: $main-shadow;
+    background-color: $background-color;
     transition: transform 0.2s ease-in;
 
     &_heading {
@@ -62,6 +63,7 @@
     .sidebar {
         flex: 1;
         margin-top: 0;
+        margin-left: 0;
         &_link {
             height: 3.5rem;
         }

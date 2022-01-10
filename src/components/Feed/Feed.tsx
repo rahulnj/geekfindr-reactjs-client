@@ -1,11 +1,12 @@
 import React from 'react'
-import { Share } from '../index'
+import { Post, Share } from '../index'
 import './_Feed.scss'
 const Feed: React.FC = () => {
     return (
         <div className='feed'>
             <div className="feed_wrapper">
                 <Share />
+                <Post />
             </div>
         </div>
     )
