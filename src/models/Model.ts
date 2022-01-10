@@ -6,3 +6,4 @@ export interface Handle {
     sidebar?: boolean;
     handleToggleSidebar: (boolean?: boolean) => void;
 }
+

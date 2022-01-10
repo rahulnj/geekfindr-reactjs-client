@@ -7,7 +7,9 @@
     position: sticky;
     top: 50px;
     border: solid green;
-    
+    // background-color: $main-color;
+    transition: transform 0.2s ease-in;
+
     &_wrapper{
     padding: 20px;
 
@@ -39,7 +41,7 @@ hr{
     margin: 20px 0;
 }
     }
-    &.close{
+    &.open{
         transform: translate(0);
     }
 }
@@ -58,10 +60,17 @@ hr{
 
 @media (max-width:$breakpoint-small){
     .sidebar{
-    transform: translate(-100%);
-    position: fixed;
-    z-index: 999;
-      }
+  transform: translate(-100%);
+  width: 100px;
+  position: fixed;
+  z-index: 999;
+  top: 10vh;
+
+  &_button{
+      display: none;
+  }
+}
+
     }
 
 
