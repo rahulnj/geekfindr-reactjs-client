@@ -1,6 +1,6 @@
-@import '../../_base.scss';
+@import "../../_base.scss";
 
-.sidebar{
+.sidebar {
     flex: 3;
     height: calc(100vh-10vh);
     overflow-y: scroll;
@@ -10,67 +10,65 @@
     // background-color: $main-color;
     transition: transform 0.2s ease-in;
 
-    &_wrapper{
-    padding: 20px;
+    &_wrapper {
+        padding: 20px;
 
-  ul{
-    padding: 0;
-    margin: 0;
-    list-style: none;
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
 
-  li{
-display: flex;
-align-items: center;
-margin-bottom: 20px;
+            li {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
 
-&_icon{
-    margin-right: 15px;
-
-}
-
+                &_icon {
+                    margin-right: 15px;
+                }
+            }
+        }
+        button {
+            width: 150px;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        hr {
+            margin: 20px 0;
+        }
     }
-}
-button{
-    width: 150px;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: 500;
-}
-hr{
-    margin: 20px 0;
-}
-    }
-    &.open{
+    &.open {
         transform: translate(0);
     }
 }
 
-@media only screen and (max-width: $breakpoint-medium){
-.sidebar{
-    flex: 1;
-     li{
-        justify-content: center;
+@media only screen and (max-width: $breakpoint-medium) {
+    .sidebar {
+        flex: 1;
+        li {
+            justify-content: center;
+        }
+        span {
+            display: none;
+        }
+        &_button {
+            display: none;
+        }
     }
-    span{
-        display: none;
-    }
- }
 }
 
-@media (max-width:$breakpoint-small){
-    .sidebar{
-  transform: translate(-100%);
-  width: 100px;
-  position: fixed;
-  z-index: 999;
-  top: 10vh;
+@media (max-width: $breakpoint-small) {
+    .sidebar {
+        transform: translate(-100%);
+        width: 100px;
+        position: fixed;
+        z-index: 999;
+        top: 10vh;
 
-  &_button{
-      display: none;
-  }
-}
-
+        &_button {
+            display: none;
+        }
     }
-
-
+}

@@ -1,103 +1,98 @@
-@import '../../_base.scss';
+@import "../../_base.scss";
 
-.header{
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #FDFDFD;
+  background-color: #fdfdfd;
   padding: 1rem 3rem;
   position: sticky;
   top: 0;
   z-index: 100;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  max-width:100%;
+  max-width: 100%;
   height: 10vh;
 
-  &_toggle{
+  &_toggle {
     display: none;
   }
 
-
-  &_logo{
+  &_logo {
     width: 180px;
     margin-right: 45px;
     object-fit: contain;
     display: block;
-    background-color: #FDFDFD;
+    background-color: #fdfdfd;
   }
-  &_sublogo{
+  &_sublogo {
     width: 60px;
     margin-right: 20px;
-    display: none;  
+    display: none;
   }
-  form{
-    background-color: #E7EAF0;
+  form {
+    background-color: #e7eaf0;
     width: 350px;
     border-radius: 20px;
     display: flex;
     align-items: center;
     padding: 0 15px;
- 
-    img{
-        width: 18px;
+
+    img {
+      width: 18px;
     }
 
-    input{
-        width: 100%;
-        background: transparent;
-        padding: 10px;
-        outline: none;
-        border: 0;
-    } 
-}
-  &_nav-right{
+    input {
+      width: 100%;
+      background: transparent;
+      padding: 10px;
+      outline: none;
+      border: 0;
+    }
+  }
+  &_nav-right {
     display: flex;
     align-items: center;
 
-    &_upload{
-    display: none;
+    &_upload {
+      display: none;
     }
 
-    &_user{
+    &_user {
+      width: 40px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+  }
+  &_user {
     width: 40px;
     cursor: pointer;
     border-radius: 50%;
-    }
-
-  }
-  &_user{
-    width: 40px;
-    cursor: pointer;
-    border-radius: 50%;
   }
 }
 
-@media (max-width:$breakpoint-small){
-    .header{
-        padding: 1.5rem;
-        &_nav-right{
-          padding:.2rem;
-        }
-        &_toggle{
-          display: block;
-          align-items: center;
-          justify-content: center;
-        }
+@media (max-width: $breakpoint-small) {
+  .header {
+    padding: 1.5rem;
+    &_nav-right {
+      padding: 0.2rem;
     }
-   
+    &_toggle {
+      display: block;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
 
-@media (max-width:$breakpoint-medium){
-    .header{
-        padding: 2rem;
-    
-    &_logo{
-display: none;
-    }
-    &_sublogo{
-display: block;
-    }
-}
-}
+@media (max-width: $breakpoint-medium) {
+  .header {
+    padding: 2rem;
 
-
+    &_logo {
+      display: none;
+    }
+    &_sublogo {
+      display: block;
+    }
+  }
+}

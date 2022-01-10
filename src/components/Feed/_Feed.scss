@@ -1,11 +1,10 @@
-@import '../../_base.scss';
+@import "../../_base.scss";
 
-.feed{
+.feed {
     flex: 5.5;
-    border: solid blue;
+    // border: solid blue;
 
-    &_wrapper{
+    &_wrapper {
         padding: 20px;
     }
 }
-

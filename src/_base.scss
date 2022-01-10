@@ -1,45 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
-
 /* ==========================================================================
                                colors
-========================================================================== */ 
-$main-color:#E7EAF0;
-
-
-
+========================================================================== */
+$main-color: #e7eaf0;
 
 /* ==========================================================================
                               display breakpoints
-========================================================================== */ 
-$breakpoint-small:540px;
-$breakpoint-medium:720px;
-$breakpoint-large:920px;
+========================================================================== */
+$breakpoint-small: 540px;
+$breakpoint-medium: 720px;
+$breakpoint-large: 920px;
 
-
-
-
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body{
+body {
     background: $main-color;
     background-attachment: fixed;
     color: black;
-    font-family: "Roboto",sans-serif;
+    font-family: "Roboto", sans-serif;
     letter-spacing: 0.1px;
 }
 
 @mixin line-limit($number) {
     overflow: hidden;
-display: -webkit-box;
--webkit-line-clamp: $number;
--webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: $number;
+    -webkit-box-orient: vertical;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     width: 0px;
 }
