@@ -10,11 +10,14 @@ const Sidebar: React.FC<Handle> = ({ sidebar, handleToggleSidebar }) => {
         <div className={sidebar ? "sidebar open" : "sidebar"}
             onClick={() => handleToggleSidebar(false)}>
             <div className="sidebar_wrapper">
+                <div className='sidebar_heading'>
+                    <span>Projects</span>
+                    <span>see all</span>
+                </div>
                 <ul className="sidebar_list">
-
                     <li className="sidebar_listItem">
                         <BiGroup size={32} className="sidebar_icon" />
-                        <span className="sidebar_listItemText">Groups</span>
+                        <span className="sidebar_listItemText">project1</span>
                     </li>
                     <li className="sidebar_listItem">
                         <BiGroup size={32} className="sidebar_icon" />
@@ -30,8 +33,8 @@ const Sidebar: React.FC<Handle> = ({ sidebar, handleToggleSidebar }) => {
                     </li>
 
                 </ul>
-                <button className="sidebar_button">Show More</button>
-                <hr className="sidebar_hr" />
+                {/* <button className="sidebar_button">Show More</button>
+                <hr className="sidebar_hr" /> */}
                 {/* <ul className="sidebarFriendList">
                     {Users.map((u) => (
                         <CloseFriend key={u.id} user={u} />
