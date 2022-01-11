@@ -11,12 +11,13 @@ import { Children } from './models/Model';
 
 
 const Layout = ({ children }: Children) => {
-
   const [sidebar, setSidebar] = useState<boolean>(false)
-
   const handleToggleSidebar = () => {
     setSidebar(value => !value)
   }
+
+
+
   return (
     <>
       <Header handleToggleSidebar={handleToggleSidebar} />

@@ -4,12 +4,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fdfdfd;
+  background-color: $background-color;
   padding: 1rem 3rem;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  box-shadow: $main-shadow;
   max-width: 100%;
   height: 10vh;
 
@@ -22,7 +22,7 @@
     margin-right: 45px;
     object-fit: contain;
     display: block;
-    background-color: #fdfdfd;
+    background-color: $background-color;
   }
   &_sublogo {
     width: 60px;
@@ -30,7 +30,7 @@
     display: none;
   }
   form {
-    background-color: #e7eaf0;
+    background-color: $main-color;
     width: 350px;
     border-radius: 20px;
     display: flex;
