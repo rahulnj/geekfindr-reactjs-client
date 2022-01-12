@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Signin, Signup } from '../../components'
 import './AuthScreen.scss'
 
+import leftpanelimg from '../../images/svg/Pair programming-rafiki.svg'
+import rightpanelimg from '../../images/svg/Pull request-amico.svg'
 
 
 const AuthScreen: React.FC = () => {
@@ -39,7 +41,7 @@ const AuthScreen: React.FC = () => {
                             Sign up
                         </button>
                     </div>
-                    <img src="" className="image" alt="" />
+                    <img src={leftpanelimg} className="image" alt="" />
                 </div>
                 <div className="panel right-panel">
                     <div className="content">
@@ -52,7 +54,7 @@ const AuthScreen: React.FC = () => {
                             Sign in
                         </button>
                     </div>
-                    <img src="" className="image" alt="" />
+                    <img src={rightpanelimg} className="image" alt="" />
                 </div>
             </div>
         </div >
