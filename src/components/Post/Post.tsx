@@ -1,5 +1,5 @@
 import React from 'react'
-import './Post.scss'
+import './_Post.scss'
 import person1 from '../../assets/persons/1.jpeg'
 import post1 from '../../assets/posts/1 (1).jpeg'
 import { BsThreeDotsVertical } from 'react-icons/bs'

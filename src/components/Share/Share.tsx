@@ -1,5 +1,5 @@
 import React from 'react'
-import './Share.scss'
+import './_Share.scss'
 import profile from '../../images/profile-pic.png'
 import { MdPostAdd } from 'react-icons/md'
 import { GoFileMedia } from 'react-icons/go'

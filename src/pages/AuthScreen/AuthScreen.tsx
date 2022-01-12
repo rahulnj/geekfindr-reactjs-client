@@ -14,9 +14,6 @@ const AuthScreen: React.FC = () => {
         setAnimation(value => !value)
     }
 
-
-
-
     return (
         <div className={animation ? "authscreen sign-up-mode" : "authscreen"}>
             <div className='authscreen_forms'>

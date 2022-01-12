@@ -1,5 +1,5 @@
 import React from 'react'
-import './Signup.scss'
+import './_Signup.scss'
 
 import { FaUserAlt } from 'react-icons/fa'
 import { SiGmail } from 'react-icons/si'
