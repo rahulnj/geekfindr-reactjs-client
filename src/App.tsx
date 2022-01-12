@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './_app.scss';
 
-import { HomeScreen } from './pages'
+import { AuthScreen, HomeScreen } from './pages'
 import { Header, Sidebar } from './components';
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Children } from './models/Model';
-
 
 
 
@@ -39,6 +39,10 @@ const App: React.FC = () => {
             <Layout>
               <HomeScreen />
             </Layout>
+          }>
+          </Route>
+          <Route path='/auth' element={
+            <AuthScreen />
           }>
           </Route>
         </Routes>

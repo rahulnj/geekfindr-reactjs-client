@@ -1,0 +1,81 @@
+@import "../../_base.scss";
+
+.signup {
+    opacity: 0;
+    z-index: 1;
+    &_title {
+        font-size: 2.2rem;
+        color: #444;
+        margin-bottom: 10px;
+    }
+    &_inputfield {
+        max-width: 380px;
+        width: 100%;
+        background-color: $main-color;
+        margin: 10px 0;
+        height: 55px;
+        border-radius: 55px;
+        display: grid;
+        grid-template-columns: 15% 85%;
+        padding: 0 0.4rem;
+        position: relative;
+
+        input {
+            background: none;
+            outline: none;
+            border: none;
+            line-height: 1;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        input::placeholder {
+            color: #aaa;
+            font-weight: 500;
+        }
+
+        &_icons {
+            text-align: center;
+            line-height: 55px;
+            color: #acacac;
+            transition: 0.5s;
+            font-size: 1.1rem;
+            margin: auto;
+        }
+    }
+
+    &_socialmedia {
+        padding: 0.7rem 0;
+        font-size: 1rem;
+    }
+    &_btn {
+        width: 150px;
+        background-color: $button-color;
+        border: none;
+        outline: none;
+        height: 49px;
+        border-radius: 49px;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin: 10px 0;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+    &_btn:hover {
+        background-color: rgba(167, 46, 248, 0.959);
+    }
+
+    &_icon {
+        height: 36px;
+        width: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0.45rem;
+        border-radius: 50%;
+        font-size: 1.1rem;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+}
