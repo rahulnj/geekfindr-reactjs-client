@@ -1,11 +1,16 @@
 import React from 'react'
-import { Post, Share } from '../index'
 import './_Feed.scss'
-const Feed: React.FC = () => {
+import { Profile } from '../../models/Model'
+import { FollowCounter, Post, Share } from '../index'
+
+
+
+
+const Feed: React.FC<Profile> = ({ profile }) => {
     return (
         <div className='feed'>
             <div className="feed_wrapper">
-                <Share />
+                {profile ? <FollowCounter /> : <Share />}
                 <Post />
             </div>
         </div>

@@ -20,7 +20,7 @@ const ProfileScreen: React.FC = () => {
                 </div>
             </div>
             <div className="profile_rightbottom">
-                <Feed />
+                <Feed profile />
                 <RightAside profile />
             </div>
         </div>
