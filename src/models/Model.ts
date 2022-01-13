@@ -7,5 +7,7 @@ export interface Handle {
     handleToggleSidebar: (boolean?: boolean) => void;
 }
 
-
+export interface Profile {
+    profile?: boolean;
+}
 

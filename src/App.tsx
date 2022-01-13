@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './_app.scss';
 
-import { AuthScreen, HomeScreen } from './pages'
+import { AuthScreen, HomeScreen, ProfileScreen } from './pages'
 import { Header, Sidebar } from './components';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -43,6 +43,12 @@ const App: React.FC = () => {
           </Route>
           <Route path='/auth' element={
             <AuthScreen />
+          }>
+          </Route>
+          <Route path='/profile' element={
+            <Layout>
+              <ProfileScreen />
+            </Layout>
           }>
           </Route>
         </Routes>
