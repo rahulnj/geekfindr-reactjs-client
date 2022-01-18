@@ -22,13 +22,16 @@
                 border-radius: 50%;
                 object-fit: cover;
             }
-            &_username {
-                font-size: 15px;
-                font-weight: 500;
+            &_details {
                 margin: 0 10px;
+            }
+            &_username {
+                font-size: 13px;
+                font-weight: 500;
             }
             &_date {
                 font-size: 12px;
+                color: #9a9a9a;
             }
         }
         &_right {
@@ -54,11 +57,13 @@
             display: flex;
             align-items: center;
             &_icons {
-                margin-right: 5px;
-                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                margin-right: 25px;
             }
-            &_likecounter {
-                font-size: 15px;
+            &_icon {
+                margin-right: 10px;
+                cursor: pointer;
             }
         }
         &_right {
