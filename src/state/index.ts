@@ -1,3 +1,3 @@
 export * from './store';
 export * from './reducers';
-export * as actionCreators from './action-creators/AuthAction'
+export * as actionCreators from './action-creators/index'

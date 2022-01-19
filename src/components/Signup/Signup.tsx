@@ -5,6 +5,7 @@ import { FaUserAlt } from 'react-icons/fa'
 import { SiGmail } from 'react-icons/si'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import { BsGithub } from 'react-icons/bs'
+
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
@@ -18,11 +19,10 @@ const Signup: React.FC = () => {
 
     const { UserSignup } = useActions();
     const { data, error, loading } = useTypedSelector(
-        (state) => state.SignupAuthReducer
+        (state) => state.UserSignup
     );
-    const formSubmit = (e: React.FormEvent) => {
+    const SignUpFormSubmition = (e: React.FormEvent) => {
         e.preventDefault()
-        console.log("signup");
 
         UserSignup({
             username: Username,
@@ -34,7 +34,7 @@ const Signup: React.FC = () => {
     }
 
     return (
-        <form onSubmit={formSubmit} >
+        <form onSubmit={SignUpFormSubmition} >
             <h2 className="signup_title">Sign up</h2>
             <div className="signup_inputfield">
                 <FaUserAlt className='signup_inputfield_icons' />
