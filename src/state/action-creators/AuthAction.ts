@@ -23,17 +23,18 @@ export const UserSignup = (signupData: SignupData) => {
         });
         try {
             const { data } = await request.post('/api/v1/users/signup/', signupData)
-            console.log(data);
+            const { avatar, email, id, username } = data
+            console.log(username);
 
             dispatch({
                 type: UserSignupActionType.USER_SIGNUP_SUCCESS,
                 payload: data
             })
         } catch (error: any) {
-            console.log(error);
+            console.log(error.response.data.errors[0].message);
             dispatch({
                 type: UserSignupActionType.USER_SIGNUP_FAIL,
-                payload: error
+                payload: error.response.data.errors[0].message
             })
 
         }
@@ -49,16 +50,16 @@ export const UserSignin = (signinData: SigninData) => {
         try {
             const { data } = await request.post('/api/v1/users/signin', signinData)
             console.log(data);
-
+            localStorage.setItem('gfr-user', JSON.stringify(data))
             dispatch({
                 type: UserSigninActionType.USER_SIGNIN_SUCCESS,
                 payload: data
             })
         } catch (error: any) {
-            console.log(error);
+            console.log(error.response.data);
             dispatch({
                 type: UserSigninActionType.USER_SIGNIN_FAIL,
-                payload: error
+                payload: error.response.data.errors[0].message
             })
         }
     }
