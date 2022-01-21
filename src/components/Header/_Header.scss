@@ -49,7 +49,7 @@
       border: 0;
     }
   }
-  &_nav-right {
+  &_nav_right {
     display: flex;
     align-items: center;
 
@@ -62,11 +62,90 @@
       cursor: pointer;
       border-radius: 50%;
     }
+    span {
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    &_userinfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    &_arrow {
+      cursor: pointer;
+    }
   }
   &_user {
     width: 40px;
     cursor: pointer;
     border-radius: 50%;
+  }
+  &_menu {
+    position: absolute;
+    top: 76px;
+    right: 10px;
+    padding: 10px 20px;
+    width: 200px;
+    border-radius: 15px;
+    transition: 0.5s;
+    background: #ffffff;
+    box-shadow: $main-shadow;
+    visibility: hidden;
+    opacity: 0;
+    h3 {
+      width: 100%;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 20px 0;
+      line-height: 1.2rem;
+
+      span {
+        font-size: 0.9rem;
+        font-weight: 400;
+      }
+    }
+
+    ul li {
+      list-style: none;
+      padding: 10px 0;
+      border-top: 1px solid rgb(216, 212, 212);
+      display: flex;
+      align-items: center;
+    }
+    &_icons {
+      margin-right: 10px;
+      opacity: 0.5;
+      transition: 0.5s;
+    }
+    &_icons:hover {
+      opacity: 1;
+    }
+    &_link {
+      display: inline-block;
+      font-weight: 500;
+      transition: 0.5s;
+      cursor: pointer;
+    }
+    &_link:hover {
+      color: rgba(175, 59, 252, 0.959);
+    }
+  }
+  .active {
+    top: 80px;
+    visibility: visible;
+    opacity: 1;
+  }
+  &_menu::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: 28px;
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    transform: rotate(45deg);
   }
 }
 
@@ -93,6 +172,11 @@
     }
     &_sublogo {
       display: block;
+    }
+    &_nav_right {
+      span {
+        font-size: 0.75rem;
+      }
     }
   }
 }

@@ -3,9 +3,9 @@ import { UserSigninActionType, UserSignupActionType } from "../actiontypes/UserA
 
 
 interface AuthState {
-    loading: boolean;
-    error: string[] | null;
     data: string[] | null
+    error: string[] | null;
+    loading: boolean;
 }
 
 const initialState = {

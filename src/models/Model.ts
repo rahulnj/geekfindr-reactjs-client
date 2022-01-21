@@ -11,3 +11,9 @@ export interface Profile {
     profile?: boolean;
 }
 
+export interface data {
+    loading: boolean;
+    error: string[] | null;
+    data: string[] | null
+}
+
