@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './_Signin.scss'
 
 import { FaUserAlt } from 'react-icons/fa'
@@ -7,7 +7,7 @@ import { BsGithub } from 'react-icons/bs'
 
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { stat } from 'fs'
+import { useNavigate } from 'react-router-dom'
 
 const Signin: React.FC = () => {
     const [Email, setEmail] = useState('')
@@ -25,6 +25,13 @@ const Signin: React.FC = () => {
             password: Password
         })
     }
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (data) {
+            navigate('/')
+        }
+    }, [data, navigate])
 
     return (
 

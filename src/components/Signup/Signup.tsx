@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './_Signup.scss'
 
 import { FaUserAlt } from 'react-icons/fa'
@@ -8,11 +8,13 @@ import { BsGithub } from 'react-icons/bs'
 
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { useNavigate } from 'react-router-dom'
 
 
 
 
 const Signup: React.FC = () => {
+
     const [Username, setUsername] = useState('')
     const [Email, setEmail] = useState('')
     const [Password, setPassword] = useState('')
@@ -21,17 +23,23 @@ const Signup: React.FC = () => {
     const { data, error, loading } = useTypedSelector(
         (state) => state.UserSignup
     );
-    const SignUpFormSubmition = (e: React.FormEvent) => {
-        e.preventDefault()
 
+    const SignUpFormSubmition = (e: React.FormEvent) => {
+        e.preventDefault();
         UserSignup({
             username: Username,
             email: Email,
             password: Password,
 
         })
-
     }
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (data) {
+            navigate('/')
+        }
+    }, [data])
 
     return (
         <form onSubmit={SignUpFormSubmition} >

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './_app.scss';
 
 import { AuthScreen, HomeScreen, ProfileScreen } from './pages'
 import { Header, Sidebar } from './components';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { Children } from './models/Model';
+import { useTypedSelector } from './hooks/useTypedSelector';
 
 
 
@@ -15,9 +16,6 @@ const Layout = ({ children }: Children) => {
   const handleToggleSidebar = () => {
     setSidebar(value => !value)
   }
-
-
-
   return (
     <>
       <Header handleToggleSidebar={handleToggleSidebar} />
@@ -31,28 +29,46 @@ const Layout = ({ children }: Children) => {
 
 
 const App: React.FC = () => {
+
+
+  const navigate = useNavigate()
+  let { data, loading } = useTypedSelector(
+    (state) => state.UserSignin
+  )
+
+  let { data: signUpData, loading: signUpLoading } = useTypedSelector(
+    (state) => state.UserSignup
+  )
+  if (!data) {
+    data = signUpData;
+    loading = signUpLoading;
+  }
+  useEffect(() => {
+    if (!loading && !data) {
+      navigate('/auth')
+    }
+  }, [loading, navigate])
+
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={
-            <Layout>
-              <HomeScreen />
-            </Layout>
-          }>
-          </Route>
-          <Route path='/auth' element={
-            <AuthScreen />
-          }>
-          </Route>
-          <Route path='/profile' element={
-            <Layout>
-              <ProfileScreen />
-            </Layout>
-          }>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path='/' element={
+          <Layout>
+            <HomeScreen />
+          </Layout>
+        }>
+        </Route>
+        <Route path='/auth' element={
+          <AuthScreen />
+        }>
+        </Route>
+        <Route path='/profile' element={
+          <Layout>
+            <ProfileScreen />
+          </Layout>
+        }>
+        </Route>
+      </Routes>
     </>
   );
 }

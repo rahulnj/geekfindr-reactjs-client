@@ -11,7 +11,7 @@ interface UserSignupSuccessAction {
 
 interface UserSignupFailAction {
     type: UserSignupActionType.USER_SIGNUP_FAIL;
-    payload: string;
+    payload: string[] | null
 }
 
 export type SignupAction =
@@ -31,7 +31,7 @@ interface UserSigninSuccessAction {
 
 interface UserSigninFailAction {
     type: UserSigninActionType.USER_SIGNIN_FAIL;
-    payload: string;
+    payload: string[] | null
 }
 
 export type SigninAction =
