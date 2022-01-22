@@ -57,7 +57,7 @@
       display: none;
     }
 
-    &_user {
+    &_userImg {
       width: 40px;
       cursor: pointer;
       border-radius: 50%;
@@ -75,11 +75,6 @@
     &_arrow {
       cursor: pointer;
     }
-  }
-  &_user {
-    width: 40px;
-    cursor: pointer;
-    border-radius: 50%;
   }
   &_menu {
     position: absolute;
@@ -176,6 +171,9 @@
     &_nav_right {
       span {
         font-size: 0.75rem;
+      }
+      &_userImg {
+        width: 30px;
       }
     }
   }

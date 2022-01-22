@@ -11,6 +11,7 @@ import { MdSettings } from 'react-icons/md'
 import './_Header.scss'
 import { Handle } from '../../models/Model'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { useActions } from '../../hooks/useActions'
 
 
 
@@ -31,8 +32,10 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
         data = signUpData;
     }
 
-    const SignOutHandler = () => {
-        //add signout
+
+    const SignOutHandler = (e: React.FormEvent) => {
+        e.preventDefault();
+
     }
 
     const ToggleHeaderDropDown = () => {
@@ -57,7 +60,7 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
             <div className='header_nav_right' onClick={ToggleHeaderDropDown}>
                 {/* <img className='header_upload' src="/images/upload.png" alt="" /> */}
                 <div className='header_nav_right_userinfo'>
-                    <img className='header_user' src={data?.avatar} alt="" />
+                    <img className='header_nav_right_userImg' src={data?.avatar} alt="" />
                     <span>Hi,{data?.username}</span>
                 </div>
                 <AiOutlineCaretDown className='header_nav_right_arrow' />
