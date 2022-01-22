@@ -14,10 +14,22 @@ interface UserSignupFailAction {
     payload: string[] | null
 }
 
+interface UserSignupLoadProfileAction {
+    type: UserSignupActionType.LOAD_USER_PROFILE;
+    payload: string[] | null
+}
+
+interface UserSignupLogoutAction {
+    type: UserSignupActionType.USER_lOGOUT;
+}
+
+
 export type SignupAction =
     | UserSignupRequestAction
     | UserSignupSuccessAction
-    | UserSignupFailAction;
+    | UserSignupFailAction
+    | UserSignupLoadProfileAction
+    | UserSignupLogoutAction
 
 
 interface UserSigninRequestAction {
@@ -34,7 +46,23 @@ interface UserSigninFailAction {
     payload: string[] | null
 }
 
+interface UserSigninLoadProfileAction {
+    type: UserSigninActionType.LOAD_USER_PROFILE;
+    payload: string[] | null
+}
+
+interface UserLogoutAction {
+    type: UserSigninActionType.USER_lOGOUT;
+}
+
 export type SigninAction =
     | UserSigninRequestAction
     | UserSigninSuccessAction
-    | UserSigninFailAction;
+    | UserSigninFailAction
+    | UserSigninLoadProfileAction
+    | UserLogoutAction
+
+
+
+// export type LogoutAction = UserLogoutAction
+

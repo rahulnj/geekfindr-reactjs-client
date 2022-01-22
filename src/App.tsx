@@ -4,7 +4,7 @@ import './_app.scss';
 import { AuthScreen, HomeScreen, ProfileScreen } from './pages'
 import { Header, Sidebar } from './components';
 
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Children } from './models/Model';
 import { useTypedSelector } from './hooks/useTypedSelector';
 
@@ -36,7 +36,7 @@ const App: React.FC = () => {
     (state) => state.UserSignin
   )
 
-  let { data: signUpData, loading: signUpLoading } = useTypedSelector(
+  let { user: signUpData, loading: signUpLoading } = useTypedSelector(
     (state) => state.UserSignup
   )
   if (!data) {
@@ -47,7 +47,7 @@ const App: React.FC = () => {
     if (!loading && !data) {
       navigate('/auth')
     }
-  }, [loading, navigate])
+  }, [data, loading, navigate])
 
   return (
     <>

@@ -20,7 +20,7 @@ const Signup: React.FC = () => {
     const [Password, setPassword] = useState('')
 
     const { UserSignup } = useActions();
-    const { data, error, loading } = useTypedSelector(
+    const { user, data, error, loading } = useTypedSelector(
         (state) => state.UserSignup
     );
 
@@ -39,7 +39,7 @@ const Signup: React.FC = () => {
         if (data) {
             navigate('/')
         }
-    }, [data])
+    }, [data, user])
 
     return (
         <form onSubmit={SignUpFormSubmition} >

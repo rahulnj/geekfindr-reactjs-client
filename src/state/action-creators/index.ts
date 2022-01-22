@@ -1,1 +1,1 @@
-export { UserSignup, UserSignin } from './AuthAction'
+export { UserSignup, UserSignin, UserLogout } from './AuthAction'

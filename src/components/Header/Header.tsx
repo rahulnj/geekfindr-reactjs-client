@@ -12,15 +12,15 @@ import './_Header.scss'
 import { Handle } from '../../models/Model'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
+import { useNavigate } from 'react-router-dom'
 
 
 
 
 
 const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
-
     const [ToggleHeader, setToggleHeader] = useState<boolean>(false)
-
+    const { UserLogout } = useActions();
     let { data }: any = useTypedSelector(
         (state) => state.UserSignin
     )
@@ -32,9 +32,13 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
         data = signUpData;
     }
 
-
+    const navigate = useNavigate()
     const SignOutHandler = (e: React.FormEvent) => {
+
+        console.log("logout");
         e.preventDefault();
+        navigate('/auth')
+        UserLogout()
 
     }
 
