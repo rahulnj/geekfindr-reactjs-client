@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './_app.scss';
 
-import { AuthScreen, HomeScreen, ProfileScreen } from './pages'
+import { AuthScreen, HomeScreen, ProfileScreen } from './screens'
 import { Header, Sidebar } from './components';
 
 import { Route, Routes, useNavigate } from 'react-router-dom';
