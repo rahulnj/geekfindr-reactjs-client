@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+
 import './_app.scss';
+import { Children } from './models/Model';
 
 import { AuthScreen, HomeScreen, ProfileScreen } from './screens'
 import { Header, Sidebar } from './components';
 
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { Children } from './models/Model';
 import { useTypedSelector } from './hooks/useTypedSelector';
 
 
@@ -29,7 +30,6 @@ const Layout = ({ children }: Children) => {
 
 
 const App: React.FC = () => {
-
 
   const navigate = useNavigate()
   let { data, loading } = useTypedSelector(

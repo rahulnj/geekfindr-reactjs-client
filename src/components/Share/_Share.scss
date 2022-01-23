@@ -36,14 +36,26 @@
         justify-content: space-between;
 
         button {
-            border: none;
-            padding: 7px;
-            border-radius: 5px;
-            background-color: #8956ff;
-            font-weight: 500;
-            margin-right: 20px;
+            background-color: $button-color;
+            border-radius: 4px;
+            border-style: none;
+            box-sizing: border-box;
+            color: #fff;
             cursor: pointer;
-            color: white;
+            display: inline-block;
+            font-family: "Farfetch Basis", "Helvetica Neue", Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            min-height: 38px;
+            outline: none;
+            overflow: hidden;
+            padding: 9px 20px 8px;
+            margin-right: 1rem;
+            text-align: center;
+        }
+        button:hover,
+        button:focus {
+            opacity: 0.75;
         }
     }
     &_icon {

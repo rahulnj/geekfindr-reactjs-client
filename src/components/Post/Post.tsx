@@ -43,8 +43,10 @@ const Post: React.FC = () => {
                     <div className="post_top">
                         <div className="post_top_left">
                             <img src={person1} alt="" />
-                            <span className="post_top_left_username">Rahul</span>
-                            <span className="post_top_left_date">5 mins ago</span>
+                            <div className='post_top_left_details'>
+                                <p className="post_top_left_username">Rahul</p>
+                                <span className="post_top_left_date">5 mins ago</span>
+                            </div>
                         </div>
                         <div className="post_top_right">
                             <BsThreeDotsVertical className='post_top_right_threedot' />
@@ -56,9 +58,8 @@ const Post: React.FC = () => {
                     </div>
                     <div className="post_bottom">
                         <div className="post_bottom_left">
-                            <AiOutlineLike className='post_bottom_left_icons' />
-                            <BiComment className='post_bottom_left_icons' />
-                            <span className="post_bottom_left_likecounter">10 people liked this</span>
+                            <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon' />50</div>
+                            <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />15</div>
                         </div>
                         <div className="post_bottom_right">
                             {/* <span className="post_commenttext">10</span> */}
