@@ -1,0 +1,68 @@
+@import "../../_base.scss";
+
+.userinfo {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+
+    h3 {
+        font-weight: 600;
+    }
+    p {
+        text-align: left;
+        margin: 10px 0;
+        font-size: 15;
+    }
+
+    hr {
+        border: 0;
+        height: 1px;
+        background: $horizontalline-color;
+        margin: 24px 0;
+    }
+
+    ul li {
+        list-style: none;
+        font-size: 0.95rem;
+        margin: 15px 0;
+        display: flex;
+        align-items: center;
+    }
+    &_icons {
+        margin-right: 10px;
+        display: inline-block;
+    }
+
+    &_details {
+        padding: 0 0.5rem;
+        width: 100%;
+    }
+
+    &_summary {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+
+    &_details[open] {
+        transition: transform 0.3s ease;
+        .arrow {
+            transform: rotate(90deg);
+            transition: transform 0.3s ease;
+        }
+    }
+
+    &_summary::webkit-details-marker {
+        display: none;
+    }
+
+    &_detailscontent {
+        font-size: 1rem;
+        padding: 1rem 1.5rem;
+
+        p {
+            margin: 1rem 0;
+        }
+    }
+}

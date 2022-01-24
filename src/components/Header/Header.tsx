@@ -21,21 +21,15 @@ import { useNavigate } from 'react-router-dom'
 const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
     const [ToggleHeader, setToggleHeader] = useState<boolean>(false)
     const { UserLogout } = useActions();
-    let { data }: any = useTypedSelector(
+
+    const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
 
-    let { data: signUpData } = useTypedSelector(
-        (state) => state.UserSignup
-    )
-    if (!data) {
-        data = signUpData;
-    }
 
     const navigate = useNavigate()
     const SignOutHandler = (e: React.FormEvent) => {
 
-        console.log("logout");
         e.preventDefault();
         navigate('/auth')
         UserLogout()
@@ -64,14 +58,14 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
             <div className='header_nav_right' onClick={ToggleHeaderDropDown}>
                 {/* <img className='header_upload' src="/images/upload.png" alt="" /> */}
                 <div className='header_nav_right_userinfo'>
-                    <img className='header_nav_right_userImg' src={data?.avatar} alt="" />
-                    <span>Hi,{data?.username}</span>
+                    <img className='header_nav_right_userImg' src={user?.avatar} alt="" />
+                    <span>Hi,{user?.username}</span>
                 </div>
                 <AiOutlineCaretDown className='header_nav_right_arrow' />
             </div>
             <div className={ToggleHeader ? "header_menu active" : "header_menu"}>
                 <h3>
-                    {data?.username}
+                    {user?.username}
                     <br />
                     <span>Web developer</span>
                 </h3>

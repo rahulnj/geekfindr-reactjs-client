@@ -1,4 +1,5 @@
 import React from 'react'
+import { Userinfo } from '..'
 import { Profile } from '../../models/Model'
 import './_RightAside.scss'
 
@@ -18,13 +19,13 @@ const RightAside: React.FC<Profile> = ({ profile }) => {
     const ProfileRightAside = () => {
         return (
             <>
-                <h1>profile RightAside</h1>
+                <Userinfo />
             </>
         )
     }
 
     return (
-        <div className='rightaside'>
+        <div className={profile ? 'profilerightaside' : 'rightaside'}>
             <div className="rightaside_wrapper">
                 {profile ? <ProfileRightAside /> : <HomeRightAside />}
             </div>

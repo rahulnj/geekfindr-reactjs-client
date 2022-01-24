@@ -2,7 +2,6 @@
 
 .rightaside {
     flex: 3.5;
-    // border: solid red;
     height: 90vh;
     margin-top: 20px;
     margin-right: 10px;
@@ -13,12 +12,33 @@
     background-color: $background-color;
     transition: transform 0.2s ease-in;
     &_wrapper {
-        padding: 20px 20px 0 0;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
 @media only screen and (max-width: $breakpoint-large) {
     .rightaside {
         display: none;
+    }
+}
+
+.profilerightaside {
+    flex: 3.5;
+    height: 90vh;
+    margin-top: 20px;
+    margin-right: 10px;
+    position: sticky;
+    top: 90px;
+    border-radius: 10px;
+    background-color: $background-color;
+    transition: transform 0.2s ease-in;
+    &_wrapper {
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
