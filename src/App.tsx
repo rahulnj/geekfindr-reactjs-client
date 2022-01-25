@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import './_app.scss';
 import { Children } from './models/Model';
 
-import { AuthScreen, HomeScreen, ProfileScreen } from './screens'
+import { AuthScreen, EditDetailsScreen, HomeScreen, ProfileScreen } from './screens'
 import { Header, Sidebar } from './components';
 
 import { useTypedSelector } from './hooks/useTypedSelector';
@@ -66,6 +66,10 @@ const App: React.FC = () => {
           <Layout>
             <ProfileScreen />
           </Layout>
+        }>
+        </Route>
+        <Route path='/form' element={
+          <EditDetailsScreen />
         }>
         </Route>
       </Routes>

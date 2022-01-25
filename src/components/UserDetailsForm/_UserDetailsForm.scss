@@ -1,0 +1,151 @@
+@import "../../_base.scss";
+
+.detailsform {
+    max-width: 700px;
+    width: 100%;
+    background-color: $background-color;
+    padding: 25px 30px;
+    border-radius: 5px;
+    &_title {
+        font-size: 1.4rem;
+        font-weight: 500;
+        position: relative;
+    }
+
+    &_title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        width: 30px;
+        background: $button-color;
+    }
+    &_wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 20px 0 12px 0;
+
+        &_input {
+            margin-bottom: 15px;
+            width: calc(100% / 2 - 20px);
+            &_icons {
+                margin-bottom: 5px;
+                margin-left: 2px;
+            }
+            label {
+                align-items: center;
+                display: flex;
+                color: #666;
+                font-size: 14px;
+                margin-bottom: 5px;
+                transition: 0.4s;
+            }
+            textarea {
+                height: 45px;
+                width: 100%;
+                outline: none;
+                border-radius: 5px;
+                border: 1px solid $main-color;
+                padding-left: 15px;
+                font-size: 14px;
+                transition: 0.4s;
+            }
+            select {
+                height: 45px;
+                width: 100%;
+                outline: none;
+                border-radius: 5px;
+                border: 1px solid $main-color;
+                padding-left: 15px;
+                font-size: 14px;
+                transition: 0.4s;
+            }
+            input {
+                height: 45px;
+                width: 100%;
+                outline: none;
+                border-radius: 5px;
+                border: 1px solid $main-color;
+                padding-left: 15px;
+                font-size: 14px;
+                transition: 0.4s;
+            }
+            textarea:focus {
+                box-shadow: $main-shadow;
+            }
+            input:focus {
+                box-shadow: $main-shadow;
+            }
+            .button-skip {
+                background-color: #ffffff;
+                border: none;
+                box-sizing: border-box;
+                color: #666;
+                font-size: 0.875rem;
+                font-weight: 600;
+                margin-right: 0.5rem;
+                line-height: 1.25rem;
+                padding: 0.75rem 1rem;
+                text-align: center;
+                cursor: pointer;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+            }
+            .button-submit {
+                background-color: $button-color;
+                border: 1px solid rgb(209, 213, 219);
+                border-radius: 5px;
+                box-sizing: border-box;
+                color: white;
+                font-size: 0.875rem;
+                font-weight: 600;
+                line-height: 1.25rem;
+                padding: 0.48rem 1rem;
+                text-align: center;
+                text-decoration: none #d1d5db solid;
+                text-decoration-thickness: auto;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                cursor: pointer;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                transition: 0.3s;
+            }
+            .button-submit:hover {
+                background-color: rgba(162, 26, 252, 0.959);
+            }
+
+            .button-submit:focus {
+                outline: 2px solid transparent;
+                outline-offset: 2px;
+            }
+
+            .button-submit:focus-visible {
+                box-shadow: none;
+            }
+        }
+        &_input:focus-within label {
+            color: $button-color;
+        }
+    }
+}
+
+@media (max-width: 584px) {
+    .detailsform {
+        max-width: 100%;
+        &_wrapper {
+            max-height: 300px;
+            overflow-y: scroll;
+            &_input {
+                margin-bottom: 15px;
+                width: 100%;
+            }
+        }
+    }
+    .detailsform_wrapper::-webkit-scrollbar {
+        width: 0;
+    }
+}

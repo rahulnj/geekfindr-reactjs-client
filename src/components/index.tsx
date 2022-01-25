@@ -8,3 +8,4 @@ export { default as Post } from './Post/Post';
 export { default as Signin } from './Signin/Signin';
 export { default as Signup } from './Signup/Signup';
 export { default as Userinfo } from './Userinfo/Userinfo'
+export { default as UserDetailsForm } from './UserDetailsForm/UserDetailsForm'
