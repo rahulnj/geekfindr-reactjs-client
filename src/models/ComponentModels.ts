@@ -17,3 +17,10 @@ export interface data {
     data: string[] | null
 }
 
+export interface usersData {
+    avatar: string
+    email: string
+    id: string
+    token: string
+    username: string
+}

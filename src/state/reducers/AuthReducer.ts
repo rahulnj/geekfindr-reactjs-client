@@ -1,13 +1,7 @@
+import { AuthState } from "../../models";
 import { SigninAction, SignupAction } from "../action-models/UserActions";
 import { UserSigninActionType, UserSignupActionType } from "../actiontypes/UserActionTypes";
 
-
-interface AuthState {
-    data: string[] | null
-    user: string[] | null
-    error: string[] | null;
-    loading: boolean;
-}
 
 const initialState = {
     loading: false,

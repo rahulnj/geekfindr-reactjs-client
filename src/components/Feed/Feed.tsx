@@ -1,7 +1,7 @@
 import React from 'react'
 import './_Feed.scss'
-import { Profile } from '../../models/Model'
-import { FollowCounter, Post, Share } from '../index'
+import { Post, Share } from '../index'
+import { Profile } from '../../models'
 
 
 
@@ -10,7 +10,7 @@ const Feed: React.FC<Profile> = ({ profile }) => {
     return (
         <div className='feed'>
             <div className="feed_wrapper">
-                {profile ? <FollowCounter /> : <Share />}
+                {profile ? "" : <Share />}
                 <Post />
             </div>
         </div>

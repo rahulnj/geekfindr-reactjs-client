@@ -66,3 +66,19 @@
         }
     }
 }
+@media (max-width: $breakpoint-large) {
+    .userinfo {
+        h3 {
+            text-align: center;
+        }
+        p {
+            text-align: center;
+        }
+        hr {
+            border: 2rem;
+            height: 1px;
+            background: $horizontalline-color;
+            margin: 24px 0;
+        }
+    }
+}

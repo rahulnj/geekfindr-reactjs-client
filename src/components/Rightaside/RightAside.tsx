@@ -1,6 +1,6 @@
 import React from 'react'
 import { Userinfo } from '..'
-import { Profile } from '../../models/Model'
+import { Profile } from '../../models'
 import './_RightAside.scss'
 
 

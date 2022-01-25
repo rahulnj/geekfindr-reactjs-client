@@ -1,9 +1,8 @@
 import React from 'react'
 import './_ProfileScreen.scss'
 
-import person1 from '../../images/profile-pic.png'
 import post1 from '../../assets/posts/3.jpeg'
-import { Feed, RightAside } from '../../components'
+import { Feed, FollowCounter, RightAside } from '../../components'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
 
@@ -28,9 +27,14 @@ const ProfileScreen: React.FC = () => {
                     <span>backend Developer</span>
                 </div>
             </div>
+            <FollowCounter />
             <div className="profile_rightbottom">
-                <Feed profile />
-                <RightAside profile />
+                <div className='componentfeed'>
+                    <Feed profile />
+                </div>
+                <div className='componentprofile'>
+                    <RightAside profile />
+                </div>
             </div>
         </div>
     )

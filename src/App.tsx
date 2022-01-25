@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import './_app.scss';
 
-import { Children } from './models/Model';
+import { AuthState, Children, usersData } from './models';
 
 import { AuthScreen, EditDetailsScreen, HomeScreen, ProfileScreen } from './screens'
 import { Header, Sidebar } from './components';
@@ -30,14 +30,15 @@ const Layout = ({ children }: Children) => {
 }
 
 
+
 const App: React.FC = () => {
 
   const navigate = useNavigate()
-  let { data, loading } = useTypedSelector(
+  let { data, loading }: AuthState = useTypedSelector(
     (state) => state.UserSignin
   )
 
-  let { user: signUpData, loading: signUpLoading } = useTypedSelector(
+  let { user: signUpData, loading: signUpLoading }: AuthState = useTypedSelector(
     (state) => state.UserSignup
   )
   if (!data) {
@@ -49,6 +50,9 @@ const App: React.FC = () => {
       navigate('/auth')
     }
   }, [data, loading, navigate])
+  const { id }: any = data;
+
+
 
   return (
     <>
@@ -63,7 +67,7 @@ const App: React.FC = () => {
           <AuthScreen />
         }>
         </Route>
-        <Route path='/profile' element={
+        <Route path={`/profile/${id}`} element={
           <Layout>
             <ProfileScreen />
           </Layout>

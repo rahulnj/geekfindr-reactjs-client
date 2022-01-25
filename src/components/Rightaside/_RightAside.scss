@@ -42,3 +42,8 @@
         align-items: center;
     }
 }
+@media (max-width: $breakpoint-large) {
+    .profilerightaside {
+        height: auto;
+    }
+}

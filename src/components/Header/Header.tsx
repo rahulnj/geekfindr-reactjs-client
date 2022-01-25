@@ -9,10 +9,12 @@ import { FaSignOutAlt } from 'react-icons/fa'
 import { MdSettings } from 'react-icons/md'
 
 import './_Header.scss'
-import { Handle } from '../../models/Model'
+
+import { Handle } from '../../models'
+
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 
@@ -22,7 +24,7 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
     const [ToggleHeader, setToggleHeader] = useState<boolean>(false)
     const { UserLogout } = useActions();
 
-    const { user }: any = useTypedSelector(
+    const { data, user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
 
@@ -55,13 +57,15 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
 
             </form>
 
-            <div className='header_nav_right' onClick={ToggleHeaderDropDown}>
+            <div className='header_nav_right' >
                 {/* <img className='header_upload' src="/images/upload.png" alt="" /> */}
-                <div className='header_nav_right_userinfo'>
-                    <img className='header_nav_right_userImg' src={user?.avatar} alt="" />
-                    <span>Hi,{user?.username}</span>
-                </div>
-                <AiOutlineCaretDown className='header_nav_right_arrow' />
+                <Link to={`/profile/${data.id}`} style={{ textDecoration: 'none' }}>
+                    <div className='header_nav_right_userinfo'>
+                        <img className='header_nav_right_userImg' src={user?.avatar} alt="" />
+                        <span>Hi,{user?.username}</span>
+                    </div>
+                </Link>
+                <AiOutlineCaretDown onClick={ToggleHeaderDropDown} className='header_nav_right_arrow' />
             </div>
             <div className={ToggleHeader ? "header_menu active" : "header_menu"}>
                 <h3>
@@ -74,7 +78,7 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
                     <li ><FaSignOutAlt className='header_menu_icons' /><span className='header_menu_link' onClick={SignOutHandler}>Logout</span></li>
                 </ul>
             </div>
-        </div>
+        </div >
     )
 }
 

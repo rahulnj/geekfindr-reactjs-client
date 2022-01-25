@@ -14,7 +14,5 @@ export enum UserSigninActionType {
     USER_lOGOUT = 'USER_LOGOUT'
 }
 
-// export enum UserLogoutActionType {
-//     USER_lOGOUT = 'USER_LOGOUT'
-// }
+
 

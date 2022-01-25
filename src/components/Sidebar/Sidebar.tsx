@@ -3,8 +3,9 @@ import './_Sidebar.scss'
 import { FiHome, FiSettings } from 'react-icons/fi'
 import { BsChatLeft } from 'react-icons/bs'
 import { GrProjects } from 'react-icons/gr'
+import { Handle } from '../../models'
 
-import { Handle } from '../../models/Model'
+
 
 
 
