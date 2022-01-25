@@ -149,3 +149,58 @@
         width: 0;
     }
 }
+
+@mixin object-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+$circleSize: 165px;
+$radius: 100px;
+$shadow: 0 0 10px 0 rgba(255, 255, 255, 0.35);
+$fontColor: rgb(250, 250, 250);
+.detailsform_wrapper_input {
+    .profile-pic {
+        color: transparent;
+        @include object-center;
+        position: relative;
+
+        input {
+            display: none;
+        }
+
+        img {
+            position: absolute;
+            object-fit: cover;
+            width: $circleSize;
+            height: $circleSize;
+            box-shadow: $shadow;
+            border-radius: $radius;
+            z-index: 0;
+        }
+
+        .-label {
+            cursor: pointer;
+            height: $circleSize;
+            width: $circleSize;
+            border-radius: $radius;
+        }
+
+        &:hover {
+            .-label {
+                @include object-center;
+                background-color: rgba(0, 0, 0, 0.8);
+                z-index: 10000;
+                color: $fontColor;
+                border-radius: $radius;
+            }
+        }
+
+        span {
+            display: inline-flex;
+            padding: 0.2em;
+            height: 2em;
+        }
+    }
+}

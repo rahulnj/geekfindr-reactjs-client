@@ -11,6 +11,22 @@ const UserDetailsForm: React.FC = () => {
             <form action="">
                 <div className='detailsform_wrapper'>
                     <div className='detailsform_wrapper_input'>
+                        <div className="profile-pic">
+                            <label className="-label" htmlFor='file'>
+                                <span className="glyphicon glyphicon-camera"></span>
+                                <span>Change Profile</span>
+                            </label>
+                            <input className='imageinput' id="file" type="file" />
+                            <img src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg" id="output" width="200" />
+                        </div>
+                    </div>
+                    <div className='detailsform_wrapper_input'>
+                        <label>Username</label>
+                        <input type="text" placeholder='username' />
+                    </div>
+
+
+                    <div className='detailsform_wrapper_input'>
                         <label>Bio</label>
                         <textarea placeholder='Add Bio' />
                     </div>
@@ -40,7 +56,7 @@ const UserDetailsForm: React.FC = () => {
                         <input type="text" placeholder='Add profile url' />
                     </div>
                     <div className='detailsform_wrapper_input'>
-                        <button className="button-skip">Skip</button>
+                        <button className="button-skip">Cancel</button>
                         <button className="button-submit">Submit</button>
                     </div>
                 </div>

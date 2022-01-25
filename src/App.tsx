@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import './_app.scss';
+
 import { Children } from './models/Model';
 
 import { AuthScreen, EditDetailsScreen, HomeScreen, ProfileScreen } from './screens'
