@@ -21,16 +21,16 @@ export const UserProfileDetails = ({ token }: any) => {
         try {
             const { data } = await request.get('/api/v1/profiles/my-profile', config)
             console.log(data);
-
             dispatch({
                 type: UserProfileDetailsActionType.USER_PROFILE_DETAILS_SUCCESS,
                 payload: data
             })
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
-
+            dispatch({
+                type: UserProfileDetailsActionType.USER_PROFILE_DETAILS_FAIL,
+                payload: error
+            })
         }
-
-
     }
 }

@@ -19,7 +19,7 @@ const ProfileScreen: React.FC = () => {
 
     useEffect(() => {
         UserProfileDetails({ token: user.token })
-    }, [UserProfileDetails]);
+    }, [UserProfileDetails, user]);
 
 
 

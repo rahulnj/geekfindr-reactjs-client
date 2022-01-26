@@ -59,7 +59,7 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
 
             <div className='header_nav_right' >
                 {/* <img className='header_upload' src="/images/upload.png" alt="" /> */}
-                <Link to={`/profile/${data.id}`} style={{ textDecoration: 'none' }}>
+                <Link to={`/profile/${data?.id}`} style={{ textDecoration: 'none' }}>
                     <div className='header_nav_right_userinfo'>
                         <img className='header_nav_right_userImg' src={user?.avatar} alt="" />
                         <span>Hi,{user?.username}</span>

@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import './_app.scss';
 
-import { AuthState, Children, usersData } from './models';
+import { AuthState, Children } from './models';
 
 import { AuthScreen, EditDetailsScreen, HomeScreen, PageNotFound, ProfileScreen } from './screens'
 import { Header, Sidebar } from './components';
@@ -50,9 +50,6 @@ const App: React.FC = () => {
     }
   }, [data, loading, navigate])
 
-  const { id }: any = data
-
-
 
   return (
     <>
@@ -67,7 +64,7 @@ const App: React.FC = () => {
           <AuthScreen />
         }>
         </Route>
-        <Route path={`/profile/${id}`} element={
+        <Route path='/profile/:id' element={
           <Layout>
             <ProfileScreen />
           </Layout>
