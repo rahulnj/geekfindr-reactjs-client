@@ -1,7 +1,7 @@
 import { UserSigninActionType, UserSignupActionType } from "../actiontypes"
 
 
-//Actions for the user signup in the AuthReducer.
+//Action Models for the user signup in the AuthReducer.
 
 
 interface UserSignupRequestAction {
@@ -35,7 +35,7 @@ export type SignupAction =
     | UserSignupLoadProfileAction
     | UserSignupLogoutAction
 
-//Actions for the user signin in the AuthReducer
+//Action Models for the user signin in the AuthReducer
 
 interface UserSigninRequestAction {
     type: UserSigninActionType.USER_SIGNIN_REQUEST;

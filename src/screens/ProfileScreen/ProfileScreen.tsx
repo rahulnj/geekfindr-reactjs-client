@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
 import './_ProfileScreen.scss'
 
 import post1 from '../../assets/posts/3.jpeg'
 import { Feed, FollowCounter, RightAside } from '../../components'
+
 import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { useActions } from '../../hooks/useActions'
 
 
 const ProfileScreen: React.FC = () => {
 
-
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
+
+    const { UserProfileDetails } = useActions();
+
+    useEffect(() => {
+        UserProfileDetails({ token: user.token })
+    }, [UserProfileDetails]);
+
 
 
 
