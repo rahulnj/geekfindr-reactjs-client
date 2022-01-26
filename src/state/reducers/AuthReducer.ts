@@ -1,6 +1,6 @@
 import { AuthState } from "../../models";
-import { SigninAction, SignupAction } from "../action-models/UserActions";
-import { UserSigninActionType, UserSignupActionType } from "../actiontypes/UserActionTypes";
+import { SigninAction, SignupAction } from "../action-models";
+import { UserSigninActionType, UserSignupActionType } from "../actiontypes/AuthActionTypes";
 
 
 const initialState = {

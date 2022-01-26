@@ -1,6 +1,8 @@
 import { Dispatch } from 'redux';
-import { UserSigninActionType, UserSignupActionType } from '../actiontypes/UserActionTypes';
-import { SigninAction, SignupAction } from '../action-models/UserActions';
+
+import { SigninAction, SignupAction } from '../action-models/AuthActions';
+import { UserSigninActionType, UserSignupActionType } from '../actiontypes';
+
 import request from '../../api'
 
 interface SignupData {
