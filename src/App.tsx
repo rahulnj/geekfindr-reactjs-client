@@ -5,7 +5,7 @@ import './_app.scss';
 
 import { AuthState, Children, usersData } from './models';
 
-import { AuthScreen, EditDetailsScreen, HomeScreen, ProfileScreen } from './screens'
+import { AuthScreen, EditDetailsScreen, HomeScreen, PageNotFound, ProfileScreen } from './screens'
 import { Header, Sidebar } from './components';
 
 import { useTypedSelector } from './hooks/useTypedSelector';
@@ -37,7 +37,6 @@ const App: React.FC = () => {
   let { data, loading }: AuthState = useTypedSelector(
     (state) => state.UserSignin
   )
-
   let { user: signUpData, loading: signUpLoading }: AuthState = useTypedSelector(
     (state) => state.UserSignup
   )
@@ -50,7 +49,8 @@ const App: React.FC = () => {
       navigate('/auth')
     }
   }, [data, loading, navigate])
-  const { id }: any = data;
+
+  const { id }: any = data
 
 
 
@@ -75,6 +75,10 @@ const App: React.FC = () => {
         </Route>
         <Route path='/form' element={
           <EditDetailsScreen />
+        }>
+        </Route>
+        <Route path='*' element={
+          <PageNotFound />
         }>
         </Route>
       </Routes>

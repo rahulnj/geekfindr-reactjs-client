@@ -3,6 +3,7 @@ export interface Children {
 }
 
 export interface Handle {
+    error?: boolean
     sidebar?: boolean;
     handleToggleSidebar: (boolean?: boolean) => void;
 }
@@ -11,11 +12,7 @@ export interface Profile {
     profile?: boolean;
 }
 
-export interface data {
-    loading: boolean;
-    error: string[] | null;
-    data: string[] | null
-}
+
 
 export interface usersData {
     avatar: string

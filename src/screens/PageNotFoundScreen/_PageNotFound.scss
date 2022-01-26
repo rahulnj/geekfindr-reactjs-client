@@ -1,0 +1,90 @@
+@import "../../_base.scss";
+
+.pagenotfound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    &_wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 90px;
+
+        img {
+            width: 450px;
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+        p {
+            font-size: 1rem;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+
+        &_details {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 50px;
+
+            button {
+                font-size: 16px;
+                font-weight: 500;
+                letter-spacing: 1px;
+                color: white;
+                padding: 13px 20px 13px;
+                outline: 0;
+                border: 1px solid black;
+                cursor: pointer;
+                position: relative;
+                background-color: rgba(255, 255, 255, 0);
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+            }
+
+            button:after {
+                content: "";
+                background-color: $button-color;
+                width: 100%;
+                z-index: -1;
+                position: absolute;
+                height: 100%;
+                top: 7px;
+                left: 7px;
+                transition: 0.2s;
+            }
+
+            button:hover:after {
+                top: 0px;
+                left: 0px;
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-large) {
+    .pagenotfound_wrapper {
+        flex-direction: column;
+        img {
+            width: 260px;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+    }
+}
+
+@media (min-width: $breakpoint-large) {
+    .pagenotfound_wrapper_details {
+        button {
+            padding: 13px 50px 13px;
+        }
+    }
+}
