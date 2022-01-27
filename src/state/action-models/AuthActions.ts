@@ -20,7 +20,7 @@ interface UserSignupFailAction {
 
 interface UserSignupLoadProfileAction {
     type: UserSignupActionType.LOAD_USER_PROFILE;
-    payload: string[] | null
+    payload: string[]
 }
 
 interface UserSignupLogoutAction {
@@ -53,7 +53,7 @@ interface UserSigninFailAction {
 
 interface UserSigninLoadProfileAction {
     type: UserSigninActionType.LOAD_USER_PROFILE;
-    payload: string[] | null
+    payload: string[]
 }
 
 interface UserLogoutAction {

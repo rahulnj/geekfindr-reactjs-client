@@ -24,6 +24,8 @@ const ProfileScreen: React.FC = () => {
 
 
 
+
+
     return (
         <div className='profile'>
             <div className="profile_righttop">

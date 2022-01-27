@@ -45,7 +45,7 @@ const App: React.FC = () => {
     loading = signUpLoading;
   }
   useEffect(() => {
-    if (!loading && !data) {
+    if (!loading && data.length === 0) {
       navigate('/auth')
     }
   }, [data, loading, navigate])

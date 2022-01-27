@@ -1,7 +1,17 @@
 import React from 'react'
+
 import './_FollowCounter.scss'
 
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { UserProfileState } from '../../models'
+
 const FollowCount: React.FC = () => {
+
+    const { data }: UserProfileState = useTypedSelector(
+        (state) => state.UserProfileDetails
+    )
+    // const { followers, following } = data;
+
     return (
         <div className='followcounter'>
             <div className="followcounter_wrapper">
@@ -11,7 +21,7 @@ const FollowCount: React.FC = () => {
                         <p>Posts</p>
                     </div>
                     <div className='followcounter_wrapper_left_items'>
-                        <span>1000</span>
+                        <span>{ }</span>
                         <p>followers</p>
                     </div>
                     <div className='followcounter_wrapper_left_items'>

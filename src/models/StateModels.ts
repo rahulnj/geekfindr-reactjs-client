@@ -1,12 +1,12 @@
 export interface AuthState {
-    data: string[] | null
-    user: string[] | null
+    data: string[]
+    user: string[]
     error: string[] | null
     loading: boolean
 }
 
 export interface UserProfileState {
-    data: string[] | null
+    data: string[]
     error: string[] | null
     loading: boolean
 }
