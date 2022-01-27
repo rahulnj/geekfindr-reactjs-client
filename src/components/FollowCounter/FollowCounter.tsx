@@ -21,7 +21,7 @@ const FollowCount: React.FC = () => {
                         <p>Posts</p>
                     </div>
                     <div className='followcounter_wrapper_left_items'>
-                        <span>{ }</span>
+                        <span>324</span>
                         <p>followers</p>
                     </div>
                     <div className='followcounter_wrapper_left_items'>

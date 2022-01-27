@@ -9,3 +9,5 @@ export { default as Signin } from './Signin/Signin';
 export { default as Signup } from './Signup/Signup';
 export { default as Userinfo } from './Userinfo/Userinfo'
 export { default as UserDetailsForm } from './UserDetailsForm/UserDetailsForm'
+export { default as Messages } from './Messages/Messages'
+export { default as FriendRequest } from './FriendRequest/FriendRequest'

@@ -1,21 +1,46 @@
 @import "../../_base.scss";
 
 .rightaside {
-    flex: 3.5;
+    flex: 3;
     height: 90vh;
     margin-top: 20px;
     margin-right: 10px;
     position: sticky;
     top: 90px;
-    border-radius: 10px;
     box-shadow: $main-shadow;
     background-color: $background-color;
+    border-radius: 10px;
     transition: transform 0.2s ease-in;
     &_wrapper {
         padding: 5px;
         display: flex;
         flex-direction: column;
+    }
+}
+.rightaside_wrapper_messages {
+    &_heading {
+        display: flex;
+        flex-direction: row;
         align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+    }
+    &_search {
+        background-color: $main-color;
+        width: 320px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        padding: 0 18px;
+        margin: 0 25px;
+
+        input {
+            width: 100%;
+            background: transparent;
+            padding: 10px;
+            outline: none;
+            border: 0;
+        }
     }
 }
 

@@ -1,0 +1,37 @@
+@import "../../_base.scss";
+
+.messages {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+    &_profileimg {
+        position: relative;
+        overflow: visible;
+        img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 10px;
+        }
+        &.active {
+            width: 0.8rem;
+            height: 0.8rem;
+            border-radius: 50%;
+            border: 3px solid rgb(255, 255, 255);
+            background: rgb(3, 245, 3);
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+    }
+    &_body {
+        padding-top: 0.5rem;
+        p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+    }
+}

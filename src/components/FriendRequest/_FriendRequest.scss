@@ -1,0 +1,80 @@
+@import "../../_base.scss";
+
+.friendrequests {
+    margin-top: 1rem;
+    h4 {
+        margin: 1rem 0 1rem 0.3rem;
+    }
+    &_single {
+        padding: 0 0.5rem;
+        margin-bottom: 0.7rem;
+        &_info {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+            &_photo {
+                img {
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    margin-top: 10px;
+                }
+            }
+        }
+        &_action {
+            display: flex;
+            gap: 0.5rem;
+
+            &_acceptbtn {
+                align-items: center;
+                background-color: $button-color;
+                border: 0;
+                border-radius: 100px;
+                box-sizing: border-box;
+                color: #ffffff;
+                cursor: pointer;
+                display: inline-flex;
+                font-size: 14px;
+                font-weight: 500;
+                justify-content: center;
+                line-height: 20px;
+                height: 35px;
+                min-width: 0px;
+                overflow: hidden;
+                padding: 0px;
+                padding-left: 20px;
+                padding-right: 20px;
+                text-align: center;
+            }
+            &_declinebtn {
+                align-items: center;
+                background-color: $main-color;
+                border: 0;
+                border-radius: 100px;
+                box-sizing: border-box;
+                color: #666;
+                cursor: pointer;
+                display: inline-flex;
+                font-size: 14px;
+                font-weight: 500;
+                justify-content: center;
+                line-height: 20px;
+                height: 35px;
+                min-width: 0px;
+                overflow: hidden;
+                padding: 0px;
+                padding-left: 20px;
+                padding-right: 20px;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.button-18:hover,
+.button-18:focus {
+    background-color: #16437e;
+    color: #ffffff;
+}
