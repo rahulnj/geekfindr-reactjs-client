@@ -1,6 +1,6 @@
 export interface AuthState {
-    data: string[]
-    user: string[]
+    data: string[] | null
+    user: string[] | null
     error: string[] | null
     loading: boolean
 }

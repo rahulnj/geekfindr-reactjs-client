@@ -37,15 +37,18 @@ const App: React.FC = () => {
   let { data, loading }: AuthState = useTypedSelector(
     (state) => state.UserSignin
   )
+
   let { user: signUpData, loading: signUpLoading }: AuthState = useTypedSelector(
     (state) => state.UserSignup
   )
+
   if (!data) {
     data = signUpData;
     loading = signUpLoading;
   }
+
   useEffect(() => {
-    if (!loading && data.length === 0) {
+    if (!loading && !data) {
       navigate('/auth')
     }
   }, [data, loading, navigate])
