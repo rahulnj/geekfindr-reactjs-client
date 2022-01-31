@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import logo from '../../images/logo.png'
 import sublogo from '../../images/sublogo.png'
 import search from '../../images/search.png'
@@ -21,6 +21,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 
 const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
+    const ref = useRef<any>();
     const [ToggleHeader, setToggleHeader] = useState<boolean>(false)
     const { UserLogout } = useActions();
 
@@ -41,6 +42,19 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
     const ToggleHeaderDropDown = () => {
         setToggleHeader(value => !value)
     }
+
+    useEffect(() => {
+        const checkClickedOutside = (e: any): void => {
+            if (ToggleHeader && ref.current && !ref.current.contains(e.target)) {
+                setToggleHeader(false)
+            }
+        }
+        document.addEventListener("mousedown", checkClickedOutside)
+        return () => {
+            document.removeEventListener("mousedown", checkClickedOutside)
+        };
+    }, [ToggleHeader]);
+
 
     return (
         <div className="header">
@@ -67,7 +81,7 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
                 </Link>
                 <AiOutlineCaretDown onClick={ToggleHeaderDropDown} className='header_nav_right_arrow' />
             </div>
-            <div className={ToggleHeader ? "header_menu active" : "header_menu"}>
+            <div ref={ref} className={ToggleHeader ? "header_menu active" : "header_menu"}>
                 <h3>
                     {user?.username}
                     <br />

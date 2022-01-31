@@ -73,7 +73,7 @@ const Signup: React.FC = () => {
         if (data) {
             navigate('/')
         }
-    }, [data, user])
+    }, [data, user, navigate])
 
     return (
 
