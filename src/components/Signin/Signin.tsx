@@ -12,12 +12,14 @@ import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useNavigate } from 'react-router-dom'
 
+
 const Signin: React.FC = () => {
     const [Email, setEmail] = useState<string>('')
     const [Password, setPassword] = useState<string>('')
 
     const [EmailError, setEmailError] = useState<string>('')
     const [PasswordError, setPasswordError] = useState<string>('')
+    const [BlankFieldError, setBlankFieldError] = useState<string>('')
 
     const { UserSignin } = useActions();
 
@@ -29,7 +31,7 @@ const Signin: React.FC = () => {
         e.preventDefault();
 
         if (Email === '' || Password === '') {
-            alert("error")
+            setBlankFieldError('Fill the fields')
         } else if (!EmailError && !PasswordError) {
             UserSignin({
                 email: Email,
@@ -75,6 +77,7 @@ const Signin: React.FC = () => {
                 <input type="password" placeholder="Password" onChange={OnChangePasswordValidator} onBlur={OnBlurPasswordValidator} />
             </div >
             <div className='signin_error'>{PasswordError}</div>
+            <div className='signin_error'>{BlankFieldError}</div>
             <input type="submit" value="Login" className="signin_btn" />
             <p className="signin_socialtext" > Or Sign in with social platforms</p >
             <div className="signin_socialmedia" >
@@ -85,4 +88,4 @@ const Signin: React.FC = () => {
     )
 }
 
-export default Signin
+export default Signin;

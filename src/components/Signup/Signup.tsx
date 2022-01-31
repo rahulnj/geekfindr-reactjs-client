@@ -14,8 +14,6 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useNavigate } from 'react-router-dom'
 
 
-
-
 const Signup: React.FC = () => {
 
     const [Username, setUsername] = useState<string>('')
@@ -25,6 +23,7 @@ const Signup: React.FC = () => {
     const [UsernameError, setUsernameError] = useState<string>('')
     const [EmailError, setEmailError] = useState<string>('')
     const [PasswordError, setPasswordError] = useState<string>('')
+    const [BlankFieldError, setBlankFieldError] = useState<string>('')
 
     const { UserSignup } = useActions();
     const { user, data, error, loading } = useTypedSelector(
@@ -34,7 +33,7 @@ const Signup: React.FC = () => {
     const SignUpFormSubmition = (e: React.SyntheticEvent) => {
         e.preventDefault();
         if (Username === '' || Email === '' || Password === '') {
-            alert("error")
+            setBlankFieldError('Fill the fields')
         }
         else if (!UsernameError && !EmailError && !PasswordError) {
             UserSignup({
@@ -77,6 +76,7 @@ const Signup: React.FC = () => {
     }, [data, user])
 
     return (
+
         <form onSubmit={SignUpFormSubmition}  >
             <h2 className="signup_title">Sign up</h2>
             <div className={UsernameError ? "signup_inputfield error_inputfield" : "signup_inputfield"}>
@@ -94,13 +94,15 @@ const Signup: React.FC = () => {
                 <input type="password" placeholder="Password" onChange={OnChangePasswordValidator} onBlur={OnBlurPasswordValidator} />
             </div>
             <div className='signup_error'>{PasswordError}</div>
+            <div className='signup_error'>{BlankFieldError}</div>
             <input type="submit" className="signup_btn" value="Sign up" />
             <p className="signup_socialtext">Or Sign up with social platforms</p>
             <div className="signup_socialmedia">
                 <BsGithub className='signup_icon' />
             </div>
         </form >
+
     )
 }
 
-export default Signup
+export default Signup;
