@@ -70,7 +70,7 @@ const App: React.FC = () => {
           </Layout>
         }>
         </Route>
-        <Route path='/form' element={
+        <Route path='/editprofile/:id' element={
           <EditDetailsScreen />
         }>
         </Route>

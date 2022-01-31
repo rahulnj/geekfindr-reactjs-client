@@ -1,16 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { UserProfileState } from '../../models'
 
+
 const FollowCount: React.FC = () => {
 
     const { data }: UserProfileState = useTypedSelector(
         (state) => state.UserProfileDetails
     )
-    // const { followers, following } = data;
+    console.log(data);
+
+    const { followers, following, userId }: any = data;
 
     return (
         <div className='followcounter'>
@@ -21,17 +25,20 @@ const FollowCount: React.FC = () => {
                         <p>Posts</p>
                     </div>
                     <div className='followcounter_wrapper_left_items'>
-                        <span>324</span>
+                        <span>{followers?.length}</span>
                         <p>followers</p>
                     </div>
                     <div className='followcounter_wrapper_left_items'>
-                        <span>1000</span>
+                        <span>{following?.length}</span>
                         <p>following</p>
                     </div>
                 </div>
                 <div className='followcounter_wrapper_right'>
                     {/* <button className="button-follow">Follow</button> */}
-                    <button className="button-edit">Edit</button>
+                    <Link to={`/editprofile/${userId}`}>
+                        <button className="button-edit">Edit</button>
+                    </Link>
+
                 </div>
             </div>
         </div>
