@@ -20,6 +20,10 @@
         padding: 0 0.4rem;
         position: relative;
 
+        &.error_inputfield {
+            border: #ff0015 0.5px solid;
+        }
+
         input {
             background: none;
             outline: none;
@@ -77,5 +81,10 @@
         font-size: 1.1rem;
         transition: 0.3s;
         cursor: pointer;
+    }
+    &_error {
+        color: red;
+        font-size: 0.9rem;
+        margin-left: 2px;
     }
 }
