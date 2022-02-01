@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
+import './_Header.scss'
+
 import logo from '../../images/logo.png'
 import sublogo from '../../images/sublogo.png'
 import search from '../../images/search.png'
@@ -8,13 +12,11 @@ import { AiOutlineCaretDown } from 'react-icons/ai'
 import { FaSignOutAlt } from 'react-icons/fa'
 import { MdSettings } from 'react-icons/md'
 
-import './_Header.scss'
 
 import { Handle } from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
-import { Link, useNavigate } from 'react-router-dom'
 
 
 
@@ -44,14 +46,14 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
     }
 
     useEffect(() => {
-        const checkClickedOutside = (e: any): void => {
+        const checkIfClickedOutside = (e: any): void => {
             if (ToggleHeader && ref.current && !ref.current.contains(e.target)) {
                 setToggleHeader(false)
             }
         }
-        document.addEventListener("mousedown", checkClickedOutside)
+        document.addEventListener("mousedown", checkIfClickedOutside)
         return () => {
-            document.removeEventListener("mousedown", checkClickedOutside)
+            document.removeEventListener("mousedown", checkIfClickedOutside)
         };
     }, [ToggleHeader]);
 
@@ -61,10 +63,10 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
             <div className='header_toggle'>
                 <GiHamburgerMenu size={26} onClick={() => handleToggleSidebar()} />
             </div>
-
-            <img className='header_logo' src={logo} alt="" />
-            <img className='header_sublogo' src={sublogo} alt="" />
-
+            <Link to={'/'}>
+                <img className='header_logo' src={logo} alt="" />
+                <img className='header_sublogo' src={sublogo} alt="" />
+            </Link>
             <form>
                 <img src={search} alt="" />
                 <input type="text" placeholder='Search' />
