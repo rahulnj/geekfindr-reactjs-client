@@ -21,8 +21,8 @@ const UserDetailsForm: React.FC = () => {
                         </div>
                     </div>
                     <div className='detailsform_wrapper_input'>
-                        <label>Username</label>
-                        <input type="text" placeholder='username' />
+                        {/* <label>Username</label> */}
+                        <input type="text" placeholder='username' hidden />
                     </div>
 
 

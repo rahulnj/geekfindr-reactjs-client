@@ -78,6 +78,7 @@ const Signin: React.FC = () => {
             </div >
             <div className='signin_error'>{PasswordError}</div>
             <div className='signin_error'>{BlankFieldError}</div>
+            <div className='signin_error'>{error}</div>
             <input type="submit" value="Login" className="signin_btn" />
             <p className="signin_socialtext" > Or Sign in with social platforms</p >
             <div className="signin_socialmedia" >

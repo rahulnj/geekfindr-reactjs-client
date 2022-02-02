@@ -14,7 +14,7 @@ const FollowCount: React.FC = () => {
     )
     console.log(data);
 
-    const { followers, following, userId }: any = data;
+    const { followers, following, id }: any = data;
 
     return (
         <div className='followcounter'>
@@ -35,7 +35,7 @@ const FollowCount: React.FC = () => {
                 </div>
                 <div className='followcounter_wrapper_right'>
                     {/* <button className="button-follow">Follow</button> */}
-                    <Link to={`/editprofile/${userId}`}>
+                    <Link to={`/editprofile/${id}`}>
                         <button className="button-edit">Edit</button>
                     </Link>
 

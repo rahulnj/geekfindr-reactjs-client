@@ -52,26 +52,28 @@
   &_nav_right {
     display: flex;
     align-items: center;
+    justify-content: space-around;
 
     &_upload {
-      display: none;
+      margin-right: 1rem;
     }
 
-    &_userImg {
-      width: 40px;
-      cursor: pointer;
-      border-radius: 50%;
-    }
-    span {
-      font-size: 0.95rem;
-      cursor: pointer;
-      color: black;
-    }
     &_userinfo {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
+      &_userImg {
+        width: 40px;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+      span {
+        font-size: 0.9rem;
+        cursor: pointer;
+        color: black;
+      }
     }
     &_arrow {
       cursor: pointer;

@@ -1,34 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import './_app.scss';
+import { AuthState } from './models';
 
-import { AuthState, Children } from './models';
-
+import { Layout } from './components';
 import { AuthScreen, EditDetailsScreen, HomeScreen, PageNotFound, ProfileScreen } from './screens'
-import { Header, Sidebar } from './components';
 
 import { useTypedSelector } from './hooks/useTypedSelector';
-
-
-
-
-const Layout = ({ children }: Children) => {
-  const [sidebar, setSidebar] = useState<boolean>(false)
-  const handleToggleSidebar = () => {
-    setSidebar(value => !value)
-  }
-  return (
-    <>
-      <Header handleToggleSidebar={handleToggleSidebar} />
-      <div className='app_container'>
-        <Sidebar sidebar={sidebar} handleToggleSidebar={handleToggleSidebar} />
-        {children}
-      </div>
-    </>
-  )
-}
-
 
 
 const App: React.FC = () => {

@@ -1,3 +1,4 @@
+export { default as Layout } from './Layout/Layout'
 export { default as Header } from './Header/Header';
 export { default as Sidebar } from './Sidebar/Sidebar';
 export { default as Feed } from './Feed/Feed';
@@ -12,3 +13,4 @@ export { default as UserDetailsForm } from './UserDetailsForm/UserDetailsForm'
 export { default as Messages } from './Messages/Messages'
 export { default as FriendRequest } from './FriendRequest/FriendRequest'
 export { default as Toast } from './Toast/Toast'
+export { default as PostUploadModal } from './PostUploadModal/PostUploadModal'

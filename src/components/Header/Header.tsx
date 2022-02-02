@@ -11,7 +11,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { AiOutlineCaretDown } from 'react-icons/ai'
 import { FaSignOutAlt } from 'react-icons/fa'
 import { MdSettings } from 'react-icons/md'
-
+import { BsPlusCircle } from 'react-icons/bs'
 
 import { Handle } from '../../models'
 
@@ -74,10 +74,10 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
             </form>
 
             <div className='header_nav_right' >
-                {/* <img className='header_upload' src="/images/upload.png" alt="" /> */}
+                <BsPlusCircle size={32} className='header_nav_right_upload' />
                 <Link to={`/profile/${data?.id}`} style={{ textDecoration: 'none' }}>
                     <div className='header_nav_right_userinfo'>
-                        <img className='header_nav_right_userImg' src={user?.avatar} alt="" />
+                        <img className='header_nav_right_userinfo_userImg' src={user?.avatar} alt="" />
                         <span>Hi,{user?.username}</span>
                     </div>
                 </Link>
@@ -98,4 +98,4 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
     )
 }
 
-export default Header
+export default Header;

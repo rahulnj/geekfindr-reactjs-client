@@ -95,6 +95,7 @@ const Signup: React.FC = () => {
             </div>
             <div className='signup_error'>{PasswordError}</div>
             <div className='signup_error'>{BlankFieldError}</div>
+            <div className='signup_error'>{error}</div>
             <input type="submit" className="signup_btn" value="Sign up" />
             <p className="signup_socialtext">Or Sign up with social platforms</p>
             <div className="signup_socialmedia">
