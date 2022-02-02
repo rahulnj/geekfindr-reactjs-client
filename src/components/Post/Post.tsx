@@ -4,44 +4,45 @@ import person1 from '../../assets/persons/1.jpeg'
 import post1 from '../../assets/posts/1 (1).jpeg'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { AiOutlineLike } from 'react-icons/ai'
-import { BiComment } from 'react-icons/bi'
+import { BiComment, BiSmile } from 'react-icons/bi'
 
 import request from "../../api"
 import axios from 'axios'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { useActions } from '../../hooks/useActions'
 const Post: React.FC = () => {
 
-    const [image, setimage] = useState();
+    // const [image, setimage] = useState();
 
-    const imageinput = (e: any) => {
-        setimage(e.target.files[0])
+    // const imageinput = (e: any) => {
+    //     setimage(e.target.files[0])
+    // }
+
+    // const { user }: any = useTypedSelector(
+    //     (state) => state.UserSignin
+    // )
+
+
+
+    // const ImageUpload = async (e: any) => {
+    //     e.preventDefault()
+    //     const uploadconfig = await request.get('/api/v1/uploads/signed-url', {
+    //         headers: {
+    //             'Authorization': `Bearer ${user.token}`,
+    //             'Content-Type': 'image/jpeg',
+    //         }
+    //     })
+    //     console.log(uploadconfig);
+    //     await axios.put(uploadconfig.data.url, image, {
+    //         headers: {
+    //             'Content-Type': 'image/jpeg'
+    //         }
+    //     })
+
+    // }
+    const CommentPostHandler = (e: any) => {
+        e.preventDefault();
     }
-
-    const { user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
-
-
-
-    const ImageUpload = async (e: any) => {
-        e.preventDefault()
-        const uploadconfig = await request.get('/api/v1/uploads/signed-url', {
-            headers: {
-                'Authorization': `Bearer ${user.token}`,
-                'Content-Type': 'image/jpeg',
-            }
-        })
-        console.log(uploadconfig);
-        await axios.put(uploadconfig.data.url, image, {
-            headers: {
-                'Content-Type': 'image/jpeg'
-            }
-        })
-
-    }
-
 
 
     return (
@@ -70,9 +71,10 @@ const Post: React.FC = () => {
                             <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />15</div>
                         </div>
                     </div>
-                    <form action="" className='post_commentform'>
-                        <input type="file" onChange={imageinput} />
-                        <button onClick={ImageUpload}>post</button>
+                    <form onSubmit={CommentPostHandler} className='post_commentform'>
+                        <BiSmile size={24} className='post_commentform_icons' />
+                        <input type="text" placeholder='Add a comment...' />
+                        <button>post</button>
                     </form>
                 </div>
             </div>
