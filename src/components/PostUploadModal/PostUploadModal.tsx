@@ -9,7 +9,7 @@ import { AddPostModalState } from '../../models';
 
 
 const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState) => {
-    const [UploadFile, SetUploadFile] = useState<any>('')
+    const [selectedImage, SetSelectedImage] = useState<any>(null)
 
     const HandlePostUpload = (e: any) => {
         const file = e.target.files[0]
@@ -17,20 +17,22 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
         reader.readAsDataURL(file)
         reader.onloadend = () => {
             console.log(reader.result);
-            SetUploadFile(reader.result)
+            SetSelectedImage(reader.result)
         }
     }
 
     return (
-        <div className='postmodal'>
+        <div className={selectedImage ? 'postmodal' : 'postmodal_none'}>
             <div className='postmodal_leftside'>
-                <img src={UploadFile} alt="" />
+                <h3>Create new post</h3>
+                <img src={selectedImage} alt="" />
                 <input type="file" onChange={HandlePostUpload} />
+
             </div>
-            <div className={'postmodal_rightside'}>
+            <div className={selectedImage ? 'postmodal_rightside' : 'postmodal_none_rightside'}>
                 <div className='postmodal_rightside_captionwrapper'>
-                    <label>Caption</label>
-                    <textarea name="" placeholder='Hey .....' ></textarea>
+                    <label className='postmodal_rightside_label'>Caption</label>
+                    <textarea className='postmodal_rightside_textarea' placeholder='Hey .....' ></textarea>
                 </div>
                 <div className='postmodal_rightside_buttonwrapper'>
                     <button className='postmodal_rightside_buttonwrapper_cancel' onClick={() => setIsModalOpened(false)}>Cancel</button>

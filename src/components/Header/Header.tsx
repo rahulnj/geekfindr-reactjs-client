@@ -76,7 +76,7 @@ const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModa
             </form>
 
             <div className='header_nav_right' >
-                <button onClick={() => ToggleAddPostModal()}>Upload</button>
+                <button className='header_nav_right_button' onClick={() => ToggleAddPostModal()}>Upload</button>
                 <Link to={`/profile/${data?.id}`} style={{ textDecoration: 'none' }}>
                     <div className='header_nav_right_userinfo'>
                         <img className='header_nav_right_userinfo_userImg' src={user?.avatar} alt="" />

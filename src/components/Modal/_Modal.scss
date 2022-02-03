@@ -15,9 +15,10 @@
     transform: translate(-50%, -50%);
     background: $background-color;
     padding: 10px;
+    transition: all 5s ease-in-out;
 }
 .modal_overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;

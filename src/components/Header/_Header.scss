@@ -54,7 +54,7 @@
     align-items: center;
     justify-content: space-around;
 
-    button {
+    &_button {
       align-items: center;
       background-color: $button-color;
       border: 0;
@@ -167,8 +167,11 @@
 @media (max-width: $breakpoint-small) {
   .header {
     padding: 1.5rem;
-    &_nav-right {
+    &_nav_right {
       padding: 0.2rem;
+      &_button {
+        display: none;
+      }
     }
     &_toggle {
       display: block;

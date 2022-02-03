@@ -3,31 +3,38 @@
 .postmodal {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    &_none {
+        grid-template-columns: 1fr;
+        &_rightside {
+            display: none;
+        }
+    }
     &_leftside {
         display: flex;
         flex-direction: column;
         position: relative;
-        background: $main-color;
         align-items: center;
         img {
             height: 300px;
             width: 350px;
             object-fit: cover;
-            margin: 1rem;
+            border: 0;
+            outline: 0;
         }
 
         input {
+            opacity: 0;
+            overflow: hidden;
             position: absolute;
+            cursor: pointer;
             width: 350px;
             height: 300px;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 0;
-            cursor: pointer;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
+
     &_rightside {
         display: grid;
         grid-template-rows: 0.6fr 0.4fr;
@@ -36,33 +43,33 @@
         }
         &_captionwrapper {
             margin: 0 8px;
-            label {
-                align-items: center;
-                display: flex;
-                color: #666;
-                font-size: 14px;
-                margin: 5px 0 5px 5px;
-                margin-bottom: 5px;
-                margin-left: 5px;
-                transition: 0.4s;
-            }
-            textarea {
-                width: 100%;
-                height: 70%;
-                outline: none;
-                border: 0;
-                border-radius: 4px;
-                padding-left: 15px;
-                font-size: 14px;
-                resize: none;
-                background: $main-color;
-                opacity: 0.3;
-            }
+        }
+        &_label {
+            align-items: center;
+            display: flex;
+            color: #666;
+            font-size: 14px;
+            margin: 5px 0 5px 5px;
+            margin-bottom: 5px;
+            margin-left: 5px;
+            transition: 0.4s;
+        }
+        &_textarea {
+            width: 100%;
+            height: 70%;
+            outline: none;
+            border: 0;
+            border-radius: 4px;
+            padding-left: 15px;
+            font-size: 14px;
+            resize: none;
+            background: $main-color;
+            opacity: 0.3;
+        }
 
-            textarea:focus {
-                opacity: 0.7;
-                border-bottom: 1px rgb(179, 179, 179) solid;
-            }
+        &_textarea:focus {
+            opacity: 0.7;
+            border-bottom: 1px rgb(179, 179, 179) solid;
         }
 
         &_buttonwrapper {
