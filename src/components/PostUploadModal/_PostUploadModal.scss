@@ -1,24 +1,34 @@
 @import "../../_base.scss";
 
-.postmodal {
+.modal {
+    position: fixed;
+    z-index: 3;
     width: 800px;
     min-width: 200px;
     min-height: 150px;
     height: 500px;
-    background: $background-color;
-    color: #000;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: absolute;
-    z-index: 999;
     border-radius: 10px;
     box-shadow: $main-shadow;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 3rem;
+    color: #000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $background-color;
+    padding: 10px;
+}
+.modal_overlay {
+    position: absolute;
     top: 0;
     left: 0;
+    bottom: 0;
     right: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.postmodal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     &_leftside {
         display: flex;
         flex-direction: column;
@@ -84,23 +94,54 @@
             flex-direction: row;
             justify-content: flex-end;
             height: fit-content;
+            padding: 10px;
 
-            button {
-                background-color: $button-color;
-                border-radius: 4px;
-                border-style: none;
+            &_cancel {
+                background-color: #ffffff;
+                border: none;
                 box-sizing: border-box;
-                color: #fff;
-                cursor: pointer;
-                display: inline-block;
-                font-size: 16px;
+                color: #666;
+                font-size: 0.875rem;
                 font-weight: 600;
-                min-height: 38px;
-                outline: none;
-                overflow: hidden;
-                padding: 9px 20px 8px;
-                margin: 0 0.8rem;
+                margin-right: 0.5rem;
+                line-height: 1.25rem;
+                padding: 0.75rem 1rem;
                 text-align: center;
+                cursor: pointer;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+            }
+            &_post {
+                background-color: $button-color;
+                border: 1px solid rgb(209, 213, 219);
+                border-radius: 5px;
+                box-sizing: border-box;
+                color: white;
+                font-size: 0.875rem;
+                font-weight: 500;
+                padding: 0 1rem;
+                text-align: center;
+                text-decoration: none #d1d5db solid;
+                text-decoration-thickness: auto;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                cursor: pointer;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                transition: 0.3s;
+            }
+            &_post:hover {
+                background-color: rgba(162, 26, 252, 0.959);
+            }
+
+            &_post:focus {
+                outline: 2px solid transparent;
+                outline-offset: 2px;
+            }
+
+            &_post:focus-visible {
+                box-shadow: none;
             }
         }
     }

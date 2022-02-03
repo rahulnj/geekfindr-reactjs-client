@@ -1,13 +1,23 @@
 export interface Children {
     children: JSX.Element[] | JSX.Element
+    isModalOpened?: boolean
 }
 
 export interface Handle {
     error?: boolean
-    sidebar?: boolean;
+    isSidebar?: boolean;
     handleToggleSidebar: (boolean?: boolean) => void;
 }
 
+export interface AddPostModal {
+    ToggleAddPostModal: (boolean?: boolean) => void;
+    handleToggleSidebar: (boolean?: boolean) => void;
+}
+
+export interface AddPostModalState {
+    isModalOpened: boolean
+    setIsModalOpened: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 export interface Profile {
     profile?: boolean;

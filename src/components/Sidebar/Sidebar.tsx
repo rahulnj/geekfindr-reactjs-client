@@ -9,9 +9,9 @@ import { Handle } from '../../models'
 
 
 
-const Sidebar: React.FC<Handle> = ({ sidebar, handleToggleSidebar }) => {
+const Sidebar: React.FC<Handle> = ({ isSidebar, handleToggleSidebar }) => {
     return (
-        <div className={sidebar ? "sidebar open" : "sidebar"}
+        <div className={isSidebar ? "sidebar open" : "sidebar"}
             onClick={() => handleToggleSidebar(false)}>
             <div className="sidebar_wrapper">
                 <div className='sidebar_heading'>

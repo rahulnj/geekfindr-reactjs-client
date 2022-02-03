@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import './_Layout.scss'
 
-import { Header, Sidebar } from ".."
+import { Header, PostUploadModal, Sidebar } from ".."
 import { Children } from "../../models"
 
 
@@ -11,16 +11,24 @@ import { Children } from "../../models"
 
 const Layout = ({ children }: Children) => {
 
-    const [sidebar, setSidebar] = useState<boolean>(false)
+    const [isSidebar, setIsSidebar] = useState<boolean>(false)
+    const [isModalOpened, setIsModalOpened] = useState<boolean>(false)
+
+    const ToggleAddPostModal = () => {
+        console.log("yes");
+        setIsModalOpened(value => !value)
+    }
+
     const handleToggleSidebar = () => {
-        setSidebar(value => !value)
+        setIsSidebar(value => !value)
     }
 
     return (
         <>
-            <Header handleToggleSidebar={handleToggleSidebar} />
+            <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened} />
+            <Header handleToggleSidebar={handleToggleSidebar} ToggleAddPostModal={ToggleAddPostModal} />
             <div className='layout_container'>
-                <Sidebar sidebar={sidebar} handleToggleSidebar={handleToggleSidebar} />
+                <Sidebar isSidebar={isSidebar} handleToggleSidebar={handleToggleSidebar} />
                 {children}
             </div>
         </>

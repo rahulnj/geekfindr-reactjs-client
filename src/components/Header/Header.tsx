@@ -13,7 +13,7 @@ import { FaSignOutAlt } from 'react-icons/fa'
 import { MdSettings } from 'react-icons/md'
 import { BsPlusCircle } from 'react-icons/bs'
 
-import { Handle } from '../../models'
+import { AddPostModal } from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
@@ -22,7 +22,7 @@ import { useActions } from '../../hooks/useActions'
 
 
 
-const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
+const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModal }) => {
     const ref = useRef<any>();
     const [ToggleHeader, setToggleHeader] = useState<boolean>(false)
     const { UserLogout } = useActions();
@@ -45,8 +45,10 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
         setToggleHeader(value => !value)
     }
 
+
+
     useEffect(() => {
-        const checkIfClickedOutside = (e: any): void => {
+        const checkIfClickedOutside = (e: MouseEvent) => {
             if (ToggleHeader && ref.current && !ref.current.contains(e.target)) {
                 setToggleHeader(false)
             }
@@ -74,7 +76,7 @@ const Header: React.FC<Handle> = ({ handleToggleSidebar }) => {
             </form>
 
             <div className='header_nav_right' >
-                <BsPlusCircle size={32} className='header_nav_right_upload' />
+                <BsPlusCircle size={32} className='header_nav_right_upload' onClick={() => ToggleAddPostModal()} />
                 <Link to={`/profile/${data?.id}`} style={{ textDecoration: 'none' }}>
                     <div className='header_nav_right_userinfo'>
                         <img className='header_nav_right_userinfo_userImg' src={user?.avatar} alt="" />
