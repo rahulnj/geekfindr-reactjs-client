@@ -14,6 +14,8 @@ export interface AddPostModal {
     handleToggleSidebar: (boolean?: boolean) => void;
 }
 
+
+
 export interface AddPostModalState {
     isModalOpened: boolean
     setIsModalOpened: React.Dispatch<React.SetStateAction<boolean>>

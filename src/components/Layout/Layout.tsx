@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import './_Layout.scss'
 
-import { Header, PostUploadModal, Sidebar } from ".."
+import { Header, Modal, Sidebar } from ".."
 import { Children } from "../../models"
 
 
@@ -25,12 +25,13 @@ const Layout = ({ children }: Children) => {
 
     return (
         <>
-            <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened} />
+            <Modal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened} />
             <Header handleToggleSidebar={handleToggleSidebar} ToggleAddPostModal={ToggleAddPostModal} />
             <div className='layout_container'>
                 <Sidebar isSidebar={isSidebar} handleToggleSidebar={handleToggleSidebar} />
                 {children}
             </div>
+
         </>
     )
 }

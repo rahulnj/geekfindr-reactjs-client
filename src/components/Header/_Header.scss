@@ -54,10 +54,27 @@
     align-items: center;
     justify-content: space-around;
 
-    &_upload {
-      margin-right: 1rem;
+    button {
+      align-items: center;
+      background-color: $button-color;
+      border: 0;
+      border-radius: 100px;
+      box-sizing: border-box;
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      font-size: 14px;
+      font-weight: 500;
+      justify-content: center;
+      height: 35px;
+      min-width: 0px;
+      overflow: hidden;
+      padding-top: 5px;
+      padding-left: 20px;
+      padding-right: 20px;
+      text-align: center;
+      margin: 0 20px;
     }
-
     &_userinfo {
       display: flex;
       flex-direction: column;

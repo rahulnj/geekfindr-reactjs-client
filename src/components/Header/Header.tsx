@@ -11,7 +11,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { AiOutlineCaretDown } from 'react-icons/ai'
 import { FaSignOutAlt } from 'react-icons/fa'
 import { MdSettings } from 'react-icons/md'
-import { BsPlusCircle } from 'react-icons/bs'
+
 
 import { AddPostModal } from '../../models'
 
@@ -76,7 +76,7 @@ const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModa
             </form>
 
             <div className='header_nav_right' >
-                <BsPlusCircle size={32} className='header_nav_right_upload' onClick={() => ToggleAddPostModal()} />
+                <button onClick={() => ToggleAddPostModal()}>Upload</button>
                 <Link to={`/profile/${data?.id}`} style={{ textDecoration: 'none' }}>
                     <div className='header_nav_right_userinfo'>
                         <img className='header_nav_right_userinfo_userImg' src={user?.avatar} alt="" />
