@@ -4,6 +4,8 @@ import ReactCrop from 'react-image-crop';
 import './_PostUploadModal.scss'
 import 'react-image-crop/dist/ReactCrop.css';
 
+import { BsUpload } from 'react-icons/bs'
+
 import { AddPostModalState } from '../../models';
 
 
@@ -51,27 +53,43 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
     }
 
     return (
-        <div className={croppedImage ? 'postmodal' : 'postmodal_none'}>
+        <div className={selectedImage ? 'postmodal' : 'postmodal_single'}>
             <div className='postmodal_leftside'>
-                <h3>Create new post</h3>
-                <input type="file" onChange={HandlePostUpload} />
-                {selectedImage && (
-                    <ReactCrop onImageLoaded={setImage} src={selectedImage} crop={crop} onChange={setCrop} />
-                )}
-                {croppedImage && (<img src={croppedImage} alt="" />)}
-                <button onClick={getCroppedImg}>Crop</button>
-            </div>
-            <div className={croppedImage ? 'postmodal_rightside' : 'postmodal_none_rightside'}>
-                <div className='postmodal_rightside_captionwrapper'>
-                    <label className='postmodal_rightside_label'>Caption</label>
-                    <textarea className='postmodal_rightside_textarea' placeholder='Hey .....' ></textarea>
+                <div className="postmodal_leftside_wrapper">
+                    <div className="postmodal_leftside_image">
+                        {selectedImage && (
+                            <ReactCrop onImageLoaded={setImage} src={selectedImage} crop={crop} onChange={setCrop} />
+                        )}
+                    </div>
+                    <div className="postmodal_leftside_content">
+                        <div className="postmodal_leftside_icon">
+                            <BsUpload />
+                        </div>
+                        <div className="postmodal_leftside_text">
+                            No file chosen, yet!
+                        </div>
+                    </div>
+                    <div className="postmodal_leftside_filename">
+                        File name here
+                    </div>
                 </div>
-                <div className='postmodal_rightside_buttonwrapper'>
-                    <button className='postmodal_rightside_buttonwrapper_cancel' onClick={() => setIsModalOpened(false)}>Cancel</button>
-                    <button className='postmodal_rightside_buttonwrapper_post'>Post</button>
+                <div className='postmodal_leftside_action'>
+                    {
+                        selectedImage ? <button className='postmodal_leftside_choose' onClick={getCroppedImg}>Crop</button>
+                            : <button className='postmodal_leftside_choose'>Choose a file</button>
+                    }
+                    {!selectedImage && (<input type="file" onChange={HandlePostUpload} />)}
                 </div>
             </div>
-        </div>
+            <div className="postmodal_rightside">
+                <div className="postmodal_rightside_wrapper">
+                    <img src={croppedImage} alt="" />
+                </div>
+                <div>
+                    <button className='postmodal_rightside_confirm'>confirm</button>
+                </div>
+            </div>
+        </div >
     )
 };
 
