@@ -23,7 +23,6 @@
             width: 100%;
             border-radius: 10px;
             background: #fff;
-            // border: 2px dashed #c2cdda;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -36,6 +35,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        img {
+            height: 270px;
+            width: 300px;
+            object-fit: cover;
+            border: 0;
+            outline: 0;
         }
         &_content {
             display: flex;
@@ -63,16 +69,6 @@
             position: absolute;
             top: 50%;
             height: 40px;
-        }
-        &_filename {
-            position: absolute;
-            bottom: 0px;
-            width: 100%;
-            padding: 8px 0;
-            font-size: 18px;
-            color: #fff;
-            display: none;
-            background: linear-gradient(135deg, #3a8ffe 0%, #9658fe 100%);
         }
         &_choose {
             margin-top: 30px;
@@ -109,7 +105,7 @@
             img {
                 height: 270px;
                 width: 300px;
-                object-fit: contain;
+                object-fit: cover;
                 border: 0;
                 outline: 0;
             }
@@ -131,5 +127,13 @@
             cursor: pointer;
             background: linear-gradient(135deg, #3a8ffe 0%, #9658fe 100%);
         }
+    }
+    &_descriptionarea {
+        flex: 6;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid;
     }
 }

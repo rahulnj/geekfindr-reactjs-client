@@ -15,6 +15,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
     const [image, setImage] = useState<any>(null)
     const [crop, setCrop] = useState<any>({ aspect: 1 / 1 })
     const [croppedImage, setCroppedImage] = useState<any>(null);
+    const [imageConfirm, setImageConfirm] = useState(false);
 
     const HandlePostUpload = (e: any) => {
         const file = e.target.files[0]
@@ -52,43 +53,69 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
         setCroppedImage(base64Image)
     }
 
+    const confirmFinalImage = () => {
+        if (croppedImage) {
+            setImageConfirm(true)
+        }
+
+
+        return;
+    }
+
     return (
         <div className={selectedImage ? 'postmodal' : 'postmodal_single'}>
             <div className='postmodal_leftside'>
                 <div className="postmodal_leftside_wrapper">
                     <div className="postmodal_leftside_image">
-                        {selectedImage && (
+                        {selectedImage && !imageConfirm && (
                             <ReactCrop onImageLoaded={setImage} src={selectedImage} crop={crop} onChange={setCrop} />
                         )}
+                        {
+                            imageConfirm && (
+                                <img src={croppedImage} alt="" />
+                            )
+                        }
                     </div>
-                    <div className="postmodal_leftside_content">
+                    {!selectedImage && (<div className="postmodal_leftside_content">
                         <div className="postmodal_leftside_icon">
                             <BsUpload />
                         </div>
                         <div className="postmodal_leftside_text">
                             No file chosen, yet!
                         </div>
-                    </div>
-                    <div className="postmodal_leftside_filename">
-                        File name here
-                    </div>
+                    </div>)}
                 </div>
                 <div className='postmodal_leftside_action'>
                     {
-                        selectedImage ? <button className='postmodal_leftside_choose' onClick={getCroppedImg}>Crop</button>
-                            : <button className='postmodal_leftside_choose'>Choose a file</button>
+                        selectedImage && !imageConfirm && (<button className='postmodal_leftside_choose' onClick={getCroppedImg}>Crop</button>)
                     }
-                    {!selectedImage && (<input type="file" onChange={HandlePostUpload} />)}
+                    {!selectedImage &&
+                        (<button className='postmodal_leftside_choose'>Choose a file</button>
+                        )}
+                    {!selectedImage &&
+                        (<input type="file" onChange={HandlePostUpload} />
+                        )}
                 </div>
             </div>
-            <div className="postmodal_rightside">
-                <div className="postmodal_rightside_wrapper">
-                    <img src={croppedImage} alt="" />
+            {selectedImage && !imageConfirm && (
+                <div className="postmodal_rightside">
+                    <div className="postmodal_rightside_wrapper">
+                        <img src={croppedImage} alt="" />
+                    </div>
+                    <div>
+                        <button className='postmodal_rightside_confirm' onClick={confirmFinalImage}>confirm</button>
+                    </div>
                 </div>
-                <div>
-                    <button className='postmodal_rightside_confirm'>confirm</button>
+            )}
+            {imageConfirm && (<div className="postmodal_descriptionarea">
+                <label htmlFor="">Caption</label>
+                <textarea placeholder='Type Something'></textarea>
+                <div className="postmodal_descriptionarea_actions">
+                    <button>Cancel</button>
+                    <button>Post</button>
                 </div>
             </div>
+            )}
         </div >
     )
 };
