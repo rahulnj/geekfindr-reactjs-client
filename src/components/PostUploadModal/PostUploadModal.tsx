@@ -57,10 +57,13 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
         if (croppedImage) {
             setImageConfirm(true)
         }
-
-
         return;
     }
+
+    const cancelThePost = () => {
+        setIsModalOpened(false)
+    }
+
 
     return (
         <div className={selectedImage ? 'postmodal' : 'postmodal_single'}>
@@ -108,14 +111,17 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
                 </div>
             )}
             {imageConfirm && (<div className="postmodal_descriptionarea">
-                <label htmlFor="">Caption</label>
-                <textarea placeholder='Type Something'></textarea>
-                <div className="postmodal_descriptionarea_actions">
-                    <button>Cancel</button>
-                    <button>Post</button>
+                <div className='postmodal_descriptionarea_wrapper'>
+                    <label htmlFor="">Caption</label>
+                    <textarea className='postmodal_descriptionarea_textarea' placeholder='Type Something'></textarea>
+                    <div className="postmodal_descriptionarea_actions">
+                        <button className="postmodal_descriptionarea_actions_cancel" onClick={cancelThePost}>Cancel</button>
+                        <button className="postmodal_descriptionarea_actions_post">Post</button>
+                    </div>
                 </div>
             </div>
-            )}
+            )
+            }
         </div >
     )
 };

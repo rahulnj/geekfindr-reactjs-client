@@ -131,9 +131,96 @@
     &_descriptionarea {
         flex: 6;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        border: 1px solid;
+        &_wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 300px;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 10px;
+
+            label {
+                color: #666;
+                font-size: 14px;
+                margin-bottom: 5px;
+                transition: 0.4s;
+            }
+            textarea {
+                height: 50%;
+                width: 100%;
+                outline: none;
+                border-radius: 5px;
+                border: 1px solid $main-color;
+                padding-left: 15px;
+                font-size: 14px;
+                transition: 0.4s;
+                resize: none;
+                margin-top: 5px;
+            }
+            textarea:focus {
+                box-shadow: $main-shadow;
+            }
+        }
+        &_wrapper:focus-within label {
+            color: $button-color;
+        }
+        &_actions {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            margin: 5px 0;
+
+            &_cancel {
+                background-color: #ffffff;
+                border: none;
+                box-sizing: border-box;
+                color: #666;
+                font-size: 0.875rem;
+                font-weight: 600;
+                margin-right: 0.5rem;
+                line-height: 1.25rem;
+                padding: 0.75rem 1rem;
+                text-align: center;
+                cursor: pointer;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+            }
+            &_post {
+                background-color: $button-color;
+                border: 1px solid rgb(209, 213, 219);
+                border-radius: 5px;
+                box-sizing: border-box;
+                color: white;
+                font-size: 0.875rem;
+                font-weight: 600;
+                line-height: 1.25rem;
+                padding: 0.48rem 1rem;
+                text-align: center;
+                text-decoration: none #d1d5db solid;
+                text-decoration-thickness: auto;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                cursor: pointer;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                transition: 0.3s;
+            }
+            &_post:hover {
+                background-color: rgba(162, 26, 252, 0.959);
+            }
+
+            &_post:focus {
+                outline: 2px solid transparent;
+                outline-offset: 2px;
+            }
+
+            &_post:focus-visible {
+                box-shadow: none;
+            }
+        }
     }
 }
