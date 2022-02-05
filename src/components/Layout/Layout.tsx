@@ -15,7 +15,6 @@ const Layout = ({ children }: Children) => {
     const [isModalOpened, setIsModalOpened] = useState<boolean>(false)
 
     const ToggleAddPostModal = () => {
-        console.log("yes");
         setIsModalOpened(value => !value)
     }
 

@@ -6,40 +6,10 @@ import { BsThreeDotsVertical } from 'react-icons/bs'
 import { AiOutlineLike } from 'react-icons/ai'
 import { BiComment, BiSmile } from 'react-icons/bi'
 
-import request from "../../api"
-import axios from 'axios'
 
-import { useTypedSelector } from '../../hooks/useTypedSelector'
 const Post: React.FC = () => {
 
-    // const [image, setimage] = useState();
 
-    // const imageinput = (e: any) => {
-    //     setimage(e.target.files[0])
-    // }
-
-    // const { user }: any = useTypedSelector(
-    //     (state) => state.UserSignin
-    // )
-
-
-
-    // const ImageUpload = async (e: any) => {
-    //     e.preventDefault()
-    //     const uploadconfig = await request.get('/api/v1/uploads/signed-url', {
-    //         headers: {
-    //             'Authorization': `Bearer ${user.token}`,
-    //             'Content-Type': 'image/jpeg',
-    //         }
-    //     })
-    //     console.log(uploadconfig);
-    //     await axios.put(uploadconfig.data.url, image, {
-    //         headers: {
-    //             'Content-Type': 'image/jpeg'
-    //         }
-    //     })
-
-    // }
     const CommentPostHandler = (e: any) => {
         e.preventDefault();
     }

@@ -7,6 +7,10 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { BsUpload } from 'react-icons/bs'
 
 import { AddPostModalState } from '../../models';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+
+import axios from 'axios';
+import request from '../../api';
 
 
 
@@ -17,10 +21,50 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
     const [croppedImage, setCroppedImage] = useState<any>(null);
     const [imageConfirm, setImageConfirm] = useState(false);
 
-    const HandlePostUpload = (e: any) => {
+    const [testImage, setTestImage] = useState(null)
+    const uploadFileForPost = (e: any) => {
         const file = e.target.files[0]
+        setTestImage(file)
         SetSelectedImage(URL.createObjectURL(file))
     }
+
+
+    const { user }: any = useTypedSelector(
+        (state) => state.UserSignin
+    )
+
+    const uploadPost = async (e: any) => {
+        e.preventDefault()
+        try {
+            const uploadconfig = await request.get('/api/v1/uploads/signed-url', {
+                params: {
+                    fileType: "image",
+                    fileSubType: "jpeg"
+                },
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                }
+            })
+            console.log(uploadconfig);
+            console.log(testImage);
+
+            await axios.put(uploadconfig.data.url, testImage, {
+                headers: {
+                    'Content-Type': 'image/jpeg'
+                }
+            })
+        } catch (error) {
+            console.log(error);
+
+        }
+
+
+    }
+
+
+
+
+
 
     function getCroppedImg() {
         const canvas = document.createElement("canvas");
@@ -96,7 +140,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
                         (<button className='postmodal_leftside_choose'>Choose a file</button>
                         )}
                     {!selectedImage &&
-                        (<input type="file" onChange={HandlePostUpload} />
+                        (<input type="file" onChange={uploadFileForPost} />
                         )}
                 </div>
             </div>
@@ -116,7 +160,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
                     <textarea className='postmodal_descriptionarea_textarea' placeholder='Type Something'></textarea>
                     <div className="postmodal_descriptionarea_actions">
                         <button className="postmodal_descriptionarea_actions_cancel" onClick={cancelThePost}>Cancel</button>
-                        <button className="postmodal_descriptionarea_actions_post">Post</button>
+                        <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Post</button>
                     </div>
                 </div>
             </div>
