@@ -132,6 +132,35 @@
             color: $button-color;
         }
     }
+    &_add-btn {
+        background: none;
+        outline: none;
+        cursor: pointer;
+        font-weight: 500;
+        border-radius: 2px;
+        padding: 5px 10px;
+        align-self: flex-start;
+        display: flex;
+        align-items: center;
+        margin: 0.3rem;
+        color: $button-color;
+        border: 1px solid $button-color;
+    }
+    &_remove-btn {
+        background: none;
+        outline: none;
+        cursor: pointer;
+        font-weight: 500;
+        border-radius: 2px;
+        margin: 0.3rem;
+        padding: 5px 10px;
+        color: red;
+        border: 1px solid red;
+    }
+    &_actions {
+        display: flex;
+        align-items: center;
+    }
 }
 
 @media (max-width: 584px) {
