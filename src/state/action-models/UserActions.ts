@@ -38,13 +38,7 @@ interface UserEditProfileFailAction {
     payload: string[] | null
 }
 
-interface UserResetProfileAction {
-    type: UserEditProfileActionType.USER_EDIT_PROFILE_RESET
-    payload: string[] | null
-}
-
-export type EditProfileAction =
+export type UserEditProfileAction =
     | UserEditProfileRequestAction
     | UserEditProfileSuccessAction
     | UserEditProfileFailAction
-    | UserResetProfileAction

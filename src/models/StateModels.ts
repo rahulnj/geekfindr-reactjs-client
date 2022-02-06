@@ -9,4 +9,5 @@ export interface UserProfileState {
     data: string[]
     error: string[] | null
     loading: boolean
+    success?: boolean
 }

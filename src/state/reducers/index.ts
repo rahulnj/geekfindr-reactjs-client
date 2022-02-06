@@ -1,12 +1,13 @@
 import { combineReducers } from "redux";
 
 import { UserSigninAuthReducer, UserRegisterAuthReducer } from "./AuthReducer";
-import { UserProfileDetailsReducer } from "./UserReducer";
+import { UserEditProfileDetailsReducer, UserProfileDetailsReducer } from "./UserReducer";
 
 const rootReducer = combineReducers({
     UserSignup: UserRegisterAuthReducer,
     UserSignin: UserSigninAuthReducer,
-    UserProfileDetails: UserProfileDetailsReducer
+    UserProfileDetails: UserProfileDetailsReducer,
+    UserEditProfileDetails: UserEditProfileDetailsReducer
 })
 
 export default rootReducer;

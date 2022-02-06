@@ -3,8 +3,8 @@ import { Dispatch } from "redux"
 import request from "../../api"
 
 
-import { UserProfileDetailsAction } from "../action-models"
-import { UserProfileDetailsActionType } from "../actiontypes"
+import { UserEditProfileAction, UserProfileDetailsAction } from "../action-models"
+import { UserEditProfileActionType, UserProfileDetailsActionType } from "../actiontypes"
 
 export const UserProfileDetails = ({ token }: any) => {
 
@@ -30,6 +30,38 @@ export const UserProfileDetails = ({ token }: any) => {
                 type: UserProfileDetailsActionType.USER_PROFILE_DETAILS_FAIL,
                 payload: error
             })
+        }
+    }
+}
+
+
+export const UserEditProfileDetails = ({ token, editProfileData }: any) => {
+    return async (dispatch: Dispatch<UserEditProfileAction>) => {
+        dispatch({
+            type: UserEditProfileActionType.USER_EDIT_PROFILE_REQUEST
+        });
+
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.patch('/api/v1/profiles/my-profile/', editProfileData, config)
+            console.log(data);
+
+            dispatch({
+                type: UserEditProfileActionType.USER_EDIT_PROFILE_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: UserEditProfileActionType.USER_EDIT_PROFILE_FAIL,
+                payload: error
+            })
+
         }
     }
 }

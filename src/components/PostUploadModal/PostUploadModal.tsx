@@ -50,14 +50,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
         const convertedCroppedImage = convertdataURLtoFile(croppedImage, fileName);
 
         const config = {
-            onUploadProgress: (ProgressEvent: any) => {
-                console.log(ProgressEvent);
-
-                const { loaded, total } = ProgressEvent;
-                let percent = Math.floor((loaded * 100) / total)
-                console.log(`${loaded}kb of ${total}kb | ${percent}%`);
-
-            }, headers: {
+            headers: {
                 'Content-Type': 'image/jpeg'
             },
         }
