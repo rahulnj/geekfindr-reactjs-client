@@ -16,25 +16,52 @@ import request from '../../api';
 
 const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState) => {
     const [selectedImage, SetSelectedImage] = useState<any>(null)
+    const [fileName, setFileName] = useState('')
     const [image, setImage] = useState<any>(null)
     const [crop, setCrop] = useState<any>({ aspect: 1 / 1 })
     const [croppedImage, setCroppedImage] = useState<any>(null);
     const [imageConfirm, setImageConfirm] = useState(false);
 
-    const [testImage, setTestImage] = useState(null)
-    const uploadFileForPost = (e: any) => {
-        const file = e.target.files[0]
-        setTestImage(file)
-        SetSelectedImage(URL.createObjectURL(file))
-    }
-
-
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
 
+    const uploadFileForPost = (e: any) => {
+        const file = e.target.files[0]
+        SetSelectedImage(URL.createObjectURL(file))
+        setFileName(file.name)
+    }
+
     const uploadPost = async (e: any) => {
         e.preventDefault()
+        function convertdataURLtoFile(dataurl: any, filename: string) {
+            let arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, { type: mime });
+        }
+
+        const convertedCroppedImage = convertdataURLtoFile(croppedImage, fileName);
+
+        const config = {
+            onUploadProgress: (ProgressEvent: any) => {
+                console.log(ProgressEvent);
+
+                const { loaded, total } = ProgressEvent;
+                let percent = Math.floor((loaded * 100) / total)
+                console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+            }, headers: {
+                'Content-Type': 'image/jpeg'
+            },
+        }
+
         try {
             const uploadconfig = await request.get('/api/v1/uploads/signed-url', {
                 params: {
@@ -46,16 +73,10 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
                 }
             })
             console.log(uploadconfig);
-            console.log(testImage);
 
-            await axios.put(uploadconfig.data.url, testImage, {
-                headers: {
-                    'Content-Type': 'image/jpeg'
-                }
-            })
+            await axios.put(uploadconfig.data.url, convertedCroppedImage, config)
         } catch (error) {
             console.log(error);
-
         }
 
 
@@ -97,9 +118,20 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
         setCroppedImage(base64Image)
     }
 
+
+
+
+
+
+
+
+
+
+
     const confirmFinalImage = () => {
         if (croppedImage) {
             setImageConfirm(true)
+
         }
         return;
     }
