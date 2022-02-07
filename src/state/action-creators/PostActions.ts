@@ -2,8 +2,8 @@ import { Dispatch } from "redux"
 import request from "../../api"
 import { PostDataState } from "../../models"
 
-import { CreatePostAction, GetMyPostAction } from "../action-models"
-import { CreatePostActionType, GetMyPostsActionType } from "../actiontypes"
+import { CreatePostAction, DeletePostAction, GetMyPostAction } from "../action-models"
+import { CreatePostActionType, DeletePostActionType, GetMyPostsActionType } from "../actiontypes"
 
 export const CreatePost = ({ token, postData, navigate, setIsModalOpened }: any) => {
     return async (dispatch: Dispatch<CreatePostAction>) => {
@@ -60,6 +60,34 @@ export const GetMyPost = ({ token }: any) => {
             console.log(error);
             dispatch({
                 type: GetMyPostsActionType.GET_MYPOST_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
+export const DeletePost = ({ postId, token, navigate, userId }: any) => {
+    return async (dispatch: Dispatch<DeletePostAction>) => {
+        dispatch({
+            type: DeletePostActionType.DELETE_POST_REQUEST
+        });
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.delete(`/api/v1/posts/${postId}`, config)
+            navigate(`/profile/${userId}`)
+            dispatch({
+                type: DeletePostActionType.DELETE_POST_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: DeletePostActionType.DELETE_POST_FAIL,
                 payload: error
             })
         }

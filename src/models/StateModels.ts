@@ -42,7 +42,7 @@ export interface PostDataState {
     comments: string[]
     createdAt?: string
     description: string
-    id?: string
+    id: string
     isOrganization?: boolean
     isProject: boolean
     likeCount: number

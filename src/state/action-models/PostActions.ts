@@ -1,4 +1,4 @@
-import { CreatePostActionType, GetMyPostsActionType } from '../actiontypes';
+import { CreatePostActionType, DeletePostActionType, GetMyPostsActionType } from '../actiontypes';
 
 
 //Action models for createpost
@@ -22,7 +22,7 @@ export type CreatePostAction =
     | CreatePostSuccessAction
     | CreatePostFailAction
 
-//Action models for myposts
+//Action models for getting myposts
 
 interface GetMyPostRequestAction {
     type: GetMyPostsActionType.GET_MYPOST_REQUEST
@@ -42,3 +42,24 @@ export type GetMyPostAction =
     | GetMyPostRequestAction
     | GetMyPostSuccessAction
     | GetMyPostFailAction
+
+//Action models for deleting posts
+
+interface DeletePostRequestAction {
+    type: DeletePostActionType.DELETE_POST_REQUEST
+}
+
+interface DeletePostSuccessAction {
+    type: DeletePostActionType.DELETE_POST_SUCCESS
+    payload: string[]
+}
+
+interface DeletePostFailAction {
+    type: DeletePostActionType.DELETE_POST_FAIL
+    payload: string[] | null
+}
+
+export type DeletePostAction =
+    | DeletePostRequestAction
+    | DeletePostSuccessAction
+    | DeletePostFailAction

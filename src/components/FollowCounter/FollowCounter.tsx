@@ -13,7 +13,6 @@ const FollowCount: React.FC = () => {
         (state) => state.UserProfileDetails
     )
 
-
     const { followers, following, id }: any = data;
 
     return (

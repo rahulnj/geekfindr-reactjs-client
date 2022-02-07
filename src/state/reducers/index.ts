@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 import { UserSigninAuthReducer, UserRegisterAuthReducer } from "./AuthReducer";
-import { CreatePostReducer, GetMyPostReducer } from "./PostReducer";
+import { CreatePostReducer, DeletePostReducer, GetMyPostReducer } from "./PostReducer";
 import { UserEditProfileDetailsReducer, UserProfileDetailsReducer } from "./UserReducer";
 
 const rootReducer = combineReducers({
@@ -10,7 +10,8 @@ const rootReducer = combineReducers({
     UserProfileDetails: UserProfileDetailsReducer,
     UserEditProfileDetails: UserEditProfileDetailsReducer,
     CreatePost: CreatePostReducer,
-    GetMyPost: GetMyPostReducer
+    GetMyPost: GetMyPostReducer,
+    DeletePost: DeletePostReducer
 })
 
 export default rootReducer;

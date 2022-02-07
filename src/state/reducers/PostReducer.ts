@@ -1,6 +1,6 @@
 import { PostState } from "../../models"
-import { CreatePostAction, GetMyPostAction } from "../action-models"
-import { CreatePostActionType, GetMyPostsActionType } from "../actiontypes";
+import { CreatePostAction, DeletePostAction, GetMyPostAction } from "../action-models"
+import { CreatePostActionType, DeletePostActionType, GetMyPostsActionType } from "../actiontypes";
 
 
 
@@ -38,6 +38,22 @@ export const GetMyPostReducer = (
             return { ...state, loading: false, error: null, data: action.payload }
         case GetMyPostsActionType.GET_MYPOST_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const DeletePostReducer = (
+    state: PostState = initialState,
+    action: DeletePostAction
+): PostState => {
+    switch (action.type) {
+        case DeletePostActionType.DELETE_POST_REQUEST:
+            return { ...state, loading: true, error: null }
+        case DeletePostActionType.DELETE_POST_SUCCESS:
+            return { ...state, success: true, error: null, data: action.payload }
+        case DeletePostActionType.DELETE_POST_FAIL:
+            return { ...state, loading: false, success: false, error: action.payload, data: [] }
         default:
             return state;
     }

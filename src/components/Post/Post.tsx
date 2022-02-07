@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './_Post.scss'
 
 import person1 from '../../assets/persons/1.jpeg'
@@ -6,13 +6,16 @@ import post1 from '../../assets/posts/1 (1).jpeg'
 
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { AiOutlineLike } from 'react-icons/ai'
-import { BiComment, BiSmile } from 'react-icons/bi'
+import { BiComment, BiSmile, BiEdit } from 'react-icons/bi'
+import { MdOutlineDeleteOutline } from 'react-icons/md'
 
 import { PostDataState, Profile } from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
 import Moment from 'react-moment';
+import { useActions } from '../../hooks/useActions'
+import { useNavigate } from 'react-router-dom'
 
 const Post: React.FC<Profile> = ({ profile }) => {
 
@@ -58,12 +61,38 @@ const Post: React.FC<Profile> = ({ profile }) => {
         )
     }
 
-    const MyProfilePosts = ({ description, isProject, likeCount, mediaURL, createdAt, comments }: PostDataState) => {
+    const MyProfilePosts = ({ description, isProject, likeCount, mediaURL, createdAt, comments, id, owner }: PostDataState) => {
 
         const { user }: any = useTypedSelector(
             (state) => state.UserSignin
         )
 
+        const { DeletePost } = useActions();
+        const navigate = useNavigate();
+
+        const ref = useRef<any>();
+        const [toggleOptions, setToggleOptions] = useState(false)
+
+        const TogglePostOptions = () => {
+            setToggleOptions(value => !value)
+        }
+
+        useEffect(() => {
+            const checkIfClickedOutside = (e: MouseEvent) => {
+                if (toggleOptions && ref.current && !ref.current.contains(e.target)) {
+                    setToggleOptions(false)
+                }
+            }
+            document.addEventListener("mousedown", checkIfClickedOutside)
+            return () => {
+                document.addEventListener("mousedown", checkIfClickedOutside)
+            }
+        }, [toggleOptions])
+
+        const DeleteMyPost = () => {
+            DeletePost({ postId: id, token: user.token, navigate, userId: owner })
+            setToggleOptions(false)
+        }
 
         return (
             <div className='post' >
@@ -77,7 +106,13 @@ const Post: React.FC<Profile> = ({ profile }) => {
                             </div>
                         </div>
                         <div className="post_top_right">
-                            <BsThreeDotsVertical className='post_top_right_threedot' />
+                            <BsThreeDotsVertical className='post_top_right_threedot' onClick={TogglePostOptions} />
+                        </div>
+                        <div ref={ref} className={toggleOptions ? "post_top_right_options active" : "post_top_right_options"}>
+                            <ul>
+                                <li ><BiEdit size={21} className='post_top_right_options_icons' /><span className='post_top_right_options_link1'>Edit</span></li>
+                                <li onClick={DeleteMyPost}><MdOutlineDeleteOutline size={21} className='post_top_right_options_icons' /><span className='post_top_right_options_link2'>Delete</span></li>
+                            </ul>
                         </div>
                     </div>
                     <div className="post_center">
@@ -114,6 +149,8 @@ const Post: React.FC<Profile> = ({ profile }) => {
                     mediaURL={post.mediaURL}
                     createdAt={post.createdAt}
                     comments={post.comments}
+                    id={post.id}
+                    owner={post.owner}
                 />
             )) : <HomePosts />}
         </>
