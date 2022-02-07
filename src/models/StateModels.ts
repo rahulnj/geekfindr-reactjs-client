@@ -11,3 +11,10 @@ export interface UserProfileState {
     loading: boolean
     success?: boolean
 }
+
+export interface CreatePostState {
+    data: string[]
+    error: string[] | null
+    loading: boolean
+    success?: boolean
+}

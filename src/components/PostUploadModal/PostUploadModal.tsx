@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReactCrop from 'react-image-crop';
 
 import './_PostUploadModal.scss'
@@ -11,20 +12,26 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import axios from 'axios';
 import request from '../../api';
+import { useActions } from '../../hooks/useActions';
 
 
 
 const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState) => {
+    const navigate = useNavigate();
+
     const [selectedImage, SetSelectedImage] = useState<any>(null)
     const [fileName, setFileName] = useState('')
     const [image, setImage] = useState<any>(null)
     const [crop, setCrop] = useState<any>({ aspect: 1 / 1 })
     const [croppedImage, setCroppedImage] = useState<any>(null);
     const [imageConfirm, setImageConfirm] = useState(false);
+    const [description, setDescription] = useState('')
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
+
+    const { CreatePost } = useActions();
 
     const uploadFileForPost = (e: any) => {
         const file = e.target.files[0]
@@ -56,7 +63,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
         }
 
         try {
-            const uploadconfig = await request.get('/api/v1/uploads/signed-url', {
+            const uploadconfig: any = await request.get('/api/v1/uploads/signed-url', {
                 params: {
                     fileType: "image",
                     fileSubType: "jpeg"
@@ -65,9 +72,23 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
                     'Authorization': `Bearer ${user.token}`,
                 }
             })
-            console.log(uploadconfig);
 
-            await axios.put(uploadconfig.data.url, convertedCroppedImage, config)
+            if (uploadconfig.data.key) {
+
+                await axios.put(uploadconfig.data.url, convertedCroppedImage, config);
+
+                const postData = {
+                    mediaType: "image",
+                    isProject: false,
+                    mediaURL: uploadconfig.data.key,
+                    description: description,
+                    isOrganization: false
+                }
+
+                CreatePost({
+                    token: user.token, postData: postData, navigate, setIsModalOpened
+                })
+            }
         } catch (error) {
             console.log(error);
         }
@@ -182,7 +203,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
             {imageConfirm && (<div className="postmodal_descriptionarea">
                 <div className='postmodal_descriptionarea_wrapper'>
                     <label htmlFor="">Caption</label>
-                    <textarea className='postmodal_descriptionarea_textarea' placeholder='Type Something'></textarea>
+                    <textarea onChange={(e) => setDescription(e.target.value)} className='postmodal_descriptionarea_textarea' placeholder='Type Something'></textarea>
                     <div className="postmodal_descriptionarea_actions">
                         <button className="postmodal_descriptionarea_actions_cancel" onClick={cancelThePost}>Cancel</button>
                         <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Post</button>
