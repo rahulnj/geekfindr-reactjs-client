@@ -12,7 +12,7 @@ const FollowCount: React.FC = () => {
     const { data }: UserProfileState = useTypedSelector(
         (state) => state.UserProfileDetails
     )
-    console.log(data);
+
 
     const { followers, following, id }: any = data;
 

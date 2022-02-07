@@ -9,6 +9,7 @@ import { BiEdit, BiSearch } from 'react-icons/bi'
 
 
 const RightAside: React.FC<Profile> = ({ profile }) => {
+    console.log(profile);
 
     const HomeRightAside = () => {
         return (
