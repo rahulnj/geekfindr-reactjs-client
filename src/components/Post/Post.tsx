@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './_Post.scss'
 import person1 from '../../assets/persons/1.jpeg'
 import post1 from '../../assets/posts/1 (1).jpeg'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { AiOutlineLike } from 'react-icons/ai'
 import { BiComment, BiSmile } from 'react-icons/bi'
-import { Profile } from '../../models'
+import { PostDataState, Profile } from '../../models'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { GetMyPost } from '../../state/action-creators'
 
 
 const Post: React.FC<Profile> = ({ profile }) => {
@@ -52,9 +54,9 @@ const Post: React.FC<Profile> = ({ profile }) => {
         )
     }
 
-    const MyProfilePosts = () => {
+    const MyProfilePosts = ({ description, isProject, likeCount, mediaURL }: PostDataState) => {
         return (
-            <div className='post'>
+            <div className='post' >
                 <div className="post_wrapper">
                     <div className="post_top">
                         <div className="post_top_left">
@@ -69,12 +71,12 @@ const Post: React.FC<Profile> = ({ profile }) => {
                         </div>
                     </div>
                     <div className="post_center">
-                        <span className="post_description">Lorem ipsum dolor sit amet consectetur.</span>
-                        <img src={post1} alt="" />
+                        <span className="post_description">{description}</span>
+                        <img src={mediaURL} alt="" />
                     </div>
                     <div className="post_bottom">
                         <div className="post_bottom_left">
-                            <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon' />50</div>
+                            <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon' />{likeCount}</div>
                             <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />15</div>
                         </div>
                     </div>
@@ -87,10 +89,27 @@ const Post: React.FC<Profile> = ({ profile }) => {
             </div>
         )
     }
+    const [profilePosts, setProfilePosts] = useState([])
+    const { data }: any = useTypedSelector(
+        (state) => state.GetMyPost
+    )
+
+    useEffect(() => {
+        setProfilePosts(data)
+        console.log(profilePosts);
+    }, [GetMyPost, profilePosts]);
+
 
     return (
         <>
-            {profile ? <MyProfilePosts /> : <HomePosts />}
+            {profile ? data?.map((post: PostDataState) => (
+                < MyProfilePosts key={post.id}
+                    description={post.description}
+                    isProject={post.isProject}
+                    likeCount={post.likeCount}
+                    mediaURL={post.mediaURL}
+                />
+            )) : <HomePosts />}
         </>
     )
 }

@@ -1,20 +1,12 @@
-import { Dispatch } from 'redux';
-
 import { SigninAction, SignupAction } from '../action-models/AuthActions';
 import { UserSigninActionType, UserSignupActionType } from '../actiontypes';
 
+import { SigninData, SignupData } from '../../models';
+import { Dispatch } from 'redux';
+
 import request from '../../api'
 
-interface SignupData {
-    username: string | number;
-    email: string | number;
-    password: string | number;
-}
 
-interface SigninData {
-    email: string | number;
-    password: string | number;
-}
 
 
 export const UserSignup = (signupData: SignupData) => {
@@ -92,6 +84,5 @@ export const UserLogout = () => {
             console.log(error);
 
         }
-
     }
 }

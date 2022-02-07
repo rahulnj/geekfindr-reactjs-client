@@ -1,6 +1,6 @@
-import { CreatePostState } from "../../models"
-import { CreatePostAction } from "../action-models"
-import { CreatePostActionType } from "../actiontypes";
+import { PostState } from "../../models"
+import { CreatePostAction, GetMyPostAction } from "../action-models"
+import { CreatePostActionType, GetMyPostsActionType } from "../actiontypes";
 
 
 
@@ -12,19 +12,33 @@ const initialState = {
 }
 
 export const CreatePostReducer = (
-    state: CreatePostState = initialState,
+    state: PostState = initialState,
     action: CreatePostAction
-): CreatePostState => {
-    {
-        switch (action.type) {
-            case CreatePostActionType.CREATE_POST_REQUEST:
-                return { ...state, loading: true, error: null, data: [] }
-            case CreatePostActionType.CREATE_POST_SUCCESS:
-                return { ...state, success: true, error: null, data: action.payload }
-            case CreatePostActionType.CREATE_POST_FAIL:
-                return { ...state, loading: false, error: action.payload, data: [] }
-            default:
-                return state;
-        }
+): PostState => {
+    switch (action.type) {
+        case CreatePostActionType.CREATE_POST_REQUEST:
+            return { ...state, loading: true, error: null, data: [] }
+        case CreatePostActionType.CREATE_POST_SUCCESS:
+            return { ...state, success: true, error: null, data: action.payload }
+        case CreatePostActionType.CREATE_POST_FAIL:
+            return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const GetMyPostReducer = (
+    state: PostState = initialState,
+    action: GetMyPostAction
+): PostState => {
+    switch (action.type) {
+        case GetMyPostsActionType.GET_MYPOST_REQUEST:
+            return { ...state, loading: true, error: null, data: [] }
+        case GetMyPostsActionType.GET_MYPOST_SUCCESS:
+            return { ...state, loading: false, error: null, data: action.payload }
+        case GetMyPostsActionType.GET_MYPOST_FAIL:
+            return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
     }
 }

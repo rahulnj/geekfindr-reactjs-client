@@ -15,9 +15,9 @@ const ProfileScreen: React.FC = () => {
         (state) => state.UserSignin
     )
 
-    const { UserProfileDetails } = useActions();
-
+    const { UserProfileDetails, GetMyPost } = useActions();
     useEffect(() => {
+        GetMyPost({ token: user.token })
         UserProfileDetails({ token: user.token })
     }, [UserProfileDetails, user]);
 
