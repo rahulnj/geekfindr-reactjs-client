@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import './_Post.scss'
+
 import person1 from '../../assets/persons/1.jpeg'
 import post1 from '../../assets/posts/1 (1).jpeg'
+
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { AiOutlineLike } from 'react-icons/ai'
 import { BiComment, BiSmile } from 'react-icons/bi'
-import { PostDataState, Profile } from '../../models'
-import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { GetMyPost } from '../../state/action-creators'
 
+import { PostDataState, Profile } from '../../models'
+
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+
+import Moment from 'react-moment';
 
 const Post: React.FC<Profile> = ({ profile }) => {
-
-
 
     const CommentPostHandler = (e: any) => {
         e.preventDefault();
     }
 
     const HomePosts = () => {
+
         return (
+
             <div className='post'>
                 <div className="post_wrapper">
                     <div className="post_top">
@@ -55,20 +59,21 @@ const Post: React.FC<Profile> = ({ profile }) => {
     }
 
     const MyProfilePosts = ({ description, isProject, likeCount, mediaURL, createdAt, comments }: PostDataState) => {
+
         const { user }: any = useTypedSelector(
             (state) => state.UserSignin
         )
-        console.log(user);
+
 
         return (
             <div className='post' >
                 <div className="post_wrapper">
                     <div className="post_top">
                         <div className="post_top_left">
-                            <img src={person1} alt="" />
+                            <img src={user?.avatar} alt="" />
                             <div className='post_top_left_details'>
                                 <p className="post_top_left_username">{user?.username}</p>
-                                <span className="post_top_left_date">{createdAt}</span>
+                                <span className="post_top_left_date"><Moment fromNow>{createdAt}</Moment></span>
                             </div>
                         </div>
                         <div className="post_top_right">
@@ -94,20 +99,14 @@ const Post: React.FC<Profile> = ({ profile }) => {
             </div>
         )
     }
-    const [profilePosts, setProfilePosts] = useState([])
-    const { data }: any = useTypedSelector(
+
+    const { data: ProfilePosts }: any = useTypedSelector(
         (state) => state.GetMyPost
     )
 
-    useEffect(() => {
-        setProfilePosts(data)
-        console.log(profilePosts);
-    }, [GetMyPost, profilePosts]);
-
-
     return (
         <>
-            {profile ? data?.map((post: PostDataState) => (
+            {profile ? ProfilePosts?.map((post: PostDataState) => (
                 < MyProfilePosts key={post.id}
                     description={post.description}
                     isProject={post.isProject}
