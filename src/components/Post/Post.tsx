@@ -11,7 +11,7 @@ import { GetMyPost } from '../../state/action-creators'
 
 
 const Post: React.FC<Profile> = ({ profile }) => {
-    console.log(profile);
+
 
 
     const CommentPostHandler = (e: any) => {
@@ -54,7 +54,12 @@ const Post: React.FC<Profile> = ({ profile }) => {
         )
     }
 
-    const MyProfilePosts = ({ description, isProject, likeCount, mediaURL }: PostDataState) => {
+    const MyProfilePosts = ({ description, isProject, likeCount, mediaURL, createdAt, comments }: PostDataState) => {
+        const { user }: any = useTypedSelector(
+            (state) => state.UserSignin
+        )
+        console.log(user);
+
         return (
             <div className='post' >
                 <div className="post_wrapper">
@@ -62,8 +67,8 @@ const Post: React.FC<Profile> = ({ profile }) => {
                         <div className="post_top_left">
                             <img src={person1} alt="" />
                             <div className='post_top_left_details'>
-                                <p className="post_top_left_username">Rahul</p>
-                                <span className="post_top_left_date">5 mins ago</span>
+                                <p className="post_top_left_username">{user?.username}</p>
+                                <span className="post_top_left_date">{createdAt}</span>
                             </div>
                         </div>
                         <div className="post_top_right">
@@ -77,7 +82,7 @@ const Post: React.FC<Profile> = ({ profile }) => {
                     <div className="post_bottom">
                         <div className="post_bottom_left">
                             <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon' />{likeCount}</div>
-                            <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />15</div>
+                            <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{comments?.length}</div>
                         </div>
                     </div>
                     <form onSubmit={CommentPostHandler} className='post_commentform'>
@@ -108,6 +113,8 @@ const Post: React.FC<Profile> = ({ profile }) => {
                     isProject={post.isProject}
                     likeCount={post.likeCount}
                     mediaURL={post.mediaURL}
+                    createdAt={post.createdAt}
+                    comments={post.comments}
                 />
             )) : <HomePosts />}
         </>

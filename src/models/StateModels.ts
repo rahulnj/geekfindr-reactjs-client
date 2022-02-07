@@ -39,7 +39,7 @@ export interface PostState {
 //Poststate Models used in the state
 
 export interface PostDataState {
-    comments?: string[]
+    comments: string[]
     createdAt?: string
     description: string
     id?: string
