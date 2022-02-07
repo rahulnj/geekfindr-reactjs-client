@@ -2,8 +2,8 @@ import { Dispatch } from "redux"
 import request from "../../api"
 import { PostDataState } from "../../models"
 
-import { CreatePostAction, DeletePostAction, GetMyPostAction } from "../action-models"
-import { CreatePostActionType, DeletePostActionType, GetMyPostsActionType } from "../actiontypes"
+import { CreatePostAction, DeletePostAction, EditPostAction, GetMyPostAction } from "../action-models"
+import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetMyPostsActionType } from "../actiontypes"
 
 export const CreatePost = ({ token, postData, navigate, setIsModalOpened }: any) => {
     return async (dispatch: Dispatch<CreatePostAction>) => {
@@ -65,6 +65,45 @@ export const GetMyPost = ({ token }: any) => {
         }
     }
 }
+
+export const EditPost = ({ token, postData, postId }: any) => {
+    return async (dispatch: Dispatch<EditPostAction>) => {
+        dispatch({
+            type: EditPostActionType.EDIT_POST_REQUEST
+        })
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.patch(`/api/v1/posts/${postId}`, postData, config)
+            console.log(data);
+            dispatch({
+                type: EditPostActionType.EDIT_POST_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: EditPostActionType.EDIT_POST_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 export const DeletePost = ({ postId, token, navigate, userId }: any) => {
     return async (dispatch: Dispatch<DeletePostAction>) => {

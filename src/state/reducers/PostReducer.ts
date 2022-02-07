@@ -1,6 +1,6 @@
 import { PostState } from "../../models"
-import { CreatePostAction, DeletePostAction, GetMyPostAction } from "../action-models"
-import { CreatePostActionType, DeletePostActionType, GetMyPostsActionType } from "../actiontypes";
+import { CreatePostAction, DeletePostAction, EditPostAction, GetMyPostAction } from "../action-models"
+import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetMyPostsActionType } from "../actiontypes";
 
 
 
@@ -42,6 +42,29 @@ export const GetMyPostReducer = (
             return state;
     }
 }
+
+export const EditPostReducer = (
+    state: PostState = initialState,
+    action: EditPostAction
+): PostState => {
+    switch (action.type) {
+        case EditPostActionType.EDIT_POST_REQUEST:
+            return { ...state, loading: true, error: null, data: [] }
+        case EditPostActionType.EDIT_POST_SUCCESS:
+            return { ...state, success: true, error: null, data: action.payload }
+        case EditPostActionType.EDIT_POST_FAIL:
+            return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+
+
+
+
+
+
 
 export const DeletePostReducer = (
     state: PostState = initialState,
