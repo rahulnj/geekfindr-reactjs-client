@@ -7,18 +7,17 @@ import 'react-image-crop/dist/ReactCrop.css';
 
 import { BsUpload } from 'react-icons/bs'
 
-import { AddPostModalState } from '../../models';
+import { ModalState } from '../../models';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import axios from 'axios';
 import request from '../../api';
 import { useActions } from '../../hooks/useActions';
+import post1 from '../../assets/posts/1 (1).jpeg'
 
 
-
-const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState) => {
+const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: ModalState) => {
     const navigate = useNavigate();
-
     const [selectedImage, SetSelectedImage] = useState<any>(null)
     const [fileName, setFileName] = useState('')
     const [image, setImage] = useState<any>(null)
@@ -97,10 +96,6 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
     }
 
 
-
-
-
-
     function getCroppedImg() {
         const canvas = document.createElement("canvas");
         const scaleX = image.naturalWidth / image.width;
@@ -132,16 +127,6 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
         setCroppedImage(base64Image)
     }
 
-
-
-
-
-
-
-
-
-
-
     const confirmFinalImage = () => {
         if (croppedImage) {
             setImageConfirm(true)
@@ -156,7 +141,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
 
 
     return (
-        <div className={selectedImage ? 'postmodal' : 'postmodal_single'}>
+        <div className={selectedImage || isEditModalOpened ? 'postmodal' : 'postmodal_single'}>
             <div className='postmodal_leftside'>
                 <div className="postmodal_leftside_wrapper">
                     <div className="postmodal_leftside_image">
@@ -164,8 +149,8 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
                             <ReactCrop onImageLoaded={setImage} src={selectedImage} crop={crop} onChange={setCrop} />
                         )}
                         {
-                            imageConfirm && (
-                                <img src={croppedImage} alt="" />
+                            (imageConfirm || isEditModalOpened) && (
+                                isEditModalOpened ? <img src={post1} alt="" /> : <img src={croppedImage} alt="" />
                             )
                         }
                     </div>
@@ -180,9 +165,9 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
                 </div>
                 <div className='postmodal_leftside_action'>
                     {
-                        selectedImage && !imageConfirm && (<button className='postmodal_leftside_choose' onClick={getCroppedImg}>Crop</button>)
+                        (selectedImage && !imageConfirm) && (<button className='postmodal_leftside_choose' onClick={getCroppedImg}>Crop</button>)
                     }
-                    {!selectedImage &&
+                    {(!selectedImage && !isEditModalOpened) &&
                         (<button className='postmodal_leftside_choose'>Choose a file</button>
                         )}
                     {!selectedImage &&
@@ -190,7 +175,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
                         )}
                 </div>
             </div>
-            {selectedImage && !imageConfirm && (
+            {(selectedImage && !imageConfirm) && (
                 <div className="postmodal_rightside">
                     <div className="postmodal_rightside_wrapper">
                         <img src={croppedImage} alt="" />
@@ -200,13 +185,23 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened }: AddPostModalState)
                     </div>
                 </div>
             )}
-            {imageConfirm && (<div className="postmodal_descriptionarea">
+            {(imageConfirm || isEditModalOpened) && (<div className="postmodal_descriptionarea">
                 <div className='postmodal_descriptionarea_wrapper'>
                     <label htmlFor="">Caption</label>
                     <textarea onChange={(e) => setDescription(e.target.value)} className='postmodal_descriptionarea_textarea' placeholder='Type Something'></textarea>
                     <div className="postmodal_descriptionarea_actions">
-                        <button className="postmodal_descriptionarea_actions_cancel" onClick={cancelThePost}>Cancel</button>
-                        <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Post</button>
+                        {isEditModalOpened ? (
+                            <>
+                                <button className="postmodal_descriptionarea_actions_cancel" onClick={cancelThePost}>Discard</button>
+                                <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Save</button>
+                            </>
+                        ) :
+                            (
+                                <>
+                                    <button className="postmodal_descriptionarea_actions_cancel" onClick={cancelThePost}>Cancel</button>
+                                    <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Post</button>
+                                </>
+                            )}
                     </div>
                 </div>
             </div>

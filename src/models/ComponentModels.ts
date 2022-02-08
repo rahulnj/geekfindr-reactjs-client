@@ -19,7 +19,21 @@ export interface AddPostModal {
 export interface AddPostModalState {
     isModalOpened: boolean
     setIsModalOpened: React.Dispatch<React.SetStateAction<boolean>>
+
 }
+
+export interface EditPostModalState {
+    isEditModalOpened: boolean
+    setIsEditModalOpened: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export interface ModalState {
+    isModalOpened: boolean
+    setIsModalOpened: React.Dispatch<React.SetStateAction<boolean>>
+    isEditModalOpened: boolean
+    setIsEditModalOpened: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 
 export interface Profile {
     profile?: boolean;

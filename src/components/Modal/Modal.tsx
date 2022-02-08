@@ -3,10 +3,10 @@ import { createPortal } from 'react-dom';
 
 import './_Modal.scss'
 
-import { AddPostModalState } from '../../models';
+
 import { PostUploadModal } from '..';
 
-const Modal = ({ isModalOpened, setIsModalOpened }: AddPostModalState) => {
+const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: any) => {
 
     const Modalref = useRef<any>()
 
@@ -22,7 +22,7 @@ const Modal = ({ isModalOpened, setIsModalOpened }: AddPostModalState) => {
         };
     }, [isModalOpened, setIsModalOpened]);
 
-    if (!isModalOpened) {
+    if (!isModalOpened && !isEditModalOpened) {
         return null;
     }
 
@@ -30,7 +30,8 @@ const Modal = ({ isModalOpened, setIsModalOpened }: AddPostModalState) => {
         <>
             <div className="modal_overlay"></div>
             <div className="modal" ref={Modalref}>
-                <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened} />
+                <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened}
+                    isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />
             </div>
         </>,
         document.getElementById('modal') as HTMLElement
