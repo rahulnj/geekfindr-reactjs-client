@@ -13,7 +13,7 @@ const FollowCount: React.FC = () => {
         (state) => state.UserProfileDetails
     )
 
-    const { followers, following, id }: any = data;
+    const { followersCount, followingCount, id }: any = data;
 
     return (
         <div className='followcounter'>
@@ -24,11 +24,11 @@ const FollowCount: React.FC = () => {
                         <p>Posts</p>
                     </div>
                     <div className='followcounter_wrapper_left_items'>
-                        <span>{followers?.length}</span>
+                        <span>{followersCount}</span>
                         <p>followers</p>
                     </div>
                     <div className='followcounter_wrapper_left_items'>
-                        <span>{following?.length}</span>
+                        <span>{followingCount}</span>
                         <p>following</p>
                     </div>
                 </div>

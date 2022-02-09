@@ -116,7 +116,7 @@ const Post: React.FC<Profile> = ({ profile }) => {
                             </div>
                             <div ref={ref} className={toggleOptions ? "post_top_right_options active" : "post_top_right_options"}>
                                 <ul>
-                                    <Link to={`/editpost/${id}`}><li onClick={() => setIsEditModalOpened(true)}><BiEdit size={21} className='post_top_right_options_icons' /><span className='post_top_right_options_link1'>Edit</span></li></Link>
+                                    <Link to={`/editpost/${id}`} style={{ textDecoration: 'none' }}><li onClick={() => setIsEditModalOpened(true)}><BiEdit size={21} className='post_top_right_options_icons' /><span className='post_top_right_options_link1'>Edit</span></li></Link>
                                     <li onClick={DeleteMyPost}><MdOutlineDeleteOutline size={21} className='post_top_right_options_icons' /><span className='post_top_right_options_link2'>Delete</span></li>
                                 </ul>
                             </div>

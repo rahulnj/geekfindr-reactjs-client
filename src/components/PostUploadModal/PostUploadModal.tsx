@@ -13,7 +13,6 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import request from '../../api';
 import { useActions } from '../../hooks/useActions';
-import post1 from '../../assets/posts/1 (1).jpeg'
 
 
 const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: ModalState) => {
@@ -99,10 +98,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
         } catch (error) {
             console.log(error);
         }
-
-
     }
-
 
     function getCroppedImg() {
         const canvas = document.createElement("canvas");
@@ -142,45 +138,21 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
         return;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     useEffect(() => {
         const EditPostDetails = ProfilePosts.filter(
             (post: PostDataState) => post.id === postId)
-        console.log(EditPostDetails);
 
         setEditPost(EditPostDetails[0])
         setDescription(EditPostDetails[0]?.description)
 
     }, [postId, isEditModalOpened, ProfilePosts])
 
-    console.log("ded", description);
 
     const UploadEditedPost = (e: React.SyntheticEvent) => {
         e.preventDefault();
-        console.log("final", description);
         const EditedPostData = {
             description: description,
         }
-        console.log("postId", postId);
 
         EditPost({
             token: user.token, EditedPostData: EditedPostData, postId: postId, userId: user.id,
