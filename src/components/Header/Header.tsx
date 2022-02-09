@@ -17,6 +17,7 @@ import { AddPostModal } from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
+import { Search } from '..'
 
 
 
@@ -69,12 +70,7 @@ const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModa
                 <img className='header_logo' src={logo} alt="" />
                 <img className='header_sublogo' src={sublogo} alt="" />
             </Link>
-            <form>
-                <img src={search} alt="" />
-                <input type="text" placeholder='Search' />
-
-            </form>
-
+            <Search />
             <div className='header_nav_right' >
                 <button className='header_nav_right_button' onClick={() => ToggleAddPostModal()}>Upload</button>
                 <Link to={`/profile/${data?.id}`} style={{ textDecoration: 'none' }}>
