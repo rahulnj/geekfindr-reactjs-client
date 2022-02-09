@@ -55,6 +55,12 @@ const App: React.FC = () => {
           <EditDetailsScreen />
         }>
         </Route>
+        <Route path='/editpost/:postId' element={
+          <Layout>
+            <ProfileScreen />
+          </Layout>
+        }>
+        </Route>
         <Route path='*' element={
           <PageNotFound />
         }>

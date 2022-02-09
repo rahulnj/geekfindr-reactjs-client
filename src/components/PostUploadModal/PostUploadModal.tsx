@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ReactCrop from 'react-image-crop';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Params, useNavigate, useParams } from 'react-router-dom';
 
 import './_PostUploadModal.scss'
+import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { BsUpload } from 'react-icons/bs'
 
-import { ModalState } from '../../models';
+import { ModalState, PostDataState } from '../../models';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
-import axios from 'axios';
 import request from '../../api';
 import { useActions } from '../../hooks/useActions';
 import post1 from '../../assets/posts/1 (1).jpeg'
 
 
 const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: ModalState) => {
+
     const navigate = useNavigate();
+    const { postId }: Readonly<Params<string>> = useParams()
+
     const [selectedImage, SetSelectedImage] = useState<any>(null)
     const [fileName, setFileName] = useState('')
     const [image, setImage] = useState<any>(null)
@@ -25,12 +28,17 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
     const [croppedImage, setCroppedImage] = useState<any>(null);
     const [imageConfirm, setImageConfirm] = useState(false);
     const [description, setDescription] = useState('')
+    const [editPost, setEditPost] = useState<any>({})
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
 
-    const { CreatePost } = useActions();
+    const { data: ProfilePosts }: any = useTypedSelector(
+        (state) => state.GetMyPost
+    )
+
+    const { CreatePost, EditPost } = useActions();
 
     const uploadFileForPost = (e: any) => {
         const file = e.target.files[0]
@@ -130,15 +138,55 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
     const confirmFinalImage = () => {
         if (croppedImage) {
             setImageConfirm(true)
-
         }
         return;
     }
 
-    const cancelThePost = () => {
-        setIsModalOpened(false)
-    }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    useEffect(() => {
+        const EditPostDetails = ProfilePosts.filter(
+            (post: PostDataState) => post.id === postId)
+        console.log(EditPostDetails);
+
+        setEditPost(EditPostDetails[0])
+        setDescription(EditPostDetails[0]?.description)
+
+    }, [postId, isEditModalOpened, ProfilePosts])
+
+    console.log("ded", description);
+
+    const UploadEditedPost = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        console.log("final", description);
+        const EditedPostData = {
+            description: description,
+        }
+        console.log("postId", postId);
+
+        EditPost({
+            token: user.token, EditedPostData: EditedPostData, postId: postId, userId: user.id,
+            navigate, setIsEditModalOpened
+        })
+    }
 
     return (
         <div className={selectedImage || isEditModalOpened ? 'postmodal' : 'postmodal_single'}>
@@ -150,7 +198,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                         )}
                         {
                             (imageConfirm || isEditModalOpened) && (
-                                isEditModalOpened ? <img src={post1} alt="" /> : <img src={croppedImage} alt="" />
+                                isEditModalOpened ? <img src={editPost?.mediaURL} alt="" /> : <img src={croppedImage} alt="" />
                             )
                         }
                     </div>
@@ -188,17 +236,22 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
             {(imageConfirm || isEditModalOpened) && (<div className="postmodal_descriptionarea">
                 <div className='postmodal_descriptionarea_wrapper'>
                     <label htmlFor="">Caption</label>
-                    <textarea onChange={(e) => setDescription(e.target.value)} className='postmodal_descriptionarea_textarea' placeholder='Type Something'></textarea>
+                    {isEditModalOpened ? <textarea onChange={(e) => setDescription(e.target.value)} value={description} className='postmodal_descriptionarea_textarea' placeholder='Type Something' /> :
+                        <textarea onChange={(e) => setDescription(e.target.value)} className='postmodal_descriptionarea_textarea' placeholder='Type Something' />}
                     <div className="postmodal_descriptionarea_actions">
                         {isEditModalOpened ? (
                             <>
-                                <button className="postmodal_descriptionarea_actions_cancel" onClick={cancelThePost}>Discard</button>
-                                <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Save</button>
+                                <button className="postmodal_descriptionarea_actions_cancel" onClick={() => {
+                                    setIsEditModalOpened(false);
+                                    navigate(`/profile/${user.id}`)
+                                }}>Discard</button>
+                                <button className="postmodal_descriptionarea_actions_post"
+                                    onClick={UploadEditedPost}>Save</button>
                             </>
                         ) :
                             (
                                 <>
-                                    <button className="postmodal_descriptionarea_actions_cancel" onClick={cancelThePost}>Cancel</button>
+                                    <button className="postmodal_descriptionarea_actions_cancel" onClick={() => setIsModalOpened(false)}>Cancel</button>
                                     <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Post</button>
                                 </>
                             )}

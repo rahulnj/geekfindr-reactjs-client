@@ -66,7 +66,7 @@ export const GetMyPost = ({ token }: any) => {
     }
 }
 
-export const EditPost = ({ token, postData, postId }: any) => {
+export const EditPost = ({ token, EditedPostData, postId, navigate, setIsEditModalOpened, userId }: any) => {
     return async (dispatch: Dispatch<EditPostAction>) => {
         dispatch({
             type: EditPostActionType.EDIT_POST_REQUEST
@@ -77,13 +77,17 @@ export const EditPost = ({ token, postData, postId }: any) => {
                 Authorization: `Bearer ${token}`,
             },
         };
+
         try {
-            const { data } = await request.patch(`/api/v1/posts/${postId}`, postData, config)
+            console.log(postId);
+            const { data } = await request.patch(`/api/v1/posts/${postId}`, EditedPostData, config)
             console.log(data);
             dispatch({
                 type: EditPostActionType.EDIT_POST_SUCCESS,
                 payload: data
             })
+            setIsEditModalOpened(false)
+            navigate(`/profile/${userId}`)
         } catch (error: any) {
             console.log(error);
             dispatch({
