@@ -1,8 +1,23 @@
 import { combineReducers } from "redux";
 
-import { UserSigninAuthReducer, UserRegisterAuthReducer } from "./AuthReducer";
-import { CreatePostReducer, DeletePostReducer, EditPostReducer, GetMyPostReducer } from "./PostReducer";
-import { GetUserDetailsReducer, UserEditProfileDetailsReducer, UserProfileDetailsReducer } from "./UserReducer";
+import {
+    UserSigninAuthReducer,
+    UserRegisterAuthReducer
+} from "./AuthReducer";
+
+import {
+    CreatePostReducer,
+    DeletePostReducer,
+    EditPostReducer,
+    GetFeedReducer,
+    GetMyPostReducer
+} from "./PostReducer";
+
+import {
+    GetUserDetailsReducer,
+    UserEditProfileDetailsReducer,
+    UserProfileDetailsReducer
+} from "./UserReducer";
 
 const rootReducer = combineReducers({
     UserSignup: UserRegisterAuthReducer,
@@ -14,6 +29,7 @@ const rootReducer = combineReducers({
     EditPost: EditPostReducer,
     DeletePost: DeletePostReducer,
     GetUserDetails: GetUserDetailsReducer,
+    GetMyFeed: GetFeedReducer,
 })
 
 export default rootReducer;

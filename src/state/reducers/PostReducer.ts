@@ -1,6 +1,6 @@
 import { PostState } from "../../models"
-import { CreatePostAction, DeletePostAction, EditPostAction, GetMyPostAction } from "../action-models"
-import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetMyPostsActionType } from "../actiontypes";
+import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction } from "../action-models"
+import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType } from "../actiontypes";
 
 
 
@@ -21,6 +21,22 @@ export const CreatePostReducer = (
         case CreatePostActionType.CREATE_POST_SUCCESS:
             return { ...state, success: true, error: null, data: action.payload }
         case CreatePostActionType.CREATE_POST_FAIL:
+            return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const GetFeedReducer = (
+    state: PostState = initialState,
+    action: GetFeedAction
+): PostState => {
+    switch (action.type) {
+        case GetFeedActionType.GET_FEED_REQUEST:
+            return { ...state, loading: true, error: null, data: [] }
+        case GetFeedActionType.GET_FEED_SUCCESS:
+            return { ...state, loading: false, error: null, data: action.payload }
+        case GetFeedActionType.GET_FEED_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
         default:
             return state;
@@ -58,13 +74,6 @@ export const EditPostReducer = (
             return state;
     }
 }
-
-
-
-
-
-
-
 
 export const DeletePostReducer = (
     state: PostState = initialState,

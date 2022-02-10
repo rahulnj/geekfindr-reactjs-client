@@ -4,6 +4,12 @@ export enum CreatePostActionType {
     CREATE_POST_FAIL = "CREATE_POST_FAIL"
 }
 
+export enum GetFeedActionType {
+    GET_FEED_REQUEST = 'GET_FEED_REQUEST',
+    GET_FEED_SUCCESS = 'GET_FEED_SUCCESS',
+    GET_FEED_FAIL = 'GET_FEED_FAIL'
+}
+
 export enum GetMyPostsActionType {
     GET_MYPOST_REQUEST = 'GET_MYPOST_REQUEST',
     GET_MYPOST_SUCCESS = 'GET_MYPOST_SUCCESS',

@@ -2,8 +2,8 @@ import { Dispatch } from "redux"
 import request from "../../api"
 import { PostDataState } from "../../models"
 
-import { CreatePostAction, DeletePostAction, EditPostAction, GetMyPostAction } from "../action-models"
-import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetMyPostsActionType } from "../actiontypes"
+import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction } from "../action-models"
+import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType } from "../actiontypes"
 
 export const CreatePost = ({ token, postData, navigate, setIsModalOpened }: any) => {
     return async (dispatch: Dispatch<CreatePostAction>) => {
@@ -36,6 +36,44 @@ export const CreatePost = ({ token, postData, navigate, setIsModalOpened }: any)
         }
     }
 }
+
+export const GetFeedPosts = ({ token, limit, lastPostId }: any) => {
+    return async (dispatch: Dispatch<GetFeedAction>) => {
+        dispatch({
+            type: GetFeedActionType.GET_FEED_REQUEST
+        })
+        try {
+            const { data } = await request.get('/api/v1/posts/my-feed', {
+                params: {
+                    limit: limit,
+                    lastId: lastPostId
+                },
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            dispatch({
+                type: GetFeedActionType.GET_FEED_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: GetFeedActionType.GET_FEED_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
+
+
+
+
+
+
+
 
 export const GetMyPost = ({ token }: any) => {
     return async (dispatch: Dispatch<GetMyPostAction>) => {
@@ -97,17 +135,6 @@ export const EditPost = ({ token, EditedPostData, postId, navigate, setIsEditMod
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 export const DeletePost = ({ postId, token, navigate, userId }: any) => {
     return async (dispatch: Dispatch<DeletePostAction>) => {
