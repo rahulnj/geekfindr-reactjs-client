@@ -1,6 +1,6 @@
-import { UserProfileState } from "../../models";
-import { UserEditProfileAction, UserProfileDetailsAction } from "../action-models";
-import { UserEditProfileActionType, UserProfileDetailsActionType } from "../actiontypes";
+import { GetUserDetails, UserProfileState } from "../../models";
+import { GetUserDetailsAction, UserEditProfileAction, UserProfileDetailsAction } from "../action-models";
+import { GetUserDetailsActionType, UserEditProfileActionType, UserProfileDetailsActionType } from "../actiontypes";
 
 
 const initialState = {
@@ -36,6 +36,22 @@ export const UserEditProfileDetailsReducer = (
         case UserEditProfileActionType.USER_EDIT_PROFILE_SUCCESS:
             return { ...state, success: true, error: null, data: action.payload }
         case UserEditProfileActionType.USER_EDIT_PROFILE_FAIL:
+            return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const GetUserDetailsReducer = (
+    state: GetUserDetails = initialState,
+    action: GetUserDetailsAction
+): GetUserDetails => {
+    switch (action.type) {
+        case GetUserDetailsActionType.GET_USERDETAILS_REQUEST:
+            return { ...state, loading: true, error: null, data: [] }
+        case GetUserDetailsActionType.GET_USERDETAILS_SUCCESS:
+            return { ...state, loading: false, error: null, data: action.payload }
+        case GetUserDetailsActionType.GET_USERDETAILS_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
         default:
             return state;

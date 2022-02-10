@@ -21,12 +21,14 @@ export interface AuthState {
 //UserState Models used in the state
 
 
-export interface UserProfileState {
+export interface UserProfileState extends GetUserDetails {
     data: string[]
     error: string[] | null
     loading: boolean
     success?: boolean
 }
+
+export interface GetUserDetails { }
 
 export interface PostState {
     data: string[]

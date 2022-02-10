@@ -12,6 +12,9 @@ const FollowCount = ({ userProfile }: userProfile) => {
     const { data }: UserProfileState = useTypedSelector(
         (state) => state.UserProfileDetails
     )
+    const { data: usersDetails }: any = useTypedSelector(
+        (state) => state.GetUserDetails
+    )
 
     const { followersCount, followingCount, id }: any = data;
 
@@ -23,19 +26,26 @@ const FollowCount = ({ userProfile }: userProfile) => {
                         <span>10</span>
                         <p>Posts</p>
                     </div>
-                    <div className='followcounter_wrapper_left_items'>
+                    {userProfile ? <div className='followcounter_wrapper_left_items'>
+                        <span>{usersDetails?.followersCount}</span>
+                        <p>followers</p>
+                    </div> : <div className='followcounter_wrapper_left_items'>
                         <span>{followersCount}</span>
                         <p>followers</p>
-                    </div>
-                    <div className='followcounter_wrapper_left_items'>
+                    </div>}
+                    {userProfile ? <div className='followcounter_wrapper_left_items'>
+                        <span>{usersDetails?.followingCount}</span>
+                        <p>following</p>
+                    </div> : <div className='followcounter_wrapper_left_items'>
                         <span>{followingCount}</span>
                         <p>following</p>
-                    </div>
+                    </div>}
                 </div>
                 <div className='followcounter_wrapper_right'>
-                    {userProfile ? <button className="button-follow">Follow</button> : <Link to={`/editprofile/${id}`}>
-                        <button className="button-edit">Edit</button>
-                    </Link>}
+                    {userProfile ? <button className="button-follow">Follow</button> :
+                        <Link to={`/editprofile/${id}`}>
+                            <button className="button-edit">Edit</button>
+                        </Link>}
                 </div>
             </div>
         </div>

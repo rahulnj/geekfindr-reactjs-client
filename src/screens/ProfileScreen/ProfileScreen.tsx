@@ -10,10 +10,16 @@ import { useActions } from '../../hooks/useActions'
 import { userProfile } from '../../models'
 
 
+
 const ProfileScreen = ({ userProfile }: userProfile) => {
+
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
+    )
+
+    const { data: usersDetails }: any = useTypedSelector(
+        (state) => state.GetUserDetails
     )
 
     const { UserProfileDetails, GetMyPost } = useActions();
@@ -27,17 +33,25 @@ const ProfileScreen = ({ userProfile }: userProfile) => {
 
 
 
+
+
     return (
         <div className='profile'>
             <div className="profile_righttop">
-                <div className='profile_righttop_profilecover'>
+                {userProfile ? <div className='profile_righttop_profilecover'>
+                    <img className='profile_righttop_profilecoverImg' src={post1} alt="" />
+                    <img className='profile_righttop_profileuserImg' src={usersDetails?.avatar} alt="" />
+                </div> : <div className='profile_righttop_profilecover'>
                     <img className='profile_righttop_profilecoverImg' src={post1} alt="" />
                     <img className='profile_righttop_profileuserImg' src={user?.avatar} alt="" />
-                </div>
-                <div className="profile_profileinfo">
+                </div>}
+                {userProfile ? <div className="profile_profileinfo">
+                    <h4>{usersDetails?.username}</h4>
+                    <span>{usersDetails?.role}</span>
+                </div> : <div className="profile_profileinfo">
                     <h4>{user?.username}</h4>
-                    <span>backend Developer</span>
-                </div>
+                    <span>{user?.role}</span>
+                </div>}
             </div>
             <FollowCounter userProfile={userProfile} />
             <div className="profile_rightbottom">

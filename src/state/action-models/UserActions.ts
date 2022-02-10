@@ -1,4 +1,4 @@
-import { UserProfileDetailsActionType, UserEditProfileActionType } from "../actiontypes";
+import { UserProfileDetailsActionType, UserEditProfileActionType, GetUserDetailsActionType } from "../actiontypes";
 
 //Action Models for fetching the user profile details
 
@@ -42,3 +42,24 @@ export type UserEditProfileAction =
     | UserEditProfileRequestAction
     | UserEditProfileSuccessAction
     | UserEditProfileFailAction
+
+//Action for getting other user's details
+
+interface GetUserDetailsRequestAction {
+    type: GetUserDetailsActionType.GET_USERDETAILS_REQUEST
+}
+
+interface GetUserDetailsSuccessAction {
+    type: GetUserDetailsActionType.GET_USERDETAILS_SUCCESS
+    payload: string[] | null
+}
+
+interface GetUserDetailsFailAction {
+    type: GetUserDetailsActionType.GET_USERDETAILS_FAIL
+    payload: string[] | null
+}
+
+export type GetUserDetailsAction =
+    | GetUserDetailsRequestAction
+    | GetUserDetailsSuccessAction
+    | GetUserDetailsFailAction

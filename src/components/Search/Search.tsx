@@ -9,6 +9,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { profileData } from '../../models';
+import { useActions } from '../../hooks/useActions';
 
 
 
@@ -19,6 +20,7 @@ import { profileData } from '../../models';
 
 const Search: React.FC = () => {
 
+    const { GetUserDetails } = useActions();
     const navigate = useNavigate();
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
@@ -61,7 +63,15 @@ const Search: React.FC = () => {
         setFilteredData([]);
         setWordEntered("");
     };
+
+
     const showUserProfile = (id: string) => {
+
+        GetUserDetails({
+            token: user.token,
+            userId: id
+        })
+        setFilteredData([])
         navigate(`userprofile/${id}`)
     }
 
