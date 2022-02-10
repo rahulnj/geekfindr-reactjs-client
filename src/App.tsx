@@ -53,7 +53,7 @@ const App: React.FC = () => {
         </Route>
         <Route path='/userprofile/:id' element={
           <Layout>
-            <ProfileScreen />
+            <ProfileScreen userProfile />
           </Layout>
         }>
         </Route>

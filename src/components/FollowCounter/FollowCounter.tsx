@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { UserProfileState } from '../../models'
+import { userProfile, UserProfileState } from '../../models'
 
 
-const FollowCount: React.FC = () => {
+const FollowCount = ({ userProfile }: userProfile) => {
 
     const { data }: UserProfileState = useTypedSelector(
         (state) => state.UserProfileDetails
@@ -33,11 +33,9 @@ const FollowCount: React.FC = () => {
                     </div>
                 </div>
                 <div className='followcounter_wrapper_right'>
-                    {/* <button className="button-follow">Follow</button> */}
-                    <Link to={`/editprofile/${id}`}>
+                    {userProfile ? <button className="button-follow">Follow</button> : <Link to={`/editprofile/${id}`}>
                         <button className="button-edit">Edit</button>
-                    </Link>
-
+                    </Link>}
                 </div>
             </div>
         </div>

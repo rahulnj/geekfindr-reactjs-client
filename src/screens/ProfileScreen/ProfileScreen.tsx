@@ -7,9 +7,10 @@ import { Feed, FollowCounter, RightAside } from '../../components'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
+import { userProfile } from '../../models'
 
 
-const ProfileScreen: React.FC = () => {
+const ProfileScreen = ({ userProfile }: userProfile) => {
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
@@ -19,7 +20,7 @@ const ProfileScreen: React.FC = () => {
     useEffect(() => {
         GetMyPost({ token: user.token })
         UserProfileDetails({ token: user.token })
-    }, [UserProfileDetails, user]);
+    }, [UserProfileDetails, user, GetMyPost]);
 
 
 
@@ -38,7 +39,7 @@ const ProfileScreen: React.FC = () => {
                     <span>backend Developer</span>
                 </div>
             </div>
-            <FollowCounter />
+            <FollowCounter userProfile={userProfile} />
             <div className="profile_rightbottom">
                 <div className='componentfeed'>
                     <Feed profile />

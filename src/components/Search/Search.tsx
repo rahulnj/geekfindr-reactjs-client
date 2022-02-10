@@ -8,6 +8,7 @@ import request from '../../api';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { profileData } from '../../models';
 
 
 
@@ -34,23 +35,18 @@ const Search: React.FC = () => {
 
     useEffect(() => {
         const CancelToken = axios.CancelToken.source() // <-- 1st step
-
         const fetchUsers = async () => {
             try {
                 const { data: usersData } = await request.get(`/api/v1/profiles?searchUserName=${wordEntered}`, {
                     cancelToken: CancelToken.token,
                     headers: {
-                        'Authorization': `Bearer ${user.token}`,
+                        'Authorization': `Bearer ${user?.token}`,
                     },
                 })
-                console.log(usersData);
-
                 setFilteredData(usersData)
             } catch (err) {
                 if (axios.isCancel(Error)) {
                     console.log('There was a problem or request was cancelled.')
-                } else {
-                    throw err;
                 }
             }
         }
@@ -58,7 +54,7 @@ const Search: React.FC = () => {
         return () => {
             CancelToken.cancel() // <-- 3rd step
         }
-    }, [wordEntered])
+    }, [wordEntered, user])
 
 
     const clearInput = () => {
@@ -87,11 +83,11 @@ const Search: React.FC = () => {
                 </div>
             </div>
 
-            {filteredData.length != 0 && (
+            {filteredData.length !== 0 && (
                 <div className={filteredData.length === 0 ? "search_dataresult" : "search_active"}>
                     {
-                        filteredData.map((user: any) => (
-                            <a className="search_dataitem" target="_blank" key={user.id} onClick={() => showUserProfile(user.id)}>
+                        filteredData.map((user: profileData) => (
+                            <a className="search_dataitem" key={user.id} onClick={() => showUserProfile(user.id)}>
                                 <img src={user.avatar} alt="" />
                                 <p>{user.username}</p>
                             </a>

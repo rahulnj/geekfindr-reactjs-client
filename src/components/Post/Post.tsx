@@ -79,7 +79,7 @@ const Post: React.FC<Profile> = ({ profile }) => {
         }
 
         const DeleteMyPost = () => {
-            DeletePost({ postId: id, token: user.token, navigate, userId: owner })
+            DeletePost({ postId: id, token: user.token, navigate, userId: user.id })
             setToggleOptions(false)
         }
 

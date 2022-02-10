@@ -2,6 +2,9 @@ export interface Children {
     children: JSX.Element[] | JSX.Element
     isModalOpened?: boolean
 }
+export interface userProfile {
+    userProfile?: boolean
+}
 
 export interface Handle {
     error?: boolean
