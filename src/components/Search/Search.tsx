@@ -48,7 +48,7 @@ const Search: React.FC = () => {
                 setFilteredData(usersData)
             } catch (err) {
                 if (axios.isCancel(Error)) {
-                    console.log('There was a problem or request was cancelled.')
+                    return;
                 }
             }
         }

@@ -50,7 +50,11 @@ export interface PostDataState {
     likeCount: number
     mediaType?: string
     mediaURL: string
-    owner?: string
+    owner?: {
+        avatar: string
+        id: string
+        username: string
+    }
     teamJoinRequests?: string[]
     updatedAt?: string
 }

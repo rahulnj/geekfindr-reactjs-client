@@ -53,6 +53,7 @@ export const GetFeedPosts = ({ token, limit, lastPostId }: any) => {
                     Authorization: `Bearer ${token}`,
                 },
             })
+            console.log(data);
             dispatch({
                 type: GetFeedActionType.GET_FEED_SUCCESS,
                 payload: data

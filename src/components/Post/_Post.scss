@@ -104,15 +104,22 @@
             opacity: 1;
         }
     }
+    &_profileimg {
+        margin-top: 20px;
+        width: 600px;
+        // width: 100%;
+        max-height: 500px;
+        object-fit: contain;
+    }
+    &_homeimg {
+        margin-top: 20px;
+        // width: 600px;
+        width: 100%;
+        max-height: 500px;
+        object-fit: contain;
+    }
     &_center {
         margin: 20px 0;
-        img {
-            margin-top: 20px;
-            width: 600px;
-            // width: 100%;
-            max-height: 500px;
-            object-fit: contain;
-        }
     }
     &_bottom {
         display: flex;

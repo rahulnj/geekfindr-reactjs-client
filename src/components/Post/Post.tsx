@@ -9,7 +9,7 @@ import { AiOutlineLike } from 'react-icons/ai'
 import { BiComment, BiSmile, BiEdit } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 
-import { PostDataState, Profile } from '../../models'
+import { PostDataState, PostState, Profile } from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
@@ -24,7 +24,8 @@ const Post: React.FC<Profile> = ({ profile }) => {
         e.preventDefault();
     }
 
-    const HomePosts = () => {
+    const HomePosts = ({ description, isProject, likeCount, mediaURL, createdAt, comments, id, owner }: PostDataState) => {
+
 
         return (
 
@@ -32,10 +33,10 @@ const Post: React.FC<Profile> = ({ profile }) => {
                 <div className="post_wrapper">
                     <div className="post_top">
                         <div className="post_top_left">
-                            <img src={person1} alt="" />
+                            <img src={owner?.avatar} alt="" />
                             <div className='post_top_left_details'>
-                                <p className="post_top_left_username">Rahul</p>
-                                <span className="post_top_left_date">5 mins ago</span>
+                                <p className="post_top_left_username">{owner?.username}</p>
+                                <span className="post_top_left_date"><Moment fromNow>{createdAt}</Moment></span>
                             </div>
                         </div>
                         <div className="post_top_right">
@@ -43,13 +44,13 @@ const Post: React.FC<Profile> = ({ profile }) => {
                         </div>
                     </div>
                     <div className="post_center">
-                        <span className="post_description">Lorem ipsum dolor sit amet consectetur.</span>
-                        <img src={post1} alt="" />
+                        <span className="post_description">{description}</span>
+                        <img className='post_homeimg' src={mediaURL} alt="" />
                     </div>
                     <div className="post_bottom">
                         <div className="post_bottom_left">
-                            <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon' />50</div>
-                            <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />15</div>
+                            <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon' />{likeCount}</div>
+                            <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{comments.length}</div>
                         </div>
                     </div>
                     <form onSubmit={CommentPostHandler} className='post_commentform'>
@@ -107,7 +108,7 @@ const Post: React.FC<Profile> = ({ profile }) => {
                             <div className="post_top_left">
                                 <img src={user?.avatar} alt="" />
                                 <div className='post_top_left_details'>
-                                    <p className="post_top_left_username">{user?.username}</p>
+                                    <p className="post_top_left_username">{owner?.username}</p>
                                     <span className="post_top_left_date"><Moment fromNow>{createdAt}</Moment></span>
                                 </div>
                             </div>
@@ -123,7 +124,7 @@ const Post: React.FC<Profile> = ({ profile }) => {
                         </div>
                         <div className="post_center">
                             <span className="post_description">{description}</span>
-                            <img src={mediaURL} alt="" />
+                            <img className='post_profileimg' src={mediaURL} alt="" />
                         </div>
                         <div className="post_bottom">
                             <div className="post_bottom_left">
@@ -145,6 +146,11 @@ const Post: React.FC<Profile> = ({ profile }) => {
     const { data: ProfilePosts }: any = useTypedSelector(
         (state) => state.GetMyPost
     )
+
+    const { data: FeedPosts }: any = useTypedSelector(
+        (state) => state.GetMyFeed
+    )
+
     const [isEditModalOpened, setIsEditModalOpened] = useState(false)
 
 
@@ -163,7 +169,17 @@ const Post: React.FC<Profile> = ({ profile }) => {
                     id={post.id}
                     owner={post.owner}
                 />
-            )) : <HomePosts />}
+            )) : FeedPosts?.map((post: PostDataState) => (
+                <HomePosts key={post.id}
+                    description={post.description}
+                    isProject={post.isProject}
+                    likeCount={post.likeCount}
+                    mediaURL={post.mediaURL}
+                    createdAt={post.createdAt}
+                    comments={post.comments}
+                    id={post.id}
+                    owner={post.owner} />
+            ))}
         </>
     )
 }
