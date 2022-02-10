@@ -51,6 +51,12 @@ const App: React.FC = () => {
           </Layout>
         }>
         </Route>
+        <Route path='/userprofile/:id' element={
+          <Layout>
+            <ProfileScreen />
+          </Layout>
+        }>
+        </Route>
         <Route path='/editprofile/:id' element={
           <EditDetailsScreen />
         }>

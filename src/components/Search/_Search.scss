@@ -12,6 +12,24 @@
     border-radius: 50px;
     background-color: $main-color;
 
+    &_mainactive {
+        margin-top: 215px;
+        padding: 0 15px;
+        border-radius: 50px;
+        background-color: $main-color;
+    }
+
+    &_active {
+        display: block;
+        border-radius: 15px 15px;
+        margin-top: 5px;
+        height: 200px;
+        background-color: white;
+        box-shadow: $main-shadow;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
     &_inputs {
         display: flex;
         justify-content: center;
@@ -26,6 +44,9 @@
         width: 100%;
         background: transparent;
         padding: 10px;
+        outline: none;
+    }
+    input:focus {
         outline: none;
     }
 
@@ -59,17 +80,21 @@
         height: 50px;
         display: flex;
         align-items: center;
+        justify-content: flex-start;
+        padding: 0 10px;
         color: black;
 
         p {
             margin-left: 10px;
         }
-        a {
-            text-decoration: none;
+        img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
         }
-
-        a:hover {
-            background-color: lightgrey;
-        }
+    }
+    &_dataitem:hover {
+        background-color: $main-color;
     }
 }
