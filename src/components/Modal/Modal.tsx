@@ -10,17 +10,37 @@ const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditMo
 
     const Modalref = useRef<any>()
 
+
+    let MODAL: boolean;
+    if (isModalOpened) {
+        MODAL = isModalOpened
+    } else if (isEditModalOpened) {
+        MODAL = isEditModalOpened
+    } else if (followersModal) {
+        MODAL = followersModal
+    }
+
+
+
     useEffect(() => {
         const checkIfClickedOutsideModal = (e: MouseEvent) => {
-            if (isModalOpened && Modalref.current && !Modalref.current.contains(e.target)) {
-                setIsModalOpened(false)
+            if (MODAL && Modalref.current && !Modalref.current.contains(e.target)) {
+                if (isModalOpened) {
+                    setIsModalOpened(false)
+                } else if (isEditModalOpened) {
+                    setIsEditModalOpened(false)
+                } else if (followersModal) {
+                    setFollowersModal(false)
+                }
             }
         }
         document.addEventListener("mousedown", checkIfClickedOutsideModal)
         return () => {
             document.addEventListener("mousedown", checkIfClickedOutsideModal)
         };
-    }, [isModalOpened, setIsModalOpened]);
+    }, [isModalOpened, setIsModalOpened,
+        isEditModalOpened, setIsEditModalOpened,
+        followersModal, setFollowersModal]);
 
     if (!isModalOpened && !isEditModalOpened && !followersModal) {
         return null;
