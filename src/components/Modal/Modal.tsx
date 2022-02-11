@@ -4,9 +4,9 @@ import { createPortal } from 'react-dom';
 import './_Modal.scss'
 
 
-import { PostUploadModal } from '..';
+import { Messages, PostUploadModal } from '..';
 
-const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: any) => {
+const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened, followersModal, setFollowersModal }: any) => {
 
     const Modalref = useRef<any>()
 
@@ -22,16 +22,20 @@ const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditMo
         };
     }, [isModalOpened, setIsModalOpened]);
 
-    if (!isModalOpened && !isEditModalOpened) {
+    if (!isModalOpened && !isEditModalOpened && !followersModal) {
         return null;
     }
 
     return createPortal(
         <>
             <div className="modal_overlay"></div>
-            <div className="modal" ref={Modalref}>
-                <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened}
-                    isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />
+            <div className={followersModal ? "modal-sm" : "modal-lg"}
+                ref={Modalref}>
+                {followersModal &&
+                    <Messages followersModal={followersModal} />
+                }
+                {(isModalOpened || isEditModalOpened) && <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened}
+                    isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />}
             </div>
         </>,
         document.getElementById('modal') as HTMLElement

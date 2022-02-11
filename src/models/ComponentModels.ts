@@ -42,6 +42,10 @@ export interface Profile {
     profile?: boolean;
 }
 
+export interface FollowersModal {
+    followersModal?: boolean
+}
+
 
 
 export interface profileData {

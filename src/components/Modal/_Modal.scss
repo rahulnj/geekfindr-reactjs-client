@@ -1,6 +1,6 @@
 @import "../../_base.scss";
 
-.modal {
+.modal-lg {
     position: fixed;
     z-index: 3;
     width: 800px;
@@ -15,8 +15,28 @@
     transform: translate(-50%, -50%);
     background: $background-color;
     padding: 10px;
-    transition: all 5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
+
+.modal-sm {
+    position: fixed;
+    z-index: 3;
+    width: 400px;
+    min-width: 150px;
+    min-height: 150px;
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: $main-shadow;
+    color: #000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $background-color;
+    padding: 10px;
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+}
+
 .modal_overlay {
     position: fixed;
     top: 0;

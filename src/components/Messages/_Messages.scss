@@ -5,7 +5,9 @@
     gap: 1rem;
     align-items: center;
     margin-bottom: 1rem;
-    padding: 0 0.5rem;
+    padding: 0 2rem;
+    overflow-y: auto;
+
     &_profileimg {
         position: relative;
         overflow: visible;
@@ -27,11 +29,35 @@
             right: 0;
         }
     }
+    &_bodywrapper {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+    }
     &_body {
         padding-top: 0.5rem;
         p {
             font-size: 0.8rem;
             opacity: 0.8;
         }
+    }
+    &_accbtn {
+        align-items: center;
+        background-color: $button-color;
+        border: 0;
+        border-radius: 100px;
+        box-sizing: border-box;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 14px;
+        font-weight: 500;
+        justify-content: center;
+        line-height: 20px;
+        height: 35px;
+        min-width: 0px;
+        overflow: hidden;
+        padding: 0 18px;
+        text-align: center;
     }
 }
