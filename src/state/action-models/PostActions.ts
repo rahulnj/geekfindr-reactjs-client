@@ -1,4 +1,12 @@
-import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType } from '../actiontypes';
+import {
+    CreatePostActionType,
+    DeletePostActionType,
+    EditPostActionType,
+    GetFeedActionType,
+    GetMyPostsActionType,
+    PostCommentsActionType,
+    PostLikesActionType
+} from '../actiontypes';
 
 
 //Action models for createpost
@@ -105,3 +113,47 @@ export type DeletePostAction =
     | DeletePostRequestAction
     | DeletePostSuccessAction
     | DeletePostFailAction
+
+
+//Action models for liking a post
+
+interface PostLikesRequestAction {
+    type: PostLikesActionType.GET_LIKES_REQUEST
+}
+
+interface PostLikesSuccessAction {
+    type: PostLikesActionType.GET_LIKES_SUCCESS
+    payload: string[]
+}
+
+interface PostLikesFailAction {
+    type: PostLikesActionType.GET_LIKES_FAIL
+    payload: string[] | null
+}
+
+export type PostLikesAction =
+    | PostLikesRequestAction
+    | PostLikesSuccessAction
+    | PostLikesFailAction
+
+
+//Action models for commenting in a post
+
+interface PostCommentsRequestAction {
+    type: PostCommentsActionType.GET_COMMENTS_REQUEST
+}
+
+interface PostCommentsSuccessAction {
+    type: PostCommentsActionType.GET_COMMENTS_SUCCESS
+    payload: string[]
+}
+
+interface PostCommentsFailAction {
+    type: PostCommentsActionType.GET_COMMENTS_FAIL
+    payload: string[] | null
+}
+
+export type PostCommentsAction =
+    | PostCommentsRequestAction
+    | PostCommentsSuccessAction
+    | PostCommentsFailAction

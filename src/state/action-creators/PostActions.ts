@@ -2,8 +2,8 @@ import { Dispatch } from "redux"
 import request from "../../api"
 import { PostDataState } from "../../models"
 
-import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction } from "../action-models"
-import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType } from "../actiontypes"
+import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction, PostCommentsAction, PostLikesAction } from "../action-models"
+import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType, PostCommentsActionType, PostLikesActionType } from "../actiontypes"
 
 export const CreatePost = ({ token, postData, navigate, setIsModalOpened }: any) => {
     return async (dispatch: Dispatch<CreatePostAction>) => {
@@ -67,14 +67,6 @@ export const GetFeedPosts = ({ token, limit, lastPostId }: any) => {
         }
     }
 }
-
-
-
-
-
-
-
-
 
 export const GetMyPost = ({ token }: any) => {
     return async (dispatch: Dispatch<GetMyPostAction>) => {
@@ -159,6 +151,64 @@ export const DeletePost = ({ postId, token, navigate, userId }: any) => {
             console.log(error);
             dispatch({
                 type: DeletePostActionType.DELETE_POST_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
+export const GetPostLikes = ({ token, postId }: any) => {
+    return async (dispatch: Dispatch<PostLikesAction>) => {
+        dispatch({
+            type: PostLikesActionType.GET_LIKES_REQUEST
+        });
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.get(`/api/v1/posts/${postId}/likes`, config)
+            dispatch({
+                type: PostLikesActionType.GET_LIKES_SUCCESS,
+                payload: data
+            })
+            console.log(data, "likes");
+
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: PostLikesActionType.GET_LIKES_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
+export const GetPostComments = ({ token, postId }: any) => {
+    return async (dispatch: Dispatch<PostCommentsAction>) => {
+        dispatch({
+            type: PostCommentsActionType.GET_COMMENTS_REQUEST
+        });
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.get(`/api/v1/posts/${postId}/comments`, config)
+            dispatch({
+                type: PostCommentsActionType.GET_COMMENTS_SUCCESS,
+                payload: data
+            })
+            console.log(data, "comments");
+
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: PostCommentsActionType.GET_COMMENTS_FAIL,
                 payload: error
             })
         }

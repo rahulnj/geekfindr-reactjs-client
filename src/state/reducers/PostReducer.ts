@@ -1,6 +1,6 @@
 import { PostState } from "../../models"
-import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction } from "../action-models"
-import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType } from "../actiontypes";
+import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction, PostCommentsAction, PostLikesAction } from "../action-models"
+import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType, PostCommentsActionType, PostLikesActionType } from "../actiontypes";
 
 
 
@@ -85,6 +85,38 @@ export const DeletePostReducer = (
         case DeletePostActionType.DELETE_POST_SUCCESS:
             return { ...state, success: true, error: null, data: action.payload }
         case DeletePostActionType.DELETE_POST_FAIL:
+            return { ...state, loading: false, success: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const GetLikesReducer = (
+    state: PostState = initialState,
+    action: PostLikesAction
+): PostState => {
+    switch (action.type) {
+        case PostLikesActionType.GET_LIKES_REQUEST:
+            return { ...state, loading: true, error: null }
+        case PostLikesActionType.GET_LIKES_SUCCESS:
+            return { ...state, success: true, error: null, data: action.payload }
+        case PostLikesActionType.GET_LIKES_FAIL:
+            return { ...state, loading: false, success: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const GetCommentsReducer = (
+    state: PostState = initialState,
+    action: PostCommentsAction
+): PostState => {
+    switch (action.type) {
+        case PostCommentsActionType.GET_COMMENTS_REQUEST:
+            return { ...state, loading: true, error: null }
+        case PostCommentsActionType.GET_COMMENTS_SUCCESS:
+            return { ...state, success: true, error: null, data: action.payload }
+        case PostCommentsActionType.GET_COMMENTS_FAIL:
             return { ...state, loading: false, success: false, error: action.payload, data: [] }
         default:
             return state;
