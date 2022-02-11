@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Params, useParams } from 'react-router-dom'
 
 import './_FollowCounter.scss'
 
@@ -9,14 +9,26 @@ import { userProfile, UserProfileState } from '../../models'
 
 const FollowCount = ({ userProfile }: userProfile) => {
 
-    const { data }: UserProfileState = useTypedSelector(
-        (state) => state.UserProfileDetails
-    )
-    const { data: usersDetails }: any = useTypedSelector(
+
+
+    let { data: UserDetails }: any = useTypedSelector(
         (state) => state.GetUserDetails
     )
 
-    const { followersCount, followingCount, id }: any = data;
+    let { data: UserProfileDetails }: any = useTypedSelector(
+        (state) => state.UserProfileDetails
+    )
+
+    if (!userProfile) {
+        UserDetails = UserProfileDetails
+    }
+
+
+
+
+
+
+
 
     return (
         <div className='followcounter'>
@@ -27,23 +39,23 @@ const FollowCount = ({ userProfile }: userProfile) => {
                         <p>Posts</p>
                     </div>
                     {userProfile ? <div className='followcounter_wrapper_left_items'>
-                        <span>{usersDetails?.followersCount}</span>
+                        <span>{UserDetails?.followersCount}</span>
                         <p>followers</p>
                     </div> : <div className='followcounter_wrapper_left_items'>
-                        <span>{followersCount}</span>
+                        <span>{UserDetails?.followersCount}</span>
                         <p>followers</p>
                     </div>}
                     {userProfile ? <div className='followcounter_wrapper_left_items'>
-                        <span>{usersDetails?.followingCount}</span>
+                        <span>{UserDetails?.followingCount}</span>
                         <p>following</p>
                     </div> : <div className='followcounter_wrapper_left_items'>
-                        <span>{followingCount}</span>
+                        <span>{UserDetails?.followingCount}</span>
                         <p>following</p>
                     </div>}
                 </div>
                 <div className='followcounter_wrapper_right'>
                     {userProfile ? <button className="button-follow">Follow</button> :
-                        <Link to={`/editprofile/${id}`}>
+                        <Link to={`/editprofile/${UserDetails?.id}`}>
                             <button className="button-edit">Edit</button>
                         </Link>}
                 </div>

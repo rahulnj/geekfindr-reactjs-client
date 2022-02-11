@@ -8,11 +8,13 @@ import { Feed, FollowCounter, RightAside } from '../../components'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
 import { userProfile } from '../../models'
+import { Params, useParams } from 'react-router-dom'
 
 
 
 const ProfileScreen = ({ userProfile }: userProfile) => {
 
+    const { userId }: Readonly<Params<string>> = useParams()
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
@@ -22,7 +24,18 @@ const ProfileScreen = ({ userProfile }: userProfile) => {
         (state) => state.GetUserDetails
     )
 
-    const { UserProfileDetails, GetMyPost } = useActions();
+    const { UserProfileDetails, GetMyPost, GetUserDetails } = useActions();
+
+    useEffect(() => {
+        if (userId !== user.id) {
+            GetUserDetails({
+                token: user.token,
+                userId
+            })
+        }
+    }, [])
+
+
     useEffect(() => {
         GetMyPost({ token: user.token })
         UserProfileDetails({ token: user.token })

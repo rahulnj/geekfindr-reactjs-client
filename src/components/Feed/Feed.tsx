@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './_Feed.scss'
 import { Post, Share } from '../index'
 import { PostState, Profile } from '../../models'
-import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { useActions } from '../../hooks/useActions'
+
 
 
 
