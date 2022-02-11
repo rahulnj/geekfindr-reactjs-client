@@ -7,12 +7,19 @@ import { Messages, PostUploadModal } from '..';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { profileData } from '../../models';
 
-const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened, followersModal, setFollowersModal }: any) => {
+const Modal = ({ isModalOpened, setIsModalOpened,
+    isEditModalOpened, setIsEditModalOpened,
+    followersModal, setFollowersModal,
+    followingModal, setFollowingModal
+}: any) => {
 
     const Modalref = useRef<any>()
 
     const { data: Followers }: any = useTypedSelector(
         (state) => state.GetUserFollowers
+    )
+    const { data: Followings }: any = useTypedSelector(
+        (state) => state.GetFollowingUsers
     )
 
     let MODAL: boolean;
@@ -23,6 +30,8 @@ const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditMo
         MODAL = isEditModalOpened
     } else if (followersModal) {
         MODAL = followersModal
+    } else if (followingModal) {
+        MODAL = followingModal
     }
 
 
@@ -36,6 +45,8 @@ const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditMo
                     setIsEditModalOpened(false)
                 } else if (followersModal) {
                     setFollowersModal(false)
+                } else if (followingModal) {
+                    setFollowingModal(false)
                 }
             }
         }
@@ -45,21 +56,33 @@ const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditMo
         };
     }, [isModalOpened, setIsModalOpened,
         isEditModalOpened, setIsEditModalOpened,
-        followersModal, setFollowersModal]);
+        followersModal, setFollowersModal,
+        followingModal, setFollowingModal]);
 
-    if (!isModalOpened && !isEditModalOpened && !followersModal) {
+    if (!isModalOpened && !isEditModalOpened && !followersModal && !followingModal) {
         return null;
     }
 
     return createPortal(
         <>
             <div className="modal_overlay"></div>
-            <div className={followersModal ? "modal-sm" : "modal-lg"}
+            <div className={(followersModal || followingModal) ? "modal-sm" : "modal-lg"}
                 ref={Modalref}>
                 {followersModal &&
                     Followers.map((user: profileData) => (
                         <Messages followersModal={followersModal}
                             key={user.id}
+                            username={user.username}
+                            role={user.role}
+                            userId={user.id}
+                            avatar={user.avatar}
+                        />
+                    ))
+                }
+                {followingModal &&
+                    Followings.map((user: profileData) => (
+                        <Messages followingModal={followingModal}
+                            key={user.userId}
                             username={user.username}
                             role={user.role}
                             userId={user.id}

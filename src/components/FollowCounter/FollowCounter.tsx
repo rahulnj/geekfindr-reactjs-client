@@ -13,8 +13,10 @@ import { useActions } from '../../hooks/useActions'
 const FollowCount = ({ userProfile }: userProfile) => {
 
     const [followersModal, setFollowersModal] = useState(false)
+    const [followingModal, setFollowingModal] = useState(false)
 
-    const { GetUserFollowers } = useActions();
+
+    const { GetUserFollowers, GetFollowingUsers } = useActions();
 
 
     let { data: user }: any = useTypedSelector(
@@ -52,18 +54,27 @@ const FollowCount = ({ userProfile }: userProfile) => {
     const ShowFollowersList = () => {
         GetUserFollowers({
             token: user.token,
-            userId: user.id
+            userId: user.id,
         })
         setFollowersModal(true)
     }
 
+    const ShowFollowingList = () => {
+        GetFollowingUsers({
+            token: user.token,
+            userId: user.id,
+        })
+        setFollowingModal(true)
+    }
 
 
 
 
     return (
         <>
-            <Modal followersModal={followersModal} setFollowersModal={setFollowersModal} />
+            <Modal followersModal={followersModal} setFollowersModal={setFollowersModal}
+                followingModal={followingModal} setFollowingModal={setFollowingModal}
+            />
             <div className='followcounter'>
                 <div className="followcounter_wrapper">
                     <div className='followcounter_wrapper_left'>
@@ -72,7 +83,7 @@ const FollowCount = ({ userProfile }: userProfile) => {
                             <p>Posts</p>
                         </div>
                         {userProfile ? <div className='followcounter_wrapper_left_items'
-                            onClick={ShowFollowersList}
+
                         >
                             <span>{UserDetails?.followersCount}</span>
                             <p>followers</p>
@@ -82,10 +93,13 @@ const FollowCount = ({ userProfile }: userProfile) => {
                             <span>{UserDetails?.followersCount}</span>
                             <p>followers</p>
                         </div>}
-                        {userProfile ? <div className='followcounter_wrapper_left_items'>
+                        {userProfile ? <div className='followcounter_wrapper_left_items'
+                        >
                             <span>{UserDetails?.followingCount}</span>
                             <p>following</p>
-                        </div> : <div className='followcounter_wrapper_left_items'>
+                        </div> : <div className='followcounter_wrapper_left_items'
+                            onClick={ShowFollowingList}
+                        >
                             <span>{UserDetails?.followingCount}</span>
                             <p>following</p>
                         </div>}

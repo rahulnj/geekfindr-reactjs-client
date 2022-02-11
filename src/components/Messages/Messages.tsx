@@ -7,7 +7,7 @@ import { FollowersModal, profileData } from '../../models';
 import { useNavigate } from 'react-router-dom';
 
 
-const Messages: React.FC<FollowersModal> = ({ followersModal, username, role, userId, avatar }) => {
+const Messages: React.FC<FollowersModal> = ({ followersModal, followingModal, username, role, userId, avatar }) => {
 
     const navigate = useNavigate();
 
@@ -52,7 +52,7 @@ const Messages: React.FC<FollowersModal> = ({ followersModal, username, role, us
 
     return (
         <>
-            {followersModal ? <ProfileFollowers /> : <HomeMessages />}
+            {(followersModal || followingModal) ? <ProfileFollowers /> : <HomeMessages />}
         </>
     )
 
