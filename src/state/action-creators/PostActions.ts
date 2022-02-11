@@ -216,6 +216,8 @@ export const GetPostComments = ({ token, postId }: any) => {
 }
 
 export const LikePost = ({ token, postId }: any) => {
+    console.log(token);
+
     return async (dispatch: Dispatch<PostLikeAction>) => {
         dispatch({
             type: PostLikeActionType.POST_LIKE_REQUEST,

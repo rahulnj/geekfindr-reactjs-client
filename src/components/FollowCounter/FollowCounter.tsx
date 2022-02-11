@@ -5,11 +5,14 @@ import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { userProfile, UserProfileState } from '../../models'
+import request from '../../api'
 
 
 const FollowCount = ({ userProfile }: userProfile) => {
 
-
+    let { data: user }: any = useTypedSelector(
+        (state) => state.UserSignin
+    )
 
     let { data: UserDetails }: any = useTypedSelector(
         (state) => state.GetUserDetails
@@ -23,6 +26,21 @@ const FollowCount = ({ userProfile }: userProfile) => {
         UserDetails = UserProfileDetails
     }
 
+    const FollowUser = async (id: string) => {
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+        try {
+            const { data } = await request.post('/api/v1/profiles/following', id, config)
+            console.log(data);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 
@@ -54,7 +72,7 @@ const FollowCount = ({ userProfile }: userProfile) => {
                     </div>}
                 </div>
                 <div className='followcounter_wrapper_right'>
-                    {userProfile ? <button className="button-follow">Follow</button> :
+                    {userProfile ? <button className="button-follow" onClick={() => FollowUser(UserDetails?.id)}>Follow</button> :
                         <Link to={`/editprofile/${UserDetails?.id}`}>
                             <button className="button-edit">Edit</button>
                         </Link>}

@@ -19,10 +19,22 @@ import { Modal } from '..'
 
 const Post: React.FC<Profile> = ({ profile }) => {
 
+    const { GetFeedPosts, LikePost } = useActions();
+
+
+
     const [isEditModalOpened, setIsEditModalOpened] = useState(false)
 
+    const { user }: any = useTypedSelector(
+        (state) => state.UserSignin
+    )
 
+    const LikePostHandler = (id: string) => {
+        console.log(id);
+        console.log(user.token);
 
+        LikePost({ token: user.token, postId: id })
+    }
 
 
     const CommentPostHandler = (e: any) => {
@@ -54,7 +66,9 @@ const Post: React.FC<Profile> = ({ profile }) => {
                     </div>
                     <div className="post_bottom">
                         <div className="post_bottom_left">
-                            <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon' />0</div>
+                            <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon'
+                                onClick={() => { LikePostHandler(id) }}
+                            />0</div>
                             <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />0</div>
                         </div>
                     </div>
@@ -108,7 +122,6 @@ const Post: React.FC<Profile> = ({ profile }) => {
 
         return (
             <>
-
                 <div className='post' >
                     <div className="post_wrapper">
                         <div className="post_top">
@@ -135,7 +148,9 @@ const Post: React.FC<Profile> = ({ profile }) => {
                         </div>
                         <div className="post_bottom">
                             <div className="post_bottom_left">
-                                <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon' />{likeCount}</div>
+                                <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon'
+                                    onClick={() => { LikePostHandler(id) }}
+                                />{likeCount}</div>
                                 <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{comments?.length}</div>
                             </div>
                         </div>
@@ -150,9 +165,7 @@ const Post: React.FC<Profile> = ({ profile }) => {
         )
     }
 
-    const { user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
+
     //////////////////////////////////////////////////////////////////////
     const [feeds, setFeeds] = useState([])
     const { data: ProfilePosts }: any = useTypedSelector(
@@ -170,7 +183,6 @@ const Post: React.FC<Profile> = ({ profile }) => {
 
 
 
-    const { GetFeedPosts } = useActions();
     useEffect(() => {
         const newArray = FeedPosts.reverse()
         const lastPostId = newArray[0]?.id
