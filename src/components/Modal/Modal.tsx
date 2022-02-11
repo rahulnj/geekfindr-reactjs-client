@@ -3,15 +3,20 @@ import { createPortal } from 'react-dom';
 
 import './_Modal.scss'
 
-
 import { Messages, PostUploadModal } from '..';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { profileData } from '../../models';
 
 const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened, followersModal, setFollowersModal }: any) => {
 
     const Modalref = useRef<any>()
 
+    const { data: Followers }: any = useTypedSelector(
+        (state) => state.GetUserFollowers
+    )
 
     let MODAL: boolean;
+
     if (isModalOpened) {
         MODAL = isModalOpened
     } else if (isEditModalOpened) {
@@ -52,7 +57,15 @@ const Modal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditMo
             <div className={followersModal ? "modal-sm" : "modal-lg"}
                 ref={Modalref}>
                 {followersModal &&
-                    <Messages followersModal={followersModal} />
+                    Followers.map((user: profileData) => (
+                        <Messages followersModal={followersModal}
+                            key={user.id}
+                            username={user.username}
+                            role={user.role}
+                            userId={user.id}
+                            avatar={user.avatar}
+                        />
+                    ))
                 }
                 {(isModalOpened || isEditModalOpened) && <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened}
                     isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />}

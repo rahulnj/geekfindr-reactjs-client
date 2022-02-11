@@ -6,6 +6,11 @@ import {
 } from "./AuthReducer";
 
 import {
+    GetFollowingUsers,
+    GetUserFollowers
+} from "./FollowersReducer";
+
+import {
     CreatePostReducer,
     DeletePostReducer,
     EditPostReducer,
@@ -36,6 +41,8 @@ const rootReducer = combineReducers({
     GetPostLikes: GetLikesReducer,
     GetPostComments: GetCommentsReducer,
     LikePost: PostLikeReducer,
+    GetUserFollowers: GetUserFollowers,
+    GetFollowingUsers: GetFollowingUsers,
 })
 
 export default rootReducer;

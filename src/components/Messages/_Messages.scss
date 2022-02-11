@@ -8,6 +8,24 @@
     padding: 0 2rem;
     overflow-y: auto;
 
+    &_followers {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        // padding: 0 2rem;
+        overflow-y: auto;
+        margin-bottom: 1rem;
+    }
+    &_followers:hover {
+        background-color: $main-color;
+    }
+    &_bodywrapperfollowers {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7rem;
+    }
     &_profileimg {
         position: relative;
         overflow: visible;

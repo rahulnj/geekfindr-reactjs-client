@@ -37,6 +37,12 @@ export interface PostState {
     success?: boolean
 }
 
+export interface FollowersState {
+    data: string[]
+    error: string[] | null
+    loading: boolean
+    success?: boolean
+}
 
 //Poststate Models used in the state
 

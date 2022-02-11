@@ -1,6 +1,6 @@
 import { Dispatch } from "redux"
+
 import request from "../../api"
-import { PostDataState } from "../../models"
 
 import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction, GetPostCommentsAction, GetPostLikesAction, PostLikeAction } from "../action-models"
 import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType, GetPostCommentsActionType, GetPostLikesActionType, PostLikeActionType } from "../actiontypes"

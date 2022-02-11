@@ -7,12 +7,14 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { userProfile, UserProfileState } from '../../models'
 import request from '../../api'
 import { Modal } from '..'
+import { useActions } from '../../hooks/useActions'
 
 
 const FollowCount = ({ userProfile }: userProfile) => {
 
     const [followersModal, setFollowersModal] = useState(false)
 
+    const { GetUserFollowers } = useActions();
 
 
     let { data: user }: any = useTypedSelector(
@@ -47,7 +49,13 @@ const FollowCount = ({ userProfile }: userProfile) => {
         }
     }
 
-
+    const ShowFollowersList = () => {
+        GetUserFollowers({
+            token: user.token,
+            userId: user.id
+        })
+        setFollowersModal(true)
+    }
 
 
 
@@ -64,12 +72,12 @@ const FollowCount = ({ userProfile }: userProfile) => {
                             <p>Posts</p>
                         </div>
                         {userProfile ? <div className='followcounter_wrapper_left_items'
-                            onClick={() => setFollowersModal(true)}
+                            onClick={ShowFollowersList}
                         >
                             <span>{UserDetails?.followersCount}</span>
                             <p>followers</p>
                         </div> : <div className='followcounter_wrapper_left_items'
-                            onClick={() => setFollowersModal(true)}
+                            onClick={ShowFollowersList}
                         >
                             <span>{UserDetails?.followersCount}</span>
                             <p>followers</p>

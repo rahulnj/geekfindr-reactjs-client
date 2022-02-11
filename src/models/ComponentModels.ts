@@ -44,6 +44,10 @@ export interface Profile {
 
 export interface FollowersModal {
     followersModal?: boolean
+    username?: string
+    role?: string
+    userId?: string
+    avatar?: string
 }
 
 
@@ -63,6 +67,7 @@ export interface profileData {
     userId: string
     username: string
     token: string
+    role?: string
 }
 
 export interface profileinfo {
