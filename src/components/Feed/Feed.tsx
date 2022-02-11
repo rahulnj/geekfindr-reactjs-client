@@ -10,36 +10,6 @@ import { useActions } from '../../hooks/useActions'
 
 const Feed: React.FC<Profile> = ({ profile }) => {
 
-
-    const [nextPostId, setNextPostId] = useState('')
-
-    const { user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
-
-    const { data: FeedPosts }: any = useTypedSelector(
-        (state) => state.GetMyFeed
-    )
-
-
-
-
-    const { GetFeedPosts } = useActions();
-    useEffect(() => {
-        const newArray = FeedPosts.reverse()
-        const lastPostId = newArray[0]?.id
-        console.log(lastPostId);
-        setNextPostId(lastPostId)
-        GetFeedPosts({
-            token: user.token,
-            limit: 5,
-            lastPostId
-        })
-    }, [])
-
-
-
-
     return (
         <div className='feed'>
             <div className="feed_wrapper">

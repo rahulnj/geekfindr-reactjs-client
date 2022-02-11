@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './_Post.scss'
 
-import person1 from '../../assets/persons/1.jpeg'
-import post1 from '../../assets/posts/1 (1).jpeg'
 
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { AiOutlineLike } from 'react-icons/ai'
@@ -18,7 +16,14 @@ import { useActions } from '../../hooks/useActions'
 import { Link, useNavigate } from 'react-router-dom'
 import { Modal } from '..'
 
+
 const Post: React.FC<Profile> = ({ profile }) => {
+
+    const [isEditModalOpened, setIsEditModalOpened] = useState(false)
+
+
+
+
 
     const CommentPostHandler = (e: any) => {
         e.preventDefault();
@@ -49,8 +54,8 @@ const Post: React.FC<Profile> = ({ profile }) => {
                     </div>
                     <div className="post_bottom">
                         <div className="post_bottom_left">
-                            <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon' />{likeCount}</div>
-                            <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{comments.length}</div>
+                            <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon' />0</div>
+                            <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />0</div>
                         </div>
                     </div>
                     <form onSubmit={CommentPostHandler} className='post_commentform'>
@@ -60,6 +65,7 @@ const Post: React.FC<Profile> = ({ profile }) => {
                     </form>
                 </div>
             </div>
+
         )
     }
 
@@ -69,7 +75,8 @@ const Post: React.FC<Profile> = ({ profile }) => {
         const navigate = useNavigate();
 
         const { user }: any = useTypedSelector(
-            (state) => state.UserSignin)
+            (state) => state.UserSignin
+        )
 
         const ref = useRef<any>();
         const [toggleOptions, setToggleOptions] = useState(false)
@@ -143,15 +150,44 @@ const Post: React.FC<Profile> = ({ profile }) => {
         )
     }
 
+    const { user }: any = useTypedSelector(
+        (state) => state.UserSignin
+    )
+    //////////////////////////////////////////////////////////////////////
+    const [feeds, setFeeds] = useState([])
     const { data: ProfilePosts }: any = useTypedSelector(
         (state) => state.GetMyPost
     )
+
+    const [nextPostId, setNextPostId] = useState('')
+
+
 
     const { data: FeedPosts }: any = useTypedSelector(
         (state) => state.GetMyFeed
     )
 
-    const [isEditModalOpened, setIsEditModalOpened] = useState(false)
+
+
+
+    const { GetFeedPosts } = useActions();
+    useEffect(() => {
+        const newArray = FeedPosts.reverse()
+        const lastPostId = newArray[0]?.id
+        console.log(lastPostId);
+        setNextPostId(lastPostId)
+        GetFeedPosts({
+            token: user.token,
+            limit: 5,
+            lastPostId
+        })
+    }, [])
+
+
+
+    ////////////////////////////////////////////////////////
+
+
 
 
     return (
@@ -169,17 +205,20 @@ const Post: React.FC<Profile> = ({ profile }) => {
                     id={post.id}
                     owner={post.owner}
                 />
-            )) : FeedPosts?.map((post: PostDataState) => (
-                <HomePosts key={post.id}
-                    description={post.description}
-                    isProject={post.isProject}
-                    likeCount={post.likeCount}
-                    mediaURL={post.mediaURL}
-                    createdAt={post.createdAt}
-                    comments={post.comments}
-                    id={post.id}
-                    owner={post.owner} />
-            ))}
+            )) :
+                FeedPosts?.map((post: PostDataState) => (
+                    <HomePosts key={post.id}
+                        description={post.description}
+                        isProject={post.isProject}
+                        likeCount={post.likeCount}
+                        mediaURL={post.mediaURL}
+                        createdAt={post.createdAt}
+                        comments={post.comments}
+                        id={post.id}
+                        owner={post.owner} />
+                ))
+
+            }
         </>
     )
 }
