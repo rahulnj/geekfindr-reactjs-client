@@ -1,6 +1,6 @@
 import { PostState } from "../../models"
-import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction, PostCommentsAction, PostLikesAction } from "../action-models"
-import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType, PostCommentsActionType, PostLikesActionType } from "../actiontypes";
+import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction, GetPostCommentsAction, GetPostLikesAction, PostLikeAction } from "../action-models"
+import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType, GetPostCommentsActionType, GetPostLikesActionType, PostLikeActionType } from "../actiontypes";
 
 
 
@@ -93,14 +93,14 @@ export const DeletePostReducer = (
 
 export const GetLikesReducer = (
     state: PostState = initialState,
-    action: PostLikesAction
+    action: GetPostLikesAction
 ): PostState => {
     switch (action.type) {
-        case PostLikesActionType.GET_LIKES_REQUEST:
+        case GetPostLikesActionType.GET_LIKES_REQUEST:
             return { ...state, loading: true, error: null }
-        case PostLikesActionType.GET_LIKES_SUCCESS:
+        case GetPostLikesActionType.GET_LIKES_SUCCESS:
             return { ...state, success: true, error: null, data: action.payload }
-        case PostLikesActionType.GET_LIKES_FAIL:
+        case GetPostLikesActionType.GET_LIKES_FAIL:
             return { ...state, loading: false, success: false, error: action.payload, data: [] }
         default:
             return state;
@@ -109,14 +109,30 @@ export const GetLikesReducer = (
 
 export const GetCommentsReducer = (
     state: PostState = initialState,
-    action: PostCommentsAction
+    action: GetPostCommentsAction
 ): PostState => {
     switch (action.type) {
-        case PostCommentsActionType.GET_COMMENTS_REQUEST:
+        case GetPostCommentsActionType.GET_COMMENTS_REQUEST:
             return { ...state, loading: true, error: null }
-        case PostCommentsActionType.GET_COMMENTS_SUCCESS:
+        case GetPostCommentsActionType.GET_COMMENTS_SUCCESS:
             return { ...state, success: true, error: null, data: action.payload }
-        case PostCommentsActionType.GET_COMMENTS_FAIL:
+        case GetPostCommentsActionType.GET_COMMENTS_FAIL:
+            return { ...state, loading: false, success: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const PostLikeReducer = (
+    state: PostState = initialState,
+    action: PostLikeAction
+): PostState => {
+    switch (action.type) {
+        case PostLikeActionType.POST_LIKE_REQUEST:
+            return { ...state, loading: true, error: null }
+        case PostLikeActionType.POST_LIKE_SUCCESS:
+            return { ...state, success: true, error: null, data: action.payload }
+        case PostLikeActionType.POST_LIKE_FAIL:
             return { ...state, loading: false, success: false, error: action.payload, data: [] }
         default:
             return state;

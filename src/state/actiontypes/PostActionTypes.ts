@@ -28,14 +28,20 @@ export enum DeletePostActionType {
     DELETE_POST_FAIL = 'DELETE_POST_FAIL'
 }
 
-export enum PostLikesActionType {
+export enum GetPostLikesActionType {
     GET_LIKES_REQUEST = 'GET_LIKES_REQUEST',
     GET_LIKES_SUCCESS = 'GET_LIKES_SUCCESS',
     GET_LIKES_FAIL = 'GET_LIKES_FAIL'
 }
 
-export enum PostCommentsActionType {
+export enum GetPostCommentsActionType {
     GET_COMMENTS_REQUEST = 'GET_COMMENTS_REQUEST',
     GET_COMMENTS_SUCCESS = 'GET_COMMENTS_SUCCESS',
     GET_COMMENTS_FAIL = 'GET_COMMENTS_FAIL'
+}
+
+export enum PostLikeActionType {
+    POST_LIKE_REQUEST = 'POST_LIKE_REQUEST',
+    POST_LIKE_SUCCESS = 'POST_LIKE_SUCCESS',
+    POST_LIKE_FAIL = 'POST_LIKE_FAIL'
 }

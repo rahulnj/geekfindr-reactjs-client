@@ -13,6 +13,7 @@ import {
     GetFeedReducer,
     GetLikesReducer,
     GetMyPostReducer,
+    PostLikeReducer,
 } from "./PostReducer";
 
 import {
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
     GetMyFeed: GetFeedReducer,
     GetPostLikes: GetLikesReducer,
     GetPostComments: GetCommentsReducer,
+    LikePost: PostLikeReducer,
 })
 
 export default rootReducer;

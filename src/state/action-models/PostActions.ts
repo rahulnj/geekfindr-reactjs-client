@@ -4,8 +4,9 @@ import {
     EditPostActionType,
     GetFeedActionType,
     GetMyPostsActionType,
-    PostCommentsActionType,
-    PostLikesActionType
+    GetPostCommentsActionType,
+    GetPostLikesActionType,
+    PostLikeActionType
 } from '../actiontypes';
 
 
@@ -115,45 +116,66 @@ export type DeletePostAction =
     | DeletePostFailAction
 
 
+//Action models for getting likes of a post
+
+interface GetPostLikesRequestAction {
+    type: GetPostLikesActionType.GET_LIKES_REQUEST
+}
+
+interface GetPostLikesSuccessAction {
+    type: GetPostLikesActionType.GET_LIKES_SUCCESS
+    payload: string[]
+}
+
+interface GetPostLikesFailAction {
+    type: GetPostLikesActionType.GET_LIKES_FAIL
+    payload: string[] | null
+}
+
+export type GetPostLikesAction =
+    | GetPostLikesRequestAction
+    | GetPostLikesSuccessAction
+    | GetPostLikesFailAction
+
+
+//Action models for getting comments of a post
+
+interface GetPostCommentsRequestAction {
+    type: GetPostCommentsActionType.GET_COMMENTS_REQUEST
+}
+
+interface GetPostCommentsSuccessAction {
+    type: GetPostCommentsActionType.GET_COMMENTS_SUCCESS
+    payload: string[]
+}
+
+interface GetPostCommentsFailAction {
+    type: GetPostCommentsActionType.GET_COMMENTS_FAIL
+    payload: string[] | null
+}
+
+export type GetPostCommentsAction =
+    | GetPostCommentsRequestAction
+    | GetPostCommentsSuccessAction
+    | GetPostCommentsFailAction
+
 //Action models for liking a post
 
-interface PostLikesRequestAction {
-    type: PostLikesActionType.GET_LIKES_REQUEST
+interface PostLikeRequestAction {
+    type: PostLikeActionType.POST_LIKE_REQUEST
 }
 
-interface PostLikesSuccessAction {
-    type: PostLikesActionType.GET_LIKES_SUCCESS
+interface PostLikeSuccessAction {
+    type: PostLikeActionType.POST_LIKE_SUCCESS
     payload: string[]
 }
 
-interface PostLikesFailAction {
-    type: PostLikesActionType.GET_LIKES_FAIL
+interface PostLikeFailAction {
+    type: PostLikeActionType.POST_LIKE_FAIL
     payload: string[] | null
 }
 
-export type PostLikesAction =
-    | PostLikesRequestAction
-    | PostLikesSuccessAction
-    | PostLikesFailAction
-
-
-//Action models for commenting in a post
-
-interface PostCommentsRequestAction {
-    type: PostCommentsActionType.GET_COMMENTS_REQUEST
-}
-
-interface PostCommentsSuccessAction {
-    type: PostCommentsActionType.GET_COMMENTS_SUCCESS
-    payload: string[]
-}
-
-interface PostCommentsFailAction {
-    type: PostCommentsActionType.GET_COMMENTS_FAIL
-    payload: string[] | null
-}
-
-export type PostCommentsAction =
-    | PostCommentsRequestAction
-    | PostCommentsSuccessAction
-    | PostCommentsFailAction
+export type PostLikeAction =
+    | PostLikeRequestAction
+    | PostLikeSuccessAction
+    | PostLikeFailAction
