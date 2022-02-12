@@ -61,7 +61,6 @@ export const GetFeedPosts = ({ token, limit, lastPostId }: any) => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            // console.log(data, "feed");
             dispatch({
                 type: GetFeedActionType.GET_FEED_SUCCESS,
                 payload: data
@@ -89,8 +88,6 @@ export const GetMyPost = ({ token }: any) => {
         };
         try {
             const { data } = await request.get('/api/v1/posts/my-posts', config)
-            console.log(data, "my posts");
-
             dispatch({
                 type: GetMyPostsActionType.GET_MYPOST_SUCCESS,
                 payload: data

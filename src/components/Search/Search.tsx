@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import './_Search.scss'
 
@@ -20,8 +20,11 @@ import { useActions } from '../../hooks/useActions';
 
 const Search: React.FC = () => {
 
-    const { GetUserDetails, GetUsersPosts } = useActions();
+    const { GetUserDetails } = useActions();
     const navigate = useNavigate();
+
+    const firstUpdate = useRef(true);
+
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
@@ -36,6 +39,10 @@ const Search: React.FC = () => {
     }
 
     useEffect(() => {
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
         const CancelToken = axios.CancelToken.source() // <-- 1st step
         const fetchUsers = async () => {
             try {
@@ -56,7 +63,7 @@ const Search: React.FC = () => {
         return () => {
             CancelToken.cancel() // <-- 3rd step
         }
-    }, [wordEntered, user])
+    }, [wordEntered])
 
 
     const clearInput = () => {
