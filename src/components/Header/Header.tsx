@@ -26,9 +26,9 @@ import { Search } from '..'
 const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModal }) => {
     const ref = useRef<any>();
     const [ToggleHeader, setToggleHeader] = useState<boolean>(false)
-    const { UserLogout } = useActions();
+    const { UserLogout, GetMyPost, UserProfileDetails } = useActions();
 
-    const { data, user }: any = useTypedSelector(
+    const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
 
@@ -60,6 +60,11 @@ const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModa
         };
     }, [ToggleHeader]);
 
+    const ProfileHandler = () => {
+        GetMyPost({ token: user.token })
+        UserProfileDetails({ token: user.token })
+        navigate(`/profile/${user?.id}`)
+    }
 
     return (
         <div className="header">
@@ -73,12 +78,12 @@ const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModa
             <Search />
             <div className='header_nav_right' >
                 <button className='header_nav_right_button' onClick={() => ToggleAddPostModal()}>Upload</button>
-                <Link to={`/profile/${user?.id}`} style={{ textDecoration: 'none' }}>
-                    <div className='header_nav_right_userinfo'>
-                        <img className='header_nav_right_userinfo_userImg' src={user?.avatar} alt="" />
-                        <span>Hi,{user?.username}</span>
-                    </div>
-                </Link>
+
+                <div className='header_nav_right_userinfo' onClick={ProfileHandler}>
+                    <img className='header_nav_right_userinfo_userImg' src={user?.avatar} alt="" />
+                    <span>Hi,{user?.username}</span>
+                </div>
+
                 <AiOutlineCaretDown onClick={ToggleHeaderDropDown} className='header_nav_right_arrow' />
             </div>
             <div ref={ref} className={ToggleHeader ? "header_menu active" : "header_menu"}>

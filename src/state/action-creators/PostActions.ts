@@ -2,8 +2,17 @@ import { Dispatch } from "redux"
 
 import request from "../../api"
 
-import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction, GetPostCommentsAction, GetPostLikesAction, PostLikeAction } from "../action-models"
-import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType, GetPostCommentsActionType, GetPostLikesActionType, PostLikeActionType } from "../actiontypes"
+import {
+    CreatePostAction, DeletePostAction, EditPostAction,
+    GetFeedAction, GetMyPostAction, GetPostCommentsAction,
+    GetPostLikesAction, GetUsersPostsAction, PostLikeAction
+} from "../action-models"
+
+import {
+    CreatePostActionType, DeletePostActionType, EditPostActionType,
+    GetFeedActionType, GetMyPostsActionType, GetPostCommentsActionType,
+    GetPostLikesActionType, GetUsersPostsActionType, PostLikeActionType
+} from "../actiontypes"
 
 export const CreatePost = ({ token, postData, navigate, setIsModalOpened }: any) => {
     return async (dispatch: Dispatch<CreatePostAction>) => {
@@ -18,7 +27,6 @@ export const CreatePost = ({ token, postData, navigate, setIsModalOpened }: any)
         };
         try {
             const { data } = await request.post('/api/v1/posts/', postData, config)
-            console.log(data);
 
             dispatch({
                 type: CreatePostActionType.CREATE_POST_SUCCESS,
@@ -53,7 +61,7 @@ export const GetFeedPosts = ({ token, limit, lastPostId }: any) => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            console.log(data);
+            console.log(data, "feed");
             dispatch({
                 type: GetFeedActionType.GET_FEED_SUCCESS,
                 payload: data
@@ -81,7 +89,7 @@ export const GetMyPost = ({ token }: any) => {
         };
         try {
             const { data } = await request.get('/api/v1/posts/my-posts', config)
-            console.log(data);
+            console.log(data, "my posts");
 
             dispatch({
                 type: GetMyPostsActionType.GET_MYPOST_SUCCESS,
@@ -108,11 +116,8 @@ export const EditPost = ({ token, EditedPostData, postId, navigate, setIsEditMod
                 Authorization: `Bearer ${token}`,
             },
         };
-
         try {
-            console.log(postId);
             const { data } = await request.patch(`/api/v1/posts/${postId}`, EditedPostData, config)
-            console.log(data);
             dispatch({
                 type: EditPostActionType.EDIT_POST_SUCCESS,
                 payload: data
@@ -216,8 +221,6 @@ export const GetPostComments = ({ token, postId }: any) => {
 }
 
 export const LikePost = ({ token, postId }: any) => {
-    console.log(token);
-
     return async (dispatch: Dispatch<PostLikeAction>) => {
         dispatch({
             type: PostLikeActionType.POST_LIKE_REQUEST,
@@ -242,6 +245,33 @@ export const LikePost = ({ token, postId }: any) => {
                 type: PostLikeActionType.POST_LIKE_FAIL,
                 payload: error
             })
+        }
+    }
+}
+
+export const GetUsersPosts = ({ token, userId }: any) => {
+    return async (dispatch: Dispatch<GetUsersPostsAction>) => {
+        dispatch({
+            type: GetUsersPostsActionType.GET_USERSPOST_REQUEST
+        });
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.get(`/api/v1/posts/by-users/${userId}`, config)
+            dispatch({
+                type: GetUsersPostsActionType.GET_USERSPOST_SUCCESS,
+                payload: data
+            });
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: GetUsersPostsActionType.GET_USERSPOST_FAIL,
+                payload: error
+            });
         }
     }
 }

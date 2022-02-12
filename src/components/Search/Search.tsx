@@ -20,7 +20,7 @@ import { useActions } from '../../hooks/useActions';
 
 const Search: React.FC = () => {
 
-    const { GetUserDetails } = useActions();
+    const { GetUserDetails, GetUsersPosts } = useActions();
     const navigate = useNavigate();
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
@@ -66,13 +66,16 @@ const Search: React.FC = () => {
 
 
     const showUserProfile = (id: string) => {
-
         GetUserDetails({
             token: user.token,
             userId: id
         })
+        // GetUsersPosts({
+        //     token: user.token,
+        //     userId: id
+        // })
         setFilteredData([])
-        navigate(`userprofile/${id}`)
+        navigate(`/userprofile/${id}`)
     }
 
 
@@ -108,7 +111,6 @@ const Search: React.FC = () => {
             )
             }
         </div >
-
     )
 };
 

@@ -19,7 +19,7 @@ const FollowCount = ({ userProfile }: userProfile) => {
     const { GetUserFollowers, GetFollowingUsers } = useActions();
 
 
-    let { data: user }: any = useTypedSelector(
+    const { data: user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
 

@@ -6,6 +6,7 @@ import {
     GetMyPostsActionType,
     GetPostCommentsActionType,
     GetPostLikesActionType,
+    GetUsersPostsActionType,
     PostLikeActionType
 } from '../actiontypes';
 
@@ -179,3 +180,24 @@ export type PostLikeAction =
     | PostLikeRequestAction
     | PostLikeSuccessAction
     | PostLikeFailAction
+
+//Action models for getting user's post
+
+interface GetUsersPostsRequestAction {
+    type: GetUsersPostsActionType.GET_USERSPOST_REQUEST
+}
+
+interface GetUsersPostsSuccessAction {
+    type: GetUsersPostsActionType.GET_USERSPOST_SUCCESS
+    payload: string[]
+}
+
+interface GetUsersPostsFailAction {
+    type: GetUsersPostsActionType.GET_USERSPOST_FAIL
+    payload: string[] | null
+}
+
+export type GetUsersPostsAction =
+    | GetUsersPostsRequestAction
+    | GetUsersPostsSuccessAction
+    | GetUsersPostsFailAction

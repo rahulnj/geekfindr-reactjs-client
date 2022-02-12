@@ -18,6 +18,7 @@ import {
     GetFeedReducer,
     GetLikesReducer,
     GetMyPostReducer,
+    GetUsersPostsReducer,
     PostLikeReducer,
 } from "./PostReducer";
 
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
     LikePost: PostLikeReducer,
     GetUserFollowers: GetUserFollowers,
     GetFollowingUsers: GetFollowingUsers,
+    GetUsersPosts: GetUsersPostsReducer,
 })
 
 export default rootReducer;

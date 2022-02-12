@@ -13,11 +13,13 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 
 import Moment from 'react-moment';
 import { useActions } from '../../hooks/useActions'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Params, useNavigate, useParams } from 'react-router-dom'
 import { Modal } from '..'
 
 
 const Post: React.FC<Profile> = ({ profile }) => {
+
+    const { userId }: Readonly<Params<string>> = useParams()
 
     const { GetFeedPosts, LikePost } = useActions();
 
@@ -168,9 +170,24 @@ const Post: React.FC<Profile> = ({ profile }) => {
 
     //////////////////////////////////////////////////////////////////////
     const [feeds, setFeeds] = useState([])
-    const { data: ProfilePosts }: any = useTypedSelector(
+    let { data: ProfilePosts }: any = useTypedSelector(
         (state) => state.GetMyPost
     )
+
+    let { data: SearchedusersPosts }: any = useTypedSelector(
+        (state) => state.GetUsersPosts
+    )
+
+    // useEffect(() => {
+    //     if (userId !== user.id) {
+    //         console.log("kerii");
+    //         console.log(SearchedusersPosts, "userpost");
+    //     }
+    // }, [user.id])
+
+
+
+
 
     const [nextPostId, setNextPostId] = useState('')
 

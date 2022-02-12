@@ -24,7 +24,7 @@ const ProfileScreen = ({ userProfile }: userProfile) => {
         (state) => state.GetUserDetails
     )
 
-    const { UserProfileDetails, GetMyPost, GetUserDetails } = useActions();
+    const { GetUserDetails } = useActions();
 
     useEffect(() => {
         if (userId !== user.id) {
@@ -34,19 +34,6 @@ const ProfileScreen = ({ userProfile }: userProfile) => {
             })
         }
     }, [])
-
-
-    useEffect(() => {
-        GetMyPost({ token: user.token })
-        UserProfileDetails({ token: user.token })
-    }, [UserProfileDetails, user, GetMyPost]);
-
-
-
-
-
-
-
 
     return (
         <div className='profile'>
