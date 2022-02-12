@@ -9,31 +9,6 @@ import { useActions } from '../../hooks/useActions'
 
 const LoadorAdd: React.FC<Profile> = ({ profile }) => {
 
-    // const { GetUsersPosts } = useActions();
-
-    // const { userId }: Readonly<Params<string>> = useParams()
-
-    // const [isUser, setIsUser] = useState(true)
-
-    // let { user }: any = useTypedSelector(
-    //     (state) => state.UserSignin
-    // )
-
-    // useEffect(() => {
-    //     if (typeof (userId) !== 'undefined') {
-    //         if (userId !== user.id) {
-    //             setIsUser(false)
-    //         }
-    //     }
-    // }, [isUser, userId])
-
-    // const LoadUsersPost = (userId: string | undefined) => {
-    //     GetUsersPosts({
-    //         token: user.token,
-    //         userId
-    //     })
-    // }
-
     return (
         <div className='loadoradd'>
             <div className="loadoradd_wrapper">

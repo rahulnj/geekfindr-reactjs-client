@@ -70,10 +70,6 @@ const Search: React.FC = () => {
             token: user.token,
             userId: id
         })
-        // GetUsersPosts({
-        //     token: user.token,
-        //     userId: id
-        // })
         setFilteredData([])
         navigate(`/userprofile/${id}`)
     }
