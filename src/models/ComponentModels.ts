@@ -2,9 +2,7 @@ export interface Children {
     children: JSX.Element[] | JSX.Element
     isModalOpened?: boolean
 }
-export interface userProfile {
-    userProfile?: boolean
-}
+
 
 export interface Handle {
     error?: boolean
@@ -40,6 +38,7 @@ export interface ModalState {
 
 export interface Profile {
     profile?: boolean;
+    userProfile?: boolean;
 }
 
 export interface FollowersModal {

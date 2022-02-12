@@ -7,13 +7,15 @@ import { PostState, Profile } from '../../models'
 
 
 
-const Feed: React.FC<Profile> = ({ profile }) => {
+const Feed: React.FC<Profile> = ({ profile, userProfile }) => {
 
     return (
         <div className='feed'>
             <div className="feed_wrapper">
                 {profile ? "" : <Share />}
-                <Post profile={profile} />
+                <Post profile={profile}
+                    userProfile={userProfile}
+                />
             </div>
         </div>
     )

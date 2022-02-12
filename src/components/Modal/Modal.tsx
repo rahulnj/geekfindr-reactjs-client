@@ -82,7 +82,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                 {followingModal &&
                     Followings.map((user: profileData) => (
                         <Messages followingModal={followingModal}
-                            key={user.userId}
+                            key={user.id}
                             username={user.username}
                             role={user.role}
                             userId={user.id}

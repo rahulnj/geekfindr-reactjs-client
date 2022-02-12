@@ -14,22 +14,46 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import Moment from 'react-moment';
 import { useActions } from '../../hooks/useActions'
 import { Link, Params, useNavigate, useParams } from 'react-router-dom'
-import { Modal } from '..'
+import { LoadorAdd, Modal } from '..'
 
 
-const Post: React.FC<Profile> = ({ profile }) => {
-
-    const { userId }: Readonly<Params<string>> = useParams()
-
-    const { GetFeedPosts, LikePost } = useActions();
-
-
+const Post: React.FC<Profile> = ({ profile, userProfile }) => {
 
     const [isEditModalOpened, setIsEditModalOpened] = useState(false)
+
+    const { userId }: Readonly<Params<string>> = useParams()
+    const { GetFeedPosts, LikePost, GetUsersPosts, GetMyPost } = useActions();
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
+    let { data: ProfilePosts }: any = useTypedSelector(
+        (state) => state.GetMyPost
+    )
+    let { data: SearchedUsersPosts }: any = useTypedSelector(
+        (state) => state.GetUsersPosts
+    )
+    const { data: FeedPosts }: any = useTypedSelector(
+        (state) => state.GetMyFeed
+    )
+
+    useEffect(() => {
+        if (userProfile) {
+            GetUsersPosts({
+                token: user.token,
+                userId
+            })
+        } else {
+            GetMyPost({
+                token: user.token,
+            })
+        }
+    }, [])
+
+    if (userProfile) {
+        ProfilePosts = SearchedUsersPosts
+    }
+
 
     const LikePostHandler = (id: string) => {
         console.log(id);
@@ -43,9 +67,11 @@ const Post: React.FC<Profile> = ({ profile }) => {
         e.preventDefault();
     }
 
+
+
+
+
     const HomePosts = ({ description, isProject, likeCount, mediaURL, createdAt, comments, id, owner }: PostDataState) => {
-
-
         return (
 
             <div className='post'>
@@ -81,9 +107,11 @@ const Post: React.FC<Profile> = ({ profile }) => {
                     </form>
                 </div>
             </div>
-
         )
     }
+
+
+
 
     const MyProfilePosts = ({ description, isProject, likeCount, mediaURL, createdAt, comments, id, owner }: PostDataState) => {
 
@@ -169,33 +197,10 @@ const Post: React.FC<Profile> = ({ profile }) => {
 
 
     //////////////////////////////////////////////////////////////////////
-    const [feeds, setFeeds] = useState([])
-    let { data: ProfilePosts }: any = useTypedSelector(
-        (state) => state.GetMyPost
-    )
 
-    let { data: SearchedusersPosts }: any = useTypedSelector(
-        (state) => state.GetUsersPosts
-    )
-
-    // useEffect(() => {
-    //     if (userId !== user.id) {
-    //         console.log("kerii");
-    //         console.log(SearchedusersPosts, "userpost");
-    //     }
-    // }, [user.id])
-
-
-
-
+    //changes to be made (!important)
 
     const [nextPostId, setNextPostId] = useState('')
-
-
-
-    const { data: FeedPosts }: any = useTypedSelector(
-        (state) => state.GetMyFeed
-    )
 
 
 
@@ -203,7 +208,6 @@ const Post: React.FC<Profile> = ({ profile }) => {
     useEffect(() => {
         const newArray = FeedPosts.reverse()
         const lastPostId = newArray[0]?.id
-        console.log(lastPostId);
         setNextPostId(lastPostId)
         GetFeedPosts({
             token: user.token,
@@ -216,25 +220,24 @@ const Post: React.FC<Profile> = ({ profile }) => {
 
     ////////////////////////////////////////////////////////
 
-
-
-
     return (
 
         <>
             <Modal isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />
-            {profile ? ProfilePosts?.map((post: PostDataState) => (
-                < MyProfilePosts key={post.id}
-                    description={post.description}
-                    isProject={post.isProject}
-                    likeCount={post.likeCount}
-                    mediaURL={post.mediaURL}
-                    createdAt={post.createdAt}
-                    comments={post.comments}
-                    id={post.id}
-                    owner={post.owner}
-                />
-            )) :
+            {profile ? (ProfilePosts.length === 0) ?
+                (<LoadorAdd />) :
+                (ProfilePosts.map((post: PostDataState) => (
+                    < MyProfilePosts key={post.id}
+                        description={post.description}
+                        isProject={post.isProject}
+                        likeCount={post.likeCount}
+                        mediaURL={post.mediaURL}
+                        createdAt={post.createdAt}
+                        comments={post.comments}
+                        id={post.id}
+                        owner={post.owner}
+                    />
+                ))) :
                 FeedPosts?.map((post: PostDataState) => (
                     <HomePosts key={post.id}
                         description={post.description}
@@ -246,7 +249,6 @@ const Post: React.FC<Profile> = ({ profile }) => {
                         id={post.id}
                         owner={post.owner} />
                 ))
-
             }
         </>
     )

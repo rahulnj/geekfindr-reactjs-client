@@ -26,7 +26,7 @@ import { Search } from '..'
 const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModal }) => {
     const ref = useRef<any>();
     const [ToggleHeader, setToggleHeader] = useState<boolean>(false)
-    const { UserLogout, GetMyPost, UserProfileDetails } = useActions();
+    const { UserLogout } = useActions();
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
@@ -61,8 +61,6 @@ const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModa
     }, [ToggleHeader]);
 
     const ProfileHandler = () => {
-        GetMyPost({ token: user.token })
-        UserProfileDetails({ token: user.token })
         navigate(`/profile/${user?.id}`)
     }
 

@@ -7,33 +7,43 @@ import { Feed, FollowCounter, RightAside } from '../../components'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
-import { userProfile } from '../../models'
+import { Profile } from '../../models'
 import { Params, useParams } from 'react-router-dom'
 
 
 
-const ProfileScreen = ({ userProfile }: userProfile) => {
+const ProfileScreen = ({ userProfile }: Profile) => {
 
     const { userId }: Readonly<Params<string>> = useParams()
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
-
     const { data: usersDetails }: any = useTypedSelector(
         (state) => state.GetUserDetails
     )
 
-    const { GetUserDetails } = useActions();
+    const { GetUsersPosts, GetUserDetails, GetMyPost, UserProfileDetails } = useActions();
 
     useEffect(() => {
-        if (userId !== user.id) {
+        if (userProfile) {
             GetUserDetails({
                 token: user.token,
                 userId
             })
+            GetUsersPosts({
+                token: user.token,
+                userId
+            })
+        } else {
+            GetMyPost({
+                token: user.token,
+            })
+            UserProfileDetails({
+                token: user.token
+            })
         }
-    }, [])
+    }, [userProfile])
 
     return (
         <div className='profile'>
@@ -56,7 +66,7 @@ const ProfileScreen = ({ userProfile }: userProfile) => {
             <FollowCounter userProfile={userProfile} />
             <div className="profile_rightbottom">
                 <div className='componentfeed'>
-                    <Feed profile />
+                    <Feed profile userProfile={userProfile} />
                 </div>
                 <div className='componentprofile'>
                     <RightAside profile />
