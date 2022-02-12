@@ -6,8 +6,9 @@ import {
 } from "./AuthReducer";
 
 import {
-    GetFollowingUsers,
-    GetUserFollowers
+    FollowUserReducer,
+    GetFollowingUsersReducer,
+    GetUserFollowersReducer
 } from "./FollowersReducer";
 
 import {
@@ -42,9 +43,10 @@ const rootReducer = combineReducers({
     GetPostLikes: GetLikesReducer,
     GetPostComments: GetCommentsReducer,
     LikePost: PostLikeReducer,
-    GetUserFollowers: GetUserFollowers,
-    GetFollowingUsers: GetFollowingUsers,
+    GetUserFollowers: GetUserFollowersReducer,
+    GetFollowingUsers: GetFollowingUsersReducer,
     GetUsersPosts: GetUsersPostsReducer,
+    FollowUser: FollowUserReducer,
 })
 
 export default rootReducer;

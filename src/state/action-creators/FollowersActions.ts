@@ -1,7 +1,7 @@
 import { Dispatch } from "redux"
 import request from "../../api"
-import { GetFollowingUsersAction, GetUserFollowersAction } from "../action-models"
-import { GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes"
+import { FollowUserAction, GetFollowingUsersAction, GetUserFollowersAction } from "../action-models"
+import { FollowUserActionType, GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes"
 
 export const GetUserFollowers = ({ token, userId }: any) => {
     return async (dispatch: Dispatch<GetUserFollowersAction>) => {
@@ -53,6 +53,33 @@ export const GetFollowingUsers = ({ token, userId }: any) => {
             console.log(error);
             dispatch({
                 type: GetFollowingUsersActionType.GET_FOLLOWINGUSERS_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
+export const FollowUser = ({ token, userId }: any) => {
+    return async (dispatch: Dispatch<FollowUserAction>) => {
+        dispatch({
+            type: FollowUserActionType.FOLLOW_USER_REQUEST
+        });
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.post('/api/v1/profiles/following', userId, config)
+            dispatch({
+                type: FollowUserActionType.FOLLOW_USER_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: FollowUserActionType.FOLLOW_USER_FAIL,
                 payload: error
             })
         }

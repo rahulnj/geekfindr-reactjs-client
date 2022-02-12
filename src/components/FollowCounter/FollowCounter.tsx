@@ -16,11 +16,19 @@ const FollowCount = ({ userProfile }: Profile) => {
     const [followingModal, setFollowingModal] = useState(false)
 
 
-    const { GetUserFollowers, GetFollowingUsers } = useActions();
+    const { GetUserFollowers, GetFollowingUsers, FollowUser } = useActions();
 
 
     const { data: user }: any = useTypedSelector(
         (state) => state.UserSignin
+    )
+
+    const { data: UsersPosts }: any = useTypedSelector(
+        (state) => state.GetUsersPosts
+    )
+
+    const { data: MyPosts }: any = useTypedSelector(
+        (state) => state.GetMyPost
     )
 
     let { data: UserDetails }: any = useTypedSelector(
@@ -35,20 +43,11 @@ const FollowCount = ({ userProfile }: Profile) => {
         UserDetails = UserProfileDetails
     }
 
-    const FollowUser = async (id: string) => {
-        const config = {
-            headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${user.token}`,
-            },
-        };
-        try {
-            const { data } = await request.post('/api/v1/profiles/following', id, config)
-            console.log(data);
-
-        } catch (error) {
-            console.log(error);
-        }
+    const HandleFollowUser = async (id: string) => {
+        FollowUser({
+            token: user.token,
+            userId: id
+        })
     }
 
     const ShowFollowersList = () => {
@@ -78,10 +77,14 @@ const FollowCount = ({ userProfile }: Profile) => {
             <div className='followcounter'>
                 <div className="followcounter_wrapper">
                     <div className='followcounter_wrapper_left'>
-                        <div className='followcounter_wrapper_left_items'>
-                            <span>10</span>
+                        {userProfile ? <div className='followcounter_wrapper_left_items'>
+                            <span>{UsersPosts.length}</span>
                             <p>Posts</p>
-                        </div>
+                        </div> :
+                            <div className='followcounter_wrapper_left_items'>
+                                <span>{MyPosts.length}</span>
+                                <p>Posts</p>
+                            </div>}
                         {userProfile ? <div className='followcounter_wrapper_left_items'
 
                         >
@@ -105,7 +108,7 @@ const FollowCount = ({ userProfile }: Profile) => {
                         </div>}
                     </div>
                     <div className='followcounter_wrapper_right'>
-                        {userProfile ? <button className="button-follow" onClick={() => FollowUser(UserDetails?.id)}>Follow</button> :
+                        {userProfile ? <button className="button-follow" onClick={() => HandleFollowUser(UserDetails?.id)}>Follow</button> :
                             <Link to={`/editprofile/${UserDetails?.id}`}>
                                 <button className="button-edit">Edit</button>
                             </Link>}

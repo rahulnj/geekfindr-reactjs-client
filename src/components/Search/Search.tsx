@@ -43,7 +43,7 @@ const Search: React.FC = () => {
             firstUpdate.current = false;
             return;
         }
-        const CancelToken = axios.CancelToken.source() // <-- 1st step
+        const CancelToken = axios.CancelToken.source()
         const fetchUsers = async () => {
             try {
                 const { data: usersData } = await request.get(`/api/v1/profiles?searchUserName=${wordEntered}`, {
@@ -61,7 +61,7 @@ const Search: React.FC = () => {
         }
         fetchUsers()
         return () => {
-            CancelToken.cancel() // <-- 3rd step
+            CancelToken.cancel()
         }
     }, [wordEntered])
 

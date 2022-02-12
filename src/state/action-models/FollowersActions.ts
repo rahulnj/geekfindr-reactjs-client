@@ -1,4 +1,4 @@
-import { GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes";
+import { FollowUserActionType, GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes";
 
 //Action model to get all user followers
 
@@ -42,3 +42,25 @@ export type GetFollowingUsersAction =
     | GetFollowingUsersRequestAction
     | GetFollowingUsersSuccessAction
     | GetFollowingUsersFailAction
+
+
+//Action models to follow a user
+
+interface FollowUserRequestAction {
+    type: FollowUserActionType.FOLLOW_USER_REQUEST
+}
+
+interface FollowUserSuccessAction {
+    type: FollowUserActionType.FOLLOW_USER_SUCCESS
+    payload: string[]
+}
+
+interface FollowUserFailAction {
+    type: FollowUserActionType.FOLLOW_USER_FAIL
+    payload: string[] | null
+}
+
+export type FollowUserAction =
+    | FollowUserRequestAction
+    | FollowUserSuccessAction
+    | FollowUserFailAction

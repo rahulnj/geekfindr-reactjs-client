@@ -1,6 +1,6 @@
 import { FollowersState } from "../../models"
-import { GetFollowingUsersAction, GetUserFollowersAction } from "../action-models"
-import { GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes";
+import { FollowUserAction, GetFollowingUsersAction, GetUserFollowersAction } from "../action-models"
+import { FollowUserActionType, GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes";
 
 const initialState = {
     data: [],
@@ -8,7 +8,7 @@ const initialState = {
     loading: false,
 }
 
-export const GetUserFollowers = (
+export const GetUserFollowersReducer = (
     state: FollowersState = initialState,
     action: GetUserFollowersAction
 ): FollowersState => {
@@ -24,7 +24,7 @@ export const GetUserFollowers = (
     }
 }
 
-export const GetFollowingUsers = (
+export const GetFollowingUsersReducer = (
     state: FollowersState = initialState,
     action: GetFollowingUsersAction
 ): FollowersState => {
@@ -35,6 +35,22 @@ export const GetFollowingUsers = (
             return { ...state, loading: false, error: null, data: action.payload }
         case GetFollowingUsersActionType.GET_FOLLOWINGUSERS_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const FollowUserReducer = (
+    state: FollowersState = initialState,
+    action: FollowUserAction
+): FollowersState => {
+    switch (action.type) {
+        case FollowUserActionType.FOLLOW_USER_REQUEST:
+            return { ...state, loading: true, success: false, error: null }
+        case FollowUserActionType.FOLLOW_USER_SUCCESS:
+            return { ...state, loading: false, success: true, error: null }
+        case FollowUserActionType.FOLLOW_USER_FAIL:
+            return { ...state, loading: false, success: false, error: null }
         default:
             return state;
     }
