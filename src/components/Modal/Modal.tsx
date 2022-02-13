@@ -10,7 +10,8 @@ import { profileData } from '../../models';
 const Modal = ({ isModalOpened, setIsModalOpened,
     isEditModalOpened, setIsEditModalOpened,
     followersModal, setFollowersModal,
-    followingModal, setFollowingModal
+    followingModal, setFollowingModal,
+    isCommentModalOpened, setIsCommentModalOpened
 }: any) => {
 
     const Modalref = useRef<any>()
@@ -32,6 +33,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         MODAL = followersModal
     } else if (followingModal) {
         MODAL = followingModal
+    } else if (isCommentModalOpened) {
+        MODAL = isCommentModalOpened
     }
 
 
@@ -47,6 +50,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                     setFollowersModal(false)
                 } else if (followingModal) {
                     setFollowingModal(false)
+                } else if (isCommentModalOpened) {
+                    setIsCommentModalOpened(false)
                 }
             }
         }
@@ -57,9 +62,12 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     }, [isModalOpened, setIsModalOpened,
         isEditModalOpened, setIsEditModalOpened,
         followersModal, setFollowersModal,
-        followingModal, setFollowingModal]);
+        followingModal, setFollowingModal,
+        isCommentModalOpened, setIsCommentModalOpened]);
 
-    if (!isModalOpened && !isEditModalOpened && !followersModal && !followingModal) {
+    if (!isModalOpened && !isEditModalOpened &&
+        !followersModal && !followingModal
+        && !isCommentModalOpened) {
         return null;
     }
 

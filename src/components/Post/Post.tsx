@@ -20,6 +20,8 @@ import { Modal } from '..'
 const Post: React.FC<Profile> = ({ profile, userProfile }) => {
 
     const [isEditModalOpened, setIsEditModalOpened] = useState(false)
+    const [isCommentModalOpened, setIsCommentModalOpened] = useState(false)
+    const [comments, setComments] = useState('')
 
     const { userId }: Readonly<Params<string>> = useParams()
     const { GetFeedPosts, LikePost, GetUsersPosts, GetMyPost } = useActions();
@@ -94,9 +96,19 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     }
 
 
-    const CommentPostHandler = (e: React.FormEvent) => {
-        e.preventDefault();
-    }
+    // const GetComment = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    //     setComments(e.target.value)
+    // }
+
+    // console.log(comments);
+
+
+    // const CommentPostHandler = (e: React.FormEvent) => {
+    //     e.preventDefault();
+
+
+
+    // }
 
     FeedPosts = FeedPosts?.map((post: PostDataState) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === user?.id))
@@ -112,7 +124,6 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
 
     const HomePosts = ({ description, isProject, likeCount, mediaURL, commentCount, createdAt, comments, id, owner, isLiked }: PostDataState) => {
         return (
-
             <div className='post'>
                 <div className="post_wrapper">
                     <div className="post_top">
@@ -139,13 +150,13 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                                         onClick={() => { LikePostHandler(id) }}
                                     />}
                                 {likeCount}</div>
-                            <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{commentCount}</div>
+                            <div className='post_bottom_left_icons'><BiComment onClick={() => setIsCommentModalOpened(true)} size={21} className='post_bottom_left_icon' />{commentCount}</div>
                         </div>
                     </div>
-                    <form onSubmit={CommentPostHandler} className='post_commentform'>
-                        <BiSmile size={24} className='post_commentform_icons' />
-                        <input type="text" placeholder='Add a comment...' />
-                        <button>post</button>
+                    <form className='post_commentform'>
+                        {/* <BiSmile size={24} className='post_commentform_icons' />
+                        <input onChange={GetComment} type="text" placeholder='Add a comment...' />
+                        <button type='submit'>post</button> */}
                     </form>
                 </div>
             </div>
@@ -227,10 +238,10 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                                 <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{commentCount}</div>
                             </div>
                         </div>
-                        <form onSubmit={CommentPostHandler} className='post_commentform'>
-                            <BiSmile size={24} className='post_commentform_icons' />
+                        <form className='post_commentform'>
+                            {/* <BiSmile size={24} className='post_commentform_icons' />
                             <input type="text" placeholder='Add a comment...' />
-                            <button>post</button>
+                            <button>post</button> */}
                         </form>
                     </div>
                 </div>
@@ -241,7 +252,8 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     return (
 
         <>
-            <Modal isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />
+            <Modal isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened}
+                isCommentModalOpened={isCommentModalOpened} setIsCommentModalOpened={setIsCommentModalOpened} />
             {profile ?
                 //  (ProfilePosts.length === 0) ?
                 //     (<LoadorAdd />) :
