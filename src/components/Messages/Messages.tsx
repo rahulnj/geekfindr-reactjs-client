@@ -24,7 +24,7 @@ const Messages: React.FC<FollowersModal> = ({ followersModal, followingModal, us
                         <h5>{username}</h5>
                         <p>{role}</p>
                     </div>
-                    <button className='messages_accbtn'>Follow</button>
+                    {/* {followersModal && <button className='messages_accbtn'>Follow</button>} */}
                 </div>
             </div >
         )

@@ -6,14 +6,15 @@
     align-items: center;
     margin-bottom: 1rem;
     padding: 0 2rem;
+
     overflow-y: auto;
 
     &_followers {
         display: flex;
         gap: 1rem;
+        width: 350px;
         align-items: center;
-        justify-content: center;
-        // padding: 0 2rem;
+        padding: 0 2rem;
         overflow-y: auto;
         margin-bottom: 1rem;
     }

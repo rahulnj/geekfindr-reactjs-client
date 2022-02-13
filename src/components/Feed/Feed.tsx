@@ -2,12 +2,35 @@ import React, { useEffect, useState } from 'react'
 import './_Feed.scss'
 import { Post, Share } from '../index'
 import { PostState, Profile } from '../../models'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { useActions } from '../../hooks/useActions'
 
 
 
 
 
 const Feed: React.FC<Profile> = ({ profile, userProfile }) => {
+    const [nextPostId, setNextPostId] = useState('')
+
+    const { GetFeedPosts } = useActions();
+
+    let { data: FeedPosts, loading: FeedPostsLoading }: any = useTypedSelector(
+        (state) => state.GetMyFeed
+    )
+    const { user }: any = useTypedSelector(
+        (state) => state.UserSignin
+    )
+
+    useEffect(() => {
+        const newArray = FeedPosts.reverse()
+        const lastPostId = newArray[0]?.id
+        setNextPostId(lastPostId)
+        GetFeedPosts({
+            token: user.token,
+            limit: 5,
+            lastPostId
+        })
+    }, [])
 
     return (
         <div className='feed'>
@@ -21,4 +44,4 @@ const Feed: React.FC<Profile> = ({ profile, userProfile }) => {
     )
 }
 
-export default Feed
+export default Feed;

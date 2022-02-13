@@ -39,6 +39,9 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     const { success: LikeSuccess }: any = useTypedSelector(
         (state) => state.LikePost
     )
+    const { success: DeleteSuccess }: any = useTypedSelector(
+        (state) => state.DeletePost
+    )
 
     if (userProfile) {
         ProfilePosts = SearchedUsersPosts
@@ -56,7 +59,7 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                 token: user.token,
             })
         }
-    }, [LikeSuccess])
+    }, [LikeSuccess, DeleteSuccess])
 
 
 
@@ -69,13 +72,13 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
 
 
     useEffect(() => {
-        const newArray = FeedPosts.reverse()
-        const lastPostId = newArray[0]?.id
-        setNextPostId(lastPostId)
+        // const newArray = FeedPosts.reverse()
+        // const lastPostId = newArray[0]?.id
+        // setNextPostId(lastPostId)
         GetFeedPosts({
             token: user.token,
-            limit: 5,
-            lastPostId
+            limit: 10,
+
         })
     }, [LikeSuccess])
 
@@ -96,13 +99,13 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     }
 
     FeedPosts = FeedPosts?.map((post: PostDataState) => {
-        let isLiked = post?.likes?.find((like: any) => (like?.owner === user.id))
+        let isLiked = post?.likes?.find((like: any) => (like?.owner === user?.id))
         return { ...post, isLiked: !!isLiked }
     })
 
 
     ProfilePosts = ProfilePosts?.map((post: PostDataState) => {
-        let isLiked = post?.likes?.find((like: any) => (like?.owner === user.id))
+        let isLiked = post?.likes?.find((like: any) => (like?.owner === user?.id))
         return { ...post, isLiked: !!isLiked }
     })
 
@@ -202,12 +205,12 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                             <div className="post_top_right">
                                 <BsThreeDotsVertical className='post_top_right_threedot' onClick={TogglePostOptions} />
                             </div>
-                            <div ref={ref} className={toggleOptions ? "post_top_right_options active" : "post_top_right_options"}>
+                            {!userProfile && <div ref={ref} className={toggleOptions ? "post_top_right_options active" : "post_top_right_options"}>
                                 <ul>
                                     <Link to={`/editpost/${id}`} style={{ textDecoration: 'none' }}><li onClick={() => setIsEditModalOpened(true)}><BiEdit size={21} className='post_top_right_options_icons' /><span className='post_top_right_options_link1'>Edit</span></li></Link>
                                     <li onClick={DeleteMyPost}><MdOutlineDeleteOutline size={21} className='post_top_right_options_icons' /><span className='post_top_right_options_link2'>Delete</span></li>
                                 </ul>
-                            </div>
+                            </div>}
                         </div>
                         <div className="post_center">
                             <span className="post_description">{description}</span>
