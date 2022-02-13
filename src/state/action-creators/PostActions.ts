@@ -224,12 +224,11 @@ export const LikePost = ({ token, postId }: any) => {
         });
         const config = {
             headers: {
-                "Content-type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
         };
         try {
-            const { data } = await request.post(`/api/v1/posts/${postId}/likes`, config)
+            const { data } = await request.post(`/api/v1/posts/${postId}/likes`, {}, config)
             dispatch({
                 type: PostLikeActionType.POST_LIKE_SUCCESS,
                 payload: data

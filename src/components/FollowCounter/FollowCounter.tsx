@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Params, useParams } from 'react-router-dom'
 
 import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { Profile, UserProfileState } from '../../models'
+import { Profile, profileData, UserProfileState } from '../../models'
 import request from '../../api'
 import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'
@@ -31,6 +31,10 @@ const FollowCount = ({ userProfile }: Profile) => {
         (state) => state.GetMyPost
     )
 
+    const { data: Followers }: any = useTypedSelector(
+        (state) => state.GetUserFollowers
+    )
+
     let { data: UserDetails }: any = useTypedSelector(
         (state) => state.GetUserDetails
     )
@@ -43,10 +47,23 @@ const FollowCount = ({ userProfile }: Profile) => {
         UserDetails = UserProfileDetails
     }
 
+
+
+    const AlreadyFollowed = Followers.filter((follower: profileData) => (follower.id === user.id))
+
+    console.log(AlreadyFollowed, "............");
+
+    useEffect(() => {
+        GetUserFollowers({
+            token: user.token,
+            userId: user.id,
+        })
+    }, [])
+
     const HandleFollowUser = async (id: string) => {
         FollowUser({
             token: user.token,
-            userId: id
+            id
         })
     }
 
@@ -108,7 +125,8 @@ const FollowCount = ({ userProfile }: Profile) => {
                         </div>}
                     </div>
                     <div className='followcounter_wrapper_right'>
-                        {userProfile ? <button className="button-follow" onClick={() => HandleFollowUser(UserDetails?.id)}>Follow</button> :
+                        {userProfile ? AlreadyFollowed ? <button className="button-edit">Following</button> :
+                            <button className="button-follow" onClick={() => HandleFollowUser(UserDetails?.id)}>Follow</button> :
                             <Link to={`/editprofile/${UserDetails?.id}`}>
                                 <button className="button-edit">Edit</button>
                             </Link>}

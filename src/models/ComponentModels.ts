@@ -68,6 +68,11 @@ export interface profileData {
     username: string
     token: string
     role?: string
+    owner?: string
+    likes?: {
+        owner: string
+        id: string
+    }
 }
 
 export interface profileinfo {

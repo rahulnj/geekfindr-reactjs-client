@@ -3,11 +3,11 @@ import './_Post.scss'
 
 
 import { BsThreeDotsVertical } from 'react-icons/bs'
-import { AiOutlineLike } from 'react-icons/ai'
+import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 import { BiComment, BiSmile, BiEdit } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 
-import { PostDataState, PostState, Profile } from '../../models'
+import { PostDataState, Profile, profileData } from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
@@ -33,8 +33,11 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     let { data: SearchedUsersPosts }: any = useTypedSelector(
         (state) => state.GetUsersPosts
     )
-    const { data: FeedPosts }: any = useTypedSelector(
+    let { data: FeedPosts, loading: FeedPostsLoading }: any = useTypedSelector(
         (state) => state.GetMyFeed
+    )
+    const { success: LikeSuccess }: any = useTypedSelector(
+        (state) => state.LikePost
     )
 
     useEffect(() => {
@@ -54,24 +57,46 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
         ProfilePosts = SearchedUsersPosts
     }
 
+    //////////////////////////////////////////////////////////////////////
+
+    //changes to be made (!important)
+    const [nextPostId, setNextPostId] = useState('')
+
+
+
+
+    useEffect(() => {
+        const newArray = FeedPosts.reverse()
+        const lastPostId = newArray[0]?.id
+        setNextPostId(lastPostId)
+        GetFeedPosts({
+            token: user.token,
+            limit: 5,
+            lastPostId
+        })
+    }, [LikeSuccess])
+
+    //////////////////////////////////////////////////////////////////////
+
 
     const LikePostHandler = (id: string) => {
-        console.log(id);
-        console.log(user.token);
-
         LikePost({ token: user.token, postId: id })
     }
 
 
-    const CommentPostHandler = (e: any) => {
+    const CommentPostHandler = (e: React.FormEvent) => {
         e.preventDefault();
     }
 
+    FeedPosts = FeedPosts?.map((post: any) => {
 
+        let isLiked = post?.likes?.find((like: any) => (like?.owner === user.id))
+        console.log(post?.likes);
 
+        return { ...post, isLiked: !!isLiked }
+    })
 
-
-    const HomePosts = ({ description, isProject, likeCount, mediaURL, createdAt, comments, id, owner }: PostDataState) => {
+    const HomePosts = ({ description, isProject, likeCount, mediaURL, commentCount, createdAt, comments, id, owner, isLiked }: PostDataState) => {
         return (
 
             <div className='post'>
@@ -94,10 +119,12 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                     </div>
                     <div className="post_bottom">
                         <div className="post_bottom_left">
-                            <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon'
-                                onClick={() => { LikePostHandler(id) }}
-                            />0</div>
-                            <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />0</div>
+                            <div className='post_bottom_left_icons'>
+                                {isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> : <AiOutlineLike size={21} className='post_bottom_left_icon'
+                                    onClick={() => { LikePostHandler(id) }}
+                                />}
+                                {likeCount}</div>
+                            <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{commentCount}</div>
                         </div>
                     </div>
                     <form onSubmit={CommentPostHandler} className='post_commentform'>
@@ -113,7 +140,7 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
 
 
 
-    const MyProfilePosts = ({ description, isProject, likeCount, mediaURL, createdAt, comments, id, owner }: PostDataState) => {
+    const MyProfilePosts = ({ description, isProject, likeCount, commentCount, mediaURL, createdAt, comments, id, owner, isLiked }: PostDataState) => {
 
         const { DeletePost } = useActions();
         const navigate = useNavigate();
@@ -178,10 +205,13 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                         </div>
                         <div className="post_bottom">
                             <div className="post_bottom_left">
-                                <div className='post_bottom_left_icons'><AiOutlineLike size={21} className='post_bottom_left_icon'
-                                    onClick={() => { LikePostHandler(id) }}
-                                />{likeCount}</div>
-                                <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{comments?.length}</div>
+                                <div className='post_bottom_left_icons'>
+                                    {isLiked ? <AiFillLike size={21} className='post_bottom_left_icon' /> :
+                                        <AiOutlineLike size={21} className='post_bottom_left_icon'
+                                            onClick={() => { LikePostHandler(id) }}
+                                        />}
+                                    {likeCount}</div>
+                                <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{commentCount}</div>
                             </div>
                         </div>
                         <form onSubmit={CommentPostHandler} className='post_commentform'>
@@ -194,31 +224,6 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
             </>
         )
     }
-
-
-    //////////////////////////////////////////////////////////////////////
-
-    //changes to be made (!important)
-
-    const [nextPostId, setNextPostId] = useState('')
-
-
-
-
-    useEffect(() => {
-        const newArray = FeedPosts.reverse()
-        const lastPostId = newArray[0]?.id
-        setNextPostId(lastPostId)
-        GetFeedPosts({
-            token: user.token,
-            limit: 5,
-            lastPostId
-        })
-    }, [])
-
-
-
-    ////////////////////////////////////////////////////////
 
     return (
 
@@ -236,6 +241,7 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                         comments={post.comments}
                         id={post.id}
                         owner={post.owner}
+                        commentCount={post.commentCount}
                     />
                 ))) :
                 FeedPosts?.map((post: PostDataState) => (
@@ -247,7 +253,11 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                         createdAt={post.createdAt}
                         comments={post.comments}
                         id={post.id}
-                        owner={post.owner} />
+                        owner={post.owner}
+                        commentCount={post.commentCount}
+                        isLiked={post.isLiked}
+                    />
+
                 ))
             }
         </>

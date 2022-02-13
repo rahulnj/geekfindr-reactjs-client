@@ -54,6 +54,7 @@ export interface PostDataState {
     isOrganization?: boolean
     isProject: boolean
     likeCount: number
+    commentCount: number
     mediaType?: string
     mediaURL: string
     owner?: {
@@ -63,4 +64,5 @@ export interface PostDataState {
     }
     teamJoinRequests?: string[]
     updatedAt?: string
+    isLiked?: boolean
 }

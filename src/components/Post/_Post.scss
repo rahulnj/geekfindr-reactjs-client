@@ -137,6 +137,9 @@
             &_icon {
                 margin-right: 10px;
                 cursor: pointer;
+                &_liked {
+                    color: $button-color;
+                }
             }
         }
     }

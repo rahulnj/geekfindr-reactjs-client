@@ -59,7 +59,7 @@ export const GetFollowingUsers = ({ token, userId }: any) => {
     }
 }
 
-export const FollowUser = ({ token, userId }: any) => {
+export const FollowUser = ({ token, id }: any) => {
     return async (dispatch: Dispatch<FollowUserAction>) => {
         dispatch({
             type: FollowUserActionType.FOLLOW_USER_REQUEST
@@ -68,10 +68,10 @@ export const FollowUser = ({ token, userId }: any) => {
             headers: {
                 "Content-type": "application/json",
                 Authorization: `Bearer ${token}`,
-            },
+            }
         };
         try {
-            const { data } = await request.post('/api/v1/profiles/following', userId, config)
+            const { data } = await request.post('/api/v1/profiles/following', { id: id }, config)
             dispatch({
                 type: FollowUserActionType.FOLLOW_USER_SUCCESS,
                 payload: data
