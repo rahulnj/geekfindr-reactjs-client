@@ -31,8 +31,8 @@ const FollowCount = ({ userProfile }: Profile) => {
         (state) => state.GetMyPost
     )
 
-    const { data: Followers }: any = useTypedSelector(
-        (state) => state.GetUserFollowers
+    let { data: Followings }: any = useTypedSelector(
+        (state) => state.GetFollowingUsers
     )
 
     let { data: UserDetails }: any = useTypedSelector(
@@ -42,23 +42,37 @@ const FollowCount = ({ userProfile }: Profile) => {
     let { data: UserProfileDetails }: any = useTypedSelector(
         (state) => state.UserProfileDetails
     )
+    const { success: FollowUserSuccess }: any = useTypedSelector(
+        (state) => state.FollowUser
+    )
 
     if (!userProfile) {
         UserDetails = UserProfileDetails
     }
 
 
-
-    const AlreadyFollowed = Followers.filter((follower: profileData) => (follower.id === user.id))
-
-    console.log(AlreadyFollowed, "............");
-
     useEffect(() => {
-        GetUserFollowers({
+
+        GetFollowingUsers({
             token: user.token,
             userId: user.id,
         })
-    }, [])
+
+    }, [FollowUserSuccess])
+
+    if (typeof (UserDetails.id) !== 'undefined') {
+        if (UserDetails.id !== user.id) {
+            let isFollowing = false;
+            Followings.every((following: profileData) => {
+                isFollowing = following?.id === UserDetails.id
+                if (isFollowing == true) {
+                    return false;
+                }
+                return true;
+            })
+            UserDetails = { ...UserDetails, isFollowing: isFollowing }
+        }
+    }
 
     const HandleFollowUser = async (id: string) => {
         FollowUser({
@@ -125,11 +139,12 @@ const FollowCount = ({ userProfile }: Profile) => {
                         </div>}
                     </div>
                     <div className='followcounter_wrapper_right'>
-                        {userProfile ? AlreadyFollowed ? <button className="button-edit">Following</button> :
-                            <button className="button-follow" onClick={() => HandleFollowUser(UserDetails?.id)}>Follow</button> :
-                            <Link to={`/editprofile/${UserDetails?.id}`}>
+                        {userProfile ?
+                            (UserDetails?.isFollowing ? <button className="button-edit">Following</button> :
+                                <button className="button-follow" onClick={() => HandleFollowUser(UserDetails?.id)}>Follow</button>) :
+                            (<Link to={`/editprofile/${UserDetails?.id}`}>
                                 <button className="button-edit">Edit</button>
-                            </Link>}
+                            </Link>)}
                     </div>
                 </div>
             </div>

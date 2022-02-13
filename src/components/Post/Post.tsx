@@ -14,7 +14,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import Moment from 'react-moment';
 import { useActions } from '../../hooks/useActions'
 import { Link, Params, useNavigate, useParams } from 'react-router-dom'
-import { LoadorAdd, Modal } from '..'
+import { Modal } from '..'
 
 
 const Post: React.FC<Profile> = ({ profile, userProfile }) => {
@@ -27,10 +27,10 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
-    let { data: ProfilePosts }: any = useTypedSelector(
+    let { data: ProfilePosts, loading: ProfilePostsLoading }: any = useTypedSelector(
         (state) => state.GetMyPost
     )
-    let { data: SearchedUsersPosts }: any = useTypedSelector(
+    let { data: SearchedUsersPosts, loading: SearchedUsersPostsLoading }: any = useTypedSelector(
         (state) => state.GetUsersPosts
     )
     let { data: FeedPosts, loading: FeedPostsLoading }: any = useTypedSelector(
@@ -39,6 +39,11 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     const { success: LikeSuccess }: any = useTypedSelector(
         (state) => state.LikePost
     )
+
+    if (userProfile) {
+        ProfilePosts = SearchedUsersPosts
+        ProfilePostsLoading = SearchedUsersPostsLoading
+    }
 
     useEffect(() => {
         if (userProfile) {
@@ -51,11 +56,9 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                 token: user.token,
             })
         }
-    }, [])
+    }, [LikeSuccess])
 
-    if (userProfile) {
-        ProfilePosts = SearchedUsersPosts
-    }
+
 
     //////////////////////////////////////////////////////////////////////
 
@@ -80,7 +83,11 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
 
 
     const LikePostHandler = (id: string) => {
-        LikePost({ token: user.token, postId: id })
+
+        LikePost({
+            token: user.token,
+            postId: id
+        })
     }
 
 
@@ -88,13 +95,17 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
         e.preventDefault();
     }
 
-    FeedPosts = FeedPosts?.map((post: any) => {
-
+    FeedPosts = FeedPosts?.map((post: PostDataState) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === user.id))
-        console.log(post?.likes);
-
         return { ...post, isLiked: !!isLiked }
     })
+
+
+    ProfilePosts = ProfilePosts?.map((post: PostDataState) => {
+        let isLiked = post?.likes?.find((like: any) => (like?.owner === user.id))
+        return { ...post, isLiked: !!isLiked }
+    })
+
 
     const HomePosts = ({ description, isProject, likeCount, mediaURL, commentCount, createdAt, comments, id, owner, isLiked }: PostDataState) => {
         return (
@@ -120,9 +131,10 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                     <div className="post_bottom">
                         <div className="post_bottom_left">
                             <div className='post_bottom_left_icons'>
-                                {isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> : <AiOutlineLike size={21} className='post_bottom_left_icon'
-                                    onClick={() => { LikePostHandler(id) }}
-                                />}
+                                {isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
+                                    <AiOutlineLike size={21} className='post_bottom_left_icon'
+                                        onClick={() => { LikePostHandler(id) }}
+                                    />}
                                 {likeCount}</div>
                             <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{commentCount}</div>
                         </div>
@@ -136,8 +148,6 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
             </div>
         )
     }
-
-
 
 
     const MyProfilePosts = ({ description, isProject, likeCount, commentCount, mediaURL, createdAt, comments, id, owner, isLiked }: PostDataState) => {
@@ -206,7 +216,7 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                         <div className="post_bottom">
                             <div className="post_bottom_left">
                                 <div className='post_bottom_left_icons'>
-                                    {isLiked ? <AiFillLike size={21} className='post_bottom_left_icon' /> :
+                                    {isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
                                         <AiOutlineLike size={21} className='post_bottom_left_icon'
                                             onClick={() => { LikePostHandler(id) }}
                                         />}
@@ -229,8 +239,9 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
 
         <>
             <Modal isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />
-            {profile ? (ProfilePosts.length === 0) ?
-                (<LoadorAdd />) :
+            {profile ?
+                //  (ProfilePosts.length === 0) ?
+                //     (<LoadorAdd />) :
                 (ProfilePosts.map((post: PostDataState) => (
                     < MyProfilePosts key={post.id}
                         description={post.description}
@@ -242,6 +253,7 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                         id={post.id}
                         owner={post.owner}
                         commentCount={post.commentCount}
+                        isLiked={post.isLiked}
                     />
                 ))) :
                 FeedPosts?.map((post: PostDataState) => (

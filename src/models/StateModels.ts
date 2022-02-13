@@ -65,4 +65,5 @@ export interface PostDataState {
     teamJoinRequests?: string[]
     updatedAt?: string
     isLiked?: boolean
+    likes?: string[]
 }

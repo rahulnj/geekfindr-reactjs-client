@@ -20,7 +20,6 @@ export const GetUserFollowers = ({ token, userId }: any) => {
                 type: GetUserFollowersActionType.GET_USERFOLLOWERS_SUCCESS,
                 payload: data
             })
-            console.log(data);
         } catch (error: any) {
             console.log(error);
             dispatch({
@@ -48,7 +47,6 @@ export const GetFollowingUsers = ({ token, userId }: any) => {
                 type: GetFollowingUsersActionType.GET_FOLLOWINGUSERS_SUCCESS,
                 payload: data
             })
-            console.log(data);
         } catch (error: any) {
             console.log(error);
             dispatch({
