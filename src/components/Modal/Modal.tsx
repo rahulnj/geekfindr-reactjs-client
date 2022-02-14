@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 import './_Modal.scss'
 
-import { Messages, PostUploadModal } from '..';
+import { Comment, Messages, PostUploadModal } from '..';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { profileData } from '../../models';
 
@@ -100,6 +100,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                 }
                 {(isModalOpened || isEditModalOpened) && <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened}
                     isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />}
+                {isCommentModalOpened && <Comment />}
             </div>
         </>,
         document.getElementById('modal') as HTMLElement

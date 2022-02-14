@@ -4,7 +4,7 @@ import './_Post.scss'
 
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
-import { BiComment, BiSmile, BiEdit } from 'react-icons/bi'
+import { BiComment, BiEdit } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 
 import { PostDataState, Profile, profileData } from '../../models'
@@ -24,7 +24,9 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     const [comments, setComments] = useState('')
 
     const { userId }: Readonly<Params<string>> = useParams()
-    const { GetFeedPosts, LikePost, GetUsersPosts, GetMyPost } = useActions();
+    const { GetFeedPosts, LikePost,
+        GetUsersPosts, GetMyPost,
+        GetPostComments } = useActions();
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
@@ -63,7 +65,13 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
         }
     }, [LikeSuccess, DeleteSuccess])
 
+    const LikePostHandler = (id: string) => {
 
+        LikePost({
+            token: user.token,
+            postId: id
+        })
+    }
 
     //////////////////////////////////////////////////////////////////////
 
@@ -87,13 +95,7 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     //////////////////////////////////////////////////////////////////////
 
 
-    const LikePostHandler = (id: string) => {
 
-        LikePost({
-            token: user.token,
-            postId: id
-        })
-    }
 
 
     // const GetComment = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -105,10 +107,16 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
 
     // const CommentPostHandler = (e: React.FormEvent) => {
     //     e.preventDefault();
-
-
-
     // }
+
+    const CommentHandler = (id: string) => {
+        setIsCommentModalOpened(true)
+        GetPostComments({
+            token: user.token,
+            postId: id
+        })
+    }
+
 
     FeedPosts = FeedPosts?.map((post: PostDataState) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === user?.id))
@@ -150,7 +158,7 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                                         onClick={() => { LikePostHandler(id) }}
                                     />}
                                 {likeCount}</div>
-                            <div className='post_bottom_left_icons'><BiComment onClick={() => setIsCommentModalOpened(true)} size={21} className='post_bottom_left_icon' />{commentCount}</div>
+                            <div className='post_bottom_left_icons'><BiComment onClick={() => CommentHandler(id)} size={21} className='post_bottom_left_icon' />{commentCount}</div>
                         </div>
                     </div>
                     <form className='post_commentform'>
