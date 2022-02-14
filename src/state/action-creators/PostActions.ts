@@ -1,20 +1,24 @@
 import { Dispatch } from "redux"
 
 import request from "../../api"
+import { profileData } from "../../models";
 
 import {
     CreatePostAction, DeletePostAction, EditPostAction,
     GetFeedAction, GetMyPostAction, GetPostCommentsAction,
-    GetPostLikesAction, GetUsersPostsAction, PostLikeAction
+    GetPostLikesAction, GetUsersPostsAction, PostCommentAction, PostLikeAction
 } from "../action-models"
 
 import {
     CreatePostActionType, DeletePostActionType, EditPostActionType,
     GetFeedActionType, GetMyPostsActionType, GetPostCommentsActionType,
-    GetPostLikesActionType, GetUsersPostsActionType, PostLikeActionType
+    GetPostLikesActionType, GetUsersPostsActionType, PostCommentActionType, PostLikeActionType
 } from "../actiontypes"
 
-export const CreatePost = ({ token, postData, navigate, setIsModalOpened }: any) => {
+const CurrentUser: profileData = JSON.parse(localStorage.getItem("gfr-user") as string);
+
+
+export const CreatePost = ({ postData, navigate, setIsModalOpened }: any) => {
     return async (dispatch: Dispatch<CreatePostAction>) => {
         dispatch({
             type: CreatePostActionType.CREATE_POST_REQUEST
@@ -22,7 +26,7 @@ export const CreatePost = ({ token, postData, navigate, setIsModalOpened }: any)
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -32,6 +36,8 @@ export const CreatePost = ({ token, postData, navigate, setIsModalOpened }: any)
                 type: CreatePostActionType.CREATE_POST_SUCCESS,
                 payload: data
             })
+            console.log("current", CurrentUser);
+
             setIsModalOpened(false)
             navigate('/')
         } catch (error: any) {
@@ -58,7 +64,7 @@ export const GetFeedPosts = ({ token, limit, lastPostId }: any) => {
                 },
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${CurrentUser?.token}`,
                 },
             })
             dispatch({
@@ -83,7 +89,7 @@ export const GetMyPost = ({ token }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -110,7 +116,7 @@ export const EditPost = ({ token, EditedPostData, postId, navigate, setIsEditMod
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -139,7 +145,7 @@ export const DeletePost = ({ postId, token, navigate, userId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -167,7 +173,7 @@ export const GetPostLikes = ({ token, postId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -196,7 +202,7 @@ export const GetPostComments = ({ token, postId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -224,7 +230,7 @@ export const LikePost = ({ token, postId }: any) => {
         });
         const config = {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -245,6 +251,36 @@ export const LikePost = ({ token, postId }: any) => {
     }
 }
 
+export const CommentPost = ({ token, postId, comment }: any) => {
+    return async (dispatch: Dispatch<PostCommentAction>) => {
+        dispatch({
+            type: PostCommentActionType.POST_COMMENT_REQUEST,
+        });
+        const config = {
+            headers: {
+                Authorization: `Bearer ${CurrentUser?.token}`,
+            },
+        };
+        try {
+            const { data } = await request.post(`/api/v1/posts/${postId}/comments`, {
+                comment: comment
+            }, config);
+            dispatch({
+                type: PostCommentActionType.POST_COMMENT_SUCCESS,
+                payload: data
+            })
+            console.log(data, "Comment response");
+
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: PostCommentActionType.POST_COMMENT_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
 export const GetUsersPosts = ({ token, userId }: any) => {
     return async (dispatch: Dispatch<GetUsersPostsAction>) => {
         dispatch({
@@ -253,7 +289,7 @@ export const GetUsersPosts = ({ token, userId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {

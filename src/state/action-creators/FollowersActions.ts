@@ -1,7 +1,12 @@
 import { Dispatch } from "redux"
 import request from "../../api"
+import { profileData } from "../../models";
 import { FollowUserAction, GetFollowingUsersAction, GetUserFollowersAction } from "../action-models"
 import { FollowUserActionType, GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes"
+
+
+
+const CurrentUser: profileData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
 export const GetUserFollowers = ({ token, userId }: any) => {
     return async (dispatch: Dispatch<GetUserFollowersAction>) => {
@@ -11,7 +16,7 @@ export const GetUserFollowers = ({ token, userId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -38,7 +43,7 @@ export const GetFollowingUsers = ({ token, userId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -65,7 +70,7 @@ export const FollowUser = ({ token, id }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             }
         };
         try {

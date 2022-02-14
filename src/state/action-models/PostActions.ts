@@ -7,6 +7,7 @@ import {
     GetPostCommentsActionType,
     GetPostLikesActionType,
     GetUsersPostsActionType,
+    PostCommentActionType,
     PostLikeActionType
 } from '../actiontypes';
 
@@ -180,6 +181,27 @@ export type PostLikeAction =
     | PostLikeRequestAction
     | PostLikeSuccessAction
     | PostLikeFailAction
+
+//Action models for commenting a post
+
+interface PostCommentRequestAction {
+    type: PostCommentActionType.POST_COMMENT_REQUEST
+}
+
+interface PostCommentSuccessAction {
+    type: PostCommentActionType.POST_COMMENT_SUCCESS
+    payload: string[]
+}
+
+interface PostCommentFailAction {
+    type: PostCommentActionType.POST_COMMENT_FAIL
+    payload: string[] | null
+}
+
+export type PostCommentAction =
+    | PostCommentRequestAction
+    | PostCommentSuccessAction
+    | PostCommentFailAction
 
 //Action models for getting user's post
 

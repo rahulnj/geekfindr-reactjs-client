@@ -1,10 +1,10 @@
 import { Dispatch } from "redux"
-
 import request from "../../api"
-
-
+import { profileData } from "../../models";
 import { GetUserDetailsAction, UserEditProfileAction, UserProfileDetailsAction } from "../action-models"
 import { GetUserDetailsActionType, UserEditProfileActionType, UserProfileDetailsActionType } from "../actiontypes"
+
+const CurrentUser: profileData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
 export const UserProfileDetails = ({ token }: any) => {
 
@@ -15,7 +15,7 @@ export const UserProfileDetails = ({ token }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -44,7 +44,7 @@ export const UserEditProfileDetails = ({ token, editProfileData }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {
@@ -73,7 +73,7 @@ export const GetUserDetails = ({ token, userId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${CurrentUser?.token}`,
             },
         };
         try {

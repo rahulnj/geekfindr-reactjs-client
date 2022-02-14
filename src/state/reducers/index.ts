@@ -20,6 +20,7 @@ import {
     GetLikesReducer,
     GetMyPostReducer,
     GetUsersPostsReducer,
+    PostCommentReducer,
     PostLikeReducer,
 } from "./PostReducer";
 
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
     GetPostLikes: GetLikesReducer,
     GetPostComments: GetCommentsReducer,
     LikePost: PostLikeReducer,
+    CommentPost: PostCommentReducer,
     GetUserFollowers: GetUserFollowersReducer,
     GetFollowingUsers: GetFollowingUsersReducer,
     GetUsersPosts: GetUsersPostsReducer,
