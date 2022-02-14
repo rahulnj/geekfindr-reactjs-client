@@ -1,3 +1,26 @@
+export interface SignupData {
+    username: string;
+    email: string;
+    password: string;
+}
+
+export interface SigninData {
+    email: string;
+    password: string;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 export interface Children {
     children: JSX.Element[] | JSX.Element
     isModalOpened?: boolean
@@ -78,4 +101,28 @@ export interface profileData {
 export interface profileinfo {
     followers: string
     following: string
+}
+
+//Poststate Models used in the state
+
+export interface PostDataState {
+    comments: string[]
+    createdAt?: string
+    description: string
+    id: string
+    isOrganization?: boolean
+    isProject: boolean
+    likeCount: number
+    commentCount: number
+    mediaType?: string
+    mediaURL: string
+    owner?: {
+        avatar: string
+        id: string
+        username: string
+    }
+    teamJoinRequests?: string[]
+    updatedAt?: string
+    isLiked?: boolean
+    likes?: string[]
 }

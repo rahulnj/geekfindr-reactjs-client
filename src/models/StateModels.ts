@@ -1,14 +1,4 @@
-//Authstate Models used in the state
-export interface SignupData {
-    username: string;
-    email: string;
-    password: string;
-}
-
-export interface SigninData {
-    email: string;
-    password: string;
-}
+//State Models used in the AuthReducer
 
 export interface AuthState {
     data: string[] | null
@@ -17,18 +7,16 @@ export interface AuthState {
     loading: boolean
 }
 
+//State Models used in the UserReducer
 
-//UserState Models used in the state
-
-
-export interface UserProfileState extends GetUserDetails {
+export interface UsersState {
     data: string[]
     error: string[] | null
     loading: boolean
     success?: boolean
 }
 
-export interface GetUserDetails { }
+//State Models used in the PostReducer
 
 export interface PostState {
     data: string[]
@@ -37,6 +25,8 @@ export interface PostState {
     success?: boolean
 }
 
+//State Models used in the FollowersReducer
+
 export interface FollowersState {
     data: string[]
     error: string[] | null
@@ -44,26 +34,3 @@ export interface FollowersState {
     success?: boolean
 }
 
-//Poststate Models used in the state
-
-export interface PostDataState {
-    comments: string[]
-    createdAt?: string
-    description: string
-    id: string
-    isOrganization?: boolean
-    isProject: boolean
-    likeCount: number
-    commentCount: number
-    mediaType?: string
-    mediaURL: string
-    owner?: {
-        avatar: string
-        id: string
-        username: string
-    }
-    teamJoinRequests?: string[]
-    updatedAt?: string
-    isLiked?: boolean
-    likes?: string[]
-}

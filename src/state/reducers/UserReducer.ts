@@ -1,4 +1,4 @@
-import { GetUserDetails, UserProfileState } from "../../models";
+import { UsersState } from "../../models";
 import { GetUserDetailsAction, UserEditProfileAction, UserProfileDetailsAction } from "../action-models";
 import { GetUserDetailsActionType, UserEditProfileActionType, UserProfileDetailsActionType } from "../actiontypes";
 
@@ -11,9 +11,9 @@ const initialState = {
 }
 
 export const UserProfileDetailsReducer = (
-    state: UserProfileState = initialState,
+    state: UsersState = initialState,
     action: UserProfileDetailsAction
-): UserProfileState => {
+): UsersState => {
     switch (action.type) {
         case UserProfileDetailsActionType.USER_PROFILE_DETAILS_REQUEST:
             return { ...state, loading: true, error: null, data: [] }
@@ -27,9 +27,9 @@ export const UserProfileDetailsReducer = (
 }
 
 export const UserEditProfileDetailsReducer = (
-    state: UserProfileState = initialState,
+    state: UsersState = initialState,
     action: UserEditProfileAction
-): UserProfileState => {
+): UsersState => {
     switch (action.type) {
         case UserEditProfileActionType.USER_EDIT_PROFILE_REQUEST:
             return { ...state, loading: true, error: null, data: [] }
@@ -43,9 +43,9 @@ export const UserEditProfileDetailsReducer = (
 }
 
 export const GetUserDetailsReducer = (
-    state: GetUserDetails = initialState,
+    state: UsersState = initialState,
     action: GetUserDetailsAction
-): GetUserDetails => {
+): UsersState => {
     switch (action.type) {
         case GetUserDetailsActionType.GET_USERDETAILS_REQUEST:
             return { ...state, loading: true, error: null, data: [] }

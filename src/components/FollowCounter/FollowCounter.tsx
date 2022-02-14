@@ -4,7 +4,7 @@ import { Link, Params, useParams } from 'react-router-dom'
 import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { Profile, profileData, UserProfileState } from '../../models'
+import { Profile, profileData, UsersState } from '../../models'
 import request from '../../api'
 import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'

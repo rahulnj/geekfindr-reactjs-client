@@ -1,2 +1,2 @@
-export * from './ComponentModels';
+export * from './DataModels';
 export * from './StateModels';

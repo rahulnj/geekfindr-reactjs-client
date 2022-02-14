@@ -51,7 +51,7 @@ interface GetUserDetailsRequestAction {
 
 interface GetUserDetailsSuccessAction {
     type: GetUserDetailsActionType.GET_USERDETAILS_SUCCESS
-    payload: string[] | null
+    payload: string[]
 }
 
 interface GetUserDetailsFailAction {
