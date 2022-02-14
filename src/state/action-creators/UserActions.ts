@@ -1,10 +1,10 @@
 import { Dispatch } from "redux"
 import request from "../../api"
-import { profileData } from "../../models";
+import { UserData } from "../../models";
 import { GetUserDetailsAction, UserEditProfileAction, UserProfileDetailsAction } from "../action-models"
 import { GetUserDetailsActionType, UserEditProfileActionType, UserProfileDetailsActionType } from "../actiontypes"
 
-const CurrentUser: profileData = JSON.parse(localStorage.getItem("gfr-user") as string);
+const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
 export const UserProfileDetails = ({ token }: any) => {
 

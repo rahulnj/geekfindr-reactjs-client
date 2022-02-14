@@ -11,19 +11,20 @@ import { BsGithub } from 'react-icons/bs'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useNavigate } from 'react-router-dom'
+import { AuthState } from '../../models';
 
 
 const Signin: React.FC = () => {
-    const [Email, setEmail] = useState<string>('')
-    const [Password, setPassword] = useState<string>('')
+    const [Email, setEmail] = useState('')
+    const [Password, setPassword] = useState('')
 
-    const [EmailError, setEmailError] = useState<string>('')
-    const [PasswordError, setPasswordError] = useState<string>('')
-    const [BlankFieldError, setBlankFieldError] = useState<string>('')
+    const [EmailError, setEmailError] = useState('')
+    const [PasswordError, setPasswordError] = useState('')
+    const [BlankFieldError, setBlankFieldError] = useState('')
 
     const { UserSignin } = useActions();
 
-    const { data, error, loading } = useTypedSelector(
+    const { data, error, loading }: AuthState = useTypedSelector(
         (state) => state.UserSignin
     )
 

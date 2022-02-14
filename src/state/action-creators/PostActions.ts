@@ -1,7 +1,7 @@
 import { Dispatch } from "redux"
 
 import request from "../../api"
-import { profileData } from "../../models";
+import { UserData } from "../../models";
 
 import {
     CreatePostAction, DeletePostAction, EditPostAction,
@@ -15,7 +15,7 @@ import {
     GetPostLikesActionType, GetUsersPostsActionType, PostCommentActionType, PostLikeActionType
 } from "../actiontypes"
 
-const CurrentUser: profileData = JSON.parse(localStorage.getItem("gfr-user") as string);
+const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
 
 export const CreatePost = ({ postData, navigate, setIsModalOpened }: any) => {

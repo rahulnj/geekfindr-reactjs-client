@@ -3,13 +3,13 @@ import './_Sidebar.scss'
 import { FiHome, FiSettings } from 'react-icons/fi'
 import { BsChatLeft } from 'react-icons/bs'
 import { GrProjects } from 'react-icons/gr'
-import { Handle } from '../../models'
+import { SidebarProps } from '../../models'
 
 
 
 
 
-const Sidebar: React.FC<Handle> = ({ isSidebar, handleToggleSidebar }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar }) => {
     return (
         <div className={isSidebar ? "sidebar open" : "sidebar"}
             onClick={() => handleToggleSidebar(false)}>

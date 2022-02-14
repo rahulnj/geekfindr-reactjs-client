@@ -1,12 +1,12 @@
 import { Dispatch } from "redux"
 import request from "../../api"
-import { profileData } from "../../models";
+import { UserData } from "../../models";
 import { FollowUserAction, GetFollowingUsersAction, GetUserFollowersAction } from "../action-models"
 import { FollowUserActionType, GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes"
 
 
 
-const CurrentUser: profileData = JSON.parse(localStorage.getItem("gfr-user") as string);
+const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
 export const GetUserFollowers = ({ token, userId }: any) => {
     return async (dispatch: Dispatch<GetUserFollowersAction>) => {

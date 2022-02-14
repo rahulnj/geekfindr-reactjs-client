@@ -3,7 +3,7 @@ import React from 'react';
 import './_Messages.scss'
 
 import post from '../../assets/persons/1.jpeg'
-import { FollowersModal, profileData } from '../../models';
+import { FollowersModal } from '../../models';
 import { useNavigate } from 'react-router-dom';
 
 

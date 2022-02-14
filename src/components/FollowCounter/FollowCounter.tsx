@@ -4,7 +4,7 @@ import { Link, Params, useParams } from 'react-router-dom'
 import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { Profile, profileData, UsersState } from '../../models'
+import { Profile, UserData, UsersState } from '../../models'
 import request from '../../api'
 import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'
@@ -63,7 +63,7 @@ const FollowCount = ({ userProfile }: Profile) => {
     if (typeof (UserDetails.id) !== 'undefined') {
         if (UserDetails.id !== user.id) {
             let isFollowing = false;
-            Followings.every((following: profileData) => {
+            Followings.every((following: UserData) => {
                 isFollowing = following?.id === UserDetails.id
                 if (isFollowing == true) {
                     return false;

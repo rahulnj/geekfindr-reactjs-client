@@ -5,7 +5,7 @@ import './_Modal.scss'
 
 import { Comment, Messages, PostUploadModal } from '..';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { profileData } from '../../models';
+import { UserData } from '../../models';
 
 const Modal = ({ isModalOpened, setIsModalOpened,
     isEditModalOpened, setIsEditModalOpened,
@@ -77,7 +77,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
             <div className={(followersModal || followingModal) ? "modal-sm" : "modal-lg"}
                 ref={Modalref}>
                 {followersModal &&
-                    Followers.map((user: profileData) => (
+                    Followers.map((user: UserData) => (
                         <Messages followersModal={followersModal}
                             key={user.id}
                             username={user.username}
@@ -88,7 +88,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                     ))
                 }
                 {followingModal &&
-                    Followings.map((user: profileData) => (
+                    Followings.map((user: UserData) => (
                         <Messages followingModal={followingModal}
                             key={user.id}
                             username={user.username}

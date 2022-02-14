@@ -7,7 +7,7 @@ import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 import { BiComment, BiEdit } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 
-import { PostDataState, Profile, profileData } from '../../models'
+import { PostDataState, Profile } from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 

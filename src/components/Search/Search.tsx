@@ -1,46 +1,39 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import './_Search.scss'
 
 import { BiSearch } from 'react-icons/bi';
 import { GrFormClose } from 'react-icons/gr'
-import request from '../../api';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { profileData } from '../../models';
+import request from '../../api';
+
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
 
+import { UserData } from '../../models';
 
-
-
-
-
-
+const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
 const Search: React.FC = () => {
 
     const { GetUserDetails } = useActions();
     const navigate = useNavigate();
 
-    const firstUpdate = useRef(true);
-
-    const { user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
+    const InitialUpdate = useRef(true);
 
     const [filteredData, setFilteredData] = useState([]);
     const [wordEntered, setWordEntered] = useState("");
 
-    const HandleSearchFilter = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const HandleSearchInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchWord = e.target.value;
         setWordEntered(searchWord)
-
     }
 
     useEffect(() => {
-        if (firstUpdate.current) {
-            firstUpdate.current = false;
+        if (InitialUpdate.current) {
+            InitialUpdate.current = false;
             return;
         }
         const CancelToken = axios.CancelToken.source()
@@ -49,7 +42,7 @@ const Search: React.FC = () => {
                 const { data: usersData } = await request.get(`/api/v1/profiles?searchUserName=${wordEntered}`, {
                     cancelToken: CancelToken.token,
                     headers: {
-                        'Authorization': `Bearer ${user?.token}`,
+                        'Authorization': `Bearer ${CurrentUser?.token}`,
                     },
                 })
                 setFilteredData(usersData)
@@ -74,7 +67,6 @@ const Search: React.FC = () => {
 
     const showUserProfile = (id: string) => {
         GetUserDetails({
-            token: user.token,
             userId: id
         })
         setFilteredData([])
@@ -89,7 +81,7 @@ const Search: React.FC = () => {
                 <div className="search_inputs">
                     <input
                         type="text"
-                        onChange={HandleSearchFilter}
+                        onChange={HandleSearchInput}
                         placeholder='search here....'
                     />
                     <div className="search_icon">
@@ -102,7 +94,7 @@ const Search: React.FC = () => {
             {filteredData.length !== 0 && (
                 <div className={filteredData.length === 0 ? "search_dataresult" : "search_active"}>
                     {
-                        filteredData.map((user: profileData) => (
+                        filteredData.map((user: UserData) => (
                             <a className="search_dataitem" key={user.id} onClick={() => showUserProfile(user.id)}>
                                 <img src={user.avatar} alt="" />
                                 <p>{user.username}</p>

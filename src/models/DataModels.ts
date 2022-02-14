@@ -27,11 +27,7 @@ export interface Children {
 }
 
 
-export interface Handle {
-    error?: boolean
-    isSidebar?: boolean;
-    handleToggleSidebar: (boolean?: boolean) => void;
-}
+
 
 export interface AddPostModal {
     ToggleAddPostModal: (boolean?: boolean) => void;
@@ -75,7 +71,7 @@ export interface FollowersModal {
 
 
 
-export interface profileData {
+export interface UserData {
     avatar: string
     createdAt: string
     email: string
