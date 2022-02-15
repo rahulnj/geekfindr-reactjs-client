@@ -4,13 +4,13 @@ import { Link, Params, useParams } from 'react-router-dom'
 import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { Profile, UserData, UsersState } from '../../models'
+import { ProfileProps, UserData, UsersState } from '../../models'
 import request from '../../api'
 import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'
 
 
-const FollowCount = ({ userProfile }: Profile) => {
+const FollowCount = ({ userProfile }: ProfileProps) => {
 
     const [followersModal, setFollowersModal] = useState(false)
     const [followingModal, setFollowingModal] = useState(false)

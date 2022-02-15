@@ -7,12 +7,12 @@ import { Feed, FollowCounter, RightAside } from '../../components'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
-import { Profile } from '../../models'
+import { ProfileProps } from '../../models'
 import { Params, useParams } from 'react-router-dom'
 
 
 
-const ProfileScreen = ({ userProfile }: Profile) => {
+const ProfileScreen = ({ userProfile }: ProfileProps) => {
 
     const { userId }: Readonly<Params<string>> = useParams()
 

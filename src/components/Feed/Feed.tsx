@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './_Feed.scss'
 import { Post, Share } from '../index'
-import { PostState, Profile } from '../../models'
+import { PostState, ProfileProps } from '../../models'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
 
@@ -9,7 +9,7 @@ import { useActions } from '../../hooks/useActions'
 
 
 
-const Feed: React.FC<Profile> = ({ profile, userProfile }) => {
+const Feed: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     const [nextPostId, setNextPostId] = useState('')
 
     const { GetFeedPosts } = useActions();

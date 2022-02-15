@@ -2,13 +2,13 @@ import './_RightAside.scss'
 
 import { FriendRequest, Messages, Userinfo } from '..'
 
-import { Profile } from '../../models'
+import { ProfileProps } from '../../models'
 
 import { BiEdit, BiSearch } from 'react-icons/bi'
 
 
 
-const RightAside: React.FC<Profile> = ({ profile }) => {
+const RightAside: React.FC<ProfileProps> = ({ profile }) => {
 
 
     const HomeRightAside = () => {

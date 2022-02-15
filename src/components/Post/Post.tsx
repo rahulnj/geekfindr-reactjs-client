@@ -7,7 +7,7 @@ import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 import { BiComment, BiEdit } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 
-import { PostDataState, Profile } from '../../models'
+import { PostData, ProfileProps } from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
@@ -17,7 +17,7 @@ import { Link, Params, useNavigate, useParams } from 'react-router-dom'
 import { Modal } from '..'
 
 
-const Post: React.FC<Profile> = ({ profile, userProfile }) => {
+const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
 
     const [isEditModalOpened, setIsEditModalOpened] = useState(false)
     const [isCommentModalOpened, setIsCommentModalOpened] = useState(false)
@@ -118,19 +118,19 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     }
 
 
-    FeedPosts = FeedPosts?.map((post: PostDataState) => {
+    FeedPosts = FeedPosts?.map((post: PostData) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === user?.id))
         return { ...post, isLiked: !!isLiked }
     })
 
 
-    ProfilePosts = ProfilePosts?.map((post: PostDataState) => {
+    ProfilePosts = ProfilePosts?.map((post: PostData) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === user?.id))
         return { ...post, isLiked: !!isLiked }
     })
 
 
-    const HomePosts = ({ description, isProject, likeCount, mediaURL, commentCount, createdAt, comments, id, owner, isLiked }: PostDataState) => {
+    const HomePosts = ({ description, isProject, likeCount, mediaURL, commentCount, createdAt, comments, id, owner, isLiked }: PostData) => {
         return (
             <div className='post'>
                 <div className="post_wrapper">
@@ -172,7 +172,7 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
     }
 
 
-    const MyProfilePosts = ({ description, isProject, likeCount, commentCount, mediaURL, createdAt, comments, id, owner, isLiked }: PostDataState) => {
+    const MyProfilePosts = ({ description, isProject, likeCount, commentCount, mediaURL, createdAt, comments, id, owner, isLiked }: PostData) => {
 
         const { DeletePost } = useActions();
         const navigate = useNavigate();
@@ -265,7 +265,7 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
             {profile ?
                 //  (ProfilePosts.length === 0) ?
                 //     (<LoadorAdd />) :
-                (ProfilePosts.map((post: PostDataState) => (
+                (ProfilePosts.map((post: PostData) => (
                     < MyProfilePosts key={post.id}
                         description={post.description}
                         isProject={post.isProject}
@@ -279,7 +279,7 @@ const Post: React.FC<Profile> = ({ profile, userProfile }) => {
                         isLiked={post.isLiked}
                     />
                 ))) :
-                FeedPosts?.map((post: PostDataState) => (
+                FeedPosts?.map((post: PostData) => (
                     <HomePosts key={post.id}
                         description={post.description}
                         isProject={post.isProject}

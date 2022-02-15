@@ -3,3 +3,15 @@ export interface SidebarProps {
     isSidebar?: boolean;
     handleToggleSidebar: (boolean?: boolean) => void;
 }
+
+export interface ProfileProps {
+    profile?: boolean;
+    userProfile?: boolean;
+}
+
+export interface PostUploadModalProps {
+    isModalOpened: boolean
+    setIsModalOpened: React.Dispatch<React.SetStateAction<boolean>>
+    isEditModalOpened: boolean
+    setIsEditModalOpened: React.Dispatch<React.SetStateAction<boolean>>
+}

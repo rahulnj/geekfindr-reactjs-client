@@ -108,7 +108,7 @@ export const GetMyPost = ({ token }: any) => {
     }
 }
 
-export const EditPost = ({ token, EditedPostData, postId, navigate, setIsEditModalOpened, userId }: any) => {
+export const EditPost = ({ EditedPostData, postId, navigate, setIsEditModalOpened }: any) => {
     return async (dispatch: Dispatch<EditPostAction>) => {
         dispatch({
             type: EditPostActionType.EDIT_POST_REQUEST
@@ -126,7 +126,7 @@ export const EditPost = ({ token, EditedPostData, postId, navigate, setIsEditMod
                 payload: data
             })
             setIsEditModalOpened(false)
-            navigate(`/profile/${userId}`)
+            navigate(`/profile/${CurrentUser?.id}`)
         } catch (error: any) {
             console.log(error);
             dispatch({

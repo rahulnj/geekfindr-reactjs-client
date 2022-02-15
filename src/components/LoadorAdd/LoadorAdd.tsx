@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 
 import './_LoadorAdd.scss'
 
-import { Profile } from '../../models'
+import { ProfileProps } from '../../models'
 import { Params, useParams } from 'react-router-dom'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
 
-const LoadorAdd: React.FC<Profile> = ({ profile }) => {
+const LoadorAdd: React.FC<ProfileProps> = ({ profile }) => {
 
     return (
         <div className='loadoradd'>

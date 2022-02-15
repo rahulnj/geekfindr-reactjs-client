@@ -3,19 +3,20 @@ import axios from 'axios';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 
 import './_PostUploadModal.scss'
-import ReactCrop from 'react-image-crop';
+import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { BsUpload } from 'react-icons/bs'
 
-import { ModalState, PostDataState } from '../../models';
+import { PostUploadModalProps, UserData } from '../../models';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import request from '../../api';
 import { useActions } from '../../hooks/useActions';
 
+const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
-const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: ModalState) => {
+const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: PostUploadModalProps) => {
 
     const navigate = useNavigate();
     const { postId }: Readonly<Params<string>> = useParams()
@@ -26,12 +27,9 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
     const [crop, setCrop] = useState<any>({ aspect: 3.5 / 2.75 })
     const [croppedImage, setCroppedImage] = useState<any>(null);
     const [imageConfirm, setImageConfirm] = useState(false);
-    const [description, setDescription] = useState('')
+    const [description, setDescription] = useState<any>('')
     const [editPost, setEditPost] = useState<any>({})
 
-    const { user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
 
     const { data: ProfilePosts }: any = useTypedSelector(
         (state) => state.GetMyPost
@@ -45,7 +43,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
         setFileName(file.name)
     }
 
-    const uploadPost = async (e: any) => {
+    const uploadPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         function convertdataURLtoFile(dataurl: any, filename: string) {
             let arr = dataurl.split(','),
@@ -69,13 +67,13 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
         }
 
         try {
-            const uploadconfig: any = await request.get('/api/v1/uploads/signed-url', {
+            const uploadconfig = await request.get('/api/v1/uploads/signed-url', {
                 params: {
                     fileType: "image",
                     fileSubType: "jpeg"
                 },
                 headers: {
-                    'Authorization': `Bearer ${user.token}`,
+                    'Authorization': `Bearer ${CurrentUser?.token}`,
                 }
             })
 
@@ -92,7 +90,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                 }
 
                 CreatePost({
-                    token: user.token, postData: postData, navigate, setIsModalOpened
+                    postData: postData, navigate, setIsModalOpened
                 })
             }
         } catch (error) {
@@ -140,7 +138,8 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
 
     useEffect(() => {
         const EditPostDetails = ProfilePosts.filter(
-            (post: PostDataState) => post.id === postId)
+            (post: any) => post.id === postId
+        )
 
         setEditPost(EditPostDetails[0])
         setDescription(EditPostDetails[0]?.description)
@@ -155,7 +154,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
         }
 
         EditPost({
-            token: user.token, EditedPostData: EditedPostData, postId: postId, userId: user.id,
+            EditedPostData: EditedPostData, postId: postId,
             navigate, setIsEditModalOpened
         })
     }
@@ -215,7 +214,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                             <>
                                 <button className="postmodal_descriptionarea_actions_cancel" onClick={() => {
                                     setIsEditModalOpened(false);
-                                    navigate(`/profile/${user.id}`)
+                                    navigate(`/profile/${CurrentUser?.id}`)
                                 }}>Discard</button>
                                 <button className="postmodal_descriptionarea_actions_post"
                                     onClick={UploadEditedPost}>Save</button>
