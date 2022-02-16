@@ -270,7 +270,6 @@ export const CommentPost = ({ token, postId, comment }: any) => {
                 payload: data
             })
             console.log(data, "Comment response");
-
         } catch (error: any) {
             console.log(error);
             dispatch({

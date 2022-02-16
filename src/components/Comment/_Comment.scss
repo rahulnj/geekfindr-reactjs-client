@@ -38,7 +38,7 @@
         &_wrapper {
             display: flex;
             flex-direction: column;
-            height: 300px;
+            height: 400px;
             width: 100%;
             border-radius: 10px;
             overflow: hidden;
@@ -52,7 +52,7 @@
             }
 
             input {
-                height: 45px;
+                height: 70%;
                 width: 100%;
                 outline: none;
                 border-radius: 5px;
@@ -109,12 +109,15 @@
     &_btnpost:focus-visible {
         box-shadow: none;
     }
+    &_listwrapper {
+        overflow: hidden;
+        overflow-y: auto;
+    }
     &_list {
         display: flex;
         gap: 1rem;
         width: 350px;
         align-items: center;
-        overflow-y: auto;
         margin-bottom: 1rem;
         padding: 0.15rem 0.5rem;
         box-shadow: $main-shadow;
