@@ -11,7 +11,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     isEditModalOpened, setIsEditModalOpened,
     followersModal, setFollowersModal,
     followingModal, setFollowingModal,
-    isCommentModalOpened, setIsCommentModalOpened
+    isCommentModalOpened, setIsCommentModalOpened,
+    commentPostId
 }: any) => {
 
     const Modalref = useRef<any>()
@@ -100,7 +101,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                 }
                 {(isModalOpened || isEditModalOpened) && <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened}
                     isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />}
-                {isCommentModalOpened && <Comment />}
+                {isCommentModalOpened && <Comment commentPostId={commentPostId} />}
             </div>
         </>,
         document.getElementById('modal') as HTMLElement

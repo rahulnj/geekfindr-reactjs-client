@@ -1,23 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { CommentProps } from '../../models'
 
 import './_Comment.scss'
 
-const Comment = () => {
+const Comment = ({ commentPostId }: CommentProps) => {
     const [comment, setComment] = useState('')
 
-    const { CommentPost } = useActions();
+    const { CommentPost, GetPostComments } = useActions();
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
-
     const { data: comments }: any = useTypedSelector(
         (state) => state.GetPostComments
     )
+    const { success: commentSuccess }: any = useTypedSelector(
+        (state) => state.CommentPost
+    )
+    console.log(commentSuccess);
 
-    console.log(comments);
+    useEffect(() => {
+        GetPostComments({
+            token: user.token,
+            postId: commentPostId
+        })
+    }, [commentSuccess])
+
+
     const PostCommentHandler = (id: string) => {
         CommentPost({
             token: user.token,
@@ -42,21 +53,24 @@ const Comment = () => {
                             placeholder='Comment here...' />
                         <div className='comment_actions'>
                             <button className='comment_btnpost'
-                                onClick={() => PostCommentHandler("620922fefb9e9e198ace78f6")}
+                                onClick={() => PostCommentHandler(commentPostId)}
                             >post</button>
                         </div>
 
-                        <div className="comment_list">
-                            <div className="comment_profileimg">
-                                <img src='' alt="" />
-                            </div>
-                            <div className="comment_bodywrapperfollowers">
-                                <div className="comment_body">
-                                    <h5>hello</h5>
-                                    <p></p>
+                        {comments?.map((comment: any, index: number) => (
+                            <div key={index} className="comment_list">
+                                <div className="comment_profileimg">
+                                    <img src={comment?.owner?.avatar} alt="" />
+                                </div>
+                                <div className="comment_bodywrapperfollowers">
+                                    <div className="comment_body">
+                                        <h5>{comment?.owner?.username}</h5>
+                                        <p>{comment?.comment}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div >
+                        ))
+                        }
 
                     </div>
                 </div>

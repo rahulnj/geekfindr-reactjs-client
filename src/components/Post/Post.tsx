@@ -21,12 +21,12 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
 
     const [isEditModalOpened, setIsEditModalOpened] = useState(false)
     const [isCommentModalOpened, setIsCommentModalOpened] = useState(false)
-    const [comments, setComments] = useState('')
+    const [commentPostId, setCommentPostId] = useState('')
 
     const { userId }: Readonly<Params<string>> = useParams()
     const { GetFeedPosts, LikePost,
-        GetUsersPosts, GetMyPost,
-        GetPostComments } = useActions();
+        GetUsersPosts, GetMyPost
+    } = useActions();
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
@@ -111,10 +111,8 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
 
     const CommentHandler = (id: string) => {
         setIsCommentModalOpened(true)
-        GetPostComments({
-            token: user.token,
-            postId: id
-        })
+        setCommentPostId(id)
+
     }
 
 
@@ -261,7 +259,8 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
 
         <>
             <Modal isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened}
-                isCommentModalOpened={isCommentModalOpened} setIsCommentModalOpened={setIsCommentModalOpened} />
+                isCommentModalOpened={isCommentModalOpened} setIsCommentModalOpened={setIsCommentModalOpened}
+                commentPostId={commentPostId} />
             {profile ?
                 //  (ProfilePosts.length === 0) ?
                 //     (<LoadorAdd />) :

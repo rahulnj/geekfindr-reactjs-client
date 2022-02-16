@@ -15,3 +15,7 @@ export interface PostUploadModalProps {
     isEditModalOpened: boolean
     setIsEditModalOpened: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+export interface CommentProps {
+    commentPostId: string
+}

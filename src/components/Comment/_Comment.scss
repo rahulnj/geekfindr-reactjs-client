@@ -114,9 +114,10 @@
         gap: 1rem;
         width: 350px;
         align-items: center;
-        padding: 0 2rem;
         overflow-y: auto;
         margin-bottom: 1rem;
+        padding: 0.15rem 0.5rem;
+        box-shadow: $main-shadow;
     }
     &_followers:hover {
         background-color: $main-color;
@@ -131,8 +132,8 @@
         position: relative;
         overflow: visible;
         img {
-            width: 45px;
-            height: 45px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             object-fit: cover;
             margin-top: 10px;
@@ -140,6 +141,9 @@
     }
     &_body {
         padding-top: 0.5rem;
+        h5 {
+            font-size: 0.95rem;
+        }
         p {
             font-size: 0.8rem;
             opacity: 0.8;
