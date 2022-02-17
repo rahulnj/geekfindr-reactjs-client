@@ -1,0 +1,53 @@
+@import "../../_base.scss";
+
+.projectlayout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    &_header {
+        flex: 1;
+        padding: 10px 40px;
+
+        h3 {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 0.95rem;
+        }
+    }
+    &_wrapper {
+        box-shadow: $main-shadow;
+        background-color: $background-color;
+        width: 100%;
+        height: 90vh;
+    }
+    &_titles {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
+    &_title1 {
+        flex: 1;
+        align-items: center;
+        text-align: center;
+        box-shadow: inset 0 0 0 2000px rgba(153, 0, 255, 0.247);
+        padding: 10px;
+        border-bottom: 1px solid rgb(153, 0, 255);
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+    }
+    &_title {
+        flex: 1;
+        align-items: center;
+        text-align: center;
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+    }
+}

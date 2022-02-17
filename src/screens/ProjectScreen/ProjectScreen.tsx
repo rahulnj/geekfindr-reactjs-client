@@ -1,10 +1,13 @@
 import React from 'react'
+import { ProjectLayout } from '../../components'
 
 import './_ProjectScreen.scss'
 
 const ProjectScreen = () => {
     return (
-        <div>ProjectScreen</div>
+        <div className='projectscreen'>
+            <ProjectLayout />
+        </div>
     )
 }
 
