@@ -42,10 +42,7 @@ export interface UserData {
 
 
 
-export interface Children {
-    children: JSX.Element[] | JSX.Element
-    isModalOpened?: boolean
-}
+
 
 
 

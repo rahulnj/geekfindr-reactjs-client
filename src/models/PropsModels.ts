@@ -1,6 +1,13 @@
+export interface LayoutProps {
+    children: JSX.Element[] | JSX.Element
+    isModalOpened?: boolean
+    project?: boolean
+}
+
 export interface SidebarProps {
     error?: boolean
     isSidebar?: boolean;
+    project?: boolean;
     handleToggleSidebar: (boolean?: boolean) => void;
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './_Sidebar.scss'
 import { FiHome, FiSettings } from 'react-icons/fi'
 import { BsChatLeft } from 'react-icons/bs'
@@ -9,9 +9,29 @@ import { SidebarProps } from '../../models'
 
 
 
-const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, project }) => {
+
+    const [windowSizeListener, setWindowSizeListener] = useState(false)
+
+    useEffect(() => {
+        const listener = () => {
+            if (window.innerWidth <= 540) {
+                setWindowSizeListener(true)
+            } else {
+                setWindowSizeListener(false)
+            }
+        }
+        window.addEventListener('resize', listener);
+
+        return () => {
+            window.removeEventListener('resize', listener)
+        }
+    }, [])
+
+
     return (
         <div className={isSidebar ? "sidebar open" : "sidebar"}
+            style={{ display: project ? (windowSizeListener ? 'block' : 'none') : '' }}
             onClick={() => handleToggleSidebar(false)}>
             <div className="sidebar_wrapper">
                 <div className='sidebar_heading'>

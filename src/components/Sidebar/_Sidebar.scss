@@ -52,6 +52,9 @@
     &.open {
         transform: translate(0);
     }
+    &.close {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: $breakpoint-large) {
