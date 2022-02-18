@@ -1,1 +1,47 @@
 @import "../../_base.scss";
+
+.projectteam {
+    display: flex;
+    flex-direction: column;
+
+    &_header {
+        padding: 20px;
+        h3 {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+    }
+    hr {
+        margin: 0 30px;
+    }
+    &_user {
+        display: flex;
+        padding: 20px 40px;
+
+        &_left {
+            flex: 6;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 0.5rem;
+            img {
+                width: 45px;
+                height: 45px;
+                // border-radius: 50%;
+                object-fit: cover;
+                margin-top: 10px;
+            }
+
+            &_body {
+                padding-top: 0.5rem;
+                h5 {
+                    font-size: 1.45rem;
+                }
+                p {
+                    font-size: 0.8rem;
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}
