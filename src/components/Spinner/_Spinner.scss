@@ -1,0 +1,60 @@
+.spinner {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    z-index: 4;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &_overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 3;
+        background-color: rgba(255, 255, 255, 0.356);
+    }
+
+    &_dot {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+    &_dot::after {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 10px;
+        background-color: rgba(153, 0, 255, 0.959);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    &_dot {
+        animation: spin 2s infinite;
+    }
+
+    &_dont:nth-child(2) {
+        animation-delay: 100ms;
+    }
+    &_dot:nth-child(3) {
+        animation-delay: 200ms;
+    }
+    &_dot:nth-child(4) {
+        animation-delay: 300ms;
+    }
+    &_dot:nth-child(5) {
+        animation-delay: 400ms;
+    }
+}

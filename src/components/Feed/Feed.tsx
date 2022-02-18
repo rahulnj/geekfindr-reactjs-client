@@ -35,7 +35,7 @@ const Feed: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     return (
         <div className='feed'>
             <div className="feed_wrapper">
-                {profile ? "" : <Share />}
+                {/* {profile ? "" : <Share />} */}
                 <Post profile={profile}
                     userProfile={userProfile}
                 />
