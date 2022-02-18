@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 
 import './_ProjectLayout.scss'
 
+import { ProjectDescription, ProjectTasks, ProjectTeam, ProjectTodo } from '..'
+
+
 const ProjectLayout = () => {
     const [descriptionActive, setDescriptionActive] = useState(true)
     const [teamActive, setTeamActive] = useState(false)
@@ -68,6 +71,22 @@ const ProjectLayout = () => {
                         </span>
                     </div>
                 </div>
+                {
+                    descriptionActive && (
+                        <ProjectDescription />
+                    )}
+                {
+                    teamActive && (
+                        <ProjectTeam />
+                    )}
+                {
+                    todoActive && (
+                        <ProjectTodo />
+                    )}
+                {
+                    taskActive && (
+                        <ProjectTasks />
+                    )}
             </div>
         </div>
     )

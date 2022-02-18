@@ -19,3 +19,7 @@ export { default as Search } from './Search/Search';
 export { default as LoadorAdd } from './LoadorAdd/LoadorAdd';
 export { default as Comment } from './Comment/Comment';
 export { default as ProjectLayout } from './ProjectLayout/ProjectLayout';
+export { default as ProjectDescription } from './ProjectDescription/ProjectDescription';
+export { default as ProjectTeam } from './ProjectTeam/ProjectTeam';
+export { default as ProjectTodo } from './ProjectTodo/ProjectTodo';
+export { default as ProjectTasks } from './ProjectTasks/ProjectTasks';
