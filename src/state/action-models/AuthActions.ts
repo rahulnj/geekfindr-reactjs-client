@@ -23,17 +23,23 @@ interface UserSignupLoadProfileAction {
     payload: string[]
 }
 
-interface UserSignupLogoutAction {
-    type: UserSignupActionType.USER_lOGOUT;
+interface UserSignupLogoutRequestAction {
+    type: UserSignupActionType.USER_LOGOUT_REQUEST;
 }
 
+interface UserSignupLogoutSuccessAction {
+    type: UserSignupActionType.USER_LOGOUT_SUCCESS;
+    user: null;
+    data: null;
+}
 
 export type SignupAction =
     | UserSignupRequestAction
     | UserSignupSuccessAction
     | UserSignupFailAction
     | UserSignupLoadProfileAction
-    | UserSignupLogoutAction
+    | UserSignupLogoutRequestAction
+    | UserSignupLogoutSuccessAction
 
 //Action Models for the user signin in the AuthReducer
 
@@ -56,8 +62,14 @@ interface UserSigninLoadProfileAction {
     payload: string[]
 }
 
-interface UserLogoutAction {
-    type: UserSigninActionType.USER_lOGOUT;
+interface UserSigninLogoutRequestAction {
+    type: UserSigninActionType.USER_LOGOUT_REQUEST;
+}
+
+interface UserSigninLogoutSuccessAction {
+    type: UserSigninActionType.USER_LOGOUT_SUCCESS;
+    user: null;
+    data: null;
 }
 
 export type SigninAction =
@@ -65,7 +77,8 @@ export type SigninAction =
     | UserSigninSuccessAction
     | UserSigninFailAction
     | UserSigninLoadProfileAction
-    | UserLogoutAction
+    | UserSigninLogoutRequestAction
+    | UserSigninLogoutSuccessAction
 
 
 

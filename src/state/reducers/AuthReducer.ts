@@ -23,8 +23,10 @@ export const UserRegisterAuthReducer = (
             return { ...state, loading: false, error: action.payload, data: null }
         case UserSignupActionType.LOAD_USER_PROFILE:
             return { ...state, user: action.payload }
-        case UserSignupActionType.USER_lOGOUT:
-            return { data: null, error: null, loading: false, user: null }
+        case UserSignupActionType.USER_LOGOUT_REQUEST:
+            return { ...state, loading: true, error: null, data: null }
+        case UserSignupActionType.USER_LOGOUT_SUCCESS:
+            return { ...state, loading: false, error: null, data: null }
         default:
             return state;
     }
@@ -43,9 +45,13 @@ export const UserSigninAuthReducer = (
             return { ...state, loading: false, error: action.payload, data: null }
         case UserSigninActionType.LOAD_USER_PROFILE:
             return { ...state, user: action.payload }
-        case UserSigninActionType.USER_lOGOUT:
-            return { data: null, error: null, loading: false, user: null }
+        case UserSigninActionType.USER_LOGOUT_REQUEST:
+            return { ...state, loading: true, error: null, data: null }
+        case UserSigninActionType.USER_LOGOUT_SUCCESS:
+            return { ...state, loading: false, error: null, data: null }
         default:
             return state;
     }
 }
+
+

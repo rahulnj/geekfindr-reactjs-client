@@ -14,7 +14,6 @@ const Layout = ({ children, project }: LayoutProps) => {
     const [isSidebar, setIsSidebar] = useState<boolean>(false)
     const [isModalOpened, setIsModalOpened] = useState<boolean>(false)
 
-    const [loader, setLoader] = useState<boolean>(false)
 
     const ToggleAddPostModal = () => {
         setIsModalOpened(value => !value)
@@ -26,7 +25,6 @@ const Layout = ({ children, project }: LayoutProps) => {
 
     return (
         <>
-            <Spinner loader={loader} />
             <Modal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened} />
             <Header handleToggleSidebar={handleToggleSidebar} ToggleAddPostModal={ToggleAddPostModal} />
             <div className='layout_container'>

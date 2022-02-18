@@ -66,17 +66,24 @@ export const UserSignin = (signinData: SigninData) => {
 
 export const UserLogout = () => {
     return async (dispatch: Dispatch<SigninAction | SignupAction>) => {
+        dispatch({
+            type: UserSigninActionType.USER_LOGOUT_REQUEST
+        })
+        dispatch({
+            type: UserSignupActionType.USER_LOGOUT_REQUEST
+        })
+
         try {
             await request.post('/api/v1/users/signout/', {})
             localStorage.removeItem("gfr-user")
 
             dispatch({
-                type: UserSigninActionType.USER_lOGOUT,
+                type: UserSigninActionType.USER_LOGOUT_SUCCESS,
                 user: null,
                 data: null
             })
             dispatch({
-                type: UserSignupActionType.USER_lOGOUT,
+                type: UserSignupActionType.USER_LOGOUT_SUCCESS,
                 user: null,
                 data: null
             })

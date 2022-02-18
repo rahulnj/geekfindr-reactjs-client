@@ -12,6 +12,7 @@ import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useNavigate } from 'react-router-dom'
 import { AuthState } from '../../models';
+import { Spinner } from '..';
 
 
 const Signin: React.FC = () => {
@@ -27,6 +28,7 @@ const Signin: React.FC = () => {
     const { data, error, loading }: AuthState = useTypedSelector(
         (state) => state.UserSignin
     )
+
 
     const SignInformSubmition = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -65,28 +67,29 @@ const Signin: React.FC = () => {
     }, [data, navigate])
 
     return (
-
-        <form onSubmit={SignInformSubmition} className="signin">
-            <h2 className="signin_title">Sign in</h2>
-            <div className={EmailError ? "signin_inputfield error_inputfield" : "signin_inputfield"} >
-                <FaUserAlt className='signin_inputfield_icons' />
-                <input type="text" placeholder="Email" onChange={OnChangeEmailValidator} onBlur={OnBlurEmailValidator} />
-            </div >
-            <div className='signin_error'>{EmailError}</div>
-            <div className={PasswordError ? "signin_inputfield error_inputfield" : "signin_inputfield"} >
-                <RiLockPasswordFill className='signin_inputfield_icons' />
-                <input type="password" placeholder="Password" onChange={OnChangePasswordValidator} onBlur={OnBlurPasswordValidator} />
-            </div >
-            <div className='signin_error'>{PasswordError}</div>
-            <div className='signin_error'>{BlankFieldError}</div>
-            <div className='signin_error'>{error}</div>
-            <input type="submit" value="Login" className="signin_btn" />
-            <p className="signin_socialtext" > Or Sign in with social platforms</p >
-            <div className="signin_socialmedia" >
-                <BsGithub className='signin_icon' />
-            </div >
-        </form >
-
+        <>
+            <Spinner loader={loading} />
+            <form onSubmit={SignInformSubmition} className="signin">
+                <h2 className="signin_title">Sign in</h2>
+                <div className={EmailError ? "signin_inputfield error_inputfield" : "signin_inputfield"} >
+                    <FaUserAlt className='signin_inputfield_icons' />
+                    <input type="text" placeholder="Email" onChange={OnChangeEmailValidator} onBlur={OnBlurEmailValidator} />
+                </div >
+                <div className='signin_error'>{EmailError}</div>
+                <div className={PasswordError ? "signin_inputfield error_inputfield" : "signin_inputfield"} >
+                    <RiLockPasswordFill className='signin_inputfield_icons' />
+                    <input type="password" placeholder="Password" onChange={OnChangePasswordValidator} onBlur={OnBlurPasswordValidator} />
+                </div >
+                <div className='signin_error'>{PasswordError}</div>
+                <div className='signin_error'>{BlankFieldError}</div>
+                <div className='signin_error'>{error}</div>
+                <input type="submit" value="Login" className="signin_btn" />
+                <p className="signin_socialtext" > Or Sign in with social platforms</p >
+                <div className="signin_socialmedia" >
+                    <BsGithub className='signin_icon' />
+                </div >
+            </form >
+        </>
     )
 }
 
