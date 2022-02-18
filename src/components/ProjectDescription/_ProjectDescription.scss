@@ -1,1 +1,32 @@
 @import "../../_base.scss";
+
+.projectdescription {
+    display: flex;
+    flex-direction: column;
+
+    &_header {
+        padding: 20px;
+        h3 {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+    }
+    hr {
+        margin: 0 30px;
+    }
+    &_short {
+        padding: 20px;
+
+        span {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+    }
+    &_long {
+        padding: 20px;
+
+        p {
+            font-size: 1rem;
+        }
+    }
+}
