@@ -110,4 +110,5 @@ export interface PostData {
     updatedAt?: string
     isLiked?: boolean
     likes?: string[]
+    ref?: any
 }

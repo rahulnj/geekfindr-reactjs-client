@@ -7,6 +7,7 @@ export { default as RightAside } from './Rightaside/RightAside';
 export { default as Share } from './Share/Share';
 export { default as FollowCounter } from './FollowCounter/FollowCounter';
 export { default as Post } from './Post/Post';
+export { default as HomePost } from './HomePost/HomePost';
 export { default as Signin } from './Signin/Signin';
 export { default as Signup } from './Signup/Signup';
 export { default as Userinfo } from './Userinfo/Userinfo';

@@ -4,8 +4,6 @@ import './_Spinner.scss'
 
 const Spinner = ({ loader }: any) => {
 
-    console.log(loader);
-
     if (!loader) {
         return null;
     }

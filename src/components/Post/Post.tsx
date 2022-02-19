@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
-import './_Post.scss'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
+import './_Post.scss'
 
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
@@ -14,7 +14,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import Moment from 'react-moment';
 import { useActions } from '../../hooks/useActions'
 import { Link, Params, useNavigate, useParams } from 'react-router-dom'
-import { Modal, Spinner } from '..'
+import { Modal, Spinner, HomePost } from '..'
 
 
 const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
@@ -37,9 +37,9 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     let { data: SearchedUsersPosts, loading: SearchedUsersPostsLoading }: any = useTypedSelector(
         (state) => state.GetUsersPosts
     )
-    let { data: FeedPosts, loading: FeedPostsLoading }: any = useTypedSelector(
-        (state) => state.GetMyFeed
-    )
+    // let { data: FeedPosts, loading: FeedPostsLoading }: any = useTypedSelector(
+    //     (state) => state.GetMyFeed
+    // )
     const { success: LikeSuccess, loading: likeLoading }: any = useTypedSelector(
         (state) => state.LikePost
     )
@@ -54,15 +54,11 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
 
     useEffect(() => {
         if (userProfile) {
-            console.log("1");
-
             GetUsersPosts({
                 token: user?.token,
                 userId
             })
         } else {
-            console.log("2");
-
             GetMyPost({
                 token: user?.token,
             })
@@ -70,48 +66,11 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     }, [LikeSuccess, DeleteSuccess])
 
     const LikePostHandler = (id: string) => {
-
         LikePost({
             token: user?.token,
             postId: id
         })
     }
-
-    //////////////////////////////////////////////////////////////////////
-
-    //changes to be made (!important)
-    const [nextPostId, setNextPostId] = useState('')
-
-
-
-
-    useEffect(() => {
-        // const newArray = FeedPosts.reverse()
-        // const lastPostId = newArray[0]?.id
-        // setNextPostId(lastPostId)
-        GetFeedPosts({
-            token: user?.token,
-            limit: 10,
-
-        })
-    }, [LikeSuccess, loading])
-
-    //////////////////////////////////////////////////////////////////////
-
-
-
-
-
-    // const GetComment = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    //     setComments(e.target.value)
-    // }
-
-    // console.log(comments);
-
-
-    // const CommentPostHandler = (e: React.FormEvent) => {
-    //     e.preventDefault();
-    // }
 
     const CommentHandler = (id: string) => {
         setIsCommentModalOpened(true)
@@ -119,59 +78,11 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
 
     }
 
-
-    FeedPosts = FeedPosts?.map((post: PostData) => {
-        let isLiked = post?.likes?.find((like: any) => (like?.owner === user?.id))
-        return { ...post, isLiked: !!isLiked }
-    })
-
-
     ProfilePosts = ProfilePosts?.map((post: PostData) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === user?.id))
         return { ...post, isLiked: !!isLiked }
     })
 
-
-    const HomePosts = ({ description, isProject, likeCount, mediaURL, commentCount, createdAt, comments, id, owner, isLiked }: PostData) => {
-        return (
-            <div className='post'>
-                <div className="post_wrapper">
-                    <div className="post_top">
-                        <div className="post_top_left">
-                            <img src={owner?.avatar} alt="" />
-                            <div className='post_top_left_details'>
-                                <p className="post_top_left_username">{owner?.username}</p>
-                                <span className="post_top_left_date"><Moment fromNow>{createdAt}</Moment></span>
-                            </div>
-                        </div>
-                        <div className="post_top_right">
-                            <BsThreeDotsVertical className='post_top_right_threedot' />
-                        </div>
-                    </div>
-                    <div className="post_center">
-                        <span className="post_description">{description}</span>
-                        <img className='post_homeimg' src={mediaURL} alt="" />
-                    </div>
-                    <div className="post_bottom">
-                        <div className="post_bottom_left">
-                            <div className='post_bottom_left_icons'>
-                                {isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
-                                    <AiOutlineLike size={21} className='post_bottom_left_icon'
-                                        onClick={() => { LikePostHandler(id) }}
-                                    />}
-                                {likeCount}</div>
-                            <div className='post_bottom_left_icons'><BiComment onClick={() => CommentHandler(id)} size={21} className='post_bottom_left_icon' />{commentCount}</div>
-                        </div>
-                    </div>
-                    <form className='post_commentform'>
-                        {/* <BiSmile size={24} className='post_commentform_icons' />
-                        <input onChange={GetComment} type="text" placeholder='Add a comment...' />
-                        <button type='submit'>post</button> */}
-                    </form>
-                </div>
-            </div>
-        )
-    }
 
 
     const MyProfilePosts = ({ description, isProject, likeCount, commentCount, mediaURL, createdAt, comments, id, owner, isLiked }: PostData) => {
@@ -249,9 +160,6 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                             </div>
                         </div>
                         <form className='post_commentform'>
-                            {/* <BiSmile size={24} className='post_commentform_icons' />
-                            <input type="text" placeholder='Add a comment...' />
-                            <button>post</button> */}
                         </form>
                     </div>
                 </div>
@@ -281,22 +189,12 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                         commentCount={post.commentCount}
                         isLiked={post.isLiked}
                     />
-                ))) :
-                FeedPosts?.map((post: PostData) => (
-                    <HomePosts key={post.id}
-                        description={post.description}
-                        isProject={post.isProject}
-                        likeCount={post.likeCount}
-                        mediaURL={post.mediaURL}
-                        createdAt={post.createdAt}
-                        comments={post.comments}
-                        id={post.id}
-                        owner={post.owner}
-                        commentCount={post.commentCount}
-                        isLiked={post.isLiked}
-                    />
-
-                ))
+                ))) : <HomePost
+                    setIsCommentModalOpened={setIsCommentModalOpened}
+                    setCommentPostId={setCommentPostId}
+                    LikePostHandler={LikePostHandler}
+                    CommentHandler={CommentHandler}
+                />
             }
         </>
     )
