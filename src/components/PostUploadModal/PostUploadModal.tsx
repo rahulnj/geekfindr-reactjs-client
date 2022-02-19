@@ -30,8 +30,11 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
     const [croppedImage, setCroppedImage] = useState<any>(null);
     const [imageConfirm, setImageConfirm] = useState(false);
     const [description, setDescription] = useState<any>('')
+    const [projectName, setProjectName] = useState('')
     const [editPost, setEditPost] = useState<any>({})
     const [loading, setLoading] = useState(false)
+    const [selectedRadioBtn, setSelectedRadioBtn] = useState('post')
+    const [isProject, setIsProject] = useState(false)
 
     const { data: ProfilePosts }: any = useTypedSelector(
         (state) => state.GetMyPost
@@ -83,14 +86,26 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
             if (uploadconfig.data.key) {
 
                 await axios.put(uploadconfig.data.url, convertedCroppedImage, config);
-
-                const postData = {
-                    mediaType: "image",
-                    isProject: false,
-                    mediaURL: uploadconfig.data.key,
-                    description: description,
-                    isOrganization: false
+                let postData;
+                if (isProject) {
+                    postData = {
+                        mediaType: "image",
+                        isProject: isProject,
+                        mediaURL: uploadconfig.data.key,
+                        Projectname: projectName,
+                        description: description,
+                        isOrganization: false
+                    }
+                } else {
+                    postData = {
+                        mediaType: "image",
+                        isProject: isProject,
+                        mediaURL: uploadconfig.data.key,
+                        description: description,
+                        isOrganization: false
+                    }
                 }
+
 
                 CreatePost({
                     postData: postData, navigate, setIsModalOpened
@@ -163,6 +178,18 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
         })
     }
 
+    const isRadioSelected = (value: string): boolean => selectedRadioBtn === value;
+
+    const handleRadioClick = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        console.log(e.currentTarget.value);
+        setSelectedRadioBtn(e.currentTarget.value)
+        if (e.currentTarget.value === 'project') {
+            setIsProject(true)
+        } else if (e.currentTarget.value === 'post') {
+            setIsProject(false)
+        }
+    }
+
     return (
         <>
             <Spinner loader={loading} />
@@ -215,6 +242,12 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                         <label htmlFor="">Caption</label>
                         {isEditModalOpened ? <textarea onChange={(e) => setDescription(e.target.value)} value={description} className='postmodal_descriptionarea_textarea' placeholder='Type Something' /> :
                             <textarea onChange={(e) => setDescription(e.target.value)} className='postmodal_descriptionarea_textarea' placeholder='Type Something' />}
+                        {isProject && <div>
+                            <label className='postmodal_label'>Project Name</label>
+                            <input className='postmodal_input' type="text"
+                                onChange={(e) => setProjectName(e.target.value)}
+                            />
+                        </div>}
                         <div className="postmodal_descriptionarea_actions">
                             {isEditModalOpened ? (
                                 <>
@@ -228,6 +261,23 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                             ) :
                                 (
                                     <>
+                                        <div className="radio_container">
+                                            <form className='radio_container_form'>
+                                                <label className='radio_container_label'>
+                                                    <input className='radio_container_input' type="radio" value='post' name="radio" checked={isRadioSelected('post')}
+                                                        onChange={handleRadioClick}
+                                                    />
+                                                    <span className='radio_container_span'>Post</span>
+                                                </label>
+                                                <label className='radio_container_label'>
+                                                    <input className='radio_container_input' type="radio" value='project' name="radio" checked={isRadioSelected('project')}
+                                                        onChange={handleRadioClick}
+                                                    />
+                                                    <span className='radio_container_span'>Project</span>
+                                                </label>
+                                            </form>
+                                        </div>
+
                                         <button className="postmodal_descriptionarea_actions_cancel" onClick={() => setIsModalOpened(false)}>Cancel</button>
                                         <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Post</button>
                                     </>

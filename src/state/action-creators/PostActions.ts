@@ -31,6 +31,7 @@ export const CreatePost = ({ postData, navigate, setIsModalOpened }: any) => {
         };
         try {
             const { data } = await request.post('/api/v1/posts/', postData, config)
+            console.log(data);
 
             dispatch({
                 type: CreatePostActionType.CREATE_POST_SUCCESS,
