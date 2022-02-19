@@ -14,7 +14,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import Moment from 'react-moment';
 import { useActions } from '../../hooks/useActions'
 import { Link, Params, useNavigate, useParams } from 'react-router-dom'
-import { Modal } from '..'
+import { Modal, Spinner } from '..'
 
 
 const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
@@ -40,7 +40,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     let { data: FeedPosts, loading: FeedPostsLoading }: any = useTypedSelector(
         (state) => state.GetMyFeed
     )
-    const { success: LikeSuccess }: any = useTypedSelector(
+    const { success: LikeSuccess, loading: likeLoading }: any = useTypedSelector(
         (state) => state.LikePost
     )
     const { success: DeleteSuccess }: any = useTypedSelector(
@@ -54,11 +54,15 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
 
     useEffect(() => {
         if (userProfile) {
+            console.log("1");
+
             GetUsersPosts({
                 token: user.token,
                 userId
             })
         } else {
+            console.log("2");
+
             GetMyPost({
                 token: user.token,
             })
@@ -254,10 +258,10 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
             </>
         )
     }
-
     return (
 
         <>
+            <Spinner loader={likeLoading} />
             <Modal isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened}
                 isCommentModalOpened={isCommentModalOpened} setIsCommentModalOpened={setIsCommentModalOpened}
                 commentPostId={commentPostId} />

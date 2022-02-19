@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import './_Layout.scss'
 
-import { Header, Modal, Sidebar, Spinner } from ".."
+import { Header, Modal, Sidebar } from ".."
 import { LayoutProps } from "../../models"
 
 

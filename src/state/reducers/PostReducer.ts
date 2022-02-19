@@ -131,7 +131,7 @@ export const PostLikeReducer = (
         case PostLikeActionType.POST_LIKE_REQUEST:
             return { ...state, loading: true, error: null }
         case PostLikeActionType.POST_LIKE_SUCCESS:
-            return { ...state, success: true, error: null, data: action.payload }
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
         case PostLikeActionType.POST_LIKE_FAIL:
             return { ...state, loading: false, success: false, error: action.payload, data: [] }
         default:

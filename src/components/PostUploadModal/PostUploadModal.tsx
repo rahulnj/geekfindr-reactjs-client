@@ -13,8 +13,10 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import request from '../../api';
 import { useActions } from '../../hooks/useActions';
+import { Spinner } from '..';
 
 const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+console.log(CurrentUser.token);
 
 const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: PostUploadModalProps) => {
 
@@ -29,7 +31,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
     const [imageConfirm, setImageConfirm] = useState(false);
     const [description, setDescription] = useState<any>('')
     const [editPost, setEditPost] = useState<any>({})
-
+    const [loading, setLoading] = useState(false)
 
     const { data: ProfilePosts }: any = useTypedSelector(
         (state) => state.GetMyPost
@@ -45,6 +47,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
 
     const uploadPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
+        setLoading(true)
         function convertdataURLtoFile(dataurl: any, filename: string) {
             let arr = dataurl.split(','),
                 mime = arr[0].match(/:(.*?);/)[1],
@@ -92,6 +95,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                 CreatePost({
                     postData: postData, navigate, setIsModalOpened
                 })
+                setLoading(false)
             }
         } catch (error) {
             console.log(error);
@@ -160,78 +164,81 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
     }
 
     return (
-        <div className={selectedImage || isEditModalOpened ? 'postmodal' : 'postmodal_single'}>
-            <div className='postmodal_leftside'>
-                <div className="postmodal_leftside_wrapper">
-                    <div className="postmodal_leftside_image">
-                        {selectedImage && !imageConfirm && (
-                            <ReactCrop onImageLoaded={setImage} src={selectedImage} crop={crop} onChange={setCrop} />
-                        )}
+        <>
+            <Spinner loader={loading} />
+            <div className={selectedImage || isEditModalOpened ? 'postmodal' : 'postmodal_single'}>
+                <div className='postmodal_leftside'>
+                    <div className="postmodal_leftside_wrapper">
+                        <div className="postmodal_leftside_image">
+                            {selectedImage && !imageConfirm && (
+                                <ReactCrop onImageLoaded={setImage} src={selectedImage} crop={crop} onChange={setCrop} />
+                            )}
+                            {
+                                (imageConfirm || isEditModalOpened) && (
+                                    isEditModalOpened ? <img src={editPost?.mediaURL} alt="" /> : <img src={croppedImage} alt="" />
+                                )
+                            }
+                        </div>
+                        {!selectedImage && (<div className="postmodal_leftside_content">
+                            <div className="postmodal_leftside_icon">
+                                <BsUpload />
+                            </div>
+                            <div className="postmodal_leftside_text">
+                                No file chosen, yet!
+                            </div>
+                        </div>)}
+                    </div>
+                    <div className='postmodal_leftside_action'>
                         {
-                            (imageConfirm || isEditModalOpened) && (
-                                isEditModalOpened ? <img src={editPost?.mediaURL} alt="" /> : <img src={croppedImage} alt="" />
-                            )
+                            (selectedImage && !imageConfirm) && (<button className='postmodal_leftside_choose' onClick={getCroppedImg}>Crop</button>)
                         }
-                    </div>
-                    {!selectedImage && (<div className="postmodal_leftside_content">
-                        <div className="postmodal_leftside_icon">
-                            <BsUpload />
-                        </div>
-                        <div className="postmodal_leftside_text">
-                            No file chosen, yet!
-                        </div>
-                    </div>)}
-                </div>
-                <div className='postmodal_leftside_action'>
-                    {
-                        (selectedImage && !imageConfirm) && (<button className='postmodal_leftside_choose' onClick={getCroppedImg}>Crop</button>)
-                    }
-                    {(!selectedImage && !isEditModalOpened) &&
-                        (<button className='postmodal_leftside_choose'>Choose a file</button>
-                        )}
-                    {!selectedImage &&
-                        (<input type="file" onChange={uploadFileForPost} />
-                        )}
-                </div>
-            </div>
-            {(selectedImage && !imageConfirm) && (
-                <div className="postmodal_rightside">
-                    <div className="postmodal_rightside_wrapper">
-                        <img src={croppedImage} alt="" />
-                    </div>
-                    <div>
-                        <button className='postmodal_rightside_confirm' onClick={confirmFinalImage}>confirm</button>
-                    </div>
-                </div>
-            )}
-            {(imageConfirm || isEditModalOpened) && (<div className="postmodal_descriptionarea">
-                <div className='postmodal_descriptionarea_wrapper'>
-                    <label htmlFor="">Caption</label>
-                    {isEditModalOpened ? <textarea onChange={(e) => setDescription(e.target.value)} value={description} className='postmodal_descriptionarea_textarea' placeholder='Type Something' /> :
-                        <textarea onChange={(e) => setDescription(e.target.value)} className='postmodal_descriptionarea_textarea' placeholder='Type Something' />}
-                    <div className="postmodal_descriptionarea_actions">
-                        {isEditModalOpened ? (
-                            <>
-                                <button className="postmodal_descriptionarea_actions_cancel" onClick={() => {
-                                    setIsEditModalOpened(false);
-                                    navigate(`/profile/${CurrentUser?.id}`)
-                                }}>Discard</button>
-                                <button className="postmodal_descriptionarea_actions_post"
-                                    onClick={UploadEditedPost}>Save</button>
-                            </>
-                        ) :
-                            (
-                                <>
-                                    <button className="postmodal_descriptionarea_actions_cancel" onClick={() => setIsModalOpened(false)}>Cancel</button>
-                                    <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Post</button>
-                                </>
+                        {(!selectedImage && !isEditModalOpened) &&
+                            (<button className='postmodal_leftside_choose'>Choose a file</button>
+                            )}
+                        {!selectedImage &&
+                            (<input type="file" onChange={uploadFileForPost} />
                             )}
                     </div>
                 </div>
-            </div>
-            )
-            }
-        </div >
+                {(selectedImage && !imageConfirm) && (
+                    <div className="postmodal_rightside">
+                        <div className="postmodal_rightside_wrapper">
+                            <img src={croppedImage} alt="" />
+                        </div>
+                        <div>
+                            <button className='postmodal_rightside_confirm' onClick={confirmFinalImage}>confirm</button>
+                        </div>
+                    </div>
+                )}
+                {(imageConfirm || isEditModalOpened) && (<div className="postmodal_descriptionarea">
+                    <div className='postmodal_descriptionarea_wrapper'>
+                        <label htmlFor="">Caption</label>
+                        {isEditModalOpened ? <textarea onChange={(e) => setDescription(e.target.value)} value={description} className='postmodal_descriptionarea_textarea' placeholder='Type Something' /> :
+                            <textarea onChange={(e) => setDescription(e.target.value)} className='postmodal_descriptionarea_textarea' placeholder='Type Something' />}
+                        <div className="postmodal_descriptionarea_actions">
+                            {isEditModalOpened ? (
+                                <>
+                                    <button className="postmodal_descriptionarea_actions_cancel" onClick={() => {
+                                        setIsEditModalOpened(false);
+                                        navigate(`/profile/${CurrentUser?.id}`)
+                                    }}>Discard</button>
+                                    <button className="postmodal_descriptionarea_actions_post"
+                                        onClick={UploadEditedPost}>Save</button>
+                                </>
+                            ) :
+                                (
+                                    <>
+                                        <button className="postmodal_descriptionarea_actions_cancel" onClick={() => setIsModalOpened(false)}>Cancel</button>
+                                        <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Post</button>
+                                    </>
+                                )}
+                        </div>
+                    </div>
+                </div>
+                )
+                }
+            </div >
+        </>
     )
 };
 
