@@ -16,7 +16,7 @@ import { useActions } from '../../hooks/useActions';
 import { Spinner } from '..';
 
 const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-console.log(CurrentUser.token);
+
 
 const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: PostUploadModalProps) => {
 

@@ -36,8 +36,6 @@ export const CreatePost = ({ postData, navigate, setIsModalOpened }: any) => {
                 type: CreatePostActionType.CREATE_POST_SUCCESS,
                 payload: data
             })
-            console.log("current", CurrentUser);
-
             setIsModalOpened(false)
             navigate('/')
         } catch (error: any) {

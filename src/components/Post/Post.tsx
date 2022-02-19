@@ -28,7 +28,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
         GetUsersPosts, GetMyPost
     } = useActions();
 
-    const { user }: any = useTypedSelector(
+    const { user, loading }: any = useTypedSelector(
         (state) => state.UserSignin
     )
     let { data: ProfilePosts, loading: ProfilePostsLoading }: any = useTypedSelector(
@@ -57,14 +57,14 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
             console.log("1");
 
             GetUsersPosts({
-                token: user.token,
+                token: user?.token,
                 userId
             })
         } else {
             console.log("2");
 
             GetMyPost({
-                token: user.token,
+                token: user?.token,
             })
         }
     }, [LikeSuccess, DeleteSuccess])
@@ -72,7 +72,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     const LikePostHandler = (id: string) => {
 
         LikePost({
-            token: user.token,
+            token: user?.token,
             postId: id
         })
     }
@@ -90,11 +90,11 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
         // const lastPostId = newArray[0]?.id
         // setNextPostId(lastPostId)
         GetFeedPosts({
-            token: user.token,
+            token: user?.token,
             limit: 10,
 
         })
-    }, [LikeSuccess])
+    }, [LikeSuccess, loading])
 
     //////////////////////////////////////////////////////////////////////
 
