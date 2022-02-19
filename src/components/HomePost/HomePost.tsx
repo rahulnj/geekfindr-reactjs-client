@@ -5,10 +5,10 @@ import { BiComment } from "react-icons/bi"
 import { BsThreeDotsVertical } from "react-icons/bs"
 
 import Moment from "react-moment"
-
-import useInfiniteScroll from "../../hooks/useInfiniteScroll"
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll"
 
 import { HomePostProps, PostData, UserData } from "../../models"
+
 
 const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
 

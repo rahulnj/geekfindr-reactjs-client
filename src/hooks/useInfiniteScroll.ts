@@ -6,21 +6,20 @@ import { UserData } from '../models';
 
 
 
-
-
-
-export default function useInfiniteScroll({ lastPostId }: any) {
+export const useInfiniteScroll = ({ lastPostId }: any) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-
 
     const [feedPosts, setFeedPosts] = useState<any>([])
     const [hasMore, setHasMore] = useState(false)
 
+    console.log(lastPostId, "..............");
 
     useEffect(() => {
+        setFeedPosts([])
+    }, [lastPostId])
 
-        console.log(lastPostId, "======");
 
+    useEffect(() => {
         const fetchFeed = async () => {
             try {
                 const { data } = await request.get('/api/v1/posts/my-feed', {
@@ -43,12 +42,6 @@ export default function useInfiniteScroll({ lastPostId }: any) {
         }
         fetchFeed()
     }, [lastPostId])
-
-
-
-
-
-
 
     return { feedPosts, hasMore };
 }
