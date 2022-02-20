@@ -229,8 +229,6 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                 } else {
                     setisProjectNameTaken(false)
                 }
-                console.log(CheckProjectNameAlreadyExist);
-
             } catch (error) {
                 if (axios.isCancel(Error)) {
                     return;

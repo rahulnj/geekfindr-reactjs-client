@@ -8,7 +8,8 @@ import {
     GetPostLikesActionType,
     GetUsersPostsActionType,
     PostCommentActionType,
-    PostLikeActionType
+    PostLikeActionType,
+    TeamJoinActionType
 } from '../actiontypes';
 
 
@@ -223,3 +224,24 @@ export type GetUsersPostsAction =
     | GetUsersPostsRequestAction
     | GetUsersPostsSuccessAction
     | GetUsersPostsFailAction
+
+//Action Models for team join request
+
+interface TeamJoinRequestAction {
+    type: TeamJoinActionType.TEAM_JOIN_REQUEST
+}
+
+interface TeamJoinSuccessAction {
+    type: TeamJoinActionType.TEAM_JOIN_SUCCESS
+    payload: string[]
+}
+
+interface TeamJoinFailAction {
+    type: TeamJoinActionType.TEAM_JOIN_FAIL
+    payload: string[] | null
+}
+
+export type TeamJoinAction =
+    | TeamJoinRequestAction
+    | TeamJoinSuccessAction
+    | TeamJoinFailAction

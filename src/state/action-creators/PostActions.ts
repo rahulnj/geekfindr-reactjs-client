@@ -6,13 +6,13 @@ import { UserData } from "../../models";
 import {
     CreatePostAction, DeletePostAction, EditPostAction,
     GetFeedAction, GetMyPostAction, GetPostCommentsAction,
-    GetPostLikesAction, GetUsersPostsAction, PostCommentAction, PostLikeAction
+    GetPostLikesAction, GetUsersPostsAction, PostCommentAction, PostLikeAction, TeamJoinAction
 } from "../action-models"
 
 import {
     CreatePostActionType, DeletePostActionType, EditPostActionType,
     GetFeedActionType, GetMyPostsActionType, GetPostCommentsActionType,
-    GetPostLikesActionType, GetUsersPostsActionType, PostCommentActionType, PostLikeActionType
+    GetPostLikesActionType, GetUsersPostsActionType, PostCommentActionType, PostLikeActionType, TeamJoinActionType
 } from "../actiontypes"
 
 const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
@@ -302,6 +302,33 @@ export const GetUsersPosts = ({ token, userId }: any) => {
                 type: GetUsersPostsActionType.GET_USERSPOST_FAIL,
                 payload: error
             });
+        }
+    }
+}
+
+export const TeamJoinRequest = ({ token, projectId }: any) => {
+    return async (dispatch: Dispatch<TeamJoinAction>) => {
+        dispatch({
+            type: TeamJoinActionType.TEAM_JOIN_REQUEST
+        })
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.post(`/api/v1/posts/${projectId}/team-join-requests`, {}, config)
+            dispatch({
+                type: TeamJoinActionType.TEAM_JOIN_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: TeamJoinActionType.TEAM_JOIN_FAIL,
+                payload: error
+            })
         }
     }
 }

@@ -28,7 +28,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
         GetUsersPosts, GetMyPost
     } = useActions();
 
-    const { user, loading }: any = useTypedSelector(
+    const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
     let { data: ProfilePosts, loading: ProfilePostsLoading }: any = useTypedSelector(
@@ -37,9 +37,6 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     let { data: SearchedUsersPosts, loading: SearchedUsersPostsLoading }: any = useTypedSelector(
         (state) => state.GetUsersPosts
     )
-    // let { data: FeedPosts, loading: FeedPostsLoading }: any = useTypedSelector(
-    //     (state) => state.GetMyFeed
-    // )
     const { success: EditPostSuccess }: any = useTypedSelector(
         (state) => state.EditPost
     )

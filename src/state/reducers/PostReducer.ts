@@ -1,6 +1,6 @@
 import { PostState } from "../../models"
-import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction, GetPostCommentsAction, GetPostLikesAction, GetUsersPostsAction, PostCommentAction, PostLikeAction } from "../action-models"
-import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType, GetPostCommentsActionType, GetPostLikesActionType, GetUsersPostsActionType, PostCommentActionType, PostLikeActionType } from "../actiontypes";
+import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction, GetPostCommentsAction, GetPostLikesAction, GetUsersPostsAction, PostCommentAction, PostLikeAction, TeamJoinAction } from "../action-models"
+import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType, GetPostCommentsActionType, GetPostLikesActionType, GetUsersPostsActionType, PostCommentActionType, PostLikeActionType, TeamJoinActionType } from "../actiontypes";
 
 
 
@@ -166,6 +166,22 @@ export const GetUsersPostsReducer = (
             return { ...state, loading: false, error: null, data: action.payload }
         case GetUsersPostsActionType.GET_USERSPOST_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const TeamJoinRequestReducer = (
+    state: PostState = initialState,
+    action: TeamJoinAction
+): PostState => {
+    switch (action.type) {
+        case TeamJoinActionType.TEAM_JOIN_REQUEST:
+            return { ...state, loading: true, error: null }
+        case TeamJoinActionType.TEAM_JOIN_SUCCESS:
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
+        case TeamJoinActionType.TEAM_JOIN_FAIL:
+            return { ...state, loading: false, success: false, error: action.payload, data: [] }
         default:
             return state;
     }

@@ -22,8 +22,12 @@ import {
     GetUsersPostsReducer,
     PostCommentReducer,
     PostLikeReducer,
+    TeamJoinRequestReducer,
 } from "./PostReducer";
-import { GetMyProjectReducer } from "./ProjectReducer";
+import {
+    GetMyProjectReducer,
+    GetProjectDetailsReducer
+} from "./ProjectReducer";
 
 import {
     GetUserDetailsReducer,
@@ -51,6 +55,8 @@ const rootReducer = combineReducers({
     GetUsersPosts: GetUsersPostsReducer,
     FollowUser: FollowUserReducer,
     GetMyProject: GetMyProjectReducer,
+    TeamJoinRequest: TeamJoinRequestReducer,
+    GetProjectDetails: GetProjectDetailsReducer,
 })
 
 export default rootReducer;
