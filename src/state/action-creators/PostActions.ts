@@ -172,7 +172,7 @@ export const GetPostLikes = ({ token, postId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
@@ -201,7 +201,7 @@ export const GetPostComments = ({ token, postId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
@@ -229,7 +229,7 @@ export const LikePost = ({ token, postId }: any) => {
         });
         const config = {
             headers: {
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
@@ -257,7 +257,7 @@ export const CommentPost = ({ token, postId, comment }: any) => {
         });
         const config = {
             headers: {
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {

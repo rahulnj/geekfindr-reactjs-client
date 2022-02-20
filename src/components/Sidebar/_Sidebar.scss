@@ -74,6 +74,10 @@
             margin-top: 15px;
         }
     }
+    &_singleprojectdetails {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 @media only screen and (max-width: $breakpoint-large) {

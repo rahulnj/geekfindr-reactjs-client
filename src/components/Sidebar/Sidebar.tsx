@@ -3,12 +3,13 @@ import './_Sidebar.scss'
 import { FiHome, FiSettings } from 'react-icons/fi'
 import { BsChatLeft } from 'react-icons/bs'
 import { GrProjects } from 'react-icons/gr'
-import { SidebarProps } from '../../models'
+import { SidebarProps, UserData } from '../../models'
 
 import post from '../../assets/persons/1.jpeg'
 import { useActions } from '../../hooks/useActions'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
 
-
+const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, project }) => {
 
     const [windowSizeListener, setWindowSizeListener] = useState(false)
@@ -29,17 +30,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
     }, [])
 
     const { GetMyProject } = useActions();
+    const { data: myProjects }: any = useTypedSelector(
+        (state) => state.GetMyProject
+    )
 
     useEffect(() => {
-        GetMyProject()
-    }, [])
-
-
-
-
-
-
-
+        GetMyProject({ token: CurrentUser?.token })
+    }, [CurrentUser])
 
     return (
         <div className={isSidebar ? "sidebar open" : "sidebar"}
@@ -50,12 +47,17 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
                     <h4>Projects</h4>
                     {/* <span>see all</span> */}
                 </div>
-                <div className='sidebar_projects'>
-                    <div className='sidebar_singleproject'>
-                        <img src={post} alt="" />
-                        <h4>Project Name</h4>
+                {myProjects?.map((project: any) => (
+                    <div className='sidebar_projects'>
+                        <div className='sidebar_singleproject'>
+                            <img src={post} alt="" />
+                            <div className='sidebar_singleprojectdetails'>
+                                <h4>{project?.project?.name}</h4>
+                                <p>{project?.role}</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                ))}
                 <ul className="sidebar_list">
                     <li className="sidebar_listItem">
                         <a href="#" className='sidebar_link'>

@@ -7,12 +7,7 @@ import { GetMyProjectActionType } from "../actiontypes/ProjectActionType";
 
 
 
-const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-
-
-
-
-export const GetMyProject = () => {
+export const GetMyProject = ({ token }: any) => {
     return async (dispatch: Dispatch<GetMyrojectAction>) => {
         dispatch({
             type: GetMyProjectActionType.GET_MYPROJECT_REQUEST
@@ -20,7 +15,7 @@ export const GetMyProject = () => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
@@ -29,7 +24,7 @@ export const GetMyProject = () => {
                 type: GetMyProjectActionType.GET_MYPROJECT_SUCCESS,
                 payload: data
             })
-            console.log(data);
+            // console.log(data);
 
         } catch (error: any) {
             console.log(error);

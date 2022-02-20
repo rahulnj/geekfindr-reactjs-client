@@ -26,8 +26,6 @@ const ProfileScreen = ({ userProfile }: ProfileProps) => {
     const { GetUsersPosts, GetUserDetails, GetMyPost, UserProfileDetails } = useActions();
 
     useEffect(() => {
-        console.log("yes");
-
         if (userProfile) {
             GetUserDetails({
                 token: user.token,
