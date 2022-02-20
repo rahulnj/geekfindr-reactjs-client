@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import request from '../../api';
 import { useActions } from '../../hooks/useActions';
 import { Spinner } from '..';
+import validator from '@brocode/simple-react-form-validation-helper';
 
 const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
@@ -30,15 +31,20 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
     const [croppedImage, setCroppedImage] = useState<any>(null);
     const [imageConfirm, setImageConfirm] = useState(false);
     const [description, setDescription] = useState<any>('')
+    const [descriptionError, setDescriptionError] = useState('')
+    const [isProjectNameTaken, setisProjectNameTaken] = useState(false)
     const [projectName, setProjectName] = useState('')
+    const [projectNameError, setProjectNameError] = useState('')
     const [editPost, setEditPost] = useState<any>({})
     const [loading, setLoading] = useState(false)
     const [selectedRadioBtn, setSelectedRadioBtn] = useState('post')
     const [isProject, setIsProject] = useState(false)
+    const [blankFieldError, setBlankFieldError] = useState('')
 
     const { data: ProfilePosts }: any = useTypedSelector(
         (state) => state.GetMyPost
     )
+
 
     const { CreatePost, EditPost } = useActions();
 
@@ -50,7 +56,6 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
 
     const uploadPost = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        setLoading(true)
         function convertdataURLtoFile(dataurl: any, filename: string) {
             let arr = dataurl.split(','),
                 mime = arr[0].match(/:(.*?);/)[1],
@@ -63,57 +68,63 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
             }
             return new File([u8arr], filename, { type: mime });
         }
+        if (description === '') {
+            setBlankFieldError('Fill the fields')
+        } else if (!descriptionError && !projectNameError && !isProjectNameTaken) {
 
-        const convertedCroppedImage = convertdataURLtoFile(croppedImage, fileName);
 
-        const config = {
-            headers: {
-                'Content-Type': 'image/jpeg'
-            },
-        }
+            setLoading(true)
 
-        try {
-            const uploadconfig = await request.get('/api/v1/uploads/signed-url', {
-                params: {
-                    fileType: "image",
-                    fileSubType: "jpeg"
-                },
+
+            const convertedCroppedImage = convertdataURLtoFile(croppedImage, fileName);
+
+            const config = {
                 headers: {
-                    'Authorization': `Bearer ${CurrentUser?.token}`,
-                }
-            })
-
-            if (uploadconfig.data.key) {
-
-                await axios.put(uploadconfig.data.url, convertedCroppedImage, config);
-                let postData;
-                if (isProject) {
-                    postData = {
-                        mediaType: "image",
-                        isProject: isProject,
-                        mediaURL: uploadconfig.data.key,
-                        projectName: projectName,
-                        description: description,
-                        isOrganization: false
-                    }
-                } else {
-                    postData = {
-                        mediaType: "image",
-                        isProject: isProject,
-                        mediaURL: uploadconfig.data.key,
-                        description: description,
-                        isOrganization: false
-                    }
-                }
-
-
-                CreatePost({
-                    postData: postData, navigate, setIsModalOpened
-                })
-                setLoading(false)
+                    'Content-Type': 'image/jpeg'
+                },
             }
-        } catch (error) {
-            console.log(error);
+
+            try {
+                const uploadconfig = await request.get('/api/v1/uploads/signed-url', {
+                    params: {
+                        fileType: "image",
+                        fileSubType: "jpeg"
+                    },
+                    headers: {
+                        'Authorization': `Bearer ${CurrentUser?.token}`,
+                    }
+                })
+
+                if (uploadconfig.data.key) {
+
+                    await axios.put(uploadconfig.data.url, convertedCroppedImage, config);
+                    let postData;
+                    if (isProject) {
+                        postData = {
+                            mediaType: "image",
+                            isProject: isProject,
+                            mediaURL: uploadconfig.data.key,
+                            projectName: projectName,
+                            description: description,
+                            isOrganization: false
+                        }
+                    } else {
+                        postData = {
+                            mediaType: "image",
+                            isProject: isProject,
+                            mediaURL: uploadconfig.data.key,
+                            description: description,
+                            isOrganization: false
+                        }
+                    }
+                    CreatePost({
+                        postData: postData, navigate, setIsModalOpened
+                    })
+                    setLoading(false)
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 
@@ -168,14 +179,18 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
 
     const UploadEditedPost = (e: React.SyntheticEvent) => {
         e.preventDefault();
-        const EditedPostData = {
-            description: description,
-        }
+        if (description === '') {
+            setBlankFieldError('Fill the fields')
+        } else if (!descriptionError) {
+            const EditedPostData = {
+                description: description,
+            }
 
-        EditPost({
-            EditedPostData: EditedPostData, postId: postId,
-            navigate, setIsEditModalOpened
-        })
+            EditPost({
+                EditedPostData: EditedPostData, postId: postId,
+                navigate, setIsEditModalOpened
+            })
+        }
     }
 
     const isRadioSelected = (value: string): boolean => selectedRadioBtn === value;
@@ -189,6 +204,64 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
             setIsProject(false)
         }
     }
+    const InitialUpdate = useRef(true);
+    useEffect(() => {
+        if (InitialUpdate.current) {
+            InitialUpdate.current = false;
+            return;
+        }
+        const CancelToken = axios.CancelToken.source()
+        const fetchProjectNames = async () => {
+            try {
+                const { data } = await request.get('/api/v1/projects/projectNames', {
+                    cancelToken: CancelToken.token,
+                    headers: {
+                        "Content-type": "application/json",
+                        Authorization: `Bearer ${CurrentUser?.token}`,
+                    },
+                })
+                console.log(data);
+                let CheckProjectNameAlreadyExist = data?.filter((name: string) => (
+                    name === projectName
+                ))
+                if (CheckProjectNameAlreadyExist.length > 0) {
+                    setisProjectNameTaken(true)
+                } else {
+                    setisProjectNameTaken(false)
+                }
+                console.log(CheckProjectNameAlreadyExist);
+
+            } catch (error) {
+                if (axios.isCancel(Error)) {
+                    return;
+                }
+                console.log(error);
+            }
+        }
+        fetchProjectNames()
+
+        return () => {
+            CancelToken.cancel()
+        }
+    }, [projectName])
+
+    const OnChangeDescriptionValidator = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+        setDescription(e.target.value);
+        validator.addressInputBlurHandler(e.target.value, setDescriptionError)
+    }
+    const OnBlurDescriptionValidator = (e: React.FocusEvent<HTMLTextAreaElement>): void => {
+        validator.addressInputBlurHandler(e.target.value, setDescriptionError)
+    }
+
+    const OnChangeProjectNameValidator = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setProjectName(e.target.value);
+        validator.nameInputChangeHandler(e.target.value, setProjectNameError)
+    }
+    const OnBlurProjectNameValidator = (e: React.FocusEvent<HTMLInputElement>): void => {
+        validator.nameInputBlurHandler(e.target.value, setProjectNameError)
+    }
+
+
 
     return (
         <>
@@ -239,14 +312,17 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                 )}
                 {(imageConfirm || isEditModalOpened) && (<div className="postmodal_descriptionarea">
                     <div className='postmodal_descriptionarea_wrapper'>
-                        <label htmlFor="">Caption</label>
-                        {isEditModalOpened ? <textarea onChange={(e) => setDescription(e.target.value)} value={description} className='postmodal_descriptionarea_textarea' placeholder='Type Something' /> :
-                            <textarea onChange={(e) => setDescription(e.target.value)} className='postmodal_descriptionarea_textarea' placeholder='Type Something' />}
+                        <label className='postmodal_descriptionarea_wrapper_labelcaption'>Caption</label>
+                        {isEditModalOpened ? <textarea onChange={OnChangeDescriptionValidator} onBlur={OnBlurDescriptionValidator} value={description} className='postmodal_descriptionarea_textarea' placeholder='Type Something' /> :
+                            <textarea onChange={OnChangeDescriptionValidator} onBlur={OnBlurDescriptionValidator} className='postmodal_descriptionarea_textarea' placeholder='Type Something' />}
+                        <p className='postmodal_errorlabel'>{descriptionError}</p>
                         {isProject && <div>
                             <label className='postmodal_label'>Project Name</label>
-                            <input className='postmodal_input' type="text"
-                                onChange={(e) => setProjectName(e.target.value)}
+                            <input className={isProjectNameTaken ? 'postmodal_input error' : 'postmodal_input'} type="text"
+                                onChange={OnChangeProjectNameValidator} onBlur={OnBlurProjectNameValidator}
                             />
+                            {isProjectNameTaken && <p className='postmodal_errorlabel'>Project Name already taken.</p>}
+                            <p className='postmodal_errorlabel'>{projectNameError}</p>
                         </div>}
                         <div className="postmodal_descriptionarea_actions">
                             {isEditModalOpened ? (
@@ -280,9 +356,11 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
 
                                         <button className="postmodal_descriptionarea_actions_cancel" onClick={() => setIsModalOpened(false)}>Cancel</button>
                                         <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Post</button>
+
                                     </>
                                 )}
                         </div>
+                        <p className='postmodal_errorlabel'>{blankFieldError}</p>
                     </div>
                 </div>
                 )

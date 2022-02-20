@@ -164,7 +164,7 @@
                 box-shadow: $main-shadow;
             }
         }
-        &_wrapper:focus-within label {
+        &_wrapper:focus-within .postmodal_label {
             color: $button-color;
         }
         &_actions {
@@ -232,6 +232,10 @@
         padding-left: 15px;
         font-size: 14px;
         transition: 0.4s;
+
+        &.error {
+            outline: 1px solid red;
+        }
     }
     &_label {
         align-items: center;
@@ -240,6 +244,13 @@
         font-size: 14px;
         margin-bottom: 5px;
         transition: 0.4s;
+    }
+    &_errorlabel {
+        align-items: center;
+        display: flex;
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
     }
 }
 

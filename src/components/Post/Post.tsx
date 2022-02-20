@@ -40,6 +40,9 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     // let { data: FeedPosts, loading: FeedPostsLoading }: any = useTypedSelector(
     //     (state) => state.GetMyFeed
     // )
+    const { success: EditPostSuccess }: any = useTypedSelector(
+        (state) => state.EditPost
+    )
     const { success: LikeSuccess, loading: likeLoading }: any = useTypedSelector(
         (state) => state.LikePost
     )
@@ -63,7 +66,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                 token: user?.token,
             })
         }
-    }, [LikeSuccess, DeleteSuccess])
+    }, [LikeSuccess, DeleteSuccess, EditPostSuccess])
 
     const LikePostHandler = (id: string) => {
         LikePost({
