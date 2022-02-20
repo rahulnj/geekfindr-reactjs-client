@@ -63,7 +63,7 @@ export const GetFeedPosts = ({ token, limit, lastPostId }: any) => {
                 },
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${CurrentUser?.token}`,
+                    Authorization: `Bearer ${token}`,
                 },
             })
             dispatch({
@@ -88,7 +88,7 @@ export const GetMyPost = ({ token }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
@@ -287,7 +287,7 @@ export const GetUsersPosts = ({ token, userId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {

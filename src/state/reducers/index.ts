@@ -23,6 +23,7 @@ import {
     PostCommentReducer,
     PostLikeReducer,
 } from "./PostReducer";
+import { GetMyProjectReducer } from "./ProjectReducer";
 
 import {
     GetUserDetailsReducer,
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
     GetFollowingUsers: GetFollowingUsersReducer,
     GetUsersPosts: GetUsersPostsReducer,
     FollowUser: FollowUserReducer,
+    GetMyProject: GetMyProjectReducer,
 })
 
 export default rootReducer;

@@ -34,5 +34,14 @@ export interface FollowersState {
     success?: boolean
 }
 
+//State Models used in the ProjectReducer
+
+export interface ProjectState {
+    data: string[]
+    error: string[] | null
+    loading: boolean
+    success?: boolean
+}
+
 
 

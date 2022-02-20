@@ -6,3 +6,4 @@ export {
     LikePost, CommentPost, GetUsersPosts, GetPostComments
 } from './PostActions';
 export { GetUserFollowers, GetFollowingUsers, FollowUser } from './FollowersActions';
+export { GetMyProject } from './ProjectActions';

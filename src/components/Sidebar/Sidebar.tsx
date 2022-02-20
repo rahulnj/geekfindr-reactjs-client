@@ -5,8 +5,8 @@ import { BsChatLeft } from 'react-icons/bs'
 import { GrProjects } from 'react-icons/gr'
 import { SidebarProps } from '../../models'
 
-
-
+import post from '../../assets/persons/1.jpeg'
+import { useActions } from '../../hooks/useActions'
 
 
 const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, project }) => {
@@ -28,6 +28,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
         }
     }, [])
 
+    const { GetMyProject } = useActions();
+
+    useEffect(() => {
+        GetMyProject()
+    }, [])
+
+
+
+
+
+
+
 
     return (
         <div className={isSidebar ? "sidebar open" : "sidebar"}
@@ -35,8 +47,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
             onClick={() => handleToggleSidebar(false)}>
             <div className="sidebar_wrapper">
                 <div className='sidebar_heading'>
-                    <span>Projects</span>
-                    <span>see all</span>
+                    <h4>Projects</h4>
+                    {/* <span>see all</span> */}
+                </div>
+                <div className='sidebar_projects'>
+                    <div className='sidebar_singleproject'>
+                        <img src={post} alt="" />
+                        <h4>Project Name</h4>
+                    </div>
                 </div>
                 <ul className="sidebar_list">
                     <li className="sidebar_listItem">

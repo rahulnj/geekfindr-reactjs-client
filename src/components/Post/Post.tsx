@@ -53,6 +53,8 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     }
 
     useEffect(() => {
+        console.log("no");
+
         if (userProfile) {
             GetUsersPosts({
                 token: user?.token,

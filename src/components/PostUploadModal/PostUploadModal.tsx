@@ -92,7 +92,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                         mediaType: "image",
                         isProject: isProject,
                         mediaURL: uploadconfig.data.key,
-                        Projectname: projectName,
+                        projectName: projectName,
                         description: description,
                         isOrganization: false
                     }

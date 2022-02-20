@@ -55,6 +55,25 @@
     &.close {
         display: none;
     }
+    &_projects {
+        display: flex;
+    }
+    &_singleproject {
+        display: flex;
+        gap: 10px;
+        cursor: pointer;
+        width: 100%;
+        img {
+            width: 55px;
+            height: 55px;
+            border-radius: 10%;
+            object-fit: cover;
+            margin-top: 10px;
+        }
+        h4 {
+            margin-top: 15px;
+        }
+    }
 }
 
 @media only screen and (max-width: $breakpoint-large) {
@@ -72,7 +91,7 @@
             height: 3.5rem;
         }
         &_heading {
-            span {
+            h4 {
                 display: none;
             }
         }
@@ -86,6 +105,9 @@
             display: none;
         }
         &_button {
+            display: none;
+        }
+        &_projects {
             display: none;
         }
     }

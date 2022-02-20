@@ -26,7 +26,7 @@ import { Search } from '..'
 const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModal }) => {
     const ref = useRef<any>();
     const [ToggleHeader, setToggleHeader] = useState<boolean>(false)
-    const { UserLogout } = useActions();
+    const { UserLogout, GetMyPost } = useActions();
 
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
