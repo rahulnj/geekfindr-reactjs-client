@@ -4,7 +4,6 @@ import './_Skeleton.scss';
 
 const PostSkeleton = () => {
     return (
-
         <div className='postskeleton'>
             <div className="postskeleton_header">
                 <BaseSkeleton type='avatar' />

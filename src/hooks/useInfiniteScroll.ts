@@ -11,8 +11,9 @@ export const useInfiniteScroll = ({ lastPostId }: any) => {
 
     const [feedPosts, setFeedPosts] = useState<any>([])
     const [hasMore, setHasMore] = useState(false)
+    const [loading, setLoading] = useState(false)
 
-    console.log(lastPostId, "..............");
+
 
     useEffect(() => {
         setFeedPosts([])
@@ -20,6 +21,7 @@ export const useInfiniteScroll = ({ lastPostId }: any) => {
 
 
     useEffect(() => {
+        setLoading(true)
         const fetchFeed = async () => {
             try {
                 const { data } = await request.get('/api/v1/posts/my-feed', {
@@ -36,6 +38,7 @@ export const useInfiniteScroll = ({ lastPostId }: any) => {
                     return [...new Set([...prevPosts, ...data])]
                 })
                 setHasMore(data.length > 0)
+                setLoading(false)
             } catch (error: any) {
                 console.log(error);
             }
@@ -43,6 +46,6 @@ export const useInfiniteScroll = ({ lastPostId }: any) => {
         fetchFeed()
     }, [lastPostId])
 
-    return { feedPosts, hasMore };
+    return { feedPosts, hasMore, loading };
 }
 

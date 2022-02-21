@@ -5,6 +5,7 @@ import { BiComment } from "react-icons/bi"
 import { BsThreeDotsVertical } from "react-icons/bs"
 
 import Moment from "react-moment"
+import { BaseSkeleton, HomePostSkeleton, PostSkeleton } from ".."
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll"
 
 import { HomePostProps, PostData, UserData } from "../../models"
@@ -17,7 +18,7 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
     const [lastPostId, setLastPostId] = useState<string>('')
     const observer = useRef<any>()
 
-    let { feedPosts, hasMore } = useInfiniteScroll(lastPostId)
+    let { feedPosts, hasMore, loading } = useInfiniteScroll(lastPostId)
 
 
     const lastFeedPostRef = useCallback(node => {
@@ -43,94 +44,92 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
 
 
     return (
-
-        feedPosts?.map((post: PostData, index: number) => {
-            if (feedPosts.length === index + 1) {
-
-                return (
-
-                    <div className='post' ref={lastFeedPostRef} key={feedPosts?.id}>
-                        <div className="post_wrapper">
-                            <div className="post_top">
-                                <div className="post_top_left">
-                                    <img src={post?.owner?.avatar} alt="" />
-                                    <div className='post_top_left_details'>
-                                        <p className="post_top_left_username">{post?.owner?.username}</p>
-                                        <span className="post_top_left_date"><Moment fromNow>{post?.createdAt}</Moment></span>
+        (!loading) ?
+            feedPosts?.map((post: PostData, index: number) => {
+                if (feedPosts.length === index + 1) {
+                    return (
+                        <div className='post' ref={lastFeedPostRef} key={feedPosts?.id}>
+                            <div className="post_wrapper">
+                                <div className="post_top">
+                                    <div className="post_top_left">
+                                        <img src={post?.owner?.avatar} alt="" />
+                                        <div className='post_top_left_details'>
+                                            <p className="post_top_left_username">{post?.owner?.username}</p>
+                                            <span className="post_top_left_date"><Moment fromNow>{post?.createdAt}</Moment></span>
+                                        </div>
+                                    </div>
+                                    <div className="post_top_right">
+                                        <BsThreeDotsVertical className='post_top_right_threedot' />
                                     </div>
                                 </div>
-                                <div className="post_top_right">
-                                    <BsThreeDotsVertical className='post_top_right_threedot' />
+                                <div className="post_center">
+                                    <span className="post_description">{post?.description}</span>
+                                    <img className='post_homeimg' src={post?.mediaURL} alt="" />
                                 </div>
-                            </div>
-                            <div className="post_center">
-                                <span className="post_description">{post?.description}</span>
-                                <img className='post_homeimg' src={post?.mediaURL} alt="" />
-                            </div>
-                            <div className="post_bottom">
-                                <div className="post_bottom_left">
-                                    <div className='post_bottom_left_icons'>
-                                        {post?.isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
-                                            <AiOutlineLike size={21} className='post_bottom_left_icon'
-                                                onClick={() => { LikePostHandler(post?.id) }}
-                                            />}
-                                        {post?.likeCount}</div>
-                                    <div className='post_bottom_left_icons'><BiComment onClick={() =>
-                                        CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
+                                <div className="post_bottom">
+                                    <div className="post_bottom_left">
+                                        <div className='post_bottom_left_icons'>
+                                            {post?.isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
+                                                <AiOutlineLike size={21} className='post_bottom_left_icon'
+                                                    onClick={() => { LikePostHandler(post?.id) }}
+                                                />}
+                                            {post?.likeCount}</div>
+                                        <div className='post_bottom_left_icons'><BiComment onClick={() =>
+                                            CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <form className='post_commentform'>
-                                {/* <BiSmile size={24} className='post_commentform_icons' />
+                                <form className='post_commentform'>
+                                    {/* <BiSmile size={24} className='post_commentform_icons' />
                     <input onChange={GetComment} type="text" placeholder='Add a comment...' />
                     <button type='submit'>post</button> */}
-                            </form>
+                                </form>
+                            </div>
                         </div>
-                    </div>
 
-                )
-            } else {
+                    )
+                } else {
 
-                return (
-                    <div className='post' key={feedPosts?.id}>
-                        <div className="post_wrapper">
-                            <div className="post_top">
-                                <div className="post_top_left">
-                                    <img src={post?.owner?.avatar} alt="" />
-                                    <div className='post_top_left_details'>
-                                        <p className="post_top_left_username">{post?.owner?.username}</p>
-                                        <span className="post_top_left_date"><Moment fromNow>{post?.createdAt}</Moment></span>
+                    return (
+                        <div className='post' key={feedPosts?.id}>
+                            <div className="post_wrapper">
+                                <div className="post_top">
+                                    <div className="post_top_left">
+                                        <img src={post?.owner?.avatar} alt="" />
+                                        <div className='post_top_left_details'>
+                                            <p className="post_top_left_username">{post?.owner?.username}</p>
+                                            <span className="post_top_left_date"><Moment fromNow>{post?.createdAt}</Moment></span>
+                                        </div>
+                                    </div>
+                                    <div className="post_top_right">
+                                        <BsThreeDotsVertical className='post_top_right_threedot' />
                                     </div>
                                 </div>
-                                <div className="post_top_right">
-                                    <BsThreeDotsVertical className='post_top_right_threedot' />
+                                <div className="post_center">
+                                    <span className="post_description">{post?.description}</span>
+                                    <img className='post_homeimg' src={post?.mediaURL} alt="" />
                                 </div>
-                            </div>
-                            <div className="post_center">
-                                <span className="post_description">{post?.description}</span>
-                                <img className='post_homeimg' src={post?.mediaURL} alt="" />
-                            </div>
-                            <div className="post_bottom">
-                                <div className="post_bottom_left">
-                                    <div className='post_bottom_left_icons'>
-                                        {post?.isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
-                                            <AiOutlineLike size={21} className='post_bottom_left_icon'
-                                                onClick={() => { LikePostHandler(post?.id) }}
-                                            />}
-                                        {post?.likeCount}</div>
-                                    <div className='post_bottom_left_icons'><BiComment onClick={() =>
-                                        CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
+                                <div className="post_bottom">
+                                    <div className="post_bottom_left">
+                                        <div className='post_bottom_left_icons'>
+                                            {post?.isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
+                                                <AiOutlineLike size={21} className='post_bottom_left_icon'
+                                                    onClick={() => { LikePostHandler(post?.id) }}
+                                                />}
+                                            {post?.likeCount}</div>
+                                        <div className='post_bottom_left_icons'><BiComment onClick={() =>
+                                            CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <form className='post_commentform'>
-                                {/* <BiSmile size={24} className='post_commentform_icons' />
+                                <form className='post_commentform'>
+                                    {/* <BiSmile size={24} className='post_commentform_icons' />
                 <input onChange={GetComment} type="text" placeholder='Add a comment...' />
                 <button type='submit'>post</button> */}
-                            </form>
-                        </div>
-                    </div>)
-            }
-        })
-
+                                </form>
+                            </div>
+                        </div>)
+                }
+            })
+            : <HomePostSkeleton theme="light" />
     )
 }
 

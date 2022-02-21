@@ -43,3 +43,6 @@ export interface FollowCounterSkeletonProps {
     theme: string
 }
 
+export interface HomePostSkeletonProps {
+    theme: string
+}
