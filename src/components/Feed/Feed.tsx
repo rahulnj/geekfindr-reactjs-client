@@ -21,17 +21,6 @@ const Feed: React.FC<ProfileProps> = ({ profile, userProfile }) => {
         (state) => state.UserSignin
     )
 
-    useEffect(() => {
-        const newArray = FeedPosts.reverse()
-        const lastPostId = newArray[0]?.id
-        setNextPostId(lastPostId)
-        GetFeedPosts({
-            token: user.token,
-            limit: 5,
-            lastPostId
-        })
-    }, [])
-
     return (
         <div className='feed'>
             <div className="feed_wrapper">

@@ -33,3 +33,7 @@ export interface HomePostProps {
     LikePostHandler: (id: string) => void
     CommentHandler: (id: string) => void
 }
+
+export interface SkeletonProps {
+    type: string
+}

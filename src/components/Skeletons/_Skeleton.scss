@@ -1,0 +1,63 @@
+@import "../../_base.scss";
+
+.skeleton {
+    background: #ddd;
+    margin: 5px 0;
+    border-radius: 4px;
+
+    &.text {
+        width: 100%;
+        height: 12px;
+    }
+    &.title {
+        width: 100px;
+        height: 16px;
+        // margin-bottom: 10px;
+    }
+    &.title-sm {
+        width: 100px;
+        height: 8px;
+    }
+    &.description {
+        width: 100%;
+        height: 15px;
+    }
+
+    &.avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+    }
+    &.thumbnail {
+        width: 100px;
+        height: 100px;
+    }
+    &.post {
+        width: 100%;
+        height: 500px;
+        border-radius: 10px;
+        margin: 10px 0;
+    }
+}
+
+// Post skeleton styles start//
+.postskeleton {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+
+    &_header {
+        display: flex;
+        gap: 0.5rem;
+    }
+    &_titles {
+        padding-top: 0.5rem;
+    }
+}
+
+@media (max-width: $breakpoint-medium) {
+    .postskeleton {
+        width: 100%;
+    }
+}
+// Post skeleton styles end//

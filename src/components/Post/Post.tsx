@@ -14,7 +14,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import Moment from 'react-moment';
 import { useActions } from '../../hooks/useActions'
 import { Link, Params, useNavigate, useParams } from 'react-router-dom'
-import { Modal, Spinner, HomePost } from '..'
+import { Modal, Spinner, HomePost, BaseSkeleton, PostSkeleton } from '..'
 
 
 const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
@@ -174,27 +174,34 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                 isCommentModalOpened={isCommentModalOpened} setIsCommentModalOpened={setIsCommentModalOpened}
                 commentPostId={commentPostId} />
             {profile ?
-                //  (ProfilePosts.length === 0) ?
-                //     (<LoadorAdd />) :
-                (ProfilePosts.map((post: PostData) => (
-                    < MyProfilePosts key={post.id}
-                        description={post.description}
-                        isProject={post.isProject}
-                        likeCount={post.likeCount}
-                        mediaURL={post.mediaURL}
-                        createdAt={post.createdAt}
-                        comments={post.comments}
-                        id={post.id}
-                        owner={post.owner}
-                        commentCount={post.commentCount}
-                        isLiked={post.isLiked}
-                    />
-                ))) : <HomePost
+                (!ProfilePostsLoading) ?
+                    (ProfilePosts.map((post: PostData) => (
+                        < MyProfilePosts key={post.id}
+                            description={post.description}
+                            isProject={post.isProject}
+                            likeCount={post.likeCount}
+                            mediaURL={post.mediaURL}
+                            createdAt={post.createdAt}
+                            comments={post.comments}
+                            id={post.id}
+                            owner={post.owner}
+                            commentCount={post.commentCount}
+                            isLiked={post.isLiked}
+                        />
+                    )))
+                    :
+                    <PostSkeleton />
+
+
+                :
+                <HomePost
                     setIsCommentModalOpened={setIsCommentModalOpened}
                     setCommentPostId={setCommentPostId}
                     LikePostHandler={LikePostHandler}
                     CommentHandler={CommentHandler}
                 />
+
+
             }
         </>
     )
