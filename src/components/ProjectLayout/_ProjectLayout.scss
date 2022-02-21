@@ -14,8 +14,13 @@
             font-weight: 600;
         }
 
-        p {
-            font-size: 0.95rem;
+        &_time {
+            display: flex;
+            gap: 0.5rem;
+            padding-top: 0.2rem;
+            p {
+                font-size: 0.95rem;
+            }
         }
     }
     &_wrapper {

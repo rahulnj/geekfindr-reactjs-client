@@ -5,7 +5,7 @@ import { BiComment } from "react-icons/bi"
 import { BsThreeDotsVertical } from "react-icons/bs"
 
 import Moment from "react-moment"
-import { BaseSkeleton, HomePostSkeleton, PostSkeleton } from ".."
+import { HomePostSkeleton } from ".."
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll"
 
 import { HomePostProps, PostData, UserData } from "../../models"
@@ -34,7 +34,7 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
         })
         if (node) observer.current.observe(node)
         console.log(lastPostId);
-    }, [hasMore, lastPostId])
+    }, [hasMore, lastPostId, feedPosts])
 
 
     feedPosts = feedPosts?.map((post: PostData) => {

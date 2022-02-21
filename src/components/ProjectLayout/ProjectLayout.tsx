@@ -3,9 +3,14 @@ import React, { useState } from 'react'
 import './_ProjectLayout.scss'
 
 import { ProjectDescription, ProjectTasks, ProjectTeam, ProjectTodo } from '..'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+import Moment from 'react-moment'
 
 
 const ProjectLayout = () => {
+    const { data: projectDetails }: any = useTypedSelector(
+        (state) => state.GetProjectDetails
+    )
     const [descriptionActive, setDescriptionActive] = useState(true)
     const [teamActive, setTeamActive] = useState(false)
     const [todoActive, setTodoActive] = useState(false)
@@ -37,8 +42,11 @@ const ProjectLayout = () => {
     return (
         <div className='projectlayout'>
             <div className="projectlayout_header">
-                <h3>Brocode</h3>
-                <p>Started 3 days ago</p>
+                <h3>{projectDetails?.name}</h3>
+                <div className="projectlayout_header_time">
+                    <p>Started</p>
+                    <p><Moment fromNow>{projectDetails?.updatedAt}</Moment></p>
+                </div>
             </div>
             <div className='projectlayout_wrapper'>
                 <div className="projectlayout_titles">

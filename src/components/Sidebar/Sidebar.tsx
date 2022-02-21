@@ -8,12 +8,17 @@ import { SidebarProps, UserData } from '../../models'
 import post from '../../assets/persons/1.jpeg'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { useNavigate } from 'react-router-dom'
 
 const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, project }) => {
 
     const [windowSizeListener, setWindowSizeListener] = useState(false)
-
+    const { data: user }: any = useTypedSelector(
+        (state) => state.UserSignin
+    )
+    const navigate = useNavigate()
+    const { GetProjectDetails } = useActions()
     useEffect(() => {
         const listener = () => {
             if (window.innerWidth <= 540) {
@@ -38,6 +43,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
         GetMyProject({ token: CurrentUser?.token })
     }, [CurrentUser])
 
+    const getProjectDetails = (projectId: string): void => {
+        GetProjectDetails({
+            token: user.token,
+            projectId
+        })
+        navigate(`/project/${projectId}`)
+    }
+
     return (
         <div className={isSidebar ? "sidebar open" : "sidebar"}
             style={{ display: project ? (windowSizeListener ? 'block' : 'none') : '' }}
@@ -48,7 +61,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
                     {/* <span>see all</span> */}
                 </div>
                 {myProjects?.map((project: any) => (
-                    <div className='sidebar_projects'>
+                    <div className='sidebar_projects' key={project?.project?.id} onClick={() => getProjectDetails(project?.project?.id)}>
                         <div className='sidebar_singleproject'>
                             <img src={post} alt="" />
                             <div className='sidebar_singleprojectdetails'>

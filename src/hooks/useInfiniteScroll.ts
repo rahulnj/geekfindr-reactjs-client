@@ -13,6 +13,7 @@ export const useInfiniteScroll = ({ lastPostId }: any) => {
     const [hasMore, setHasMore] = useState(false)
     const [loading, setLoading] = useState(false)
 
+    // console.log(lastPostId, "----------");
 
 
     useEffect(() => {

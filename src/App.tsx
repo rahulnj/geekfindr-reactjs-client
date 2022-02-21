@@ -67,7 +67,7 @@ const App: React.FC = () => {
           </Layout>
         }>
         </Route>
-        <Route path='/project' element={
+        <Route path='/project/:projectId' element={
           <Layout project>
             <ProjectScreen />
           </Layout>
