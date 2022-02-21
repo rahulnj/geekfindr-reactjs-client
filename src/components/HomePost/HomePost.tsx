@@ -1,12 +1,14 @@
 import { useCallback, useRef, useState } from "react"
 
-import { AiFillLike, AiOutlineLike } from "react-icons/ai"
+import { AiFillLike, AiOutlineLike, AiOutlineUsergroupAdd } from "react-icons/ai"
 import { BiComment } from "react-icons/bi"
 import { BsThreeDotsVertical } from "react-icons/bs"
 
 import Moment from "react-moment"
 import { HomePostSkeleton } from ".."
+import { useActions } from "../../hooks/useActions"
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll"
+import { useTypedSelector } from "../../hooks/useTypedSelector"
 
 import { HomePostProps, PostData, UserData } from "../../models"
 
@@ -14,12 +16,14 @@ import { HomePostProps, PostData, UserData } from "../../models"
 const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
 
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-
+    const { user }: any = useTypedSelector(
+        (state) => state.UserSignin
+    )
     const [lastPostId, setLastPostId] = useState<string>('')
     const observer = useRef<any>()
 
     let { feedPosts, hasMore, loading } = useInfiniteScroll(lastPostId)
-
+    const { TeamJoinRequest } = useActions();
 
     const lastFeedPostRef = useCallback(node => {
         if (observer.current) observer.current.disconnect()
@@ -41,7 +45,12 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === CurrentUser?.id))
         return { ...post, isLiked: !!isLiked }
     })
-
+    const handleTeamJoinRequest = () => {
+        TeamJoinRequest({
+            token: user?.token,
+            userId: user?.id
+        })
+    }
 
     return (
         (!loading) ?
@@ -77,11 +86,13 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
                                         <div className='post_bottom_left_icons'><BiComment onClick={() =>
                                             CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
                                     </div>
+                                    <div className="post_bottom_right">
+                                        <AiOutlineUsergroupAdd className='post_bottom_left_icon' size={28}
+                                            onClick={handleTeamJoinRequest}
+                                        />
+                                    </div>
                                 </div>
                                 <form className='post_commentform'>
-                                    {/* <BiSmile size={24} className='post_commentform_icons' />
-                    <input onChange={GetComment} type="text" placeholder='Add a comment...' />
-                    <button type='submit'>post</button> */}
                                 </form>
                             </div>
                         </div>
@@ -119,11 +130,14 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
                                         <div className='post_bottom_left_icons'><BiComment onClick={() =>
                                             CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
                                     </div>
+                                    <div className="post_bottom_right">
+                                        <AiOutlineUsergroupAdd className='post_bottom_left_icon' size={28}
+                                            onClick={handleTeamJoinRequest}
+                                        />
+                                    </div>
                                 </div>
                                 <form className='post_commentform'>
-                                    {/* <BiSmile size={24} className='post_commentform_icons' />
-                <input onChange={GetComment} type="text" placeholder='Add a comment...' />
-                <button type='submit'>post</button> */}
+
                                 </form>
                             </div>
                         </div>)

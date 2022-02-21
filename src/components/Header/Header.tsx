@@ -75,7 +75,7 @@ const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModa
             </Link>
             <Search />
             <div className='header_nav_right' >
-                <button className='header_nav_right_button' onClick={() => ToggleAddPostModal()}>Upload</button>
+                <button className='header_nav_right_button' onClick={() => ToggleAddPostModal()}>Add Post</button>
 
                 <div className='header_nav_right_userinfo' onClick={ProfileHandler}>
                     <img className='header_nav_right_userinfo_userImg' src={user?.avatar} alt="" />

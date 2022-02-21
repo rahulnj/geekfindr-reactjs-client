@@ -306,7 +306,7 @@ export const GetUsersPosts = ({ token, userId }: any) => {
     }
 }
 
-export const TeamJoinRequest = ({ token, projectId }: any) => {
+export const TeamJoinRequest = ({ token, userId }: any) => {
     return async (dispatch: Dispatch<TeamJoinAction>) => {
         dispatch({
             type: TeamJoinActionType.TEAM_JOIN_REQUEST
@@ -317,8 +317,10 @@ export const TeamJoinRequest = ({ token, projectId }: any) => {
                 Authorization: `Bearer ${token}`,
             },
         };
+        console.log(userId);
+
         try {
-            const { data } = await request.post(`/api/v1/posts/${projectId}/team-join-requests`, {}, config)
+            const { data } = await request.post(`/api/v1/posts/${userId}/team-join-requests`, {}, config)
             dispatch({
                 type: TeamJoinActionType.TEAM_JOIN_SUCCESS,
                 payload: data

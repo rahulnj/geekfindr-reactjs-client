@@ -142,6 +142,11 @@
                 }
             }
         }
+        &_right {
+            display: flex;
+            align-items: center;
+            padding: 0 4px;
+        }
     }
     &_commentform {
         display: flex;
