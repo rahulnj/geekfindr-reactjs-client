@@ -66,15 +66,9 @@ const Search: React.FC = () => {
 
 
     const showUserProfile = (id: string) => {
-        GetUserDetails({
-            userId: id
-        })
         setFilteredData([])
         navigate(`/userprofile/${id}`)
     }
-
-
-
     return (
         <div className='wrapper'>
             <div className={filteredData.length === 0 ? "search" : "search search_mainactive"}>

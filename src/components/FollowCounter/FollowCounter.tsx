@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Link, Params, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { ProfileProps, UserData, UsersState } from '../../models'
-import request from '../../api'
 import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'
 

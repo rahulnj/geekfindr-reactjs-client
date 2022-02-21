@@ -27,3 +27,4 @@ export { default as ProjectTasks } from './ProjectTasks/ProjectTasks';
 export { default as Spinner } from './Spinner/Spinner';
 export { default as BaseSkeleton } from './Skeletons/BaseSkeleton';
 export { default as PostSkeleton } from './Skeletons/PostSkeleton';
+export { default as FollowCounterSkeleton } from './Skeletons/FollowCounterSkeleton';

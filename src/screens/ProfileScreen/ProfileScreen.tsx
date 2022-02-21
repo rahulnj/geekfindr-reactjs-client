@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import './_ProfileScreen.scss'
 
 import post1 from '../../assets/posts/3.jpeg'
-import { Feed, FollowCounter, RightAside } from '../../components'
+import { BaseSkeleton, Feed, FollowCounter, FollowCounterSkeleton, RightAside } from '../../components'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
@@ -15,16 +15,19 @@ import { Params, useParams } from 'react-router-dom'
 const ProfileScreen = ({ userProfile }: ProfileProps) => {
 
     const { userId }: Readonly<Params<string>> = useParams()
+    const { GetUsersPosts, GetUserDetails, GetMyPost, UserProfileDetails } = useActions();
 
-    const { user }: any = useTypedSelector(
+    let { user, loading: ProfileDetailsLoading }: any = useTypedSelector(
         (state) => state.UserSignin
     )
-    const { data: usersDetails }: any = useTypedSelector(
+    let { data: usersDetails, loading: SearchedUsersDetailsLoading }: any = useTypedSelector(
         (state) => state.GetUserDetails
     )
 
-    const { GetUsersPosts, GetUserDetails, GetMyPost, UserProfileDetails } = useActions();
-
+    if (userProfile) {
+        user = usersDetails
+        ProfileDetailsLoading = SearchedUsersDetailsLoading
+    }
     useEffect(() => {
         if (userProfile) {
             GetUserDetails({
@@ -44,26 +47,35 @@ const ProfileScreen = ({ userProfile }: ProfileProps) => {
             })
         }
     }, [userProfile])
-
     return (
         <div className='profile'>
             <div className="profile_righttop">
-                {userProfile ? <div className='profile_righttop_profilecover'>
-                    <img className='profile_righttop_profilecoverImg' src={post1} alt="" />
-                    <img className='profile_righttop_profileuserImg' src={usersDetails?.avatar} alt="" />
-                </div> : <div className='profile_righttop_profilecover'>
+                {!ProfileDetailsLoading ? <div className='profile_righttop_profilecover'>
                     <img className='profile_righttop_profilecoverImg' src={post1} alt="" />
                     <img className='profile_righttop_profileuserImg' src={user?.avatar} alt="" />
-                </div>}
-                {userProfile ? <div className="profile_profileinfo">
-                    <h4>{usersDetails?.username}</h4>
-                    <span>{usersDetails?.role}</span>
-                </div> : <div className="profile_profileinfo">
+                </div> :
+                    <div className='profile_righttop_profilecover'>
+                        <div className='profile_righttop_profilecoverImg'>
+                            <BaseSkeleton type='rectangle-lg' />
+                        </div>
+                        <div className='profile_righttop_profileuserImg'>
+                            <BaseSkeleton type='avatar-lg' />
+                        </div>
+                    </div>
+                }
+                {!ProfileDetailsLoading ? <div className="profile_profileinfo">
                     <h4>{user?.username}</h4>
                     <span>{user?.role}</span>
-                </div>}
+                </div> :
+                    <div className="profile_profileinfo">
+                        <BaseSkeleton type='title' />
+                        <BaseSkeleton type='title-sm' />
+                    </div>
+                }
             </div>
-            <FollowCounter userProfile={userProfile} />
+            {!ProfileDetailsLoading ? <FollowCounter userProfile={userProfile} /> :
+                <FollowCounterSkeleton theme='' />
+            }
             <div className="profile_rightbottom">
                 <div className='componentfeed'>
                     <Feed profile userProfile={userProfile} />
