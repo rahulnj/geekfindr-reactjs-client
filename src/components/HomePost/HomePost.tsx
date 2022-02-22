@@ -45,10 +45,10 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === CurrentUser?.id))
         return { ...post, isLiked: !!isLiked }
     })
-    const handleTeamJoinRequest = () => {
+    const handleTeamJoinRequest = (projectId: string) => {
         TeamJoinRequest({
             token: user?.token,
-            userId: user?.id
+            projectId
         })
     }
 
@@ -86,11 +86,11 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
                                         <div className='post_bottom_left_icons'><BiComment onClick={() =>
                                             CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
                                     </div>
-                                    <div className="post_bottom_right">
+                                    {post?.isProject && <div className="post_bottom_right">
                                         <AiOutlineUsergroupAdd className='post_bottom_left_icon' size={28}
-                                            onClick={handleTeamJoinRequest}
+                                            onClick={() => handleTeamJoinRequest(post?.id)}
                                         />
-                                    </div>
+                                    </div>}
                                 </div>
                                 <form className='post_commentform'>
                                 </form>
@@ -130,11 +130,11 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
                                         <div className='post_bottom_left_icons'><BiComment onClick={() =>
                                             CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
                                     </div>
-                                    <div className="post_bottom_right">
+                                    {post?.isProject && <div className="post_bottom_right">
                                         <AiOutlineUsergroupAdd className='post_bottom_left_icon' size={28}
-                                            onClick={handleTeamJoinRequest}
+                                            onClick={() => handleTeamJoinRequest(post?.id)}
                                         />
-                                    </div>
+                                    </div>}
                                 </div>
                                 <form className='post_commentform'>
 

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import './_Post.scss'
 
 import { BsThreeDotsVertical } from 'react-icons/bs'
-import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
+import { AiOutlineLike, AiFillLike, AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { BiComment, BiEdit } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 
@@ -24,8 +24,10 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     const [commentPostId, setCommentPostId] = useState('')
 
     const { userId }: Readonly<Params<string>> = useParams()
-    const { GetFeedPosts, LikePost,
-        GetUsersPosts, GetMyPost
+    const { LikePost,
+        GetUsersPosts,
+        GetMyPost,
+        TeamJoinRequest
     } = useActions();
 
     const { user }: any = useTypedSelector(
@@ -82,7 +84,12 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === user?.id))
         return { ...post, isLiked: !!isLiked }
     })
-
+    const handleTeamJoinRequest = (projectId: string) => {
+        TeamJoinRequest({
+            token: user?.token,
+            projectId
+        })
+    }
 
 
     const MyProfilePosts = ({ description, isProject, likeCount, commentCount, mediaURL, createdAt, comments, id, owner, isLiked }: PostData) => {
@@ -158,6 +165,12 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                                     {likeCount}</div>
                                 <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{commentCount}</div>
                             </div>
+                            {/* {isProject &&
+                                <div className="post_bottom_right">
+                                    <AiOutlineUsergroupAdd className='post_bottom_left_icon' size={28}
+                                        onClick={() => handleTeamJoinRequest(id)}
+                                    />
+                                </div>} */}
                         </div>
                         <form className='post_commentform'>
                         </form>
