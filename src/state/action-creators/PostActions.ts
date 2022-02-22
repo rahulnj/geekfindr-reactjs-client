@@ -15,10 +15,10 @@ import {
     GetPostLikesActionType, GetUsersPostsActionType, PostCommentActionType, PostLikeActionType, TeamJoinActionType
 } from "../actiontypes"
 
-const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
 
-export const CreatePost = ({ postData, navigate, setIsModalOpened }: any) => {
+
+export const CreatePost = ({ postData, navigate, setIsModalOpened, token }: any) => {
     return async (dispatch: Dispatch<CreatePostAction>) => {
         dispatch({
             type: CreatePostActionType.CREATE_POST_REQUEST
@@ -26,7 +26,7 @@ export const CreatePost = ({ postData, navigate, setIsModalOpened }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
@@ -107,7 +107,7 @@ export const GetMyPost = ({ token }: any) => {
     }
 }
 
-export const EditPost = ({ EditedPostData, postId, navigate, setIsEditModalOpened }: any) => {
+export const EditPost = ({ EditedPostData, postId, navigate, setIsEditModalOpened, token, userId }: any) => {
     return async (dispatch: Dispatch<EditPostAction>) => {
         dispatch({
             type: EditPostActionType.EDIT_POST_REQUEST
@@ -115,7 +115,7 @@ export const EditPost = ({ EditedPostData, postId, navigate, setIsEditModalOpene
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
@@ -125,7 +125,7 @@ export const EditPost = ({ EditedPostData, postId, navigate, setIsEditModalOpene
                 payload: data
             })
             setIsEditModalOpened(false)
-            navigate(`/profile/${CurrentUser?.id}`)
+            navigate(`/profile/${userId}`)
         } catch (error: any) {
             console.log(error);
             dispatch({
@@ -144,7 +144,7 @@ export const DeletePost = ({ postId, token, navigate, userId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {

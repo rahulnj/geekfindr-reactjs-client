@@ -19,16 +19,16 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
-    const [lastPostId, setLastPostId] = useState<string>('')
+    const [lastPostId, setLastPostId] = useState()
     const observer = useRef<any>()
 
-    let { feedPosts, hasMore, loading } = useInfiniteScroll(lastPostId)
+    let { feedPosts, hasMore, loading } = useInfiniteScroll({ lastPostId })
     const { TeamJoinRequest } = useActions();
 
     const lastFeedPostRef = useCallback(node => {
         if (observer.current) observer.current.disconnect()
         observer.current = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
+            if (entries[0].isIntersecting && hasMore) {
                 console.log("visible");
                 const newArray = feedPosts.reverse()
                 const lastFetchedPostId = newArray[0]?.id
@@ -38,7 +38,7 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
         })
         if (node) observer.current.observe(node)
         console.log(lastPostId);
-    }, [hasMore, lastPostId, feedPosts])
+    }, [hasMore, loading])
 
 
     feedPosts = feedPosts?.map((post: PostData) => {
@@ -57,7 +57,7 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
             feedPosts?.map((post: PostData, index: number) => {
                 if (feedPosts.length === index + 1) {
                     return (
-                        <div className='post' ref={lastFeedPostRef} key={feedPosts?.id}>
+                        <div className='post' ref={lastFeedPostRef} key={randomId()}>
                             <div className="post_wrapper">
                                 <div className="post_top">
                                     <div className="post_top_left">
@@ -101,7 +101,7 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
                 } else {
 
                     return (
-                        <div className='post' key={feedPosts?.id}>
+                        <div className='post' key={randomId()}>
                             <div className="post_wrapper">
                                 <div className="post_top">
                                     <div className="post_top_left">
@@ -146,5 +146,7 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
             : <HomePostSkeleton theme="light" />
     )
 }
-
+const randomId = () => {
+    return Math.random().toString(36).substring(2, 5);
+};
 export default HomePosts;

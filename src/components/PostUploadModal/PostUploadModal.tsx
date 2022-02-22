@@ -16,11 +16,11 @@ import { useActions } from '../../hooks/useActions';
 import { Spinner } from '..';
 import validator from '@brocode/simple-react-form-validation-helper';
 
-const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
 
 const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: PostUploadModalProps) => {
 
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const navigate = useNavigate();
     const { postId }: Readonly<Params<string>> = useParams()
 
@@ -118,7 +118,10 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                         }
                     }
                     CreatePost({
-                        postData: postData, navigate, setIsModalOpened
+                        postData: postData,
+                        navigate,
+                        setIsModalOpened,
+                        token: CurrentUser?.token
                     })
                     setLoading(false)
                 }
@@ -187,8 +190,12 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
             }
 
             EditPost({
-                EditedPostData: EditedPostData, postId: postId,
-                navigate, setIsEditModalOpened
+                EditedPostData: EditedPostData,
+                userId: CurrentUser?.id,
+                token: CurrentUser?.token,
+                postId,
+                navigate,
+                setIsEditModalOpened
             })
         }
     }
