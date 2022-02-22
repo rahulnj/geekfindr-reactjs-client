@@ -1,0 +1,60 @@
+@import "../../_base.scss";
+
+.desmodal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    &_wrapper {
+        display: flex;
+        flex-direction: column;
+        margin: 20px;
+        gap: 0.5rem;
+        textarea {
+            height: 200px;
+            width: 75%;
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid $main-color;
+            background: #f0f0f0;
+            padding-left: 15px;
+            font-size: 14px;
+            transition: 0.4s;
+            resize: none;
+            margin-top: 5px;
+        }
+    }
+    &_button-submit {
+        background-color: $button-color;
+        border: 1px solid rgb(209, 213, 219);
+        border-radius: 5px;
+        box-sizing: border-box;
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.25rem;
+        padding: 0.48rem 1.5rem;
+        text-align: center;
+        text-decoration: none #d1d5db solid;
+        text-decoration-thickness: auto;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        transition: 0.3s;
+    }
+    &_button-submit:hover {
+        background-color: rgba(162, 26, 252, 0.959);
+    }
+
+    &_button-submit:focus {
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+    }
+
+    &_button-submit:focus-visible {
+        box-shadow: none;
+    }
+}

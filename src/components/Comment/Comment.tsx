@@ -59,7 +59,7 @@ const Comment = ({ commentPostId }: CommentProps) => {
                 <div className="comment_rightside">
                     <div className="comment_rightside_wrapper">
                         <label className='comment_label' htmlFor="">Comments</label>
-                        <input className='comment_input' value={comment} type="text"
+                        <textarea className='comment_input' value={comment}
                             onChange={(e) => setComment(e.target.value)}
                             placeholder='Comment here...' />
                         <div className='comment_actions'>

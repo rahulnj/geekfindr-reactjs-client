@@ -1,6 +1,6 @@
 import { ProjectState } from "../../models"
-import { GetMyrojectAction, GetProjectDetailsAction } from "../action-models/ProjectAction"
-import { GetMyProjectActionType, GetProjectDetailsActionType } from "../actiontypes/ProjectActionType"
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction } from "../action-models/ProjectAction"
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType } from "../actiontypes/ProjectActionType"
 
 const initialState = {
     data: [],
@@ -35,6 +35,22 @@ export const GetProjectDetailsReducer = (
         case GetProjectDetailsActionType.GET_PROJECT_DETAILS_SUCCESS:
             return { ...state, loading: false, error: null, data: action.payload }
         case GetProjectDetailsActionType.GET_PROJECT_DETAILS_FAIL:
+            return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const AddProjectDescriptionReducer = (
+    state: ProjectState = initialState,
+    action: AddProjectDescriptionAction
+): ProjectState => {
+    switch (action.type) {
+        case AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_REQUEST:
+            return { ...state, success: false, loading: true, error: null, data: [] }
+        case AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_SUCCESS:
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
+        case AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
         default:
             return state;

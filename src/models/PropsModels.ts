@@ -46,3 +46,7 @@ export interface FollowCounterSkeletonProps {
 export interface HomePostSkeletonProps {
     theme: string
 }
+
+export interface ProjectDescriptionModalProps {
+    setIsProjectDescriptionModal: React.Dispatch<React.SetStateAction<boolean>>
+}

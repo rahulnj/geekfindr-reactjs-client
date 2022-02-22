@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import request from "../../api";
 import { UserData } from "../../models";
-import { GetMyrojectAction, GetProjectDetailsAction } from "../action-models/ProjectAction";
-import { GetMyProjectActionType, GetProjectDetailsActionType } from "../actiontypes/ProjectActionType";
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction } from "../action-models/ProjectAction";
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType } from "../actiontypes/ProjectActionType";
 
 
 
@@ -37,7 +37,6 @@ export const GetMyProject = ({ token }: any) => {
 }
 
 export const GetProjectDetails = ({ token, projectId }: any) => {
-
     return async (dispatch: Dispatch<GetProjectDetailsAction>) => {
         dispatch({
             type: GetProjectDetailsActionType.GET_PROJECT_DETAILS_REQUEST
@@ -58,6 +57,36 @@ export const GetProjectDetails = ({ token, projectId }: any) => {
             console.log(error);
             dispatch({
                 type: GetProjectDetailsActionType.GET_PROJECT_DETAILS_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
+export const AddProjectDescription = ({ token, description, projectId }: any) => {
+    return async (dispatch: Dispatch<AddProjectDescriptionAction>) => {
+        dispatch({
+            type: AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_REQUEST
+        });
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.put(`/api/v1/projects/${projectId}/description`,
+                {
+                    description: description
+                }, config)
+            dispatch({
+                type: AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_FAIL,
                 payload: error
             })
         }

@@ -10,13 +10,10 @@ import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useNavigate } from 'react-router-dom'
 
-const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, project }) => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
     const [windowSizeListener, setWindowSizeListener] = useState(false)
-    const { data: user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
     const navigate = useNavigate()
     const { GetProjectDetails } = useActions()
     useEffect(() => {
@@ -38,14 +35,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
     const { data: myProjects }: any = useTypedSelector(
         (state) => state.GetMyProject
     )
-
+    const { loading: createPostLoading }: any = useTypedSelector(
+        (state) => state.CreatePost
+    )
     useEffect(() => {
         GetMyProject({ token: CurrentUser?.token })
-    }, [CurrentUser])
+    }, [createPostLoading])
 
     const getProjectDetails = (projectId: string): void => {
         GetProjectDetails({
-            token: user.token,
+            token: CurrentUser?.token,
             projectId
         })
         navigate(`/project/${projectId}`)

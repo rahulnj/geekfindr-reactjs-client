@@ -51,8 +51,8 @@
                 transition: 0.4s;
             }
 
-            input {
-                height: 70%;
+            textarea {
+                height: 50%;
                 width: 100%;
                 outline: none;
                 border-radius: 5px;
@@ -60,6 +60,8 @@
                 padding-left: 15px;
                 font-size: 14px;
                 transition: 0.4s;
+                resize: none;
+                margin-top: 5px;
             }
             input:focus {
                 box-shadow: $main-shadow;

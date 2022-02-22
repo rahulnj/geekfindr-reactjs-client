@@ -1,39 +1,48 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Params, useParams } from 'react-router-dom'
+import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { UserData } from '../../models'
 
 import './_ProjectDescription.scss'
 
 const ProjectDescription: React.FC = () => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { projectId }: Readonly<Params<string>> = useParams()
     const { GetProjectDetails } = useActions();
     const { data: projectDetails }: any = useTypedSelector(
         (state) => state.GetProjectDetails
     )
-    const { data: user }: any = useTypedSelector(
-        (state) => state.UserSignin
+    const { success: projectDescriptionSuccess }: any = useTypedSelector(
+        (state) => state.AddProjectDescription
     )
+    const [isProjectDescriptionModal, setIsProjectDescriptionModal] = useState(false)
     useEffect(() => {
         GetProjectDetails({
-            token: user.token,
+            token: CurrentUser?.token,
             projectId
         })
-    }, [])
+    }, [projectDescriptionSuccess])
     return (
-        <div className='projectdescription'>
-            <div className="projectdescription_header">
-                <h3>{projectDetails?.name}</h3>
+        <>
+            <Modal isProjectDescriptionModal={isProjectDescriptionModal}
+                setIsProjectDescriptionModal={setIsProjectDescriptionModal} />
+            <div className='projectdescription'>
+                <div className="projectdescription_header">
+                    <h3>{projectDetails?.name}</h3>
+                </div>
+                <hr />
+                {projectDetails?.description?.length === 0 ?
+                    <div className='projectdescription_button'>
+                        <button className="btnadd" role="button" onClick={() => setIsProjectDescriptionModal(true)}>
+                            <span className="btntext">+ Add Description</span></button>
+                    </div>
+                    : <div className="projectdescription_short">
+                        <span>{projectDetails?.description}</span>
+                    </div>}
             </div>
-            <hr />
-            <div className="projectdescription_short">
-                <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos tenetur ad necessitatibus quaerat ipsa deleniti error pariatur debitis mollitia, eveniet.</span>
-            </div>
-            <div className="projectdescription_long">
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Tempore et consequuntur, optio iusto expedita quia dignissimos quod voluptas officia deleniti. Sunt asperiores eius aliquid ea harum error fugit consequuntur placeat.</p>
-            </div>
-        </div>
+        </>
     )
 }
 

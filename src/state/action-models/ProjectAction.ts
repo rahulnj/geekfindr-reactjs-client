@@ -1,6 +1,6 @@
 //Action models for getting my projects
 
-import { GetMyProjectActionType, GetProjectDetailsActionType } from "../actiontypes/ProjectActionType";
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType } from "../actiontypes/ProjectActionType";
 
 interface GetMyrojectRequestAction {
     type: GetMyProjectActionType.GET_MYPROJECT_REQUEST
@@ -41,3 +41,24 @@ export type GetProjectDetailsAction =
     | GetProjectDetailsRequestAction
     | GetProjectDetailsSuccessAction
     | GetProjectDetailsFailAction
+
+//Action models for adding project Description
+
+interface AddProjectDescriptionRequestAction {
+    type: AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_REQUEST
+}
+
+interface AddProjectDescriptionSuccessAction {
+    type: AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_SUCCESS
+    payload: string[]
+}
+
+interface AddProjectDescriptionFailAction {
+    type: AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_FAIL
+    payload: string[] | null
+}
+
+export type AddProjectDescriptionAction =
+    | AddProjectDescriptionRequestAction
+    | AddProjectDescriptionSuccessAction
+    | AddProjectDescriptionFailAction

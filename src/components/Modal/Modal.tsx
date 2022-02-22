@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 import './_Modal.scss'
 
-import { Comment, Messages, PostUploadModal } from '..';
+import { Comment, Messages, PostUploadModal, ProjectDescriptionModal } from '..';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { UserData } from '../../models';
 
@@ -12,7 +12,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     followersModal, setFollowersModal,
     followingModal, setFollowingModal,
     isCommentModalOpened, setIsCommentModalOpened,
-    commentPostId
+    commentPostId, isProjectDescriptionModal,
+    setIsProjectDescriptionModal, setProjectDescriptionLoading
 }: any) => {
 
     const Modalref = useRef<any>()
@@ -36,6 +37,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         MODAL = followingModal
     } else if (isCommentModalOpened) {
         MODAL = isCommentModalOpened
+    } else if (isProjectDescriptionModal) {
+        MODAL = isProjectDescriptionModal
     }
 
 
@@ -53,6 +56,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                     setFollowingModal(false)
                 } else if (isCommentModalOpened) {
                     setIsCommentModalOpened(false)
+                } else if (isProjectDescriptionModal) {
+                    setIsProjectDescriptionModal(false)
                 }
             }
         }
@@ -64,11 +69,16 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         isEditModalOpened, setIsEditModalOpened,
         followersModal, setFollowersModal,
         followingModal, setFollowingModal,
-        isCommentModalOpened, setIsCommentModalOpened]);
+        isCommentModalOpened, setIsCommentModalOpened,
+        isProjectDescriptionModal, setIsProjectDescriptionModal]);
 
-    if (!isModalOpened && !isEditModalOpened &&
-        !followersModal && !followingModal
-        && !isCommentModalOpened) {
+    if (!isModalOpened &&
+        !isEditModalOpened &&
+        !followersModal &&
+        !followingModal &&
+        !isCommentModalOpened &&
+        !isProjectDescriptionModal
+    ) {
         return null;
     }
 
@@ -102,6 +112,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                 {(isModalOpened || isEditModalOpened) && <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened}
                     isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />}
                 {isCommentModalOpened && <Comment commentPostId={commentPostId} />}
+                {isProjectDescriptionModal && <ProjectDescriptionModal setIsProjectDescriptionModal={setIsProjectDescriptionModal} />}
             </div>
         </>,
         document.getElementById('modal') as HTMLElement

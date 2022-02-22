@@ -25,6 +25,7 @@ import {
     TeamJoinRequestReducer,
 } from "./PostReducer";
 import {
+    AddProjectDescriptionReducer,
     GetMyProjectReducer,
     GetProjectDetailsReducer
 } from "./ProjectReducer";
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
     GetMyProject: GetMyProjectReducer,
     TeamJoinRequest: TeamJoinRequestReducer,
     GetProjectDetails: GetProjectDetailsReducer,
+    AddProjectDescription: AddProjectDescriptionReducer
 })
 
 export default rootReducer;

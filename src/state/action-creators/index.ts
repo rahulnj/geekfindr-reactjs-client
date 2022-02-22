@@ -29,5 +29,6 @@ export {
 } from './FollowersActions';
 export {
     GetMyProject,
-    GetProjectDetails
+    GetProjectDetails,
+    AddProjectDescription
 } from './ProjectActions';
