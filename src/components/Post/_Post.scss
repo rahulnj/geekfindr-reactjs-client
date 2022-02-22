@@ -1,5 +1,8 @@
 @import "../../_base.scss";
 
+.post:nth-child(1) {
+    margin: 0;
+}
 .post {
     width: 100%;
     border-radius: 10px;

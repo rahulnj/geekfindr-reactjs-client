@@ -50,7 +50,7 @@ export const CreatePost = ({ postData, navigate, setIsModalOpened, token }: any)
     }
 }
 
-export const GetFeedPosts = ({ token, limit, lastPostId }: any) => {
+export const GetFeedPosts = ({ token, limit, lastId }: any) => {
     return async (dispatch: Dispatch<GetFeedAction>) => {
         dispatch({
             type: GetFeedActionType.GET_FEED_REQUEST
@@ -59,7 +59,7 @@ export const GetFeedPosts = ({ token, limit, lastPostId }: any) => {
             const { data } = await request.get('/api/v1/posts/my-feed', {
                 params: {
                     limit: limit,
-                    lastId: lastPostId
+                    lastId
                 },
                 headers: {
                     "Content-type": "application/json",

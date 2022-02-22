@@ -10,7 +10,8 @@
   top: 0;
   z-index: 100;
   box-shadow: $main-shadow;
-  max-width: 100%;
+  width: 100%;
+  // max-width: 1920px;
   height: 10vh;
 
   &_toggle {
