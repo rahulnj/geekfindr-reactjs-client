@@ -24,6 +24,7 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
 
     let { feedPosts, hasMore, loading } = useInfiniteScroll({ lastPostId })
     const { TeamJoinRequest } = useActions();
+    console.log(feedPosts);
 
     const lastFeedPostRef = useCallback(node => {
         if (observer.current) observer.current.disconnect()

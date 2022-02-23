@@ -203,7 +203,6 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
     const isRadioSelected = (value: string): boolean => selectedRadioBtn === value;
 
     const handleRadioClick = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        console.log(e.currentTarget.value);
         setSelectedRadioBtn(e.currentTarget.value)
         if (e.currentTarget.value === 'project') {
             setIsProject(true)
