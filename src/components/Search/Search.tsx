@@ -68,6 +68,7 @@ const Search: React.FC = () => {
     const showUserProfile = (id: string) => {
         setFilteredData([])
         navigate(`/userprofile/${id}`)
+        setWordEntered("");
     }
     return (
         <div className='wrapper'>
@@ -77,6 +78,7 @@ const Search: React.FC = () => {
                         type="text"
                         onChange={HandleSearchInput}
                         placeholder='search here....'
+                        value={wordEntered}
                     />
                     <div className="search_icon">
                         {filteredData.length === 0 ? <BiSearch size={26} opacity={0.5} /> :
