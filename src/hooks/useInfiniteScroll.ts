@@ -40,6 +40,6 @@ export const useInfiniteScroll = ({ lastPostId: lastId }: any) => {
         fetchFeed()
     }, [lastId])
 
-    return { feedPosts, hasMore, loading };
+    return { feedPosts, hasMore, loading, setFeedPosts };
 }
 

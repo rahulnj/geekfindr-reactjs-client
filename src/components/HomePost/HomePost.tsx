@@ -19,29 +19,48 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
+    const { success: LikeSuccess, loading: likeLoading }: any = useTypedSelector(
+        (state) => state.LikePost
+    )
+
+    const { LikePost, TeamJoinRequest } = useActions()
     const [lastPostId, setLastPostId] = useState()
+    const [homePosts, setHomePosts] = useState()
     const observer = useRef<any>()
 
-    let { feedPosts, hasMore, loading } = useInfiniteScroll({ lastPostId })
-    const { TeamJoinRequest } = useActions();
+    let { feedPosts, hasMore, loading, setFeedPosts } = useInfiniteScroll({ lastPostId })
     console.log(feedPosts);
 
     const lastFeedPostRef = useCallback(node => {
         if (observer.current) observer.current.disconnect()
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMore) {
-                console.log("visible");
                 const newArray = feedPosts.reverse()
                 const lastFetchedPostId = newArray[0]?.id
                 setLastPostId(lastFetchedPostId)
-
             }
         })
         if (node) observer.current.observe(node)
-        console.log(lastPostId);
     }, [hasMore, loading])
 
+    const FeedPostLikeHandler = (id: string) => {
+        console.log("like id:", id);
+        let updatedFeed = feedPosts?.map((post: any) => {
+            if (post?.id === id) {
+                post.likes = [...post?.likes, { owner: CurrentUser?.id }]
+                post.likeCount = post?.likeCount + 1
+            }
+            return post;
+        })
 
+        setFeedPosts(updatedFeed)
+
+        LikePost({
+            token: user?.token,
+            postId: id
+        })
+
+    }
     feedPosts = feedPosts?.map((post: PostData) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === CurrentUser?.id))
         return { ...post, isLiked: !!isLiked }
@@ -52,6 +71,8 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
             projectId
         })
     }
+
+
 
     return (
         (!loading) ?
@@ -81,7 +102,7 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
                                         <div className='post_bottom_left_icons'>
                                             {post?.isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
                                                 <AiOutlineLike size={21} className='post_bottom_left_icon'
-                                                    onClick={() => { LikePostHandler(post?.id) }}
+                                                    onClick={() => { FeedPostLikeHandler(post?.id) }}
                                                 />}
                                             {post?.likeCount}</div>
                                         <div className='post_bottom_left_icons'><BiComment onClick={() =>
@@ -125,7 +146,7 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
                                         <div className='post_bottom_left_icons'>
                                             {post?.isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
                                                 <AiOutlineLike size={21} className='post_bottom_left_icon'
-                                                    onClick={() => { LikePostHandler(post?.id) }}
+                                                    onClick={() => { FeedPostLikeHandler(post?.id) }}
                                                 />}
                                             {post?.likeCount}</div>
                                         <div className='post_bottom_left_icons'><BiComment onClick={() =>

@@ -14,7 +14,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import Moment from 'react-moment';
 import { useActions } from '../../hooks/useActions'
 import { Link, Params, useNavigate, useParams } from 'react-router-dom'
-import { Modal, Spinner, HomePost, BaseSkeleton, PostSkeleton } from '..'
+import { Modal, Spinner, HomePost, PostSkeleton } from '..'
 
 
 const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
@@ -22,6 +22,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     const [isEditModalOpened, setIsEditModalOpened] = useState(false)
     const [isCommentModalOpened, setIsCommentModalOpened] = useState(false)
     const [commentPostId, setCommentPostId] = useState('')
+
 
     const { userId }: Readonly<Params<string>> = useParams()
     const { LikePost,
@@ -68,11 +69,13 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     }, [LikeSuccess, DeleteSuccess, EditPostSuccess])
 
     const LikePostHandler = (id: string) => {
+        console.log("like id:", id);
         LikePost({
             token: user?.token,
             postId: id
         })
     }
+
 
     const CommentHandler = (id: string) => {
         setIsCommentModalOpened(true)

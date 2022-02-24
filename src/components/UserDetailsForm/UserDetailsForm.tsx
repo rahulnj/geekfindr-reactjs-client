@@ -141,6 +141,9 @@ const UserDetailsForm: React.FC = () => {
                         <label>Education</label>
                         <input type="text" placeholder='education' />
                     </div>
+
+
+
                     <div className='detailsform_wrapper_input'>
                         <label>Organization</label>
                         {organizationList.map((singleorg: any, index: any) => (
@@ -160,6 +163,9 @@ const UserDetailsForm: React.FC = () => {
                             </React.Fragment>
                         ))}
                     </div>
+
+
+
                     <div className='detailsform_wrapper_input'>
                         <button className="button-skip">Cancel</button>
                         <button type='submit' className="button-submit">Submit</button>
