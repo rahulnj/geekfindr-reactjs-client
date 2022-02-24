@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import './_Post.scss'
 
 import { BsThreeDotsVertical } from 'react-icons/bs'
-import { AiOutlineLike, AiFillLike, AiOutlineUsergroupAdd } from 'react-icons/ai'
+import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 import { BiComment, BiEdit } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 

@@ -18,7 +18,6 @@ const ProjectDescription: React.FC = () => {
         (state) => state.AddProjectDescription
     )
     const [isProjectDescriptionModal, setIsProjectDescriptionModal] = useState(false)
-    console.log(projectDetails);
 
     useEffect(() => {
         GetProjectDetails({
