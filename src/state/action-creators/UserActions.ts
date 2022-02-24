@@ -1,12 +1,12 @@
 import { Dispatch } from "redux"
 import request from "../../api"
-import { UserData } from "../../models";
+import { UserData, UserProfileDetailsData } from "../../models";
 import { GetUserDetailsAction, UserEditProfileAction, UserProfileDetailsAction } from "../action-models"
 import { GetUserDetailsActionType, UserEditProfileActionType, UserProfileDetailsActionType } from "../actiontypes"
 
 const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
-export const UserProfileDetails = ({ token }: any) => {
+export const UserProfileDetails = (token: string) => {
 
     return async (dispatch: Dispatch<UserProfileDetailsAction>) => {
         dispatch({
@@ -15,11 +15,11 @@ export const UserProfileDetails = ({ token }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
-            const { data } = await request.get('/api/v1/profiles/my-profile', config)
+            const { data } = await request.get<UserProfileDetailsData>('/api/v1/profiles/my-profile', config)
             dispatch({
                 type: UserProfileDetailsActionType.USER_PROFILE_DETAILS_SUCCESS,
                 payload: data
@@ -44,11 +44,11 @@ export const UserEditProfileDetails = ({ token, editProfileData }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
-            const { data } = await request.patch('/api/v1/profiles/my-profile/', editProfileData, config)
+            const { data } = await request.patch<UserProfileDetailsData>('/api/v1/profiles/my-profile/', editProfileData, config)
             console.log(data);
 
             dispatch({
@@ -77,7 +77,7 @@ export const GetUserDetails = ({ token, userId }: any) => {
             },
         };
         try {
-            const { data } = await request.get(`/api/v1/profiles/${userId}`, config)
+            const { data } = await request.get<UserProfileDetailsData>(`/api/v1/profiles/${userId}`, config)
             dispatch({
                 type: GetUserDetailsActionType.GET_USERDETAILS_SUCCESS,
                 payload: data

@@ -1,7 +1,7 @@
 import { SigninAction, SignupAction } from '../action-models/AuthActions';
 import { UserSigninActionType, UserSignupActionType } from '../actiontypes';
 
-import { SigninData, SignupData } from '../../models';
+import { SigninData, SignupData, UserAuthData } from '../../models';
 import { Dispatch } from 'redux';
 
 import request from '../../api'
@@ -15,7 +15,7 @@ export const UserSignup = (signupData: SignupData) => {
             type: UserSignupActionType.USER_SIGNUP_REQUEST
         });
         try {
-            const { data } = await request.post('/api/v1/users/signup/', signupData)
+            const { data } = await request.post<UserAuthData>('/api/v1/users/signup/', signupData)
             localStorage.setItem('gfr-user', JSON.stringify(data))
             dispatch({
                 type: UserSignupActionType.USER_SIGNUP_SUCCESS,
@@ -43,7 +43,7 @@ export const UserSignin = (signinData: SigninData) => {
             type: UserSigninActionType.USER_SIGNIN_REQUEST
         });
         try {
-            const { data } = await request.post('/api/v1/users/signin', signinData)
+            const { data } = await request.post<UserAuthData>('/api/v1/users/signin', signinData)
             localStorage.setItem('gfr-user', JSON.stringify(data))
             dispatch({
                 type: UserSigninActionType.USER_SIGNIN_SUCCESS,

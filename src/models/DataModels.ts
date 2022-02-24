@@ -1,3 +1,5 @@
+//Data models for the Authstate
+
 export interface SignupData {
     username: string;
     email: string;
@@ -9,6 +11,36 @@ export interface SigninData {
     password: string;
 }
 
+export interface UserAuthData {
+    email: string
+    avatar: string
+    username: string
+    createdAt: string
+    updatedAt: string
+    id: string
+    token: string
+}
+
+export interface UserProfileDetailsData {
+    email: string
+    username: string
+    avatar: string
+    bio: string
+    organizations: string[]
+    followersCount: number
+    followingCount: number
+    experience: string
+    education: string[]
+    works: string[]
+    skills: string[]
+    socials: string[]
+    role: string
+    createdAt: string
+    updatedAt: string
+    id: string
+}
+
+
 export interface UserData {
     avatar: string
     createdAt: string
@@ -17,7 +49,7 @@ export interface UserData {
     followers: string[]
     following: string[]
     id: string
-    organization: string[]
+    organizations: string[]
     skills: string[]
     socials: string[]
     works: string[]

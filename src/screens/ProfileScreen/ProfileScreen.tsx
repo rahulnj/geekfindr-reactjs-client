@@ -7,12 +7,13 @@ import { BaseSkeleton, Feed, FollowCounter, FollowCounterSkeleton, RightAside } 
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
-import { ProfileProps } from '../../models'
+import { ProfileProps, UserData } from '../../models'
 import { Params, useParams } from 'react-router-dom'
 
 
 
 const ProfileScreen = ({ userProfile }: ProfileProps) => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
     const { userId }: Readonly<Params<string>> = useParams()
     const { GetUsersPosts, GetUserDetails, GetMyPost, UserProfileDetails } = useActions();
@@ -31,22 +32,20 @@ const ProfileScreen = ({ userProfile }: ProfileProps) => {
     useEffect(() => {
         if (userProfile) {
             GetUserDetails({
-                token: user.token,
+                token: CurrentUser?.token,
                 userId
             })
             GetUsersPosts({
-                token: user.token,
+                token: CurrentUser?.token,
                 userId
             })
         } else {
             GetMyPost({
-                token: user.token,
+                token: CurrentUser?.token,
             })
-            UserProfileDetails({
-                token: user.token
-            })
+            UserProfileDetails(CurrentUser?.token)
         }
-    }, [userProfile])
+    }, [userProfile, userId])
     return (
         <div className='profile'>
             <div className="profile_righttop">

@@ -59,11 +59,11 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
 
     }, [FollowUserSuccess])
 
-    if (typeof (UserDetails.id) !== 'undefined') {
-        if (UserDetails.id !== user.id) {
+    if (typeof (UserDetails?.id) !== 'undefined') {
+        if (UserDetails?.id !== user?.id) {
             let isFollowing = false;
-            Followings.every((following: UserData) => {
-                isFollowing = following?.id === UserDetails.id
+            Followings?.every((following: UserData) => {
+                isFollowing = following?.id === UserDetails?.id
                 if (isFollowing == true) {
                     return false;
                 }

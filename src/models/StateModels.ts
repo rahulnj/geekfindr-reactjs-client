@@ -1,8 +1,13 @@
 //State Models used in the AuthReducer
 
+import {
+    UserAuthData
+    , UserProfileDetailsData
+} from ".";
+
 export interface AuthState {
-    data: string[] | null
-    user: string[] | null
+    data: UserAuthData | null
+    user: UserAuthData | null
     error: string[] | null
     loading: boolean
 }
@@ -10,7 +15,7 @@ export interface AuthState {
 //State Models used in the UserReducer
 
 export interface UsersState {
-    data: string[]
+    data: UserProfileDetailsData | null
     error: string[] | null
     loading: boolean
     success?: boolean

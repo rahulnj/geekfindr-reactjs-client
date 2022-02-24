@@ -1,3 +1,4 @@
+import { UserAuthData } from "../../models"
 import { UserSigninActionType, UserSignupActionType } from "../actiontypes"
 
 
@@ -10,7 +11,7 @@ interface UserSignupRequestAction {
 
 interface UserSignupSuccessAction {
     type: UserSignupActionType.USER_SIGNUP_SUCCESS;
-    payload: string[];
+    payload: UserAuthData;
 }
 
 interface UserSignupFailAction {
@@ -20,7 +21,7 @@ interface UserSignupFailAction {
 
 interface UserSignupLoadProfileAction {
     type: UserSignupActionType.LOAD_USER_PROFILE;
-    payload: string[]
+    payload: UserAuthData
 }
 
 interface UserSignupLogoutRequestAction {
@@ -49,7 +50,7 @@ interface UserSigninRequestAction {
 
 interface UserSigninSuccessAction {
     type: UserSigninActionType.USER_SIGNIN_SUCCESS;
-    payload: string[];
+    payload: UserAuthData;
 }
 
 interface UserSigninFailAction {
@@ -59,7 +60,7 @@ interface UserSigninFailAction {
 
 interface UserSigninLoadProfileAction {
     type: UserSigninActionType.LOAD_USER_PROFILE;
-    payload: string[]
+    payload: UserAuthData
 }
 
 interface UserSigninLogoutRequestAction {

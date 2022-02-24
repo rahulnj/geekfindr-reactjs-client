@@ -1,4 +1,4 @@
-import { AuthState } from "../../models";
+import { AuthState, UserAuthData } from "../../models";
 import { SigninAction, SignupAction } from "../action-models";
 import { UserSigninActionType, UserSignupActionType } from "../actiontypes/AuthActionTypes";
 
@@ -6,8 +6,8 @@ import { UserSigninActionType, UserSignupActionType } from "../actiontypes/AuthA
 const initialState = {
     loading: false,
     error: null,
-    data: localStorage.getItem("gfr-user") ? JSON.parse(localStorage.getItem("gfr-user") as string) as string[] : null,
-    user: localStorage.getItem("gfr-user") ? JSON.parse(localStorage.getItem("gfr-user") as string) as string[] : null
+    data: localStorage.getItem("gfr-user") ? JSON.parse(localStorage.getItem("gfr-user") as string) as UserAuthData : null,
+    user: localStorage.getItem("gfr-user") ? JSON.parse(localStorage.getItem("gfr-user") as string) as UserAuthData : null
 }
 
 export const UserRegisterAuthReducer = (
