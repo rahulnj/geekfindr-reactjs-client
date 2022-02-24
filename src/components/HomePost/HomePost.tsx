@@ -87,109 +87,55 @@ const HomePosts = ({ CommentHandler }: HomePostProps) => {
     return (
         (!loading) ?
             feedPosts?.map((post: PostData, index: number) => {
-                if (feedPosts.length === index + 1) {
-                    return (
-                        <div className='post' ref={lastFeedPostRef} key={randomId()}>
-                            <div className="post_wrapper">
-                                <div className="post_top">
-                                    <div className="post_top_left">
-                                        <img src={post?.owner?.avatar} alt="" />
-                                        <div className='post_top_left_details'>
-                                            <p className="post_top_left_username">{post?.owner?.username}</p>
-                                            <span className="post_top_left_date"><Moment fromNow>{post?.createdAt}</Moment></span>
-                                        </div>
-                                    </div>
-                                    <div className="post_top_right">
-                                        <BsThreeDotsVertical className='post_top_right_threedot' />
+                return (
+                    <div className='post' ref={(feedPosts.length === index + 1) ? lastFeedPostRef : null} key={post.id}>
+                        <div className="post_wrapper">
+                            <div className="post_top">
+                                <div className="post_top_left">
+                                    <img src={post?.owner?.avatar} alt="" />
+                                    <div className='post_top_left_details'>
+                                        <p className="post_top_left_username">{post?.owner?.username}</p>
+                                        <span className="post_top_left_date"><Moment fromNow>{post?.createdAt}</Moment></span>
                                     </div>
                                 </div>
-                                <div className="post_center">
-                                    <span className="post_description">{post?.description}</span>
-                                    <img className='post_homeimg' src={post?.mediaURL} alt="" />
+                                <div className="post_top_right">
+                                    <BsThreeDotsVertical className='post_top_right_threedot' />
                                 </div>
-                                <div className="post_bottom">
-                                    <div className="post_bottom_left">
-                                        <div className='post_bottom_left_icons'>
-                                            {post?.isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
-                                                <AiOutlineLike size={21} className='post_bottom_left_icon'
-                                                    onClick={() => { FeedPostLikeHandler(post?.id) }}
-                                                />}
-                                            {post?.likeCount}</div>
-                                        <div className='post_bottom_left_icons'><BiComment onClick={() =>
-                                            CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
+                            </div>
+                            <div className="post_center">
+                                <span className="post_description">{post?.description}</span>
+                                <img className='post_homeimg' src={post?.mediaURL} alt="" />
+                            </div>
+                            <div className="post_bottom">
+                                <div className="post_bottom_left">
+                                    <div className='post_bottom_left_icons'>
+                                        {post?.isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
+                                            <AiOutlineLike size={21} className='post_bottom_left_icon'
+                                                onClick={() => { FeedPostLikeHandler(post?.id) }}
+                                            />}
+                                        {post?.likeCount}</div>
+                                    <div className='post_bottom_left_icons'><BiComment onClick={() =>
+                                        CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
+                                </div>
+                                {
+                                    post?.isProject &&
+                                    <div className="post_bottom_right">
+                                        {(post?.isJoined) ?
+                                            <div className="post_bottom_right_icons">Requested<IoMdCheckmarkCircleOutline
+                                                className='post_bottom_right_icon_request' size={26} />
+                                            </div> :
+                                            <AiOutlineUsergroupAdd className='post_bottom_right_icon' size={28}
+                                                onClick={() => handleTeamJoinRequest(post?.id)}
+                                            />}
                                     </div>
-                                    {
-                                        post?.isProject &&
-                                        <div className="post_bottom_right">
-                                            {(post?.isJoined) ?
-                                                <div className="post_bottom_right_icons">Requested<IoMdCheckmarkCircleOutline
-                                                    className='post_bottom_right_icon_request' size={26} />
-                                                </div> :
-                                                <AiOutlineUsergroupAdd className='post_bottom_right_icon' size={28}
-                                                    onClick={() => handleTeamJoinRequest(post?.id)}
-                                                />}
-                                        </div>
-                                    }
-                                </div>
+                                }
                             </div>
                         </div>
-
-                    )
-                } else {
-
-                    return (
-                        <div className='post' key={randomId()}>
-                            <div className="post_wrapper">
-                                <div className="post_top">
-                                    <div className="post_top_left">
-                                        <img src={post?.owner?.avatar} alt="" />
-                                        <div className='post_top_left_details'>
-                                            <p className="post_top_left_username">{post?.owner?.username}</p>
-                                            <span className="post_top_left_date"><Moment fromNow>{post?.createdAt}</Moment></span>
-                                        </div>
-                                    </div>
-                                    <div className="post_top_right">
-                                        <BsThreeDotsVertical className='post_top_right_threedot' />
-                                    </div>
-                                </div>
-                                <div className="post_center">
-                                    <span className="post_description">{post?.description}</span>
-                                    <img className='post_homeimg' src={post?.mediaURL} alt="" />
-                                </div>
-                                <div className="post_bottom">
-                                    <div className="post_bottom_left">
-                                        <div className='post_bottom_left_icons'>
-                                            {post?.isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
-                                                <AiOutlineLike size={21} className='post_bottom_left_icon'
-                                                    onClick={() => { FeedPostLikeHandler(post?.id) }}
-                                                />}
-                                            {post?.likeCount}
-                                        </div>
-                                        <div className='post_bottom_left_icons'><BiComment onClick={() =>
-                                            CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}
-                                        </div>
-                                    </div>
-                                    {
-                                        post?.isProject &&
-                                        <div className="post_bottom_right">
-                                            {(post?.isJoined) ?
-                                                <div className="post_bottom_right_icons">Requested <IoMdCheckmarkCircleOutline
-                                                    className='post_bottom_right_icon_request' size={26} />
-                                                </div> :
-                                                <AiOutlineUsergroupAdd className='post_bottom_right_icon' size={28}
-                                                    onClick={() => handleTeamJoinRequest(post?.id)}
-                                                />}
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>)
-                }
+                    </div>
+                )
             })
             : <HomePostSkeleton theme="light" />
     )
 }
-const randomId = () => {
-    return Math.random().toString(36).substring(2, 5);
-};
+
 export default HomePosts;
