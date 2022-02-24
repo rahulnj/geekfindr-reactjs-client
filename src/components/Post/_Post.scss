@@ -128,6 +128,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 10px;
         &_left {
             display: flex;
             align-items: center;
@@ -149,39 +150,20 @@
             display: flex;
             align-items: center;
             padding: 0 4px;
-        }
-    }
-    &_commentform {
-        display: flex;
-        align-items: center;
-        padding: 4px;
-        margin: 10px 0;
-        &_icons {
-            cursor: pointer;
-        }
-        input {
-            flex: 1;
-            outline: none;
-            border: 0;
-            margin: 0 4px;
-            transition: 0.4s;
-            opacity: 0.5;
-        }
-
-        input:focus {
-            opacity: 1;
-            border-bottom: 1px solid;
-        }
-
-        button {
-            background-color: #ffffff;
-            border: none;
-            box-sizing: border-box;
-            font-size: 0.875rem;
-            font-weight: 600;
-            padding: 0 0.5rem;
-            text-align: center;
-            cursor: pointer;
+            &_icons {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+                font-size: 0.9rem;
+                color: $button-color;
+            }
+            &_icon {
+                margin-right: 10px;
+                cursor: pointer;
+                &_request {
+                    color: $button-color;
+                }
+            }
         }
     }
 }

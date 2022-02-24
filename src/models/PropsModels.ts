@@ -30,7 +30,6 @@ export interface CommentProps {
 export interface HomePostProps {
     setIsCommentModalOpened: React.Dispatch<React.SetStateAction<boolean>>
     setCommentPostId: React.Dispatch<React.SetStateAction<string>>
-    LikePostHandler: (id: string) => void
     CommentHandler: (id: string) => void
 }
 

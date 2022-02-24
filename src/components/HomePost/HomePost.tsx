@@ -11,21 +11,18 @@ import { useInfiniteScroll } from "../../hooks/useInfiniteScroll"
 import { useTypedSelector } from "../../hooks/useTypedSelector"
 
 import { HomePostProps, PostData, UserData } from "../../models"
+import { IoMdCheckmarkCircleOutline } from "react-icons/io"
 
 
-const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
+const HomePosts = ({ CommentHandler }: HomePostProps) => {
 
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
-    const { success: LikeSuccess, loading: likeLoading }: any = useTypedSelector(
-        (state) => state.LikePost
-    )
 
     const { LikePost, TeamJoinRequest } = useActions()
     const [lastPostId, setLastPostId] = useState()
-    const [homePosts, setHomePosts] = useState()
     const observer = useRef<any>()
 
     let { feedPosts, hasMore, loading, setFeedPosts } = useInfiniteScroll({ lastPostId })
@@ -44,7 +41,6 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
     }, [hasMore, loading])
 
     const FeedPostLikeHandler = (id: string) => {
-        console.log("like id:", id);
         let updatedFeed = feedPosts?.map((post: any) => {
             if (post?.id === id) {
                 post.likes = [...post?.likes, { owner: CurrentUser?.id }]
@@ -59,19 +55,33 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
             token: user?.token,
             postId: id
         })
-
     }
+
     feedPosts = feedPosts?.map((post: PostData) => {
         let isLiked = post?.likes?.find((like: any) => (like?.owner === CurrentUser?.id))
         return { ...post, isLiked: !!isLiked }
     })
+
     const handleTeamJoinRequest = (projectId: string) => {
+        let updatedFeed = feedPosts?.map((post: any) => {
+            if (post?.id === projectId) {
+                post.teamJoinRequests = [...post?.teamJoinRequests, { owner: CurrentUser?.id }]
+                post.teamJoinRequestCount = post?.teamJoinRequestCount + 1
+            }
+            return post;
+        })
+
+        setFeedPosts(updatedFeed)
+
         TeamJoinRequest({
             token: user?.token,
             projectId
         })
     }
-
+    feedPosts = feedPosts?.map((post: PostData) => {
+        let isJoined = post?.teamJoinRequests?.find((requests: any) => (requests?.owner === CurrentUser?.id))
+        return { ...post, isJoined: !!isJoined }
+    })
 
 
     return (
@@ -108,14 +118,19 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
                                         <div className='post_bottom_left_icons'><BiComment onClick={() =>
                                             CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
                                     </div>
-                                    {post?.isProject && <div className="post_bottom_right">
-                                        <AiOutlineUsergroupAdd className='post_bottom_left_icon' size={28}
-                                            onClick={() => handleTeamJoinRequest(post?.id)}
-                                        />
-                                    </div>}
+                                    {
+                                        post?.isProject &&
+                                        <div className="post_bottom_right">
+                                            {(post?.isJoined) ?
+                                                <div className="post_bottom_right_icons">Requested<IoMdCheckmarkCircleOutline
+                                                    className='post_bottom_right_icon_request' size={26} />
+                                                </div> :
+                                                <AiOutlineUsergroupAdd className='post_bottom_right_icon' size={28}
+                                                    onClick={() => handleTeamJoinRequest(post?.id)}
+                                                />}
+                                        </div>
+                                    }
                                 </div>
-                                <form className='post_commentform'>
-                                </form>
                             </div>
                         </div>
 
@@ -148,19 +163,25 @@ const HomePosts = ({ LikePostHandler, CommentHandler }: HomePostProps) => {
                                                 <AiOutlineLike size={21} className='post_bottom_left_icon'
                                                     onClick={() => { FeedPostLikeHandler(post?.id) }}
                                                 />}
-                                            {post?.likeCount}</div>
+                                            {post?.likeCount}
+                                        </div>
                                         <div className='post_bottom_left_icons'><BiComment onClick={() =>
-                                            CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
+                                            CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}
+                                        </div>
                                     </div>
-                                    {post?.isProject && <div className="post_bottom_right">
-                                        <AiOutlineUsergroupAdd className='post_bottom_left_icon' size={28}
-                                            onClick={() => handleTeamJoinRequest(post?.id)}
-                                        />
-                                    </div>}
+                                    {
+                                        post?.isProject &&
+                                        <div className="post_bottom_right">
+                                            {(post?.isJoined) ?
+                                                <div className="post_bottom_right_icons">Requested <IoMdCheckmarkCircleOutline
+                                                    className='post_bottom_right_icon_request' size={26} />
+                                                </div> :
+                                                <AiOutlineUsergroupAdd className='post_bottom_right_icon' size={28}
+                                                    onClick={() => handleTeamJoinRequest(post?.id)}
+                                                />}
+                                        </div>
+                                    }
                                 </div>
-                                <form className='post_commentform'>
-
-                                </form>
                             </div>
                         </div>)
                 }

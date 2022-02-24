@@ -68,7 +68,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
         }
     }, [LikeSuccess, DeleteSuccess, EditPostSuccess])
 
-    const LikePostHandler = (id: string) => {
+    const PostLikeHandler = (id: string) => {
         console.log("like id:", id);
         LikePost({
             token: user?.token,
@@ -163,7 +163,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                                 <div className='post_bottom_left_icons'>
                                     {isLiked ? <AiFillLike size={21} className='post_bottom_left_icon_liked' /> :
                                         <AiOutlineLike size={21} className='post_bottom_left_icon'
-                                            onClick={() => { LikePostHandler(id) }}
+                                            onClick={() => { PostLikeHandler(id) }}
                                         />}
                                     {likeCount}</div>
                                 <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{commentCount}</div>
@@ -175,8 +175,6 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                                     />
                                 </div>} */}
                         </div>
-                        <form className='post_commentform'>
-                        </form>
                     </div>
                 </div>
             </>
@@ -213,7 +211,6 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                 <HomePost
                     setIsCommentModalOpened={setIsCommentModalOpened}
                     setCommentPostId={setCommentPostId}
-                    LikePostHandler={LikePostHandler}
                     CommentHandler={CommentHandler}
                 />
 
