@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import request from "../../api";
 import { UserData } from "../../models";
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction } from "../action-models/ProjectAction";
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType } from "../actiontypes/ProjectActionType";
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, ManageTeamRoleAction } from "../action-models/ProjectAction";
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, ManageTeamRoleActionType } from "../actiontypes/ProjectActionType";
 
 
 
@@ -89,6 +89,35 @@ export const AddProjectDescription = ({ token, description, projectId }: any) =>
                 type: AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_FAIL,
                 payload: error
             })
+        }
+    }
+}
+
+export const ManageTeamRole = ({ projectId, memberId, role, token }: any) => {
+    return async (dispatch: Dispatch<ManageTeamRoleAction>) => {
+        dispatch({
+            type: ManageTeamRoleActionType.MANAGE_TEAM_ROLE_REQUEST
+        })
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.put(`/api/v1/projects/${projectId}/team/${memberId}/role`, { role: role },
+                config)
+            dispatch({
+                type: ManageTeamRoleActionType.MANAGE_TEAM_ROLE_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: ManageTeamRoleActionType.MANAGE_TEAM_ROLE_FAIL,
+                payload: error
+            })
+
         }
     }
 }

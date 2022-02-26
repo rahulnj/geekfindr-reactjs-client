@@ -4,6 +4,7 @@ import './_ProjectTeam.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { UserData } from '../../models';
+import { useActions } from '../../hooks/useActions';
 
 const ProjectTeam = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
@@ -12,6 +13,9 @@ const ProjectTeam = () => {
     let { data: projectDetails }: any = useTypedSelector(
         (state) => state.GetProjectDetails
     )
+
+    const { ManageTeamRole } = useActions()
+
 
     let isOwner = true;
     projectDetails?.team?.every((member: any) => {
@@ -64,15 +68,17 @@ const ProjectTeam = () => {
 
     const isRadioSelected = (value: string): boolean => selectedRadioBtn === value;
 
-    const handleRadioClick = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleRadioClick = (e: React.ChangeEvent<HTMLInputElement>, memberId: string): void => {
         console.log(e.currentTarget.value);
-
         setSelectedRadioBtn(e.currentTarget.value)
-        if (e.currentTarget.value === 'project') {
 
-        } else if (e.currentTarget.value === 'post') {
+        ManageTeamRole({
+            token: CurrentUser?.token,
+            role: e.currentTarget.value,
+            projectId: projectDetails?.id,
+            memberId
+        })
 
-        }
     }
 
 
@@ -97,13 +103,13 @@ const ProjectTeam = () => {
                             </div>
                         </div>
                         <div className="projectteam_user_right">
-                            {(projectDetails?.isOwner && projectDetails?.isAdmin) &&
+                            {(projectDetails?.isOwner || projectDetails?.isAdmin) &&
                                 <div className='projectteam_user_right_radios'>
                                     <input className='projectteam_user_right_input' id='myradio1' value='admin' type="radio"
-                                        checked={isRadioSelected('admin')} onChange={handleRadioClick} />
+                                        checked={isRadioSelected('admin')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
                                     <label htmlFor='myradio1' className='projectteam_user_right_label'>Admin</label>
                                     <input className='projectteam_user_right_input' id='myradio2' type="radio" value='collaborator'
-                                        checked={isRadioSelected('collaborator')} onChange={handleRadioClick} />
+                                        checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
                                     <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
                                 </div>
                             }

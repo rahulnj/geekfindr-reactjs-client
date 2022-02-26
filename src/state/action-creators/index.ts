@@ -30,5 +30,6 @@ export {
 export {
     GetMyProject,
     GetProjectDetails,
-    AddProjectDescription
+    AddProjectDescription,
+    ManageTeamRole
 } from './ProjectActions';

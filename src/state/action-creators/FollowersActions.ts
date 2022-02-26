@@ -70,7 +70,7 @@ export const FollowUser = ({ token, id }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             }
         };
         try {

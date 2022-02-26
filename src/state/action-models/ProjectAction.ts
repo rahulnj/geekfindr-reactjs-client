@@ -1,6 +1,6 @@
 //Action models for getting my projects
 
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType } from "../actiontypes/ProjectActionType";
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, ManageTeamRoleActionType } from "../actiontypes/ProjectActionType";
 
 interface GetMyrojectRequestAction {
     type: GetMyProjectActionType.GET_MYPROJECT_REQUEST
@@ -62,3 +62,25 @@ export type AddProjectDescriptionAction =
     | AddProjectDescriptionRequestAction
     | AddProjectDescriptionSuccessAction
     | AddProjectDescriptionFailAction
+
+//Action models for changing team members role
+
+interface ManageTeamRoleRequestAction {
+    type: ManageTeamRoleActionType.MANAGE_TEAM_ROLE_REQUEST
+}
+
+interface ManageTeamRoleSuccessAction {
+    type: ManageTeamRoleActionType.MANAGE_TEAM_ROLE_SUCCESS
+    payload: string[]
+}
+
+interface ManageTeamRoleFailAction {
+    type: ManageTeamRoleActionType.MANAGE_TEAM_ROLE_FAIL
+    payload: String[] | null
+}
+
+export type ManageTeamRoleAction =
+    | ManageTeamRoleRequestAction
+    | ManageTeamRoleSuccessAction
+    | ManageTeamRoleFailAction
+

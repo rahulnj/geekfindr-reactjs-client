@@ -1,6 +1,6 @@
 import { ProjectState } from "../../models"
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction } from "../action-models/ProjectAction"
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType } from "../actiontypes/ProjectActionType"
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, ManageTeamRoleAction } from "../action-models/ProjectAction"
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, ManageTeamRoleActionType } from "../actiontypes/ProjectActionType"
 
 const initialState = {
     data: [],
@@ -52,6 +52,22 @@ export const AddProjectDescriptionReducer = (
             return { ...state, success: true, loading: false, error: null, data: action.payload }
         case AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const ManageTeamRoleReducer = (
+    state: ProjectState = initialState,
+    action: ManageTeamRoleAction
+): ProjectState => {
+    switch (action.type) {
+        case ManageTeamRoleActionType.MANAGE_TEAM_ROLE_REQUEST:
+            return { ...state, success: false, loading: true, error: null, data: [] }
+        case ManageTeamRoleActionType.MANAGE_TEAM_ROLE_SUCCESS:
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
+        case ManageTeamRoleActionType.MANAGE_TEAM_ROLE_FAIL:
+            return { ...state, success: false, loading: false, error: null, data: [] }
         default:
             return state;
     }
