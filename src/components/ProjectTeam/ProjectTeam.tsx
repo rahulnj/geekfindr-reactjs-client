@@ -22,7 +22,7 @@ const ProjectTeam = () => {
     let isOwner = true;
     projectDetails?.team?.every((member: any) => {
         isOwner = member?.role === 'owner' && member?.user?.id === CurrentUser?.id
-        if (isOwner == true) {
+        if (isOwner === true) {
             return false
         }
         return true;
@@ -42,7 +42,7 @@ const ProjectTeam = () => {
     let isCollaborator = true;
     projectDetails?.team?.every((member: any) => {
         isCollaborator = member?.role === 'collaborator' && member?.user?.id === CurrentUser?.id
-        if (isCollaborator == true) {
+        if (isCollaborator === true) {
             return false
         }
         return true;
@@ -52,7 +52,7 @@ const ProjectTeam = () => {
     let isJoinRequest = true;
     projectDetails?.team?.every((member: any) => {
         isJoinRequest = member?.role === 'joinRequest' && member?.user?.id === CurrentUser?.id
-        if (isJoinRequest == true) {
+        if (isJoinRequest === true) {
             return false
         }
         return true;
@@ -60,13 +60,6 @@ const ProjectTeam = () => {
     projectDetails = { ...projectDetails, isjoinRequest: isJoinRequest }
 
     console.log(projectDetails);
-
-
-
-
-
-
-
 
     const isRadioSelected = (value: string): boolean => selectedRadioBtn === value;
 
@@ -109,15 +102,20 @@ const ProjectTeam = () => {
                                 (projectDetails?.isAdmin && CurrentUser?.id === teammates?.user?.id) ?
                                 <button className="projectteam_user_right_button-leave">Leave</button> :
                                 (projectDetails?.isOwner && CurrentUser?.id === teammates?.user?.id) ?
-                                    <span></span> :
-                                    <div className='projectteam_user_right_radios'>
-                                        <input className='projectteam_user_right_input' id='myradio1' value='admin' type="radio"
-                                            checked={isRadioSelected('admin')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
-                                        <label htmlFor='myradio1' className='projectteam_user_right_label'>Admin</label>
-                                        <input className='projectteam_user_right_input' id='myradio2' type="radio" value='collaborator'
-                                            checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
-                                        <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
-                                    </div>
+                                    <span /> :
+                                    (projectDetails?.isOwner || projectDetails?.isAdmin && teammates?.role === 'joinRequest') ?
+                                        <div className="projectteam_user_right_icons">
+                                            <IoIosCheckmarkCircleOutline className="projectteam_user_right_icons_icontick" size={40} />
+                                            <AiOutlineCloseCircle className="projectteam_user_right_icons_iconclose" size={40} />
+                                        </div> :
+                                        <div className='projectteam_user_right_radios'>
+                                            <input className='projectteam_user_right_input' id='myradio1' value='admin' type="radio"
+                                                checked={isRadioSelected('admin')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
+                                            <label htmlFor='myradio1' className='projectteam_user_right_label'>Admin</label>
+                                            <input className='projectteam_user_right_input' id='myradio2' type="radio" value='collaborator'
+                                                checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
+                                            <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
+                                        </div>
                             }
                             {
                                 projectDetails?.isJoinRequest &&

@@ -102,6 +102,31 @@
                     box-shadow: none;
                 }
             }
+            &_icons {
+                display: flex;
+                gap: 0.5rem;
+                margin-right: 20px;
+
+                &_icontick {
+                    cursor: pointer;
+                    color: rgba(0, 128, 0, 0.5);
+                    transition: opacity 0.3s ease-in 0.1s;
+                }
+                &_iconclose {
+                    cursor: pointer;
+                    color: rgba(255, 0, 0, 0.5);
+                    transition: opacity 0.3s ease-in 0.1s;
+                }
+
+                &_icontick:hover {
+                    cursor: pointer;
+                    color: rgba(0, 128, 0, 0.8);
+                }
+                &_iconclose:hover {
+                    cursor: pointer;
+                    color: rgba(255, 0, 0, 0.8);
+                }
+            }
         }
     }
 }
