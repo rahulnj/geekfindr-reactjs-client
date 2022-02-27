@@ -69,6 +69,39 @@
             .projectteam_user_right_input:checked + .projectteam_user_right_label {
                 box-shadow: inset 0 0 0 2000px rgba(153, 0, 255, 0.397);
             }
+            &_button-leave {
+                background-color: #ffffff;
+                border: 1px solid rgb(175, 175, 175);
+                border-radius: 4px;
+                box-sizing: border-box;
+                height: 42px;
+                color: red;
+                font-size: 1rem;
+                font-weight: 500;
+                line-height: 1.25rem;
+                padding: 0.7rem 2rem;
+                text-align: center;
+                text-decoration: none #d1d5db solid;
+                text-decoration-thickness: auto;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                cursor: pointer;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+
+                &_button-leave:hover {
+                    background-color: rgb(249, 250, 251);
+                }
+
+                &_button-leave:focus {
+                    outline: 2px solid red;
+                    outline-offset: 2px;
+                }
+
+                &_button-leave:focus-visible {
+                    box-shadow: none;
+                }
+            }
         }
     }
 }

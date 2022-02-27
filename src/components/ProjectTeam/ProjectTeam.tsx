@@ -5,6 +5,8 @@ import './_ProjectTeam.scss'
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { UserData } from '../../models';
 import { useActions } from '../../hooks/useActions';
+import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const ProjectTeam = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
@@ -72,12 +74,12 @@ const ProjectTeam = () => {
         console.log(e.currentTarget.value);
         setSelectedRadioBtn(e.currentTarget.value)
 
-        ManageTeamRole({
-            token: CurrentUser?.token,
-            role: e.currentTarget.value,
-            projectId: projectDetails?.id,
-            memberId
-        })
+        // ManageTeamRole({
+        //     token: CurrentUser?.token,
+        //     role: e.currentTarget.value,
+        //     projectId: projectDetails?.id,
+        //     memberId
+        // })
 
     }
 
@@ -104,13 +106,23 @@ const ProjectTeam = () => {
                         </div>
                         <div className="projectteam_user_right">
                             {(projectDetails?.isOwner || projectDetails?.isAdmin) &&
-                                <div className='projectteam_user_right_radios'>
-                                    <input className='projectteam_user_right_input' id='myradio1' value='admin' type="radio"
-                                        checked={isRadioSelected('admin')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
-                                    <label htmlFor='myradio1' className='projectteam_user_right_label'>Admin</label>
-                                    <input className='projectteam_user_right_input' id='myradio2' type="radio" value='collaborator'
-                                        checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
-                                    <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
+                                (projectDetails?.isAdmin && CurrentUser?.id === teammates?.user?.id) ?
+                                <button className="projectteam_user_right_button-leave">Leave</button> :
+                                (projectDetails?.isOwner && CurrentUser?.id === teammates?.user?.id) ?
+                                    <span></span> :
+                                    <div className='projectteam_user_right_radios'>
+                                        <input className='projectteam_user_right_input' id='myradio1' value='admin' type="radio"
+                                            checked={isRadioSelected('admin')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
+                                        <label htmlFor='myradio1' className='projectteam_user_right_label'>Admin</label>
+                                        <input className='projectteam_user_right_input' id='myradio2' type="radio" value='collaborator'
+                                            checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
+                                        <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
+                                    </div>
+                            }
+                            {
+                                projectDetails?.isJoinRequest &&
+                                <div>
+                                    leave
                                 </div>
                             }
                         </div>
