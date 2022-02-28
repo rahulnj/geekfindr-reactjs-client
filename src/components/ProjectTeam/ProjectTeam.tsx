@@ -10,14 +10,26 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const ProjectTeam = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-    const [selectedRadioBtn, setSelectedRadioBtn] = useState('admin')
+    const { GetProjectDetails, ManageTeamRole, LeaveOrRemoveMembers } = useActions()
 
     let { data: projectDetails }: any = useTypedSelector(
         (state) => state.GetProjectDetails
     )
+    let { success: LeaveOrRemoveSuccess }: any = useTypedSelector(
+        (state) => state.LeaveOrRemoveMembers
+    )
+    let { success: ManageTeamRoleSuccess }: any = useTypedSelector(
+        (state) => state.ManageTeamRole
+    )
 
-    const { ManageTeamRole } = useActions()
+    const [selectedRadioBtn, setSelectedRadioBtn] = useState('admin')
 
+    useEffect(() => {
+        GetProjectDetails({
+            token: CurrentUser?.token,
+            projectId: projectDetails?.project?.id
+        })
+    }, [LeaveOrRemoveSuccess, ManageTeamRoleSuccess])
 
     let isOwner = true;
     projectDetails?.project?.team?.every((member: any) => {
@@ -73,10 +85,24 @@ const ProjectTeam = () => {
         //     projectId: projectDetails?.id,
         //     memberId
         // })
-
     }
 
+    const acceptMembertoTeam = (id: string) => {
+        ManageTeamRole({
+            token: CurrentUser?.token,
+            role: 'collaborator',
+            projectId: projectDetails?.project?.id,
+            memberId: id
+        })
+    }
 
+    const rejectMemberfromTeam = (id: string) => {
+        LeaveOrRemoveMembers({
+            token: CurrentUser?.token,
+            memberId: id,
+            projectId: projectDetails?.project?.id
+        })
+    }
 
 
     return (
@@ -104,26 +130,32 @@ const ProjectTeam = () => {
                                     <button className="projectteam_user_right_button-leave">Leave</button> :
                                     (projectDetails?.isOwner && CurrentUser?.id === teammates?.user?.id) ?
                                         <span /> :
-                                        ((projectDetails?.isOwner || projectDetails?.isAdmin) && teammates?.role === 'joinRequest') ?
-                                            <div className="projectteam_user_right_icons">
-                                                <IoIosCheckmarkCircleOutline className="projectteam_user_right_icons_icontick" size={40} />
-                                                <AiOutlineCloseCircle className="projectteam_user_right_icons_iconclose" size={38} />
-                                            </div> :
-                                            <div className='projectteam_user_right_radios'>
-                                                <input className='projectteam_user_right_input' id='myradio1' value='admin' type="radio"
-                                                    checked={isRadioSelected('admin')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
-                                                <label htmlFor='myradio1' className='projectteam_user_right_label'>Admin</label>
-                                                <input className='projectteam_user_right_input' id='myradio2' type="radio" value='collaborator'
-                                                    checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
-                                                <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
-                                            </div>
+                                        (projectDetails?.isCollaborator && CurrentUser?.id === teammates?.user?.id) ?
+                                            <button className="projectteam_user_right_button-leave">Leave</button> :
+                                            ((projectDetails?.isOwner || projectDetails?.isAdmin) && teammates?.role === 'joinRequest') ?
+                                                <div className="projectteam_user_right_icons">
+                                                    <IoIosCheckmarkCircleOutline className="projectteam_user_right_icons_icontick" size={40}
+                                                        onClick={() => { acceptMembertoTeam(teammates?.user?.id) }}
+                                                    />
+                                                    <AiOutlineCloseCircle className="projectteam_user_right_icons_iconclose" size={38}
+                                                        onClick={() => { rejectMemberfromTeam(teammates?.user?.id) }}
+                                                    />
+                                                </div> :
+                                                <div className='projectteam_user_right_radios'>
+                                                    <input className='projectteam_user_right_input' id='myradio1' value='admin' type="radio"
+                                                        checked={isRadioSelected('admin')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
+                                                    <label htmlFor='myradio1' className='projectteam_user_right_label'>Admin</label>
+                                                    <input className='projectteam_user_right_input' id='myradio2' type="radio" value='collaborator'
+                                                        checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
+                                                    <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
+                                                </div>
                                 }
-                                {
+                                {/* {
                                     projectDetails?.isCollaborator &&
                                     <div>
-                                        leave
+                                        leave 1
                                     </div>
-                                }
+                                } */}
                             </div>
                         </div>
                         <hr />
