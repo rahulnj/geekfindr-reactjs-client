@@ -1,6 +1,6 @@
 //Action models for getting my projects
 
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, ManageTeamRoleActionType } from "../actiontypes/ProjectActionType";
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType } from "../actiontypes/ProjectActionType";
 
 interface GetMyrojectRequestAction {
     type: GetMyProjectActionType.GET_MYPROJECT_REQUEST
@@ -84,3 +84,23 @@ export type ManageTeamRoleAction =
     | ManageTeamRoleSuccessAction
     | ManageTeamRoleFailAction
 
+//Action models for removing or leaving from the project
+
+interface LeaveOrRemoveMembersRequestAction {
+    type: LeaveOrRemoveMembersActionType.LEAVE_OR_REMOVE_MEMBERS_REQUEST
+}
+
+interface LeaveOrRemoveMembersSuccessAction {
+    type: LeaveOrRemoveMembersActionType.LEAVE_OR_REMOVE_MEMBERS_SUCCESS
+    payload: string[]
+}
+
+interface LeaveOrRemoveMembersFailAction {
+    type: LeaveOrRemoveMembersActionType.LEAVE_OR_REMOVE_MEMBERS_FAIL
+    payload: string[] | null
+}
+
+export type LeaveOrRemoveMembersAction =
+    | LeaveOrRemoveMembersRequestAction
+    | LeaveOrRemoveMembersSuccessAction
+    | LeaveOrRemoveMembersFailAction

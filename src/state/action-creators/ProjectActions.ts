@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import request from "../../api";
 import { UserData } from "../../models";
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, ManageTeamRoleAction } from "../action-models/ProjectAction";
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, ManageTeamRoleActionType } from "../actiontypes/ProjectActionType";
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction } from "../action-models/ProjectAction";
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType } from "../actiontypes/ProjectActionType";
 
 
 
@@ -115,6 +115,34 @@ export const ManageTeamRole = ({ projectId, memberId, role, token }: any) => {
             console.log(error);
             dispatch({
                 type: ManageTeamRoleActionType.MANAGE_TEAM_ROLE_FAIL,
+                payload: error
+            })
+
+        }
+    }
+}
+
+export const LeaveOrRemoveMembers = ({ projectId, memberId, token }: any) => {
+    return async (dispatch: Dispatch<LeaveOrRemoveMembersAction>) => {
+        dispatch({
+            type: LeaveOrRemoveMembersActionType.LEAVE_OR_REMOVE_MEMBERS_REQUEST
+        })
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.delete(`/api/v1/projects/${projectId}/team/${memberId}`, config)
+            dispatch({
+                type: LeaveOrRemoveMembersActionType.LEAVE_OR_REMOVE_MEMBERS_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: LeaveOrRemoveMembersActionType.LEAVE_OR_REMOVE_MEMBERS_FAIL,
                 payload: error
             })
 

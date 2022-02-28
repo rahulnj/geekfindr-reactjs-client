@@ -25,16 +25,18 @@ const ProjectDescription: React.FC = () => {
             projectId
         })
     }, [projectDescriptionSuccess])
+    console.log(projectDetails);
+
     return (
         <>
             <Modal isProjectDescriptionModal={isProjectDescriptionModal}
                 setIsProjectDescriptionModal={setIsProjectDescriptionModal} />
             <div className='projectdescription'>
                 <div className="projectdescription_header">
-                    <h3>{projectDetails?.name}</h3>
+                    <h3>{projectDetails?.project?.name}</h3>
                 </div>
                 <hr />
-                {projectDetails?.description?.length === 0 ?
+                {projectDetails?.project?.description?.length === 0 ?
                     <div className='projectdescription_button'>
                         <button className="btnadd" role="button" onClick={() => setIsProjectDescriptionModal(true)}>
                             <span className="btntext">+ Add Description</span></button>

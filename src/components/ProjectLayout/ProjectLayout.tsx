@@ -42,10 +42,10 @@ const ProjectLayout = () => {
     return (
         <div className='projectlayout'>
             <div className="projectlayout_header">
-                <h3>{projectDetails?.name}</h3>
+                <h3>{projectDetails?.project?.name}</h3>
                 <div className="projectlayout_header_time">
                     <p>Started</p>
-                    <p><Moment fromNow>{projectDetails?.updatedAt}</Moment></p>
+                    <p><Moment fromNow>{projectDetails?.project?.updatedAt}</Moment></p>
                 </div>
             </div>
             <div className='projectlayout_wrapper'>

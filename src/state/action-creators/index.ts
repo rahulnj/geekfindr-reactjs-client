@@ -31,5 +31,6 @@ export {
     GetMyProject,
     GetProjectDetails,
     AddProjectDescription,
-    ManageTeamRole
+    ManageTeamRole,
+    LeaveOrRemoveMembers
 } from './ProjectActions';

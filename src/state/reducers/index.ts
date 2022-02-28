@@ -28,6 +28,7 @@ import {
     AddProjectDescriptionReducer,
     GetMyProjectReducer,
     GetProjectDetailsReducer,
+    LeaveOrRemoveMembersReducer,
     ManageTeamRoleReducer
 } from "./ProjectReducer";
 
@@ -60,7 +61,8 @@ const rootReducer = combineReducers({
     TeamJoinRequest: TeamJoinRequestReducer,
     GetProjectDetails: GetProjectDetailsReducer,
     AddProjectDescription: AddProjectDescriptionReducer,
-    ManageTeamRole: ManageTeamRoleReducer
+    ManageTeamRole: ManageTeamRoleReducer,
+    LeaveOrRemoveMembers: LeaveOrRemoveMembersReducer,
 })
 
 export default rootReducer;
