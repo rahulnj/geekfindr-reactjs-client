@@ -1,0 +1,48 @@
+@import "../../_base.scss";
+.projecttodo {
+    display: flex;
+    flex-direction: column;
+
+    &_header {
+        padding: 10px 30px;
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+    }
+    hr {
+        margin: 0 30px;
+        opacity: 0.5;
+    }
+    &_header2 {
+        padding: 10px 30px;
+        text-align: center;
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+    }
+    &_wrapper {
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+        &_nostatus {
+            flex: 3;
+            border: 1px solid red;
+            // height: 100%;
+        }
+        &_nextup {
+            flex: 3;
+            border: 1px solid green;
+        }
+        &_inprogress {
+            flex: 3;
+            border: 1px solid blue;
+        }
+        &_completed {
+            flex: 3;
+            border: 1px solid black;
+        }
+    }
+}
