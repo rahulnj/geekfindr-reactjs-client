@@ -48,6 +48,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 0.5rem;
+            // &_btnaction {
+            //     margin: 0.5rem;
+            // }
             &_radios {
                 display: inline-flex;
                 overflow: hidden;
@@ -74,13 +78,12 @@
                 background-color: #ffffff;
                 border: 1px solid rgb(175, 175, 175);
                 border-radius: 4px;
-                box-sizing: border-box;
                 height: 42px;
                 color: red;
                 font-size: 1rem;
                 font-weight: 500;
                 line-height: 1.25rem;
-                padding: 0.7rem 2rem;
+                padding: 0.5rem 1rem;
                 text-align: center;
                 text-decoration: none #d1d5db solid;
                 text-decoration-thickness: auto;
