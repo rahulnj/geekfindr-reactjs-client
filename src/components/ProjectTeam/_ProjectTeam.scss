@@ -49,30 +49,35 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            // &_btnaction {
-            //     margin: 0.5rem;
-            // }
             &_radios {
-                display: inline-flex;
+                display: flex;
                 overflow: hidden;
                 border-radius: 1px;
-                box-shadow: $main-shadow;
             }
             &_input {
-                display: none;
-            }
-            &_label {
-                padding: 10px 14px;
-                font-size: 14px;
+                background-color: #ffffff;
+                border: 1px solid rgb(175, 175, 175);
+                height: 42px;
+                color: black;
+                font-size: 1rem;
+                font-weight: 500;
+                line-height: 1.25rem;
+                padding: 0.5rem 1rem;
+                text-align: center;
+                text-decoration: none #d1d5db solid;
+                text-decoration-thickness: auto;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
                 cursor: pointer;
-                transition: background 0.1s;
-                background: $background-color;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+
+                &.bgbtn {
+                    box-shadow: inset 0 0 0 2000px rgba(153, 0, 255, 0.397);
+                }
             }
-            &_label:not(:last-of-type) {
+            &_input:not(:last-of-type) {
                 border-right: 1px solid $horizontalline-color;
-            }
-            .projectteam_user_right_input:checked + .projectteam_user_right_label {
-                box-shadow: inset 0 0 0 2000px rgba(153, 0, 255, 0.397);
             }
             &_button-leave {
                 background-color: #ffffff;

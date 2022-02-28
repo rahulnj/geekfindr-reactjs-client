@@ -36,7 +36,7 @@ const ProjectDescription: React.FC = () => {
                     <h3>{projectDetails?.project?.name}</h3>
                 </div>
                 <hr />
-                {projectDetails?.project?.description?.length === 0 ?
+                {projectDetails?.project?.description?.length === 0 && projectDetails?.role === 'owner' ?
                     <div className='projectdescription_button'>
                         <button className="btnadd" role="button" onClick={() => setIsProjectDescriptionModal(true)}>
                             <span className="btntext">+ Add Description</span></button>

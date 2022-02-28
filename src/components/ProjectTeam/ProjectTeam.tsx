@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Fragment } from 'react'
 
 import './_ProjectTeam.scss'
 
@@ -7,9 +7,11 @@ import { UserData } from '../../models';
 import { useActions } from '../../hooks/useActions';
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { Params, useParams } from 'react-router-dom';
 
 const ProjectTeam = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+    const { projectId }: Readonly<Params<string>> = useParams()
     const { GetProjectDetails, ManageTeamRole, LeaveOrRemoveMembers } = useActions()
 
     let { data: projectDetails }: any = useTypedSelector(
@@ -22,16 +24,14 @@ const ProjectTeam = () => {
         (state) => state.ManageTeamRole
     )
 
-    const [selectedRadioBtn, setSelectedRadioBtn] = useState('admin')
-
     useEffect(() => {
         GetProjectDetails({
             token: CurrentUser?.token,
-            projectId: projectDetails?.project?.id
+            projectId
         })
     }, [LeaveOrRemoveSuccess, ManageTeamRoleSuccess])
 
-    let isOwner;
+    let isOwner = true;
     projectDetails?.project?.team?.every((member: any) => {
         isOwner = member?.role === 'owner' && member?.user?.id === CurrentUser?.id
         if (isOwner === true) {
@@ -41,7 +41,7 @@ const ProjectTeam = () => {
     })
     projectDetails = { ...projectDetails, isOwner: isOwner }
 
-    let isAdmin;
+    let isAdmin = true;
     projectDetails?.project?.team?.every((member: any) => {
         isAdmin = member?.role === 'admin' && member?.user?.id === CurrentUser?.id
         if (isAdmin == true) {
@@ -51,7 +51,7 @@ const ProjectTeam = () => {
     })
     projectDetails = { ...projectDetails, isAdmin: isAdmin }
 
-    let isCollaborator;
+    let isCollaborator = true;
     projectDetails?.project?.team?.every((member: any) => {
         isCollaborator = member?.role === 'collaborator' && member?.user?.id === CurrentUser?.id
         if (isCollaborator === true) {
@@ -61,7 +61,7 @@ const ProjectTeam = () => {
     })
     projectDetails = { ...projectDetails, isCollaborator: isCollaborator }
 
-    let isJoinRequest;
+    let isJoinRequest = true;
     projectDetails?.project?.team?.every((member: any) => {
         isJoinRequest = member?.role === 'joinRequest' && member?.user?.id === CurrentUser?.id
         if (isJoinRequest === true) {
@@ -73,18 +73,16 @@ const ProjectTeam = () => {
 
     console.log(projectDetails);
 
-    const isRadioSelected = (value: string): boolean => selectedRadioBtn === value;
-
-    const handleRadioClick = (e: React.ChangeEvent<HTMLInputElement>, memberId: string): void => {
+    const handleMemberRole = (e: React.MouseEvent<HTMLInputElement>, memberId: string): void => {
+        e.preventDefault()
         console.log(e.currentTarget.value);
-        setSelectedRadioBtn(e.currentTarget.value)
 
-        // ManageTeamRole({
-        //     token: CurrentUser?.token,
-        //     role: e.currentTarget.value,
-        //     projectId: projectDetails?.id,
-        //     memberId
-        // })
+        ManageTeamRole({
+            token: CurrentUser?.token,
+            role: e.currentTarget.value,
+            projectId,
+            memberId
+        })
     }
 
     const acceptMembertoProject = (id: string) => {
@@ -96,7 +94,7 @@ const ProjectTeam = () => {
         })
     }
 
-    const rejectMemberfromProject = (id: string) => {
+    const removeMemberfromProject = (id: string) => {
         LeaveOrRemoveMembers({
             token: CurrentUser?.token,
             memberId: id,
@@ -145,24 +143,31 @@ const ProjectTeam = () => {
                                                         onClick={() => { acceptMembertoProject(teammates?.user?.id) }}
                                                     />
                                                     <AiOutlineCloseCircle className="projectteam_user_right_icons_iconclose" size={38}
-                                                        onClick={() => { rejectMemberfromProject(teammates?.user?.id) }}
+                                                        onClick={() => { removeMemberfromProject(teammates?.user?.id) }}
                                                     />
                                                 </div> :
                                                 (projectDetails?.isAdmin && teammates?.role === 'admin') ? <span /> :
-                                                    <>
-                                                        <div className='projectteam_user_right_radios'>
-                                                            <input className='projectteam_user_right_input' id='myradio1' value='admin' type="radio"
-                                                                checked={isRadioSelected('admin')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
-                                                            <label htmlFor='myradio1' className='projectteam_user_right_label'>Admin</label>
-                                                            <input className='projectteam_user_right_input' id='myradio2' type="radio" value='collaborator'
-                                                                checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
-                                                            <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
-                                                        </div>
+                                                    (projectDetails?.isAdmin && teammates?.role === 'collaborator') ?
                                                         <div className='projectteam_user_right_btnaction'>
                                                             <button className="projectteam_user_right_button-leave"
+                                                                onClick={() => { removeMemberfromProject(teammates?.user?.id) }}
                                                             >Remove</button>
-                                                        </div>
-                                                    </>
+                                                        </div> :
+                                                        <>
+                                                            <div className='projectteam_user_right_radios'>
+                                                                <input className={teammates?.role === 'admin' ? 'projectteam_user_right_input bgbtn' :
+                                                                    'projectteam_user_right_input'} id={teammates?.user?.id} value='admin' type="button"
+                                                                    onClick={(e) => handleMemberRole(e, teammates?.user?.id)} />
+                                                                <input className={teammates?.role === 'collaborator' ? 'projectteam_user_right_input bgbtn' :
+                                                                    'projectteam_user_right_input'} id='myradio2' type="button" value='collaborator'
+                                                                    onClick={(e) => handleMemberRole(e, teammates?.user?.id)} />
+                                                            </div>
+                                                            <div className='projectteam_user_right_btnaction'>
+                                                                <button className="projectteam_user_right_button-leave"
+                                                                    onClick={() => { removeMemberfromProject(teammates?.user?.id) }}
+                                                                >Remove</button>
+                                                            </div>
+                                                        </>
                                     : (projectDetails?.isCollaborator && CurrentUser?.id === teammates?.user?.id) &&
                                     <button className="projectteam_user_right_button-leave"
                                         onClick={leaveTheProject}
