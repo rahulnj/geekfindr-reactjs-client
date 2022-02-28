@@ -106,8 +106,6 @@ const ProjectTeam = () => {
 
 
     return (
-
-
         <div className='projectteam'>
             <div className="projectteam_header">
                 <h3>Teammates</h3>
@@ -125,13 +123,12 @@ const ProjectTeam = () => {
                                 </div>
                             </div>
                             <div className="projectteam_user_right">
-                                {(projectDetails?.isOwner || projectDetails?.isAdmin) &&
+                                {(projectDetails?.isOwner || projectDetails?.isAdmin) ?
                                     (projectDetails?.isAdmin && CurrentUser?.id === teammates?.user?.id) ?
-                                    <button className="projectteam_user_right_button-leave">Leave</button> :
-                                    (projectDetails?.isOwner && CurrentUser?.id === teammates?.user?.id) ?
-                                        <span /> :
-                                        (projectDetails?.isCollaborator && CurrentUser?.id === teammates?.user?.id) ?
-                                            <button className="projectteam_user_right_button-leave">Leave</button> :
+                                        <button className="projectteam_user_right_button-leave">Leave</button> :
+                                        (projectDetails?.isOwner && CurrentUser?.id === teammates?.user?.id ||
+                                            projectDetails?.project?.owner?.id === teammates?.user?.id) ?
+                                            <span /> :
                                             ((projectDetails?.isOwner || projectDetails?.isAdmin) && teammates?.role === 'joinRequest') ?
                                                 <div className="projectteam_user_right_icons">
                                                     <IoIosCheckmarkCircleOutline className="projectteam_user_right_icons_icontick" size={40}
@@ -149,20 +146,15 @@ const ProjectTeam = () => {
                                                         checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
                                                     <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
                                                 </div>
+                                    : (projectDetails?.isCollaborator && CurrentUser?.id === teammates?.user?.id) &&
+                                    <button className="projectteam_user_right_button-leave">Leave</button>
                                 }
-                                {/* {
-                                    projectDetails?.isCollaborator &&
-                                    <div>
-                                        leave 1
-                                    </div>
-                                } */}
                             </div>
                         </div>
                         <hr />
                     </>
                 ))
             }
-
         </div>
 
 
