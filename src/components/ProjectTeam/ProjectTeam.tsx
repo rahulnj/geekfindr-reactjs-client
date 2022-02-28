@@ -148,21 +148,21 @@ const ProjectTeam = () => {
                                                         onClick={() => { rejectMemberfromProject(teammates?.user?.id) }}
                                                     />
                                                 </div> :
-                                                <>
-                                                    <div className='projectteam_user_right_radios'>
-                                                        <input className='projectteam_user_right_input' id='myradio1' value='admin' type="radio"
-                                                            checked={isRadioSelected('admin')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
-                                                        <label htmlFor='myradio1' className='projectteam_user_right_label'>Admin</label>
-                                                        <input className='projectteam_user_right_input' id='myradio2' type="radio" value='collaborator'
-                                                            checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
-                                                        <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
-                                                    </div>
-                                                    <div className='projectteam_user_right_btnaction'>
-                                                        <button className="projectteam_user_right_button-leave"
-                                                        >Remove</button>
-                                                    </div>
-                                                </>
-
+                                                (projectDetails?.isAdmin && teammates?.role === 'admin') ? <span /> :
+                                                    <>
+                                                        <div className='projectteam_user_right_radios'>
+                                                            <input className='projectteam_user_right_input' id='myradio1' value='admin' type="radio"
+                                                                checked={isRadioSelected('admin')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
+                                                            <label htmlFor='myradio1' className='projectteam_user_right_label'>Admin</label>
+                                                            <input className='projectteam_user_right_input' id='myradio2' type="radio" value='collaborator'
+                                                                checked={isRadioSelected('collaborator')} onChange={(e) => handleRadioClick(e, teammates?.user?.id)} />
+                                                            <label htmlFor='myradio2' className='projectteam_user_right_label'>Collaborator</label>
+                                                        </div>
+                                                        <div className='projectteam_user_right_btnaction'>
+                                                            <button className="projectteam_user_right_button-leave"
+                                                            >Remove</button>
+                                                        </div>
+                                                    </>
                                     : (projectDetails?.isCollaborator && CurrentUser?.id === teammates?.user?.id) &&
                                     <button className="projectteam_user_right_button-leave"
                                         onClick={leaveTheProject}
@@ -175,10 +175,6 @@ const ProjectTeam = () => {
                 ))
             }
         </div>
-
-
-
-
     )
 }
 
