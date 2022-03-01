@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import './_ProfileScreen.scss'
 
-import post1 from '../../assets/posts/3.jpeg'
+import post1 from '../../assets/posts/banner1.jpg'
 import { BaseSkeleton, Feed, FollowCounter, FollowCounterSkeleton, RightAside } from '../../components'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
@@ -51,7 +51,7 @@ const ProfileScreen = ({ userProfile }: ProfileProps) => {
             <div className="profile_righttop">
                 {!ProfileDetailsLoading ? <div className='profile_righttop_profilecover'>
                     <img className='profile_righttop_profilecoverImg' src={post1} alt="" />
-                    <img className='profile_righttop_profileuserImg' src={user?.avatar} alt="" />
+                    <img className='profile_righttop_profileuserImg' id='profileimg' src={user?.avatar} alt="" />
                 </div> :
                     <div className='profile_righttop_profilecover'>
                         <div className='profile_righttop_profilecoverImg'>
