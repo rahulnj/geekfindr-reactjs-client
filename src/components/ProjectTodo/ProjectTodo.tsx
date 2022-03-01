@@ -36,24 +36,29 @@ const ProjectTodo = () => {
         fetchedNoStatus = projectDetails?.project?.todo[0]?.tasks?.map((todo: any) => {
             return { id: Math.random().toString(36).substr(2, 9), todo: todo }
         })
-        setNoStatus(fetchedNoStatus)
-
+        if (fetchedNoStatus) {
+            setNoStatus(fetchedNoStatus)
+        }
         fetchedNextUp = projectDetails?.project?.todo[1]?.tasks?.map((todo: any) => {
             return { id: Math.random().toString(36).substr(2, 9), todo: todo }
         })
-        setNextUp(fetchedNextUp)
+        if (fetchedNextUp) {
+            setNextUp(fetchedNextUp)
+        }
 
         fetchedInProgress = projectDetails?.project?.todo[2]?.tasks?.map((todo: any) => {
             return { id: Math.random().toString(36).substr(2, 9), todo: todo }
         })
-        setInProgress(fetchedInProgress)
-
+        if (fetchedInProgress) {
+            setInProgress(fetchedInProgress)
+        }
         fetchedCompleted = projectDetails?.project?.todo[3]?.tasks?.map((todo: any) => {
             return { id: Math.random().toString(36).substr(2, 9), todo: todo }
         })
-        setCompleted(fetchedCompleted)
+        if (fetchedCompleted) {
+            setCompleted(fetchedCompleted)
+        }
     }, [])
-
     const handleAddTodo = () => {
         if (todo) {
             setNoStatus([...noStatus, {

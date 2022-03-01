@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Params, useParams } from 'react-router-dom';
 import request from '../../api';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
@@ -9,6 +10,7 @@ import './_ProjectDescriptionModal.scss'
 const ProjectDescriptionModal: React.FC<ProjectDescriptionModalProps> = ({ setIsProjectDescriptionModal }) => {
 
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+    const { projectId }: Readonly<Params<string>> = useParams()
     const [description, setDescription] = useState('')
 
     const { AddProjectDescription } = useActions();
@@ -18,7 +20,7 @@ const ProjectDescriptionModal: React.FC<ProjectDescriptionModalProps> = ({ setIs
     const handleProjectDescription = async () => {
         AddProjectDescription({
             token: CurrentUser?.token,
-            projectId: projectDetails?.id,
+            projectId,
             description
         })
         setIsProjectDescriptionModal(false)

@@ -22,6 +22,9 @@
     }
     &_wrapper {
         padding: 20px;
+        overflow: hidden;
+        overflow-y: auto;
+        height: 90vh;
 
         ul {
             padding: 0;
