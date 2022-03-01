@@ -93,14 +93,23 @@
         &_nextup {
             flex: 3;
             border: 1px solid green;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         &_inprogress {
             flex: 3;
             border: 1px solid blue;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         &_completed {
             flex: 3;
             border: 1px solid black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
     }
     &_singletodo {
