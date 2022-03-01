@@ -9,6 +9,7 @@ import post from '../../assets/persons/1.jpeg'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useNavigate } from 'react-router-dom'
+import { createImageFromInitials, getRandomColor } from '../../helpers/CreateImageFromInitials'
 
 const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, project }) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
@@ -49,6 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
         })
         navigate(`/project/${projectId}`)
     }
+    console.log(myProjects);
 
     return (
         <div className={isSidebar ? "sidebar open" : "sidebar"}
@@ -62,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
                 {myProjects?.map((project: any) => (
                     <div className='sidebar_projects' key={project?.project?.id} onClick={() => getProjectDetails(project?.project?.id)}>
                         <div className='sidebar_singleproject'>
-                            <img src={post} alt="" />
+                            <img src={createImageFromInitials(400, project?.project?.name, getRandomColor())} alt="" />
                             <div className='sidebar_singleprojectdetails'>
                                 <h4>{project?.project?.name}</h4>
                                 <p>{project?.role}</p>

@@ -9,17 +9,9 @@ import { ProjectTodoDragandDropProps, Todo } from '../../models';
 const DragAndDrop = ({ noStatus, nextUp, inProgress, completed }: ProjectTodoDragandDropProps) => {
 
 
-
-
-
-
-
-
-
-
     return (
         <div className="projecttodo_wrapper">
-            <Droppable droppableId='nostatus'>
+            <Droppable droppableId='nostatus' >
                 {(provided: DroppableProvided) => (
                     <div className="projecttodo_wrapper_nostatus"
                         ref={provided.innerRef} {...provided.droppableProps}
