@@ -5,7 +5,6 @@ import { BsChatLeft } from 'react-icons/bs'
 import { GrProjects } from 'react-icons/gr'
 import { SidebarProps, UserData } from '../../models'
 
-import post from '../../assets/persons/1.jpeg'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useNavigate } from 'react-router-dom'
@@ -50,8 +49,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
         })
         navigate(`/project/${projectId}`)
     }
-    console.log(myProjects);
-
     return (
         <div className={isSidebar ? "sidebar open" : "sidebar"}
             style={{ display: project ? (windowSizeListener ? 'block' : 'none') : '' }}

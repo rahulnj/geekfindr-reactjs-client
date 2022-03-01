@@ -54,6 +54,7 @@ const DragAndDrop = ({ noStatus, nextUp, inProgress, completed }: ProjectTodoDra
                                         {...provided.dragHandleProps}
                                     >
                                         {todo?.todo}
+
                                     </div>
                                 )}
                             </Draggable>

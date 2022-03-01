@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { AiOutlineDelete } from 'react-icons/ai'
+import { DragDropContext, Droppable, DroppableProvided, DropResult } from "react-beautiful-dnd";
 import { Params, useParams } from 'react-router-dom';
 import { DragAndDrop, ReadOnly } from '..';
 import { useActions } from '../../hooks/useActions';
@@ -159,13 +159,27 @@ const ProjectTodo = () => {
             <div className='projecttodo'>
                 <div className='projecttodo_header'>
                     <h3>Status</h3>
-                    {projectDetails?.role === 'owner' ? <div className='projecttodo_input'>
-                        <input type="text" placeholder='Add ...' value={todo}
-                            onChange={(e) => setTodo(e.target.value)} />
-                        <button className="projecttodo_buttonadd"
-                            onClick={handleAddTodo}
-                        >Add+</button>
-                    </div> : <label>Read Only</label>}
+                    {projectDetails?.role === 'owner' ?
+                        <>
+                            <Droppable droppableId='delete'>
+                                {(provided: DroppableProvided) => (
+                                    <div className='projecttodo_delete'
+                                        ref={provided.innerRef} {...provided.droppableProps}
+                                    >Drop here to Remove
+                                        <AiOutlineDelete className='projecttodo_deleteicon'
+                                            size={28} />
+                                    </div>
+                                )}
+                            </Droppable>
+                            <div className='projecttodo_input'>
+                                <input type="text" placeholder='Add ...' value={todo}
+                                    onChange={(e) => setTodo(e.target.value)} />
+                                <button className="projecttodo_buttonadd"
+                                    onClick={handleAddTodo}
+                                >Add+</button>
+                            </div>
+                        </>
+                        : <label>Read Only</label>}
                 </div>
                 <hr />
                 {projectDetails?.role === 'owner' ?
