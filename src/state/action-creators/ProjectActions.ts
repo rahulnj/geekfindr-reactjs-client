@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import request from "../../api";
 import { UserData } from "../../models";
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction } from "../action-models/ProjectAction";
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType } from "../actiontypes/ProjectActionType";
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectTodoAction } from "../action-models/ProjectAction";
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType";
 
 
 
@@ -146,6 +146,35 @@ export const LeaveOrRemoveMembers = ({ projectId, memberId, token }: any) => {
                 payload: error
             })
 
+        }
+    }
+}
+
+export const ProjectTodo = ({ projectId, token, Todo }: any) => {
+    console.log(Todo);
+
+    return async (dispatch: Dispatch<ProjectTodoAction>) => {
+        dispatch({
+            type: ProjectTodoActionType.PROJECT_TODO_REQUEST
+        })
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.put(`/api/v1/projects/${projectId}/todo`, Todo, config);
+            dispatch({
+                type: ProjectTodoActionType.PROJECT_TODO_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: ProjectTodoActionType.PROJECT_TODO_FAIL,
+                payload: error
+            })
         }
     }
 }

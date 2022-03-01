@@ -1,6 +1,6 @@
 import { ProjectState } from "../../models"
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction } from "../action-models/ProjectAction"
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType } from "../actiontypes/ProjectActionType"
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectTodoAction } from "../action-models/ProjectAction"
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType"
 
 const initialState = {
     data: [],
@@ -84,8 +84,22 @@ export const LeaveOrRemoveMembersReducer = (
             return { ...state, success: true, loading: false, error: null, data: action.payload }
         case LeaveOrRemoveMembersActionType.LEAVE_OR_REMOVE_MEMBERS_FAIL:
             return { ...state, success: false, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
 
-
+export const ProjectTodoReducer = (
+    state: ProjectState = initialState,
+    action: ProjectTodoAction
+): ProjectState => {
+    switch (action.type) {
+        case ProjectTodoActionType.PROJECT_TODO_REQUEST:
+            return { ...state, success: false, loading: true, error: null, data: [] }
+        case ProjectTodoActionType.PROJECT_TODO_SUCCESS:
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
+        case ProjectTodoActionType.PROJECT_TODO_FAIL:
+            return { ...state, success: false, loading: false, error: action.payload, data: [] }
         default:
             return state;
     }

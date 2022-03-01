@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 
 import { DragDropContext, Draggable, DraggableProvided, DroppableProvided, DropResult } from "react-beautiful-dnd";
 import { Droppable } from 'react-beautiful-dnd'
+import { Params, useParams } from 'react-router-dom';
+import { useActions } from '../../hooks/useActions';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { UserData } from '../../models';
 
 import './_ProjectTodo.scss'
 
@@ -14,6 +18,16 @@ interface Todo {
     // isCompleted: boolean
 }
 const ProjectTodo = () => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+    const { projectId }: Readonly<Params<string>> = useParams()
+    const { ProjectTodo } = useActions();
+
+    const { success: ProjectTodoSuccess }: any = useTypedSelector(
+        (state) => state.ProjectTodo
+    )
+    const { data: projectDetails }: any = useTypedSelector(
+        (state) => state.GetProjectDetails
+    )
 
     const [todo, setTodo] = useState('')
     const [noStatus, setNoStatus] = useState<Todo[]>([])
@@ -31,7 +45,7 @@ const ProjectTodo = () => {
         }
 
     }
-    console.log(noStatus);
+
     const onDragEnd = (result: DropResult) => {
         console.log(result);
         const { source, destination } = result;
@@ -74,6 +88,13 @@ const ProjectTodo = () => {
         setInProgress(inprogress)
         setCompleted(iscompleted)
 
+
+        // console.log(noStatus, "noStatus");
+        // console.log(nextUp, "nextup");
+        // console.log(inProgress, "inProgress");
+        // console.log(completed, "completed");
+
+
         const finalTodo = {
             todo: [
                 {
@@ -94,6 +115,14 @@ const ProjectTodo = () => {
                 }
             ]
         }
+        console.log(finalTodo);
+
+        ProjectTodo({
+            token: CurrentUser?.token,
+            projectId,
+            Todo: finalTodo
+        })
+
     }
 
     return (
