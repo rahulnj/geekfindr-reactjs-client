@@ -25,7 +25,7 @@ const ProjectDescription: React.FC = () => {
             projectId
         })
     }, [projectDescriptionSuccess])
-    console.log(projectDetails);
+
 
     return (
         <>

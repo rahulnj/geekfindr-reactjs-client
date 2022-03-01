@@ -1,3 +1,5 @@
+import { Todo } from ".";
+
 export interface LayoutProps {
     children: JSX.Element[] | JSX.Element
     isModalOpened?: boolean
@@ -48,4 +50,11 @@ export interface HomePostSkeletonProps {
 
 export interface ProjectDescriptionModalProps {
     setIsProjectDescriptionModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export interface ProjectTodoDragandDropProps {
+    noStatus: Todo[]
+    nextUp: Todo[]
+    inProgress: Todo[]
+    completed: Todo[]
 }

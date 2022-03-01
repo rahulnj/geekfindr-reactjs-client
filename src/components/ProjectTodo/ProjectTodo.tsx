@@ -1,22 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { DragDropContext, Draggable, DraggableProvided, DroppableProvided, DropResult } from "react-beautiful-dnd";
 import { Droppable } from 'react-beautiful-dnd'
 import { Params, useParams } from 'react-router-dom';
+import { DragAndDrop, ReadOnly } from '..';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { UserData } from '../../models';
+import { Todo, UserData } from '../../models';
 
 import './_ProjectTodo.scss'
 
-interface Todo {
-    id: number
-    todo: string
-    // isNoStatus: Boolean
-    // isNextUp: boolean
-    // isInProgress: boolean
-    // isCompleted: boolean
-}
+
 const ProjectTodo = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { projectId }: Readonly<Params<string>> = useParams()
@@ -36,6 +30,30 @@ const ProjectTodo = () => {
     const [completed, setCompleted] = useState<Todo[]>([])
 
 
+
+    useEffect(() => {
+        let fetchedNoStatus, fetchedNextUp, fetchedInProgress, fetchedCompleted;
+        fetchedNoStatus = projectDetails?.project?.todo[0]?.tasks?.map((todo: any) => {
+            return { id: Math.random().toString(36).substr(2, 9), todo: todo }
+        })
+        setNoStatus(fetchedNoStatus)
+
+        fetchedNextUp = projectDetails?.project?.todo[1]?.tasks?.map((todo: any) => {
+            return { id: Math.random().toString(36).substr(2, 9), todo: todo }
+        })
+        setNextUp(fetchedNextUp)
+
+        fetchedInProgress = projectDetails?.project?.todo[2]?.tasks?.map((todo: any) => {
+            return { id: Math.random().toString(36).substr(2, 9), todo: todo }
+        })
+        setInProgress(fetchedInProgress)
+
+        fetchedCompleted = projectDetails?.project?.todo[3]?.tasks?.map((todo: any) => {
+            return { id: Math.random().toString(36).substr(2, 9), todo: todo }
+        })
+        setCompleted(fetchedCompleted)
+    }, [])
+
     const handleAddTodo = () => {
         if (todo) {
             setNoStatus([...noStatus, {
@@ -43,11 +61,8 @@ const ProjectTodo = () => {
             }])
             setTodo('')
         }
-
     }
-
     const onDragEnd = (result: DropResult) => {
-        console.log(result);
         const { source, destination } = result;
         if (!destination) return;
 
@@ -83,46 +98,56 @@ const ProjectTodo = () => {
         } else if (destination.droppableId === 'completed') {
             iscompleted.splice(destination.index, 0, add)
         }
+
         setNoStatus(nostatus)
         setNextUp(nextup)
         setInProgress(inprogress)
         setCompleted(iscompleted)
 
-
-        // console.log(noStatus, "noStatus");
-        // console.log(nextUp, "nextup");
-        // console.log(inProgress, "inProgress");
-        // console.log(completed, "completed");
-
+        let updatedNostatus: string[] = [];
+        nostatus.forEach((todo: any) => {
+            updatedNostatus.push(todo.todo)
+        })
+        let updatedNextup: string[] = [];
+        nextup.forEach((todo: any) => {
+            updatedNextup.push(todo.todo)
+        })
+        let updatedInprogress: string[] = [];
+        inprogress.forEach((todo: any) => {
+            updatedInprogress.push(todo.todo)
+        })
+        let updatedCompleted: string[] = [];
+        iscompleted.forEach((todo: any) => {
+            updatedCompleted.push(todo.todo)
+        })
 
         const finalTodo = {
             todo: [
                 {
                     title: 'nostatus',
-                    tasks: noStatus
+                    tasks: updatedNostatus
                 },
                 {
                     title: 'nextup',
-                    tasks: nextUp
+                    tasks: updatedNextup
                 },
                 {
                     title: 'inprogress',
-                    tasks: inProgress
+                    tasks: updatedInprogress
                 },
                 {
                     title: 'completed',
-                    tasks: completed
+                    tasks: updatedCompleted
                 }
             ]
         }
-        console.log(finalTodo);
+
 
         ProjectTodo({
             token: CurrentUser?.token,
             projectId,
             Todo: finalTodo
         })
-
     }
 
     return (
@@ -130,122 +155,22 @@ const ProjectTodo = () => {
             <div className='projecttodo'>
                 <div className='projecttodo_header'>
                     <h3>Status</h3>
-                    <div className='projecttodo_input'>
-                        {/* <label>Add +</label> */}
+                    {projectDetails?.role === 'owner' ? <div className='projecttodo_input'>
                         <input type="text" placeholder='Add ...' value={todo}
                             onChange={(e) => setTodo(e.target.value)} />
                         <button className="projecttodo_buttonadd"
                             onClick={handleAddTodo}
                         >Add+</button>
-                    </div>
+                    </div> : <label>Read Only</label>}
                 </div>
                 <hr />
-                <div className="projecttodo_wrapper">
-                    <Droppable droppableId='nostatus'>
-                        {(provided: DroppableProvided) => (
-                            <div className="projecttodo_wrapper_nostatus"
-                                ref={provided.innerRef} {...provided.droppableProps}
-                            >
-                                <div className='projecttodo_header2'>
-                                    <h3>No Status</h3>
-                                </div>
-                                <hr />
-                                {noStatus?.map((todo: Todo, index) => (
-                                    <Draggable draggableId={todo.id.toString()} index={index} >
-                                        {(provided: DraggableProvided) => (
-                                            <div key={todo?.id} className='projecttodo_singletodo'
-                                                ref={provided.innerRef} {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                            >
-                                                {todo?.todo}
-                                            </div>
-                                        )}
-                                    </Draggable>
-                                ))}
-                                {provided.placeholder}
-                            </div>
-                        )}
-
-                    </Droppable>
-                    <Droppable droppableId='nextup'>
-                        {(provided: DroppableProvided) => (
-                            <div className="projecttodo_wrapper_nextup"
-                                ref={provided.innerRef} {...provided.droppableProps}
-                            >
-                                <div className='projecttodo_header2'>
-                                    <h3>Next Up</h3>
-                                </div>
-                                <hr />
-                                {nextUp?.map((todo: Todo, index) => (
-                                    <Draggable draggableId={todo.id.toString()} index={index} >
-                                        {(provided: DraggableProvided) => (
-                                            <div key={todo?.id} className='projecttodo_singletodo'
-                                                ref={provided.innerRef} {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                            >
-                                                {todo?.todo}
-                                            </div>
-                                        )}
-                                    </Draggable>
-                                ))}
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-
-                    <Droppable droppableId='inprogress'>
-                        {(provided: DroppableProvided) => (
-                            <div className="projecttodo_wrapper_inprogress"
-                                ref={provided.innerRef} {...provided.droppableProps}
-                            >
-                                <div className='projecttodo_header2'>
-                                    <h3>In Progress</h3>
-                                </div>
-                                <hr />
-                                {inProgress?.map((todo: Todo, index) => (
-                                    <Draggable draggableId={todo.id.toString()} index={index} >
-                                        {(provided: DraggableProvided) => (
-                                            <div key={todo?.id} className='projecttodo_singletodo'
-                                                ref={provided.innerRef} {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                            >
-                                                {todo?.todo}
-                                            </div>
-                                        )}
-                                    </Draggable>
-                                ))}
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-
-                    <Droppable droppableId='completed'>
-                        {(provided: DroppableProvided) => (
-                            <div className="projecttodo_wrapper_completed"
-                                ref={provided.innerRef} {...provided.droppableProps}
-                            >
-                                <div className='projecttodo_header2'>
-                                    <h3>Completed</h3>
-                                </div>
-                                <hr />
-                                {completed?.map((todo: Todo, index) => (
-                                    <Draggable draggableId={todo.id.toString()} index={index} >
-                                        {(provided: DraggableProvided) => (
-                                            <div key={todo?.id} className='projecttodo_singletodo'
-                                                ref={provided.innerRef} {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                            >
-                                                {todo?.todo}
-                                            </div>
-                                        )}
-                                    </Draggable>
-                                ))}
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-
-                </div>
+                {projectDetails?.role === 'owner' ?
+                    <DragAndDrop
+                        noStatus={noStatus}
+                        nextUp={nextUp}
+                        inProgress={inProgress}
+                        completed={completed} /> :
+                    <ReadOnly />}
             </div >
         </DragDropContext >
     )

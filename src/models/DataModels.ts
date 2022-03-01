@@ -146,3 +146,7 @@ export interface PostData {
     ref?: any
 }
 
+export interface Todo {
+    id: number
+    todo: string
+}
