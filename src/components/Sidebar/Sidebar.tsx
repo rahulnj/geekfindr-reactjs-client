@@ -9,6 +9,7 @@ import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useNavigate } from 'react-router-dom'
 import { createImageFromInitials, getRandomColor } from '../../helpers/CreateImageFromInitials'
+import { BaseSkeleton, SideBarProjectSkeleton } from '..'
 
 const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, project }) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
@@ -30,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
             window.removeEventListener('resize', listener)
         }
     }, [])
-    const { data: myProjects }: any = useTypedSelector(
+    const { data: myProjects, loading: myProjectsLoading }: any = useTypedSelector(
         (state) => state.GetMyProject
     )
     const { loading: createPostLoading, success: createPostSuccess }: any = useTypedSelector(
@@ -56,8 +57,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
                     <h4>Projects</h4>
                     {/* <span>see all</span> */}
                 </div>
-                {myProjects?.map((project: any) => (
-                    <div className='sidebar_projects' key={project?.project?.id} onClick={() => getProjectDetails(project?.project?.id)}>
+                {!myProjectsLoading ? myProjects?.map((project: any) => (
+                    (<div className='sidebar_projects' key={project?.project?.id} onClick={() => getProjectDetails(project?.project?.id)}>
                         <div className='sidebar_singleproject'>
                             <img src={createImageFromInitials(400, project?.project?.name, getRandomColor())} alt="" />
                             <div className='sidebar_singleprojectdetails'>
@@ -65,8 +66,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
                                 <p>{project?.role}</p>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    </div>)
+                )) : <SideBarProjectSkeleton theme='light' />
+                }
                 <ul className="sidebar_list">
                     <li className="sidebar_listItem">
                         <a href="#" className='sidebar_link'>

@@ -49,6 +49,10 @@ export interface HomePostSkeletonProps {
     theme: string
 }
 
+export interface SidbarProjectSkeletonProps {
+    theme: string
+}
+
 export interface ProjectDescriptionModalProps {
     setIsProjectDescriptionModal: React.Dispatch<React.SetStateAction<boolean>>
 }
