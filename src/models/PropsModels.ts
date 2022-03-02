@@ -27,12 +27,13 @@ export interface PostUploadModalProps {
 
 export interface CommentProps {
     commentPostId: string
+    commentPostImg: string
 }
 
 export interface HomePostProps {
     setIsCommentModalOpened: React.Dispatch<React.SetStateAction<boolean>>
     setCommentPostId: React.Dispatch<React.SetStateAction<string>>
-    CommentHandler: (id: string) => void
+    CommentHandler: (id: string, mediaURL: string) => void
 }
 
 export interface SkeletonProps {

@@ -12,7 +12,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     followersModal, setFollowersModal,
     followingModal, setFollowingModal,
     isCommentModalOpened, setIsCommentModalOpened,
-    commentPostId, isProjectDescriptionModal,
+    commentPostId, commentPostImg, isProjectDescriptionModal,
     setIsProjectDescriptionModal, setProjectDescriptionLoading
 }: any) => {
 
@@ -111,7 +111,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                 }
                 {(isModalOpened || isEditModalOpened) && <PostUploadModal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened}
                     isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />}
-                {isCommentModalOpened && <Comment commentPostId={commentPostId} />}
+                {isCommentModalOpened && <Comment commentPostId={commentPostId} commentPostImg={commentPostImg} />}
                 {isProjectDescriptionModal && <ProjectDescriptionModal setIsProjectDescriptionModal={setIsProjectDescriptionModal} />}
             </div>
         </>,

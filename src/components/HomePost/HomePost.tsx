@@ -11,7 +11,7 @@ import { useInfiniteScroll } from "../../hooks/useInfiniteScroll"
 import { useTypedSelector } from "../../hooks/useTypedSelector"
 
 import { HomePostProps, PostData, UserData } from "../../models"
-import { IoMdCheckmarkCircleOutline } from "react-icons/io"
+import { IoIosCheckmarkCircle, IoMdCheckmarkCircleOutline } from "react-icons/io"
 
 
 const HomePosts = ({ CommentHandler }: HomePostProps) => {
@@ -128,13 +128,14 @@ const HomePosts = ({ CommentHandler }: HomePostProps) => {
                                             />}
                                         {post?.likeCount}</div>
                                     <div className='post_bottom_left_icons'><BiComment onClick={() =>
-                                        CommentHandler(post?.id)} size={21} className='post_bottom_left_icon' />{post?.commentCount}</div>
+                                        CommentHandler(post?.id, post?.mediaURL)} size={21} className='post_bottom_left_icon' /></div>
                                 </div>
                                 {
                                     post?.isProject &&
                                     <div className="post_bottom_right">
-                                        {(post?.isRequested && post?.isJoined) ? <div className="post_bottom_right_icons_joined">Joined<IoMdCheckmarkCircleOutline
-                                            className='post_bottom_right_icon_joined' size={26} />
+                                        {(post?.isRequested && post?.isJoined) ? <div className="post_bottom_right_icons_joined">Joined
+                                            <IoIosCheckmarkCircle
+                                                className='post_bottom_right_icon_joined' size={26} />
                                         </div>
                                             :
                                             post?.isRequested && !post?.isJoined ? <div className="post_bottom_right_icons">Requested<IoMdCheckmarkCircleOutline

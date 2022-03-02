@@ -22,6 +22,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     const [isEditModalOpened, setIsEditModalOpened] = useState(false)
     const [isCommentModalOpened, setIsCommentModalOpened] = useState(false)
     const [commentPostId, setCommentPostId] = useState('')
+    const [commentPostImg, setCommentPostImg] = useState('')
 
 
     const { userId }: Readonly<Params<string>> = useParams()
@@ -79,9 +80,10 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     }
 
 
-    const CommentHandler = (id: string) => {
+    const CommentHandler = (id: string, mediaURL: string) => {
         setIsCommentModalOpened(true)
         setCommentPostId(id)
+        setCommentPostImg(mediaURL)
 
     }
 
@@ -169,7 +171,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                                         />}
                                     {likeCount}</div>
                                 <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon'
-                                    onClick={() => CommentHandler(id)} />{commentCount}</div>
+                                    onClick={() => CommentHandler(id, mediaURL)} />{commentCount}</div>
                             </div>
                             {/* {isProject &&
                                 <div className="post_bottom_right">
@@ -189,7 +191,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
             <Spinner loader={likeLoading} />
             <Modal isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened}
                 isCommentModalOpened={isCommentModalOpened} setIsCommentModalOpened={setIsCommentModalOpened}
-                commentPostId={commentPostId} />
+                commentPostId={commentPostId} commentPostImg={commentPostImg} />
             {profile ?
                 (!ProfilePostsLoading) ?
                     (ProfilePosts.map((post: PostData) => (

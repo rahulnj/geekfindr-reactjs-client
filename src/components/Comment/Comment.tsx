@@ -6,7 +6,7 @@ import { CommentProps, UserData } from '../../models'
 
 import './_Comment.scss'
 
-const Comment = ({ commentPostId }: CommentProps) => {
+const Comment = ({ commentPostId, commentPostImg }: CommentProps) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { userId }: Readonly<Params<string>> = useParams()
     const [comment, setComment] = useState('')
@@ -65,7 +65,7 @@ const Comment = ({ commentPostId }: CommentProps) => {
             <div className='comment'>
                 <div className="comment_leftside">
                     <div className="comment_leftside_image">
-                        <img src={commentPost?.mediaURL} alt="" />
+                        <img src={commentPost ? commentPost?.mediaURL : commentPostImg} alt="" />
                     </div>
                 </div>
                 <div className="comment_rightside">
