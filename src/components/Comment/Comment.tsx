@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { Params, useParams } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { CommentProps } from '../../models'
+import { CommentProps, UserData } from '../../models'
 
 import './_Comment.scss'
 
 const Comment = ({ commentPostId }: CommentProps) => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+    const { userId }: Readonly<Params<string>> = useParams()
     const [comment, setComment] = useState('')
     const [commentPost, setCommentPost] = useState<any>('')
 
@@ -20,9 +23,18 @@ const Comment = ({ commentPostId }: CommentProps) => {
     const { success: commentSuccess }: any = useTypedSelector(
         (state) => state.CommentPost
     )
-    const { data: MyPosts }: any = useTypedSelector(
+    let { data: Posts }: any = useTypedSelector(
         (state) => state.GetMyPost
     )
+    let { data: UsersPosts }: any = useTypedSelector(
+        (state) => state.GetUsersPosts
+    )
+
+    if (typeof userId !== "undefined") {
+        if (userId != CurrentUser?.id) {
+            Posts = UsersPosts
+        }
+    }
 
     useEffect(() => {
         GetPostComments({
@@ -32,7 +44,7 @@ const Comment = ({ commentPostId }: CommentProps) => {
     }, [commentSuccess])
 
     useEffect(() => {
-        const commentPostDetails = MyPosts?.filter(
+        const commentPostDetails = Posts?.filter(
             (post: any) => post.id === commentPostId
         )
         setCommentPost(commentPostDetails[0])

@@ -20,12 +20,15 @@ const HomePosts = ({ CommentHandler }: HomePostProps) => {
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
-
+    const { data: myProjects }: any = useTypedSelector(
+        (state) => state.GetMyProject
+    )
     const { LikePost, TeamJoinRequest } = useActions()
     const [lastPostId, setLastPostId] = useState()
     const observer = useRef<any>()
 
     let { feedPosts, hasMore, loading, setFeedPosts } = useInfiniteScroll({ lastPostId })
+    // console.log(feedPosts);
 
     const lastFeedPostRef = useCallback(node => {
         if (observer.current) observer.current.disconnect()
@@ -78,7 +81,18 @@ const HomePosts = ({ CommentHandler }: HomePostProps) => {
         })
     }
     feedPosts = feedPosts?.map((post: PostData) => {
-        let isJoined = post?.teamJoinRequests?.find((requests: any) => (requests?.owner === CurrentUser?.id))
+        let isRequested = post?.teamJoinRequests?.find((requests: any) => (requests?.owner === CurrentUser?.id))
+        return { ...post, isRequested: !!isRequested }
+    })
+
+    const myProjectIdList = myProjects?.map((project: any) => {
+        return project?.project?.id
+    })
+
+
+
+    feedPosts = feedPosts?.map((post: PostData) => {
+        let isJoined = myProjectIdList?.find((id: string) => (id === post?.id))
         return { ...post, isJoined: !!isJoined }
     })
 
@@ -119,13 +133,16 @@ const HomePosts = ({ CommentHandler }: HomePostProps) => {
                                 {
                                     post?.isProject &&
                                     <div className="post_bottom_right">
-                                        {(post?.isJoined) ?
-                                            <div className="post_bottom_right_icons">Requested<IoMdCheckmarkCircleOutline
+                                        {(post?.isRequested && post?.isJoined) ? <div className="post_bottom_right_icons_joined">Joined<IoMdCheckmarkCircleOutline
+                                            className='post_bottom_right_icon_joined' size={26} />
+                                        </div>
+                                            :
+                                            post?.isRequested && !post?.isJoined ? <div className="post_bottom_right_icons">Requested<IoMdCheckmarkCircleOutline
                                                 className='post_bottom_right_icon_request' size={26} />
                                             </div> :
-                                            <AiOutlineUsergroupAdd className='post_bottom_right_icon' size={28}
-                                                onClick={() => handleTeamJoinRequest(post?.id)}
-                                            />}
+                                                <AiOutlineUsergroupAdd className='post_bottom_right_icon' size={28}
+                                                    onClick={() => handleTeamJoinRequest(post?.id)}
+                                                />}
                                     </div>
                                 }
                             </div>
@@ -138,3 +155,6 @@ const HomePosts = ({ CommentHandler }: HomePostProps) => {
 }
 
 export default HomePosts;
+
+
+

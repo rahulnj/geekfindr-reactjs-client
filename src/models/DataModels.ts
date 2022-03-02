@@ -141,6 +141,7 @@ export interface PostData {
     teamJoinRequests?: string[]
     updatedAt?: string
     isLiked?: boolean
+    isRequested?: boolean
     isJoined?: boolean
     likes?: string[]
     ref?: any

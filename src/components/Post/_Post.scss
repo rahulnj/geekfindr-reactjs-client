@@ -156,12 +156,22 @@
                 gap: 0.3rem;
                 font-size: 0.9rem;
                 color: $button-color;
+                &_joined {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.3rem;
+                    font-size: 0.9rem;
+                    color: rgb(16, 197, 16);
+                }
             }
             &_icon {
                 margin-right: 10px;
                 cursor: pointer;
                 &_request {
                     color: $button-color;
+                }
+                &_joined {
+                    color: rgb(16, 197, 16);
                 }
             }
         }
