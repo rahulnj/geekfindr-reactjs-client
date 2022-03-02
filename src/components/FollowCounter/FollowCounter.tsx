@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import './_FollowCounter.scss'
 
@@ -10,13 +10,12 @@ import { useActions } from '../../hooks/useActions'
 
 
 const FollowCount = ({ userProfile }: ProfileProps) => {
-
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const [followersModal, setFollowersModal] = useState(false)
     const [followingModal, setFollowingModal] = useState(false)
 
-
-    const { GetUserFollowers, GetFollowingUsers, FollowUser } = useActions();
-
+    const { GetUserFollowers, GetFollowingUsers, FollowUser, UserProfileDetails: UserProfileDetail } = useActions();
+    const navigate = useNavigate()
 
     const { data: user }: any = useTypedSelector(
         (state) => state.UserSignin
@@ -96,6 +95,10 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
         setFollowingModal(true)
     }
 
+    const handleEditProfileDetails = () => {
+        navigate(`/editprofile/${UserDetails?.id}`)
+        UserProfileDetail(CurrentUser?.token)
+    }
 
 
 
@@ -141,9 +144,9 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
                         {userProfile ?
                             (UserDetails?.isFollowing ? <button className="button-edit">Following</button> :
                                 <button className="button-follow" onClick={() => HandleFollowUser(UserDetails?.id)}>Follow</button>) :
-                            (<Link to={`/editprofile/${UserDetails?.id}`}>
-                                <button className="button-edit">Edit</button>
-                            </Link>)}
+
+                            <button className="button-edit" onClick={handleEditProfileDetails}>Edit</button>
+                        }
                     </div>
                 </div>
             </div>

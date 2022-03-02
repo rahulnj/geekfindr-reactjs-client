@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 
 import "./_UserDetailsForm.scss"
 
@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 const UserDetailsForm: React.FC = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-    const { UserEditProfileDetails } = useActions();
+    const { UserEditProfileDetails, UserProfileDetails } = useActions();
     const navigate = useNavigate();
 
     const [bio, setBio] = useState('');
@@ -21,14 +21,56 @@ const UserDetailsForm: React.FC = () => {
     const [github, setGithub] = useState('');
     const [linkedin, setLinkedin] = useState('');
 
-    const [organizationList, setOraganizationList] = useState<any>([{}]);
+    const [organizationList, setOrganizationList] = useState<any>([{}]);
     const [educationList, setEducationList] = useState<any>([{}]);
 
+    let { data: editProfileDetails, loading: editProfileDetailsLoading }: any = useTypedSelector(
+        (state) => state.UserProfileDetails
+    )
+
+    useEffect(() => {
+        UserProfileDetails(CurrentUser?.token)
+    }, [])
+
+    useEffect(() => {
+        let fetchedOrganiztionList, fetchedEducationList;
+        fetchedOrganiztionList = editProfileDetails?.organizations?.map((organization: string[]) => {
+            return { id: Math.random().toString(36).substr(2, 9), organizations: organization }
+        })
+        if (fetchedOrganiztionList) {
+            setOrganizationList(fetchedOrganiztionList)
+        }
+
+        fetchedEducationList = editProfileDetails?.education?.map((education: string[]) => {
+            return { id: Math.random().toString(36).substr(2, 9), ...education }
+        })
+        if (fetchedEducationList) {
+            setEducationList(fetchedEducationList)
+        }
+
+        if (editProfileDetails) {
+            setBio(editProfileDetails?.bio)
+            setPosition(editProfileDetails?.role)
+            setExperience(editProfileDetails?.experience)
+
+            editProfileDetails?.socials?.map((social: any) => {
+                if (social.github) {
+                    setGithub(social?.github)
+                } else if (social.linkedin) {
+                    setLinkedin(social?.linkedin)
+                }
+            })
+        }
+
+
+    }, [editProfileDetails])
+
+    console.log(editProfileDetails);
 
 
 
     const handleOrganiztionListAdd = () => {
-        setOraganizationList([...organizationList, { organizations: '', id: Date.now() }])
+        setOrganizationList([...organizationList, { organizations: '', id: Date.now() }])
     }
 
 
@@ -38,7 +80,7 @@ const UserDetailsForm: React.FC = () => {
         })
         const list = [...organizationList]
         list.splice(index, 1)
-        setOraganizationList(list)
+        setOrganizationList(list)
     }
 
     const handleEducationListAdd = () => {
@@ -63,7 +105,7 @@ const UserDetailsForm: React.FC = () => {
         const { name, value } = e.target
         const list = [...organizationList]
         list[index][name] = value;
-        setOraganizationList(list);
+        setOrganizationList(list);
     }
     const onChangeEductionValidator = (e: React.ChangeEvent<HTMLInputElement>, index: any) => {
         const { name, value } = e.target
@@ -90,18 +132,13 @@ const UserDetailsForm: React.FC = () => {
     })
     let updatedEducation: string[] = [];
     updatedEducation = educationList.map((edu: any) => {
-        console.log(edu);
-
         return { educations: edu.educations }
     })
-    console.log(updatedEducation);
-
-
-
 
     const EditUserProfileDetails = (e: React.SyntheticEvent) => {
         e.preventDefault();
         const editProfileData = {
+            role: position,
             bio: bio,
             organizations: updatedOrganization,
             skills: [],
@@ -132,16 +169,20 @@ const UserDetailsForm: React.FC = () => {
 
                     <div className='detailsform_wrapper_input'>
                         <label>Position / Role</label>
-                        <input type="text" placeholder='eg: developer, engineer ....' onChange={OnChangePositionValidator} />
+                        <input type="text" placeholder='eg: developer, engineer ....' onChange={OnChangePositionValidator}
+                            value={position} />
                     </div>
 
                     <div className='detailsform_wrapper_input'>
                         <label>Bio</label>
-                        <textarea placeholder='Add Bio' onChange={OnChangeBioValidator} />
+                        <textarea placeholder='Add Bio' onChange={OnChangeBioValidator}
+                            value={bio} />
                     </div>
                     <div className='detailsform_wrapper_input'>
                         <label>Experience</label>
-                        <select placeholder='experience' onChange={OnChangeExperienceValidator}>experience
+                        <select placeholder='experience' onChange={OnChangeExperienceValidator}
+                            value={experience}
+                        >experience
                             <option value="">select</option>
                             <option value="0-6 months">0-6 mnths</option>
                             <option value="1 year+">1 year +</option>
@@ -150,11 +191,13 @@ const UserDetailsForm: React.FC = () => {
                     </div>
                     <div className='detailsform_wrapper_input'>
                         <label>GitHub<AiFillGithub className='detailsform_wrapper_input_icons' size={20} /></label>
-                        <input type="text" placeholder='Add profile url' onChange={OnChangeGithubValidator} />
+                        <input type="text" placeholder='Add profile url' onChange={OnChangeGithubValidator}
+                            value={github} />
                     </div>
                     <div className='detailsform_wrapper_input'>
                         <label>Linkedin<AiFillLinkedin className='detailsform_wrapper_input_icons' size={20} /></label>
-                        <input type="text" placeholder='Add profile url' onChange={OnChangeLinkedinValidator} />
+                        <input type="text" placeholder='Add profile url' onChange={OnChangeLinkedinValidator}
+                            value={linkedin} />
                     </div>
                     <div className='detailsform_wrapper_input'>
                         <label>Education</label>
@@ -179,7 +222,7 @@ const UserDetailsForm: React.FC = () => {
                         {organizationList.map((singleorg: any, index: any) => (
                             <Fragment key={singleorg.id}>
                                 <input type="text" name='organizations' placeholder='organization'
-                                    value={singleorg.oraganizations}
+                                    value={singleorg.organizations}
                                     onChange={(e) => OnChangeOrganizationValidator(e, index)} />
                                 <div className='detailsform_actions'>
                                     {organizationList.length - 1 === index && organizationList.length < 3 && (
@@ -193,9 +236,6 @@ const UserDetailsForm: React.FC = () => {
                             </Fragment>
                         ))}
                     </div>
-
-
-
                     <div className='detailsform_wrapper_input'>
                         <button className="button-skip" onClick={() => navigate(`/profile/${CurrentUser?.id}`)}>Cancel</button>
                         <button type='submit' className="button-submit">Submit</button>

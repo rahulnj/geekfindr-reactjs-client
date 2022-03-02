@@ -22,8 +22,6 @@ const Userinfo = ({ userProfile }: ProfileRightAsideProps) => {
     let { data: usersDetails, loading: UsersDetailsLoading }: any = useTypedSelector(
         (state) => state.GetUserDetails
     )
-    console.log(usersDetails);
-    console.log(currentUserDetails);
     if (!userProfile) {
         usersDetails = currentUserDetails
         UsersDetailsLoading = currentUserDetailsLoading
@@ -31,7 +29,7 @@ const Userinfo = ({ userProfile }: ProfileRightAsideProps) => {
 
     return (
         <div className='userinfo'>
-            <h3>Info</h3>
+            <h3>Bio</h3>
             <p>{usersDetails?.bio}</p>
             <hr />
             <ul >
