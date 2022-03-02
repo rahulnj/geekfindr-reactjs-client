@@ -6,9 +6,12 @@ import { AiFillGithub, AiFillLinkedin } from "react-icons/ai"
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions';
+import { UserData } from '../../models';
 
 
 const UserDetailsForm: React.FC = () => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+    const { UserEditProfileDetails } = useActions();
 
     const [bio, setBio] = useState('');
     const [experience, setExperience] = useState('');
@@ -25,7 +28,7 @@ const UserDetailsForm: React.FC = () => {
     const handleOrganiztionListAdd = () => {
         setOraganizationList([...organizationList, { organizations: '', id: Date.now() }])
     }
-    console.log(organizationList);
+
 
     const handleOrganiztionListRemove = (id: any) => {
         let index = organizationList.findIndex((one: any) => {
@@ -49,9 +52,6 @@ const UserDetailsForm: React.FC = () => {
         list.splice(index, 1)
         setEducationList(list)
     }
-
-
-
 
     const OnChangeBioValidator = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setBio(e.target.value);
@@ -82,39 +82,41 @@ const UserDetailsForm: React.FC = () => {
     const OnChangeLinkedinValidator = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLinkedin(e.target.value);
     }
+    let updatedOrganization: string[] = [];
+    organizationList.forEach((org: any) => {
+        updatedOrganization.push(org.organizations)
+    })
+    let updatedEducation: string[] = [];
+    updatedEducation = educationList.map((edu: any) => {
+        console.log(edu);
+
+        return { educations: edu.educations }
+    })
+    console.log(updatedEducation);
 
 
 
 
+    const EditUserProfileDetails = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        const editProfileData = {
+            bio: bio,
+            organizations: updatedOrganization,
+            skills: [],
+            experience: experience,
+            education: updatedEducation,
+            works: [{}],
+            socials: [{ github: github }, { linkedin: linkedin }]
+        }
+        console.log(editProfileData);
 
-
-
-
-    const { user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
-
-    const { UserEditProfileDetails } = useActions();
-
-
-    // const EditUserProfileDetails = (e: React.SyntheticEvent) => {
-    //     e.preventDefault();
-    //     const editProfileData = {
-    //         bio: bio,
-    //         organizations: [organizations],
-    //         skills: [],
-    //         experience: [{ experience }],
-    //         education: [{ position }],
-    //         works: [{}],
-    //         socials: [{ github: github }, { linkedin: linkedin }]
-    //     }
-    //     UserEditProfileDetails({ token: user.token, editProfileData: editProfileData })
-    // }
+        UserEditProfileDetails({ token: CurrentUser.token, editProfileData: editProfileData })
+    }
 
     return (
         <div className='detailsform'>
             <div className="detailsform_title">Add your details</div>
-            <form >
+            <form onSubmit={EditUserProfileDetails}>
                 <div className='detailsform_wrapper'>
                     <div className='detailsform_wrapper_input'>
                         <div className="profile-pic">
