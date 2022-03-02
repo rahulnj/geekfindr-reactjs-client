@@ -31,9 +31,9 @@ export const GetProjectDetailsReducer = (
 ): ProjectState => {
     switch (action.type) {
         case GetProjectDetailsActionType.GET_PROJECT_DETAILS_REQUEST:
-            return { ...state, loading: true, error: null, data: [] }
+            return { ...state, success: false, loading: true, error: null, data: [] }
         case GetProjectDetailsActionType.GET_PROJECT_DETAILS_SUCCESS:
-            return { ...state, loading: false, error: null, data: action.payload }
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
         case GetProjectDetailsActionType.GET_PROJECT_DETAILS_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
         default:

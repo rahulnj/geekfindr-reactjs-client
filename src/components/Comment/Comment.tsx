@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Params, useParams } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
@@ -81,17 +81,20 @@ const Comment = ({ commentPostId, commentPostImg }: CommentProps) => {
                         </div>
                         <div className='comment_listwrapper'>
                             {comments?.map((comment: any, index: number) => (
-                                <div key={index} className="comment_list">
-                                    <div className="comment_profileimg">
-                                        <img src={comment?.owner?.avatar} alt="" />
-                                    </div>
-                                    <div className="comment_bodywrapperfollowers">
-                                        <div className="comment_body">
-                                            <h5>{comment?.owner?.username}</h5>
-                                            <p>{comment?.comment}</p>
+                                <Fragment key={index}>
+                                    <div className="comment_list">
+                                        <div className="comment_profileimg">
+                                            <img src={comment?.owner?.avatar} alt="" />
+                                        </div>
+                                        <div className="comment_bodywrapperfollowers">
+                                            <div className="comment_body">
+                                                <h5>{comment?.owner?.username}</h5>
+                                                <p>{comment?.comment}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <hr />
+                                </Fragment>
                             ))
                             }
                         </div>

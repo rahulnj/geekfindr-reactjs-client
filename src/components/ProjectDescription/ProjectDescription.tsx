@@ -14,6 +14,9 @@ const ProjectDescription: React.FC = () => {
     const { data: projectDetails }: any = useTypedSelector(
         (state) => state.GetProjectDetails
     )
+    const { success: ProjectTodoSuccess }: any = useTypedSelector(
+        (state) => state.ProjectTodo
+    )
     const { success: projectDescriptionSuccess }: any = useTypedSelector(
         (state) => state.AddProjectDescription
     )
@@ -24,7 +27,7 @@ const ProjectDescription: React.FC = () => {
             token: CurrentUser?.token,
             projectId
         })
-    }, [projectDescriptionSuccess])
+    }, [projectDescriptionSuccess, ProjectTodoSuccess])
 
 
     return (

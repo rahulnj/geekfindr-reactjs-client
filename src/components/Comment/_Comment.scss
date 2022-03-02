@@ -122,7 +122,11 @@
         align-items: center;
         margin-bottom: 1rem;
         padding: 0.15rem 0.5rem;
-        box-shadow: $main-shadow;
+        // box-shadow: $main-shadow;
+    }
+    hr {
+        margin: 0 30px;
+        opacity: 0.5;
     }
     &_followers:hover {
         background-color: $main-color;
