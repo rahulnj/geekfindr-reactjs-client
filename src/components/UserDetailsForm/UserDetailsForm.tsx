@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 
 import "./_UserDetailsForm.scss"
 
@@ -11,34 +11,44 @@ import { useActions } from '../../hooks/useActions';
 const UserDetailsForm: React.FC = () => {
 
     const [bio, setBio] = useState('');
-    const [organizations, setOrganizations] = useState('');
     const [experience, setExperience] = useState('');
     const [position, setPosition] = useState('');
     const [github, setGithub] = useState('');
     const [linkedin, setLinkedin] = useState('');
 
     const [organizationList, setOraganizationList] = useState<any>([{}]);
+    const [educationList, setEducationList] = useState<any>([{}]);
 
-    // console.log(organizationList);
 
 
-    const handleorganiztionListAdd = () => {
-        setOraganizationList([...organizationList, { organizations: "" }])
+
+    const handleOrganiztionListAdd = () => {
+        setOraganizationList([...organizationList, { organizations: '', id: Date.now() }])
     }
+    console.log(organizationList);
 
-    const handleorganiztionListARemove = (index: any) => {
-        console.log(index);
-
+    const handleOrganiztionListRemove = (id: any) => {
+        let index = organizationList.findIndex((one: any) => {
+            return one.id === id;
+        })
         const list = [...organizationList]
-        console.log(organizationList);
-        console.log(list);
-
         list.splice(index, 1)
         setOraganizationList(list)
-
-
     }
 
+    const handleEducationListAdd = () => {
+        setEducationList([...educationList, { educations: '', id: Date.now() }])
+    }
+    console.log(educationList);
+
+    const handleEducationListRemove = (id: any) => {
+        let index = educationList.findIndex((one: any) => {
+            return one.id === id;
+        })
+        const list = [...educationList]
+        list.splice(index, 1)
+        setEducationList(list)
+    }
 
 
 
@@ -52,6 +62,12 @@ const UserDetailsForm: React.FC = () => {
         const list = [...organizationList]
         list[index][name] = value;
         setOraganizationList(list);
+    }
+    const onChangeEductionValidator = (e: React.ChangeEvent<HTMLInputElement>, index: any) => {
+        const { name, value } = e.target
+        const list = [...educationList]
+        list[index][name] = value;
+        setEducationList(list);
     }
     const OnChangeExperienceValidator = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setExperience(e.target.value);
@@ -139,28 +155,39 @@ const UserDetailsForm: React.FC = () => {
                     </div>
                     <div className='detailsform_wrapper_input'>
                         <label>Education</label>
-                        <input type="text" placeholder='education' />
+                        {educationList.map((singleedu: any, index: any) => (
+                            <Fragment key={singleedu.id}>
+                                <input type="text" placeholder='education' name='educations' onChange={(e) => onChangeEductionValidator(e, index)}
+                                    value={singleedu.educations}
+                                />
+                                <div className='detailsform_actions'>
+                                    {educationList.length - 1 === index && educationList.length < 3 && (
+                                        <button type='button' className='detailsform_add-btn' onClick={handleEducationListAdd}><span>Add +</span></button>
+                                    )}
+                                    {educationList.length !== 1 && (
+                                        <button type='button' className='detailsform_remove-btn' onClick={() => handleEducationListRemove(singleedu.id)}><span>Remove -</span></button>
+                                    )}
+                                </div>
+                            </Fragment>
+                        ))}
                     </div>
-
-
-
                     <div className='detailsform_wrapper_input'>
                         <label>Organization</label>
                         {organizationList.map((singleorg: any, index: any) => (
-                            <React.Fragment key={index}>
+                            <Fragment key={singleorg.id}>
                                 <input type="text" name='organizations' placeholder='organization'
                                     value={singleorg.oraganizations}
                                     onChange={(e) => OnChangeOrganizationValidator(e, index)} />
                                 <div className='detailsform_actions'>
                                     {organizationList.length - 1 === index && organizationList.length < 3 && (
-                                        <button type='button' className='detailsform_add-btn' onClick={handleorganiztionListAdd}><span>Add +</span></button>
+                                        <button type='button' className='detailsform_add-btn' onClick={handleOrganiztionListAdd}><span>Add +</span></button>
                                     )}
 
                                     {organizationList.length !== 1 && (
-                                        <button type='button' className='detailsform_remove-btn' onClick={() => handleorganiztionListARemove(index)}><span>Remove -</span></button>
+                                        <button type='button' className='detailsform_remove-btn' onClick={() => handleOrganiztionListRemove(singleorg.id)}><span>Remove -</span></button>
                                     )}
                                 </div>
-                            </React.Fragment>
+                            </Fragment>
                         ))}
                     </div>
 
