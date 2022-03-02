@@ -34,10 +34,10 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     const { user }: any = useTypedSelector(
         (state) => state.UserSignin
     )
-    let { data: ProfilePosts, loading: ProfilePostsLoading }: any = useTypedSelector(
+    let { data: ProfilePosts, loading: ProfilePostsLoading, success: ProfilePostsSuccess }: any = useTypedSelector(
         (state) => state.GetMyPost
     )
-    let { data: SearchedUsersPosts, loading: SearchedUsersPostsLoading }: any = useTypedSelector(
+    let { data: SearchedUsersPosts, loading: SearchedUsersPostsLoading, success: SeachedUsersPostsSuccess }: any = useTypedSelector(
         (state) => state.GetUsersPosts
     )
     const { success: EditPostSuccess }: any = useTypedSelector(
@@ -49,10 +49,13 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     const { success: DeleteSuccess }: any = useTypedSelector(
         (state) => state.DeletePost
     )
-
+    const { success: CommentSuccess }: any = useTypedSelector(
+        (state) => state.CommentPost
+    )
     if (userProfile) {
         ProfilePosts = SearchedUsersPosts
         ProfilePostsLoading = SearchedUsersPostsLoading
+        ProfilePostsSuccess = SeachedUsersPostsSuccess
     }
 
     useEffect(() => {
@@ -66,10 +69,9 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                 token: user?.token,
             })
         }
-    }, [LikeSuccess, DeleteSuccess, EditPostSuccess])
+    }, [LikeSuccess, DeleteSuccess, EditPostSuccess, CommentSuccess])
 
     const PostLikeHandler = (id: string) => {
-        console.log("like id:", id);
         LikePost({
             token: user?.token,
             postId: id
@@ -166,7 +168,8 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                                             onClick={() => { PostLikeHandler(id) }}
                                         />}
                                     {likeCount}</div>
-                                <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon' />{commentCount}</div>
+                                <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon'
+                                    onClick={() => CommentHandler(id)} />{commentCount}</div>
                             </div>
                             {/* {isProject &&
                                 <div className="post_bottom_right">

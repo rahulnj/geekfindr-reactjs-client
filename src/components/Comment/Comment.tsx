@@ -20,8 +20,8 @@ const Comment = ({ commentPostId }: CommentProps) => {
     const { success: commentSuccess }: any = useTypedSelector(
         (state) => state.CommentPost
     )
-    const { data: FeedPosts }: any = useTypedSelector(
-        (state) => state.GetMyFeed
+    const { data: MyPosts }: any = useTypedSelector(
+        (state) => state.GetMyPost
     )
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const Comment = ({ commentPostId }: CommentProps) => {
     }, [commentSuccess])
 
     useEffect(() => {
-        const commentPostDetails = FeedPosts?.filter(
+        const commentPostDetails = MyPosts?.filter(
             (post: any) => post.id === commentPostId
         )
         setCommentPost(commentPostDetails[0])

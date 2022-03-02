@@ -15,7 +15,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
 
     const [windowSizeListener, setWindowSizeListener] = useState(false)
     const navigate = useNavigate()
-    const { GetProjectDetails } = useActions()
+    const { GetProjectDetails, GetMyProject } = useActions()
     useEffect(() => {
         const listener = () => {
             if (window.innerWidth <= 540) {
@@ -30,17 +30,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
             window.removeEventListener('resize', listener)
         }
     }, [])
-
-    const { GetMyProject } = useActions();
     const { data: myProjects }: any = useTypedSelector(
         (state) => state.GetMyProject
     )
-    const { loading: createPostLoading }: any = useTypedSelector(
+    const { loading: createPostLoading, success: createPostSuccess }: any = useTypedSelector(
         (state) => state.CreatePost
     )
     useEffect(() => {
         GetMyProject({ token: CurrentUser?.token })
-    }, [createPostLoading])
+    }, [createPostSuccess])
 
     const getProjectDetails = (projectId: string): void => {
         GetProjectDetails({

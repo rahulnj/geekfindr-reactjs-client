@@ -17,7 +17,7 @@ export const CreatePostReducer = (
 ): PostState => {
     switch (action.type) {
         case CreatePostActionType.CREATE_POST_REQUEST:
-            return { ...state, loading: true, error: null, data: [] }
+            return { ...state, success: false, loading: true, error: null, data: [] }
         case CreatePostActionType.CREATE_POST_SUCCESS:
             return { ...state, success: true, error: null, data: action.payload }
         case CreatePostActionType.CREATE_POST_FAIL:
@@ -49,9 +49,9 @@ export const GetMyPostReducer = (
 ): PostState => {
     switch (action.type) {
         case GetMyPostsActionType.GET_MYPOST_REQUEST:
-            return { ...state, loading: true, error: null, data: [] }
+            return { ...state, success: false, loading: true, error: null, data: [] }
         case GetMyPostsActionType.GET_MYPOST_SUCCESS:
-            return { ...state, loading: false, error: null, data: action.payload }
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
         case GetMyPostsActionType.GET_MYPOST_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
         default:
@@ -145,7 +145,7 @@ export const PostCommentReducer = (
 ): PostState => {
     switch (action.type) {
         case PostCommentActionType.POST_COMMENT_REQUEST:
-            return { ...state, loading: true, error: null }
+            return { ...state, success: false, loading: true, error: null }
         case PostCommentActionType.POST_COMMENT_SUCCESS:
             return { ...state, success: true, error: null, data: action.payload }
         case PostCommentActionType.POST_COMMENT_FAIL:
@@ -161,9 +161,9 @@ export const GetUsersPostsReducer = (
 ): PostState => {
     switch (action.type) {
         case GetUsersPostsActionType.GET_USERSPOST_REQUEST:
-            return { ...state, loading: true, error: null, data: [] }
+            return { ...state, success: false, loading: true, error: null, data: [] }
         case GetUsersPostsActionType.GET_USERSPOST_SUCCESS:
-            return { ...state, loading: false, error: null, data: action.payload }
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
         case GetUsersPostsActionType.GET_USERSPOST_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
         default:
