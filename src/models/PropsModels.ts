@@ -58,3 +58,8 @@ export interface ProjectTodoDragandDropProps {
     inProgress: Todo[]
     completed: Todo[]
 }
+
+export interface ProfileRightAsideProps {
+    userProfile?: boolean
+    profile?: boolean
+}

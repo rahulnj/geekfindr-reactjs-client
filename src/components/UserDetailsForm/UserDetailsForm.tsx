@@ -7,11 +7,13 @@ import { AiFillGithub, AiFillLinkedin } from "react-icons/ai"
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions';
 import { UserData } from '../../models';
+import { useNavigate } from 'react-router-dom';
 
 
 const UserDetailsForm: React.FC = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { UserEditProfileDetails } = useActions();
+    const navigate = useNavigate();
 
     const [bio, setBio] = useState('');
     const [experience, setExperience] = useState('');
@@ -108,9 +110,8 @@ const UserDetailsForm: React.FC = () => {
             works: [{}],
             socials: [{ github: github }, { linkedin: linkedin }]
         }
-        console.log(editProfileData);
-
         UserEditProfileDetails({ token: CurrentUser.token, editProfileData: editProfileData })
+        navigate(`/profile/${CurrentUser?.id}`)
     }
 
     return (
@@ -119,14 +120,14 @@ const UserDetailsForm: React.FC = () => {
             <form onSubmit={EditUserProfileDetails}>
                 <div className='detailsform_wrapper'>
                     <div className='detailsform_wrapper_input'>
-                        <div className="profile-pic">
+                        {/* <div className="profile-pic">
                             <label className="-label" htmlFor='file'>
                                 <span className="glyphicon glyphicon-camera"></span>
                                 <span>Change Profile</span>
                             </label>
                             <input className='imageinput' id="file" type="file" />
                             <img src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg" id="output" width="200" alt='profile' />
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className='detailsform_wrapper_input'>
@@ -196,7 +197,7 @@ const UserDetailsForm: React.FC = () => {
 
 
                     <div className='detailsform_wrapper_input'>
-                        <button className="button-skip">Cancel</button>
+                        <button className="button-skip" onClick={() => navigate(`/profile/${CurrentUser?.id}`)}>Cancel</button>
                         <button type='submit' className="button-submit">Submit</button>
                     </div>
 

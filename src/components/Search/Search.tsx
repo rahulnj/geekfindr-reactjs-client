@@ -18,7 +18,6 @@ const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as str
 
 const Search: React.FC = () => {
 
-    const { GetUserDetails } = useActions();
     const navigate = useNavigate();
 
     const InitialUpdate = useRef(true);

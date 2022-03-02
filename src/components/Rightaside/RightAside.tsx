@@ -2,13 +2,13 @@ import './_RightAside.scss'
 
 import { FriendRequest, Messages, Userinfo } from '..'
 
-import { ProfileProps } from '../../models'
+import { ProfileProps, ProfileRightAsideProps } from '../../models'
 
 import { BiEdit, BiSearch } from 'react-icons/bi'
 
 
 
-const RightAside: React.FC<ProfileProps> = ({ profile }) => {
+const RightAside = ({ profile, userProfile }: ProfileRightAsideProps) => {
 
 
     const HomeRightAside = () => {
@@ -29,10 +29,10 @@ const RightAside: React.FC<ProfileProps> = ({ profile }) => {
         )
     }
 
-    const ProfileRightAside = () => {
+    const ProfileRightAside = ({ userProfile }: ProfileRightAsideProps) => {
         return (
             <>
-                <Userinfo />
+                <Userinfo userProfile={userProfile} />
             </>
         )
     }
@@ -40,7 +40,7 @@ const RightAside: React.FC<ProfileProps> = ({ profile }) => {
     return (
         <div className={profile ? 'profilerightaside' : 'rightaside'}>
             <div className="rightaside_wrapper">
-                {profile ? <ProfileRightAside /> : <HomeRightAside />}
+                {profile ? <ProfileRightAside userProfile={userProfile} /> : <HomeRightAside />}
             </div>
         </div>
     )

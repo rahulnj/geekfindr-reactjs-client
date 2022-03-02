@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './_Userinfo.scss'
 
@@ -6,15 +6,36 @@ import { GiOfficeChair } from 'react-icons/gi'
 import { GrOrganization, GrCertificate } from 'react-icons/gr'
 import { FaBusinessTime } from 'react-icons/fa'
 import { IoIosArrowForward } from 'react-icons/io'
+import { ProfileRightAsideProps, UserData } from '../../models';
+import { Params, useParams } from 'react-router-dom';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useActions } from '../../hooks/useActions';
 
-const Userinfo: React.FC = () => {
+const Userinfo = ({ userProfile }: ProfileRightAsideProps) => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+
+    const { userId }: Readonly<Params<string>> = useParams()
+    const { GetUserDetails, UserProfileDetails } = useActions()
+    let { data: currentUserDetails, loading: currentUserDetailsLoading }: any = useTypedSelector(
+        (state) => state.UserProfileDetails
+    )
+    let { data: usersDetails, loading: UsersDetailsLoading }: any = useTypedSelector(
+        (state) => state.GetUserDetails
+    )
+    console.log(usersDetails);
+    console.log(currentUserDetails);
+    if (!userProfile) {
+        usersDetails = currentUserDetails
+        UsersDetailsLoading = currentUserDetailsLoading
+    }
+
     return (
         <div className='userinfo'>
             <h3>Info</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt illo .</p>
+            <p>{usersDetails?.bio}</p>
             <hr />
             <ul >
-                <li><GiOfficeChair className='userinfo_icons' size={26} />
+                {/* <li><GiOfficeChair className='userinfo_icons' size={26} />
                     <details className='userinfo_details'>
                         <summary className='userinfo_summary'>Work<IoIosArrowForward className='arrow' /></summary>
                         <div className="detailscontent">
@@ -22,21 +43,24 @@ const Userinfo: React.FC = () => {
                         </div>
                     </details>
                 </li>
-                <hr />
+                <hr /> */}
                 <li><GrOrganization className='userinfo_icons' size={26} />
                     <details className='userinfo_details'>
                         <summary className='userinfo_summary'>Organization<IoIosArrowForward className='arrow' /></summary>
-                        <div className="detailscontent">
-                            <p>crossroads academy</p>
-                        </div>
+                        {usersDetails?.organizations?.map((organization: string[]) => (
+                            <div className="detailscontent">
+                                <p>{organization}</p>
+                            </div>
+                        ))}
                     </details>
                 </li>
+
                 <hr />
                 <li><FaBusinessTime className='userinfo_icons' size={26} />
                     <details className='userinfo_details'>
                         <summary className='userinfo_summary'>Experience<IoIosArrowForward className='arrow' /></summary>
                         <div className="detailscontent">
-                            <p>crossroads academy</p>
+                            <p>{usersDetails?.experience}</p>
                         </div>
                     </details>
                 </li>
@@ -44,9 +68,11 @@ const Userinfo: React.FC = () => {
                 <li><GrCertificate className='userinfo_icons' size={26} />
                     <details className='userinfo_details'>
                         <summary className='userinfo_summary'>Education<IoIosArrowForward className='arrow' /></summary>
-                        <div className="detailscontent">
-                            <p>crossroads academy</p>
-                        </div>
+                        {usersDetails?.organizations?.map((education: string[]) => (
+                            <div className="detailscontent">
+                                <p>{education}</p>
+                            </div>
+                        ))}
                     </details>
                 </li>
             </ul>

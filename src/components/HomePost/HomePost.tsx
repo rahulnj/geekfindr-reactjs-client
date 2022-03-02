@@ -26,7 +26,6 @@ const HomePosts = ({ CommentHandler }: HomePostProps) => {
     const observer = useRef<any>()
 
     let { feedPosts, hasMore, loading, setFeedPosts } = useInfiniteScroll({ lastPostId })
-    console.log(feedPosts);
 
     const lastFeedPostRef = useCallback(node => {
         if (observer.current) observer.current.disconnect()

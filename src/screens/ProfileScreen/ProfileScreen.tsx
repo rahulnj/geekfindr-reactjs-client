@@ -80,7 +80,7 @@ const ProfileScreen = ({ userProfile }: ProfileProps) => {
                     <Feed profile userProfile={userProfile} />
                 </div>
                 <div className='componentprofile'>
-                    <RightAside profile />
+                    <RightAside profile userProfile={userProfile} />
                 </div>
             </div>
         </div>
