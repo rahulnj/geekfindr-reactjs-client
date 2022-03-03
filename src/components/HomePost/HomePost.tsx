@@ -112,7 +112,6 @@ const HomePosts = ({ CommentHandler }: HomePostProps) => {
                                     </div>
                                 </div>
                                 <div className="post_top_right">
-                                    <BsThreeDotsVertical className='post_top_right_threedot' />
                                 </div>
                             </div>
                             <div className="post_center">
