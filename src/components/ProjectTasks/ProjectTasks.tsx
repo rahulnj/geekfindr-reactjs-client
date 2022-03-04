@@ -5,7 +5,10 @@ import './_ProjectTasks.scss'
 
 const ProjectTasks = () => {
     return (
-        <div>ProjectTasks</div>
+        <div className='projecttasks'>
+            <div className="projecttasks_wrapper">
+            </div>
+        </div>
     )
 }
 
