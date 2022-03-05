@@ -33,5 +33,6 @@ export {
     AddProjectDescription,
     ManageTeamRole,
     LeaveOrRemoveMembers,
-    ProjectTodo
+    ProjectTodo,
+    ProjectTask
 } from './ProjectActions';

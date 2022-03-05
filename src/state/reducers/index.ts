@@ -30,6 +30,7 @@ import {
     GetProjectDetailsReducer,
     LeaveOrRemoveMembersReducer,
     ManageTeamRoleReducer,
+    ProjectTaskReducer,
     ProjectTodoReducer
 } from "./ProjectReducer";
 
@@ -65,6 +66,7 @@ const rootReducer = combineReducers({
     ManageTeamRole: ManageTeamRoleReducer,
     LeaveOrRemoveMembers: LeaveOrRemoveMembersReducer,
     ProjectTodo: ProjectTodoReducer,
+    ProjectTask: ProjectTaskReducer,
 })
 
 export default rootReducer;
