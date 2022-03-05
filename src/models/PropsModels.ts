@@ -75,4 +75,5 @@ export interface ProjectTaskModalProps {
 
 export interface ProjectTaskManageModalProps {
     setIsProjectTaskManageModal: React.Dispatch<React.SetStateAction<boolean>>
+    projectTaskIndex: number
 }

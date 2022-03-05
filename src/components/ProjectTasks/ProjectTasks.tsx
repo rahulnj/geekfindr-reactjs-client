@@ -16,15 +16,22 @@ const ProjectTasks = () => {
 
     const [isProjectTaskModal, setIsProjectTaskModal] = useState(false)
     const [isProjectTaskManageModal, setIsProjectTaskManageModal] = useState(false)
+    const [projectTaskIndex, setProjectTaskIndex] = useState<number>()
 
     console.log(projectDetails);
+    const manageProjectTask = (index: number) => {
+        setProjectTaskIndex(index)
+        setIsProjectTaskManageModal(true)
+    }
+
 
     return (
         <>
             <Modal isProjectTaskModal={isProjectTaskModal}
                 setIsProjectTaskModal={setIsProjectTaskModal}
                 isProjectTaskManageModal={isProjectTaskManageModal}
-                setIsProjectTaskManageModal={setIsProjectTaskManageModal} />
+                setIsProjectTaskManageModal={setIsProjectTaskManageModal}
+                projectTaskIndex={projectTaskIndex} />
 
 
             <div className='projecttasks'>
@@ -38,7 +45,7 @@ const ProjectTasks = () => {
                 </div>
                 <hr />
                 {
-                    projectDetails?.project?.task?.map((task: any, index: string) => (
+                    projectDetails?.project?.task?.map((task: any, index: number) => (
                         <div className='projecttasks_singletask' key={index}>
                             <div className='projecttasks_singletask_left'>
                                 <h3>
@@ -55,7 +62,7 @@ const ProjectTasks = () => {
                             </div>
                             <div className='projecttasks_singletask_right'>
                                 <button className="projecttasks_buttonassign"
-                                    onClick={() => setIsProjectTaskManageModal(true)}
+                                    onClick={() => manageProjectTask(index)}
                                 >Manage</button>
                             </div>
                         </div>

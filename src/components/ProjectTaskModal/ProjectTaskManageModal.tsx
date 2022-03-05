@@ -7,7 +7,7 @@ import { useActions } from '../../hooks/useActions';
 import { ProjectTaskManageModalProps, UserData } from '../../models';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
-const ProjectTaskManageModal = ({ setIsProjectTaskManageModal }: ProjectTaskManageModalProps) => {
+const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex }: ProjectTaskManageModalProps) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { ProjectTask } = useActions()
     let { data: projectDetails }: any = useTypedSelector(
@@ -19,26 +19,35 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal }: ProjectTaskMana
     const [type, setType] = useState('')
     const [selectedUsers, setSelectedUsers] = useState([])
     useEffect(() => {
-        if (projectDetails?.project?.task) {
+        if (projectDetails?.project?.task[projectTaskIndex]) {
+            setTitle(projectDetails?.project?.task[projectTaskIndex]?.title)
+            setDescription(projectDetails?.project?.task[projectTaskIndex]?.description)
+            setType(projectDetails?.project?.task[projectTaskIndex]?.type)
 
+            let updatedAlreadySelectedUsers: any = []
+            for (let i = 0; i < (alreadySelectedUsers.length); i++) {
+                for (let j = 0; j < (projectDetails?.project?.team?.length); j++) {
+                    if (alreadySelectedUsers[i]?.id === projectDetails?.project?.team?.[j]?.user?.id) {
+                        updatedAlreadySelectedUsers.push({
+                            username: projectDetails?.project?.team?.[j]?.user?.username,
+                            id: projectDetails?.project?.team?.[j]?.user?.id
+                        })
+                    }
+                }
+            }
+            setSelectedUsers(updatedAlreadySelectedUsers)
         }
-    }, [projectDetails])
+    }, [projectDetails, projectTaskIndex])
 
 
     const options = projectDetails?.project?.team?.map((user: any) => {
         return { username: user?.user?.username, id: user?.user?.id }
     })
 
-    console.log(projectDetails);
-
-    let alreadySelectedUsers: string[] = []
-    alreadySelectedUsers = projectDetails?.project?.task[0]?.users?.map((user: any) => {
+    let alreadySelectedUsers: any = []
+    alreadySelectedUsers = projectDetails?.project?.task[projectTaskIndex]?.users?.map((user: any) => {
         return { id: user }
-
     })
-    console.log(alreadySelectedUsers);
-
-
 
     return (
         <div className="projecttaskmodal">
@@ -46,19 +55,20 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal }: ProjectTaskMana
                 <div className='projecttaskmodal_left_inputs'>
                     <label className='projecttaskmodal_left_inputs_label'>Task Title</label>
                     <input className='projecttaskmodal_left_inputs_input' type="text"
-                        onChange={(e) => setTitle(e.target.value)}
+                        value={title} onChange={(e) => setTitle(e.target.value)}
                     />
                 </div>
                 <div className='projecttaskmodal_left_inputs'>
                     <label className='projecttaskmodal_left_inputs_label'>Description</label>
                     <textarea className='projecttaskmodal_left_inputs_textarea' placeholder='Add Bio'
-                        onChange={(e) => setDescription(e.target.value)}
+                        value={description} onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
                 <div className='projecttaskmodal_left_inputs'>
                     <label className='projecttaskmodal_left_inputs_label'>Type</label>
                     <select placeholder='Type'
                         onChange={(e) => setType(e.target.value)}
+                        value={type}
                     >Type
                         <option value="">select</option>
                         <option value="development">development</option>
@@ -80,7 +90,6 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal }: ProjectTaskMana
                         displayValue='username'
                         selectedValues={selectedUsers}
                         placeholder="Select teammates"
-                        style={{}}
                     />
                 </div>
                 <div className='projecttaskmodal_left_actions'>

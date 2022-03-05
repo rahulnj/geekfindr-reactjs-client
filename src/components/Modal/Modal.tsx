@@ -24,7 +24,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     commentPostId, commentPostImg, isProjectDescriptionModal,
     setIsProjectDescriptionModal, setProjectDescriptionLoading,
     isProjectTaskModal, setIsProjectTaskModal,
-    isProjectTaskManageModal, setIsProjectTaskManageModal
+    isProjectTaskManageModal, setIsProjectTaskManageModal,
+    projectTaskIndex
 }: any) => {
 
     const Modalref = useRef<any>()
@@ -137,7 +138,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                 {isCommentModalOpened && <Comment commentPostId={commentPostId} commentPostImg={commentPostImg} />}
                 {isProjectDescriptionModal && <ProjectDescriptionModal setIsProjectDescriptionModal={setIsProjectDescriptionModal} />}
                 {isProjectTaskModal && <ProjectTaskModal setIsProjectTaskModal={setIsProjectTaskModal} />}
-                {isProjectTaskManageModal && <ProjectTaskManageModal setIsProjectTaskManageModal={setIsProjectTaskManageModal} />}
+                {isProjectTaskManageModal && <ProjectTaskManageModal setIsProjectTaskManageModal={setIsProjectTaskManageModal}
+                    projectTaskIndex={projectTaskIndex} />}
             </div>
         </>,
         document.getElementById('modal') as HTMLElement
