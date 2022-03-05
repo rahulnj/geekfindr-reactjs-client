@@ -240,7 +240,6 @@ const UserDetailsForm: React.FC = () => {
                         <button className="button-skip" onClick={() => navigate(`/profile/${CurrentUser?.id}`)}>Cancel</button>
                         <button type='submit' className="button-submit">Submit</button>
                     </div>
-
                 </div>
             </form>
         </div>
