@@ -1,1 +1,63 @@
 @import "../../_base.scss";
+.projecttasks {
+    display: flex;
+    flex-direction: column;
+
+    &_header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 30px;
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+    }
+    &_buttonassign {
+        background-color: #ffffff;
+        border: 1px solid rgb(175, 175, 175);
+        border-radius: 4px;
+        height: 42px;
+        color: black;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 0.4rem 1rem;
+        text-align: center;
+        text-decoration: none #d1d5db solid;
+        text-decoration-thickness: auto;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+    &_buttonassign:hover {
+        background-color: rgb(249, 250, 251);
+    }
+
+    &_buttonassign:focus {
+        outline: 2px solid rgb(249, 250, 251);
+        outline-offset: 2px;
+    }
+
+    &_buttonassign:focus-visible {
+        box-shadow: none;
+    }
+    hr {
+        margin: 0 30px;
+        opacity: 0.5;
+    }
+    &_singletask {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        border-bottom: 1px solid $horizontalline-color;
+        margin: 0 30px;
+        &_left {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
