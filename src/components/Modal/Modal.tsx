@@ -3,10 +3,18 @@ import { createPortal } from 'react-dom';
 
 import './_Modal.scss'
 
-import { Comment, Messages, PostUploadModal, ProjectDescriptionModal } from '..';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { UserData } from '../../models';
-import ProjectTaskModal from '../ProjectTaskModal/ProjectTaskModal';
+
+import {
+    Comment,
+    Messages,
+    PostUploadModal,
+    ProjectDescriptionModal,
+    ProjectTaskManageModal,
+    ProjectTaskModal
+} from '..';
+
 
 const Modal = ({ isModalOpened, setIsModalOpened,
     isEditModalOpened, setIsEditModalOpened,
@@ -15,7 +23,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     isCommentModalOpened, setIsCommentModalOpened,
     commentPostId, commentPostImg, isProjectDescriptionModal,
     setIsProjectDescriptionModal, setProjectDescriptionLoading,
-    isProjectTaskModal, setIsProjectTaskModal
+    isProjectTaskModal, setIsProjectTaskModal,
+    isProjectTaskManageModal, setIsProjectTaskManageModal
 }: any) => {
 
     const Modalref = useRef<any>()
@@ -43,6 +52,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         MODAL = isProjectDescriptionModal
     } else if (isProjectTaskModal) {
         MODAL = isProjectTaskModal
+    } else if (isProjectTaskManageModal) {
+        MODAL = isProjectTaskManageModal
     }
 
 
@@ -64,6 +75,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                     setIsProjectDescriptionModal(false)
                 } else if (isProjectTaskModal) {
                     setIsProjectTaskModal(false)
+                } else if (isProjectTaskManageModal) {
+                    setIsProjectTaskManageModal(false)
                 }
             }
         }
@@ -77,7 +90,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         followingModal, setFollowingModal,
         isCommentModalOpened, setIsCommentModalOpened,
         isProjectDescriptionModal, setIsProjectDescriptionModal,
-        isProjectTaskModal, setIsProjectTaskModal]);
+        isProjectTaskModal, setIsProjectTaskModal,
+        isProjectTaskManageModal, setIsProjectTaskManageModal]);
 
     if (!isModalOpened &&
         !isEditModalOpened &&
@@ -85,7 +99,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         !followingModal &&
         !isCommentModalOpened &&
         !isProjectDescriptionModal &&
-        !isProjectTaskModal
+        !isProjectTaskModal &&
+        !isProjectTaskManageModal
     ) {
         return null;
     }
@@ -122,6 +137,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                 {isCommentModalOpened && <Comment commentPostId={commentPostId} commentPostImg={commentPostImg} />}
                 {isProjectDescriptionModal && <ProjectDescriptionModal setIsProjectDescriptionModal={setIsProjectDescriptionModal} />}
                 {isProjectTaskModal && <ProjectTaskModal setIsProjectTaskModal={setIsProjectTaskModal} />}
+                {isProjectTaskManageModal && <ProjectTaskManageModal setIsProjectTaskManageModal={setIsProjectTaskManageModal} />}
             </div>
         </>,
         document.getElementById('modal') as HTMLElement

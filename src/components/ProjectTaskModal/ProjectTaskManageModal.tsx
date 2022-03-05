@@ -1,49 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import './ProjectTaskModal.scss'
 import Multiselect from 'multiselect-react-dropdown';
-import { ProjectTaskModalProps, UserData } from '../../models'
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+
 import { useActions } from '../../hooks/useActions';
 
+import { ProjectTaskManageModalProps, UserData } from '../../models';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 
-
-
-const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
+const ProjectTaskManageModal = ({ setIsProjectTaskManageModal }: ProjectTaskManageModalProps) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { ProjectTask } = useActions()
+    let { data: projectDetails }: any = useTypedSelector(
+        (state) => state.GetProjectDetails
+    )
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [type, setType] = useState('')
     const [selectedUsers, setSelectedUsers] = useState([])
+    useEffect(() => {
+        if (projectDetails?.project?.task) {
 
-    let { data: projectDetails }: any = useTypedSelector(
-        (state) => state.GetProjectDetails
-    )
+        }
+    }, [projectDetails])
+
 
     const options = projectDetails?.project?.team?.map((user: any) => {
         return { username: user?.user?.username, id: user?.user?.id }
     })
 
-    let updatedSelectedUsers: string[] = [];
-    updatedSelectedUsers = selectedUsers?.map((user: any) => (
-        user.id
-    ))
-    const CreateProjectTask = () => {
-        const task = {
-            title,
-            description,
-            users: updatedSelectedUsers,
-            type
-        }
+    console.log(projectDetails);
 
-        ProjectTask({
-            token: CurrentUser?.token,
-            projectId: projectDetails?.project?.id,
-            task
-        })
-    }
+    let alreadySelectedUsers: string[] = []
+    alreadySelectedUsers = projectDetails?.project?.task[0]?.users?.map((user: any) => {
+        return { id: user }
+
+    })
+    console.log(alreadySelectedUsers);
+
+
+
     return (
         <div className="projecttaskmodal">
             <div className="projecttaskmodal_left">
@@ -88,12 +84,15 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
                     />
                 </div>
                 <div className='projecttaskmodal_left_actions'>
-                    <button className="button-skip" onClick={() => setIsProjectTaskModal(false)}>Cancel</button>
-                    <button type='button' onClick={CreateProjectTask} className="button-submit">Create</button>
+                    <button className="button-skip" onClick={() => setIsProjectTaskManageModal(false)}>Cancel</button>
+                    <button type='button' className="button-submit">Create</button>
                 </div>
+            </div>
+            <div className="projecttaskmodal_manage">
+
             </div>
         </div>
     )
 }
 
-export default ProjectTaskModal
+export default ProjectTaskManageModal

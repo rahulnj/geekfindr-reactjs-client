@@ -177,7 +177,7 @@ export const ProjectTodo = ({ projectId, token, Todo }: any) => {
     }
 }
 
-export const ProjectTask = ({ token, projectId }: any) => {
+export const ProjectTask = ({ token, projectId, task }: any) => {
     return async (dispatch: Dispatch<ProjectTaskAction>) => {
         dispatch({
             type: ProjectTaskActionType.PROJECT_TASK_REQUEST
@@ -186,10 +186,10 @@ export const ProjectTask = ({ token, projectId }: any) => {
             headers: {
                 "Content-type": "application/json",
                 Authorization: `Bearer ${token}`,
-            },
+            }
         };
         try {
-            const { data } = await request.post(`/api/v1/projects/${projectId}/tasks`, config)
+            const { data } = await request.post(`/api/v1/projects/${projectId}/tasks`, task, config)
             console.log(data);
             dispatch({
                 type: ProjectTaskActionType.PROJECT_TASK_SUCCESS,
