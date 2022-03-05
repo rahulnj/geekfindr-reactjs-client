@@ -48,6 +48,8 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
     alreadySelectedUsers = projectDetails?.project?.task[projectTaskIndex]?.users?.map((user: any) => {
         return { id: user }
     })
+    console.log(selectedUsers);
+
 
     return (
         <div className="projecttaskmodal">
@@ -94,7 +96,8 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
                 </div>
                 <div className='projecttaskmodal_left_actions'>
                     <button className="button-skip" onClick={() => setIsProjectTaskManageModal(false)}>Cancel</button>
-                    <button type='button' className="button-submit">Create</button>
+                    <button type='button' className="button-submit"
+                    >Save Changes</button>
                 </div>
             </div>
             <div className="projecttaskmodal_manage">

@@ -43,6 +43,7 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
             projectId: projectDetails?.project?.id,
             task
         })
+        setIsProjectTaskModal(false)
     }
     return (
         <div className="projecttaskmodal">

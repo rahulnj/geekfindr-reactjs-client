@@ -1,4 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { AiFillBug, AiOutlineDeploymentUnit } from 'react-icons/ai'
+import { GoIssueOpened } from 'react-icons/go'
+import { MdNotificationImportant, MdOutlineFeaturedPlayList } from 'react-icons/md'
+import { SiAffinitydesigner, SiSpeedtest } from 'react-icons/si'
+import { Params, useParams } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { UserData } from '../../models'
@@ -9,11 +14,20 @@ import './_ProjectTasks.scss'
 
 const ProjectTasks = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-    const { ProjectTask } = useActions()
+    const { projectId }: Readonly<Params<string>> = useParams()
+    const { ProjectTask, GetProjectDetails } = useActions()
     let { data: projectDetails }: any = useTypedSelector(
         (state) => state.GetProjectDetails
     )
-
+    const { success: projectTaskSuccess }: any = useTypedSelector(
+        (state) => state.ProjectTask
+    )
+    useEffect(() => {
+        GetProjectDetails({
+            token: CurrentUser?.token,
+            projectId
+        })
+    }, [projectTaskSuccess])
     const [isProjectTaskModal, setIsProjectTaskModal] = useState(false)
     const [isProjectTaskManageModal, setIsProjectTaskManageModal] = useState(false)
     const [projectTaskIndex, setProjectTaskIndex] = useState<number>()
@@ -56,9 +70,18 @@ const ProjectTasks = () => {
                                 </p>
                             </div>
                             <div className='projecttasks_singletask_center'>
-                                <span>
-                                    {task?.type}
-                                </span>
+
+                                {
+                                    task?.type === 'development' && <SiSpeedtest /> ||
+                                    task?.type === 'design' && <SiAffinitydesigner /> ||
+                                    task?.type === 'testing' && <SiSpeedtest size={24} fill='green' /> ||
+                                    task?.type === 'deployment' && <AiOutlineDeploymentUnit size={24} fill='green' /> ||
+                                    task?.type === 'feature' && <MdOutlineFeaturedPlayList size={24} fill='green' /> ||
+                                    task?.type === 'hotfix' && <MdNotificationImportant size={24} fill='green' /> ||
+                                    task?.type === 'issue' && <GoIssueOpened size={24} fill='green' /> ||
+                                    task?.type === 'bug' && <AiFillBug size={24} fill='red' />
+                                }
+
                             </div>
                             <div className='projecttasks_singletask_right'>
                                 <button className="projecttasks_buttonassign"
