@@ -6,6 +6,7 @@ import './_Modal.scss'
 import { Comment, Messages, PostUploadModal, ProjectDescriptionModal } from '..';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { UserData } from '../../models';
+import ProjectTaskModal from '../ProjectTaskModal/ProjectTaskModal';
 
 const Modal = ({ isModalOpened, setIsModalOpened,
     isEditModalOpened, setIsEditModalOpened,
@@ -13,7 +14,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     followingModal, setFollowingModal,
     isCommentModalOpened, setIsCommentModalOpened,
     commentPostId, commentPostImg, isProjectDescriptionModal,
-    setIsProjectDescriptionModal, setProjectDescriptionLoading
+    setIsProjectDescriptionModal, setProjectDescriptionLoading,
+    isProjectTaskModal, setIsProjectTaskModal
 }: any) => {
 
     const Modalref = useRef<any>()
@@ -39,6 +41,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         MODAL = isCommentModalOpened
     } else if (isProjectDescriptionModal) {
         MODAL = isProjectDescriptionModal
+    } else if (isProjectTaskModal) {
+        MODAL = isProjectTaskModal
     }
 
 
@@ -58,6 +62,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                     setIsCommentModalOpened(false)
                 } else if (isProjectDescriptionModal) {
                     setIsProjectDescriptionModal(false)
+                } else if (isProjectTaskModal) {
+                    setIsProjectTaskModal(false)
                 }
             }
         }
@@ -70,14 +76,16 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         followersModal, setFollowersModal,
         followingModal, setFollowingModal,
         isCommentModalOpened, setIsCommentModalOpened,
-        isProjectDescriptionModal, setIsProjectDescriptionModal]);
+        isProjectDescriptionModal, setIsProjectDescriptionModal,
+        isProjectTaskModal, setIsProjectTaskModal]);
 
     if (!isModalOpened &&
         !isEditModalOpened &&
         !followersModal &&
         !followingModal &&
         !isCommentModalOpened &&
-        !isProjectDescriptionModal
+        !isProjectDescriptionModal &&
+        !isProjectTaskModal
     ) {
         return null;
     }
@@ -113,6 +121,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                     isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened} />}
                 {isCommentModalOpened && <Comment commentPostId={commentPostId} commentPostImg={commentPostImg} />}
                 {isProjectDescriptionModal && <ProjectDescriptionModal setIsProjectDescriptionModal={setIsProjectDescriptionModal} />}
+                {isProjectTaskModal && <ProjectTaskModal setIsProjectTaskModal={setIsProjectTaskModal} />}
             </div>
         </>,
         document.getElementById('modal') as HTMLElement

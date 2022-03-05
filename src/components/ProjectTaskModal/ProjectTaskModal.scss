@@ -1,0 +1,66 @@
+@import "../../_base.scss";
+.projecttaskmodal {
+    display: flex;
+    &_left {
+        display: flex;
+        flex-direction: column;
+        flex: 6;
+        gap: 0.4rem;
+        &_inputs {
+            display: flex;
+            flex-direction: column;
+            padding: 0 10px;
+            &_label {
+                color: #666;
+                font-size: 14px;
+                margin-bottom: 5px;
+                transition: 0.4s;
+            }
+            &_input {
+                height: 45px;
+                width: 100%;
+                outline: none;
+                border-radius: 5px;
+                border: 1px solid $main-color;
+                padding-left: 15px;
+                font-size: 14px;
+                transition: 0.4s;
+            }
+            &_input:focus {
+                box-shadow: $main-shadow;
+            }
+            &_input:focus-within label {
+                color: $button-color;
+            }
+            &_textarea {
+                height: 70px;
+                width: 100%;
+                outline: none;
+                border-radius: 5px;
+                border: 1px solid $main-color;
+                padding-left: 15px;
+                font-size: 14px;
+                transition: 0.4s;
+                resize: none;
+            }
+            &_textarea:focus {
+                box-shadow: $main-shadow;
+            }
+            select {
+                height: 45px;
+                width: 100%;
+                outline: none;
+                border-radius: 5px;
+                border: 1px solid $main-color;
+                padding-left: 15px;
+                font-size: 14px;
+                transition: 0.4s;
+            }
+        }
+    }
+    &_manage {
+        display: flex;
+        flex-direction: column;
+        flex: 6;
+    }
+}

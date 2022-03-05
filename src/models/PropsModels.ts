@@ -68,3 +68,7 @@ export interface ProfileRightAsideProps {
     userProfile?: boolean
     profile?: boolean
 }
+
+export interface ProjectTaskModalProps {
+    setIsProjectTaskModal: React.Dispatch<React.SetStateAction<boolean>>
+}

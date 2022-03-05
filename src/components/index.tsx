@@ -1,3 +1,5 @@
+import { FaRProject } from 'react-icons/fa';
+
 export { default as Layout } from './Layout/Layout';
 export { default as Modal } from './Modal/Modal';
 export { default as Header } from './Header/Header';
@@ -33,3 +35,4 @@ export { default as SideBarProjectSkeleton } from './Skeletons/SideBarProjectSke
 export { default as ProjectDescriptionModal } from './ProjectDescriptionModal/ProjectDescriptionModal';
 export { default as DragAndDrop } from './ProjectTodo/DragAndDrop';
 export { default as ReadOnly } from './ProjectTodo/ReadOnly';
+export { default as ProjectTaskModal } from './ProjectTaskModal/ProjectTaskModal';
