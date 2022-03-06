@@ -1,6 +1,6 @@
 import { ProjectState } from "../../models"
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectTaskAction, ProjectTaskDeleteAction, ProjectTaskIsCompleteAction, ProjectTodoAction } from "../action-models/ProjectAction"
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTaskActionType, ProjectTaskDeleteActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType"
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectDeleteAction, ProjectTaskAction, ProjectTaskDeleteAction, ProjectTaskIsCompleteAction, ProjectTodoAction } from "../action-models/ProjectAction"
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectDeleteActionType, ProjectTaskActionType, ProjectTaskDeleteActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType"
 
 const initialState = {
     data: [],
@@ -147,6 +147,22 @@ export const ProjectTaskDeleteReducer = (
         case ProjectTaskDeleteActionType.PROJECT_TASK_DELETE_SUCCESS:
             return { ...state, success: true, loading: false, error: null, data: action.payload }
         case ProjectTaskDeleteActionType.PROJECT_TASK_DELETE_FAIL:
+            return { ...state, success: false, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const ProjectDeleteReducer = (
+    state: ProjectState = initialState,
+    action: ProjectDeleteAction
+): ProjectState => {
+    switch (action.type) {
+        case ProjectDeleteActionType.PROJECT_DELETE_REQUEST:
+            return { ...state, success: false, loading: true, error: null, data: [] }
+        case ProjectDeleteActionType.PROJECT_DELETE_SUCCESS:
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
+        case ProjectDeleteActionType.PROJECT_DELETE_FAIL:
             return { ...state, success: false, loading: false, error: action.payload, data: [] }
         default:
             return state;

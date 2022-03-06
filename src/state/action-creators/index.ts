@@ -36,5 +36,6 @@ export {
     ProjectTodo,
     ProjectTask,
     ProjectTaskIsComplete,
-    ProjectTaskDelete
+    ProjectTaskDelete,
+    DeleteProject
 } from './ProjectActions';

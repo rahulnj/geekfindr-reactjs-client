@@ -1,6 +1,6 @@
 //Action models for getting my projects
 
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTaskActionType, ProjectTaskDeleteActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType";
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectDeleteActionType, ProjectTaskActionType, ProjectTaskDeleteActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType";
 
 interface GetMyrojectRequestAction {
     type: GetMyProjectActionType.GET_MYPROJECT_REQUEST
@@ -189,4 +189,23 @@ export type ProjectTaskDeleteAction =
     | ProjectTaskDeleteSuccessAction
     | ProjectTaskDeleteFailAction
 
+//action models for deleting the project
 
+interface ProjectDeleteRequestAction {
+    type: ProjectDeleteActionType.PROJECT_DELETE_REQUEST
+}
+
+interface ProjectDeleteSuccessAction {
+    type: ProjectDeleteActionType.PROJECT_DELETE_SUCCESS
+    payload: string[]
+}
+
+interface ProjectDeleteFailAction {
+    type: ProjectDeleteActionType.PROJECT_DELETE_FAIL
+    payload: string[]
+}
+
+export type ProjectDeleteAction =
+    | ProjectDeleteRequestAction
+    | ProjectDeleteSuccessAction
+    | ProjectDeleteFailAction

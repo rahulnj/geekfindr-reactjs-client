@@ -14,7 +14,6 @@ const ProjectTeam = () => {
     const { projectId }: Readonly<Params<string>> = useParams()
     const { GetProjectDetails, ManageTeamRole, LeaveOrRemoveMembers } = useActions()
     const navigate = useNavigate()
-    const [role, setRole] = useState('')
     let { data: projectDetails }: any = useTypedSelector(
         (state) => state.GetProjectDetails
     )
@@ -71,11 +70,9 @@ const ProjectTeam = () => {
         return true;
     })
     projectDetails = { ...projectDetails, isjoinRequest: isJoinRequest }
-
-    console.log(projectDetails);
-
+    let role: string;
     const handleMemberRole = (e: React.MouseEvent<HTMLInputElement>, memberId: string, userName: string): void => {
-        setRole(e.currentTarget.value)
+        role = e.currentTarget.value
         Swal.fire({
             title: 'Are you sure?',
             text: `You want to assign ${userName} as ${e.currentTarget.value}`,
@@ -116,8 +113,8 @@ const ProjectTeam = () => {
             text: `You want to remove ${userName}`,
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#9D0AFF',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9D0AFF',
             confirmButtonText: 'Remove'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -141,8 +138,8 @@ const ProjectTeam = () => {
             text: `You want to leave ${projectDetails?.project?.name}?`,
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#9D0AFF',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9D0AFF',
             confirmButtonText: 'Leave'
         }).then((result) => {
             if (result.isConfirmed) {

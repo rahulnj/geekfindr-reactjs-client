@@ -37,9 +37,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
     const { loading: createPostLoading, success: createPostSuccess }: any = useTypedSelector(
         (state) => state.CreatePost
     )
+    const { success: projectDeleteSuccess }: any = useTypedSelector(
+        (state) => state.ProjectDelete
+    )
     useEffect(() => {
         GetMyProject({ token: CurrentUser?.token })
-    }, [createPostSuccess])
+    }, [createPostSuccess, projectDeleteSuccess])
 
     const getProjectDetails = (projectId: string): void => {
         GetProjectDetails({

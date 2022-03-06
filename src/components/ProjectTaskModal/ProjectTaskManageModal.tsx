@@ -83,9 +83,9 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
             text: "You want to delete this task",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#9D0AFF',
+            confirmButtonText: 'Delete'
         }).then((result) => {
             if (result.isConfirmed) {
                 ProjectTaskDelete({

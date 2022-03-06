@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Params, useParams } from 'react-router-dom';
-import request from '../../api';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { ProjectDescriptionModalProps, UserData } from '../../models';
@@ -17,6 +16,10 @@ const ProjectDescriptionModal: React.FC<ProjectDescriptionModalProps> = ({ setIs
     const { data: projectDetails }: any = useTypedSelector(
         (state) => state.GetProjectDetails
     )
+    useEffect(() => {
+        setDescription(projectDetails?.project?.description)
+    }, [])
+
     const handleProjectDescription = async () => {
         AddProjectDescription({
             token: CurrentUser?.token,
@@ -29,11 +32,15 @@ const ProjectDescriptionModal: React.FC<ProjectDescriptionModalProps> = ({ setIs
         <div className='desmodal'>
             <div className='desmodal_wrapper'>
                 <h4>Description</h4>
-                <textarea name="" placeholder='Type here'
+                <textarea name="" placeholder='Type here' value={description}
                     onChange={(e) => setDescription(e.target.value)} />
                 <div className="desmodal_action">
-                    <button className='desmodal_button-submit'
+                    {description.length < 0 ? <button className='desmodal_button-submit'
                         onClick={handleProjectDescription}>Add</button>
+                        :
+                        <button className='desmodal_button-submit'
+                            onClick={handleProjectDescription}>Save</button>
+                    }
                 </div>
             </div>
         </div>
