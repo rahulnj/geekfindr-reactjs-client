@@ -85,7 +85,6 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
                         displayValue='username'
                         selectedValues={selectedUsers}
                         placeholder="Select teammates"
-                        style={{}}
                     />
                 </div>
                 <div className='projecttaskmodal_left_actions'>

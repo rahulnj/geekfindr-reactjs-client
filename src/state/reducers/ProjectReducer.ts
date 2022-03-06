@@ -1,6 +1,6 @@
 import { ProjectState } from "../../models"
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectTaskAction, ProjectTodoAction } from "../action-models/ProjectAction"
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTaskActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType"
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectTaskAction, ProjectTaskIsCompleteAction, ProjectTodoAction } from "../action-models/ProjectAction"
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTaskActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType"
 
 const initialState = {
     data: [],
@@ -115,6 +115,22 @@ export const ProjectTaskReducer = (
         case ProjectTaskActionType.PROJECT_TASK_SUCCESS:
             return { ...state, success: true, loading: false, error: null, data: action.payload }
         case ProjectTaskActionType.PROJECT_TASK_FAIL:
+            return { ...state, success: false, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const ProjectTaskIsCompleteReducer = (
+    state: ProjectState = initialState,
+    action: ProjectTaskIsCompleteAction
+): ProjectState => {
+    switch (action.type) {
+        case ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_REQUEST:
+            return { ...state, success: false, loading: true, error: null, data: [] }
+        case ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_SUCCESS:
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
+        case ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_FAIL:
             return { ...state, success: false, loading: false, error: action.payload, data: [] }
         default:
             return state;

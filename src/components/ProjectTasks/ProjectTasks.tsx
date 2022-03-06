@@ -79,11 +79,20 @@ const ProjectTasks = () => {
                                     task?.type === 'bug' && <div className='projecttasks_singletask_center_icons'><AiFillBug size={24} fill='red' />Bug</div>
                                 }
                             </div>
-                            <div className='projecttasks_singletask_right'>
-                                <button className="projecttasks_buttonassign"
-                                    onClick={() => manageProjectTask(index)}
-                                >Manage</button>
-                            </div>
+                            {(task?.assignor === CurrentUser?.id) ?
+                                <div className='projecttasks_singletask_right'>
+                                    <button className="projecttasks_buttonassign"
+                                        onClick={() => manageProjectTask(index)}
+                                    >Manage</button>
+                                </div>
+                                :
+                                <div className='projecttasks_singletask_right'>
+                                    <button className="projecttasks_buttonassign"
+                                        onClick={() => manageProjectTask(index)}
+                                    >View</button>
+                                </div>
+                            }
+
                         </div>
                     ))
                 }

@@ -1,6 +1,6 @@
 //Action models for getting my projects
 
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTaskActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType";
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTaskActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType";
 
 interface GetMyrojectRequestAction {
     type: GetMyProjectActionType.GET_MYPROJECT_REQUEST
@@ -146,6 +146,28 @@ export type ProjectTaskAction =
     | ProjectTaskRequestAction
     | ProjectTaskSuccessAction
     | ProjectTaskFailAction
+
+//Action models for project task iscomplete
+
+interface ProjectTaskIsCompleteRequestAction {
+    type: ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_REQUEST
+}
+
+interface ProjectTaskIsCompleteSuccessAction {
+    type: ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_SUCCESS
+    payload: string[]
+}
+
+interface ProjectTaskIsCompleteFailAction {
+    type: ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_FAIL
+    payload: string[]
+}
+
+export type ProjectTaskIsCompleteAction =
+    | ProjectTaskIsCompleteRequestAction
+    | ProjectTaskIsCompleteSuccessAction
+    | ProjectTaskIsCompleteFailAction
+
 
 
 
