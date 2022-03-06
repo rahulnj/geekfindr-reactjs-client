@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
+// import 'sweetalert2/src/sweetalert2.scss'
 import Multiselect from 'multiselect-react-dropdown';
 
 import { useActions } from '../../hooks/useActions';
@@ -75,14 +77,34 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
             }
         })
     }
-
     const handleDeleteTask = () => {
-        ProjectTaskDelete({
-            token: CurrentUser?.token,
-            projectId,
-            title
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to delete this task",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                ProjectTaskDelete({
+                    token: CurrentUser?.token,
+                    projectId,
+                    title
+                })
+                setIsProjectTaskManageModal(false)
+                Swal.fire(
+                    'Deleted!',
+                    'Task has been deleted.',
+                    'success'
+                )
+            } else {
+                setIsProjectTaskManageModal(true)
+            }
         })
-        setIsProjectTaskManageModal(false)
+
+
     }
 
     return (

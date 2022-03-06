@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import './_Post.scss'
-
+import Swal from 'sweetalert2'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 import { BiComment, BiEdit } from 'react-icons/bi'
@@ -99,7 +99,9 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     }
 
 
-    const MyProfilePosts = ({ description, isProject, likeCount, commentCount, mediaURL, createdAt, comments, id, owner, isLiked }: PostData) => {
+    const MyProfilePosts = ({ description, isProject, likeCount,
+        commentCount, mediaURL, createdAt,
+        comments, id, owner, isLiked }: PostData) => {
 
         const { DeletePost } = useActions();
         const navigate = useNavigate();
@@ -117,8 +119,25 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
         }
 
         const DeleteMyPost = () => {
-            DeletePost({ postId: id, token: user.token, navigate, userId: user.id })
-            setToggleOptions(false)
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to delete this post?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#9D0AFF',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    DeletePost({ postId: id, token: user.token, navigate, userId: user.id })
+                    setToggleOptions(false)
+                    Swal.fire(
+                        'Deleted!',
+                        'Post has been deleted.',
+                        'success'
+                    )
+                }
+            })
         }
 
 
@@ -133,8 +152,6 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                 document.addEventListener("mousedown", checkIfClickedOutside)
             }
         }, [toggleOptions])
-
-
 
         return (
             <>
@@ -153,8 +170,16 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                             </div>
                             {!userProfile && <div ref={ref} className={toggleOptions ? "post_top_right_options active" : "post_top_right_options"}>
                                 <ul>
-                                    <Link to={`/editpost/${id}`} style={{ textDecoration: 'none' }}><li onClick={() => setIsEditModalOpened(true)}><BiEdit size={21} className='post_top_right_options_icons' /><span className='post_top_right_options_link1'>Edit</span></li></Link>
-                                    <li onClick={DeleteMyPost}><MdOutlineDeleteOutline size={21} className='post_top_right_options_icons' /><span className='post_top_right_options_link2'>Delete</span></li>
+                                    <Link to={`/editpost/${id}`} style={{ textDecoration: 'none' }}>
+                                        <li onClick={() => setIsEditModalOpened(true)}>
+                                            <BiEdit size={21} className='post_top_right_options_icons' />
+                                            <span className='post_top_right_options_link1'>Edit</span></li>
+                                    </Link>
+                                    {!isProject &&
+                                        <li onClick={DeleteMyPost}><MdOutlineDeleteOutline size={21} className='post_top_right_options_icons' />
+                                            <span className='post_top_right_options_link2'>Delete</span></li>
+                                    }
+
                                 </ul>
                             </div>}
                         </div>
@@ -185,6 +210,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
             </>
         )
     }
+
     return (
 
         <>

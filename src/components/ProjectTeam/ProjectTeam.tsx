@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react'
-
+import Swal from 'sweetalert2'
 import './_ProjectTeam.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
@@ -7,13 +7,14 @@ import { UserData } from '../../models';
 import { useActions } from '../../hooks/useActions';
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { Params, useParams } from 'react-router-dom';
+import { Params, useNavigate, useParams } from 'react-router-dom';
 
 const ProjectTeam = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { projectId }: Readonly<Params<string>> = useParams()
     const { GetProjectDetails, ManageTeamRole, LeaveOrRemoveMembers } = useActions()
-
+    const navigate = useNavigate()
+    const [role, setRole] = useState('')
     let { data: projectDetails }: any = useTypedSelector(
         (state) => state.GetProjectDetails
     )
@@ -73,15 +74,30 @@ const ProjectTeam = () => {
 
     console.log(projectDetails);
 
-    const handleMemberRole = (e: React.MouseEvent<HTMLInputElement>, memberId: string): void => {
-        e.preventDefault()
-        console.log(e.currentTarget.value);
-
-        ManageTeamRole({
-            token: CurrentUser?.token,
-            role: e.currentTarget.value,
-            projectId,
-            memberId
+    const handleMemberRole = (e: React.MouseEvent<HTMLInputElement>, memberId: string, userName: string): void => {
+        setRole(e.currentTarget.value)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You want to assign ${userName} as ${e.currentTarget.value}`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#9D0AFF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Assign'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                ManageTeamRole({
+                    token: CurrentUser?.token,
+                    role,
+                    projectId,
+                    memberId
+                })
+                Swal.fire(
+                    'Assigned',
+                    `${userName} assigned as ${role}`,
+                    'success'
+                )
+            }
         })
     }
 
@@ -94,22 +110,51 @@ const ProjectTeam = () => {
         })
     }
 
-    const removeMemberfromProject = (id: string) => {
-        LeaveOrRemoveMembers({
-            token: CurrentUser?.token,
-            memberId: id,
-            projectId: projectDetails?.project?.id
+    const removeMemberfromProject = (id: string, userName: string) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You want to remove ${userName}`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#9D0AFF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Remove'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                LeaveOrRemoveMembers({
+                    token: CurrentUser?.token,
+                    memberId: id,
+                    projectId: projectDetails?.project?.id
+                })
+                Swal.fire(
+                    'Removed!',
+                    `${userName} has been removed.`,
+                    'success'
+                )
+            }
         })
     }
 
     const leaveTheProject = () => {
-        LeaveOrRemoveMembers({
-            token: CurrentUser?.token,
-            memberId: CurrentUser?.id,
-            projectId: projectDetails?.project?.id
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You want to leave ${projectDetails?.project?.name}?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#9D0AFF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Leave'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                LeaveOrRemoveMembers({
+                    token: CurrentUser?.token,
+                    memberId: CurrentUser?.id,
+                    projectId: projectDetails?.project?.id
+                })
+                navigate('/')
+            }
         })
     }
-
 
     return (
         <div className='projectteam'>
@@ -143,28 +188,28 @@ const ProjectTeam = () => {
                                                         onClick={() => { acceptMembertoProject(teammates?.user?.id) }}
                                                     />
                                                     <AiOutlineCloseCircle className="projectteam_user_right_icons_iconclose" size={38}
-                                                        onClick={() => { removeMemberfromProject(teammates?.user?.id) }}
+                                                        onClick={() => { removeMemberfromProject(teammates?.user?.id, teammates?.user?.username) }}
                                                     />
                                                 </div> :
                                                 (projectDetails?.isAdmin && teammates?.role === 'admin') ? <span /> :
                                                     (projectDetails?.isAdmin && teammates?.role === 'collaborator') ?
                                                         <div className='projectteam_user_right_btnaction'>
                                                             <button className="projectteam_user_right_button-leave"
-                                                                onClick={() => { removeMemberfromProject(teammates?.user?.id) }}
+                                                                onClick={() => { removeMemberfromProject(teammates?.user?.id, teammates?.user?.username) }}
                                                             >Remove</button>
                                                         </div> :
                                                         <>
                                                             <div className='projectteam_user_right_radios'>
                                                                 <input className={teammates?.role === 'admin' ? 'projectteam_user_right_input bgbtn' :
                                                                     'projectteam_user_right_input'} id={teammates?.user?.id} value='admin' type="button"
-                                                                    onClick={(e) => handleMemberRole(e, teammates?.user?.id)} />
+                                                                    onClick={(e) => handleMemberRole(e, teammates?.user?.id, teammates?.user?.username)} />
                                                                 <input className={teammates?.role === 'collaborator' ? 'projectteam_user_right_input bgbtn' :
                                                                     'projectteam_user_right_input'} id='myradio2' type="button" value='collaborator'
-                                                                    onClick={(e) => handleMemberRole(e, teammates?.user?.id)} />
+                                                                    onClick={(e) => handleMemberRole(e, teammates?.user?.id, teammates?.user?.username)} />
                                                             </div>
                                                             <div className='projectteam_user_right_btnaction'>
                                                                 <button className="projectteam_user_right_button-leave"
-                                                                    onClick={() => { removeMemberfromProject(teammates?.user?.id) }}
+                                                                    onClick={() => { removeMemberfromProject(teammates?.user?.id, teammates?.user?.username) }}
                                                                 >Remove</button>
                                                             </div>
                                                         </>
