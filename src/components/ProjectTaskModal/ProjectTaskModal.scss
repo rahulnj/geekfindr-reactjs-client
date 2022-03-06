@@ -62,6 +62,10 @@
             }
         }
         &_actions {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 0.4rem;
             .button-skip {
                 background-color: #ffffff;
                 border: none;
@@ -98,6 +102,10 @@
                 touch-action: manipulation;
                 transition: 0.3s;
             }
+            &_manage {
+                display: flex;
+                justify-content: flex-end;
+            }
         }
     }
     &_manage {
@@ -113,4 +121,43 @@
     flex-direction: row;
     align-items: center;
     padding: 20px;
+    &_icon {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: green;
+    }
+}
+.button-edit {
+    background-color: #ffffff;
+    border: 1px solid rgb(175, 175, 175);
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 42px;
+    color: #e70c0c;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    padding: 0.75rem 2rem;
+    text-align: center;
+    text-decoration: none #d1d5db solid;
+    text-decoration-thickness: auto;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-edit:hover {
+    background-color: rgb(249, 250, 251);
+}
+
+.button-edit:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.button-edit:focus-visible {
+    box-shadow: none;
 }

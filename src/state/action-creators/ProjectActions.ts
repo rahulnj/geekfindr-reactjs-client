@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import request from "../../api";
 import { UserData } from "../../models";
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectTaskAction, ProjectTaskIsCompleteAction, ProjectTodoAction } from "../action-models/ProjectAction";
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTaskActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType";
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectTaskAction, ProjectTaskDeleteAction, ProjectTaskIsCompleteAction, ProjectTodoAction } from "../action-models/ProjectAction";
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTaskActionType, ProjectTaskDeleteActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType";
 
 
 
@@ -216,11 +216,8 @@ export const ProjectTaskIsComplete = ({ token, projectId, title, isComplete }: a
                 Authorization: `Bearer ${token}`,
             }
         };
-
         try {
-            console.log(title);
             const { data } = await request.put(`/api/v1/projects/${projectId}/tasks/${title}/completion-status`, isComplete, config)
-            console.log(data);
             dispatch({
                 type: ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_SUCCESS,
                 payload: data
@@ -229,6 +226,33 @@ export const ProjectTaskIsComplete = ({ token, projectId, title, isComplete }: a
             console.log(error);
             dispatch({
                 type: ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
+export const ProjectTaskDelete = ({ token, projectId, title }: any) => {
+    return async (dispatch: Dispatch<ProjectTaskDeleteAction>) => {
+        dispatch({
+            type: ProjectTaskDeleteActionType.PROJECT_TASK_DELETE_REQUEST
+        })
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+        };
+        try {
+            const { data } = await request.delete(`/api/v1/projects/${projectId}/tasks/${title}`, config)
+            dispatch({
+                type: ProjectTaskDeleteActionType.PROJECT_TASK_DELETE_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: ProjectTaskDeleteActionType.PROJECT_TASK_DELETE_FAIL,
                 payload: error
             })
         }

@@ -35,5 +35,6 @@ export {
     LeaveOrRemoveMembers,
     ProjectTodo,
     ProjectTask,
-    ProjectTaskIsComplete
+    ProjectTaskIsComplete,
+    ProjectTaskDelete
 } from './ProjectActions';

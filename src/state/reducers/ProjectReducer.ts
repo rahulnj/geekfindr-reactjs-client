@@ -1,6 +1,6 @@
 import { ProjectState } from "../../models"
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectTaskAction, ProjectTaskIsCompleteAction, ProjectTodoAction } from "../action-models/ProjectAction"
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTaskActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType"
+import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectTaskAction, ProjectTaskDeleteAction, ProjectTaskIsCompleteAction, ProjectTodoAction } from "../action-models/ProjectAction"
+import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectTaskActionType, ProjectTaskDeleteActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType"
 
 const initialState = {
     data: [],
@@ -131,6 +131,22 @@ export const ProjectTaskIsCompleteReducer = (
         case ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_SUCCESS:
             return { ...state, success: true, loading: false, error: null, data: action.payload }
         case ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_FAIL:
+            return { ...state, success: false, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const ProjectTaskDeleteReducer = (
+    state: ProjectState = initialState,
+    action: ProjectTaskDeleteAction
+): ProjectState => {
+    switch (action.type) {
+        case ProjectTaskDeleteActionType.PROJECT_TASK_DELETE_REQUEST:
+            return { ...state, success: false, loading: true, error: null, data: [] }
+        case ProjectTaskDeleteActionType.PROJECT_TASK_DELETE_SUCCESS:
+            return { ...state, success: true, loading: false, error: null, data: action.payload }
+        case ProjectTaskDeleteActionType.PROJECT_TASK_DELETE_FAIL:
             return { ...state, success: false, loading: false, error: action.payload, data: [] }
         default:
             return state;
