@@ -22,12 +22,18 @@ const ProjectTasks = () => {
     const { success: projectTaskSuccess }: any = useTypedSelector(
         (state) => state.ProjectTask
     )
+    const { success: projectTaskIsCompleteSuccess }: any = useTypedSelector(
+        (state) => state.ProjectTaskIsComplete
+    )
+    const { success: projectTaskDeleteSuccess }: any = useTypedSelector(
+        (state) => state.ProjectTaskDelete
+    )
     useEffect(() => {
         GetProjectDetails({
             token: CurrentUser?.token,
             projectId
         })
-    }, [projectTaskSuccess])
+    }, [projectTaskSuccess, projectTaskIsCompleteSuccess, projectTaskDeleteSuccess])
     const [isProjectTaskModal, setIsProjectTaskModal] = useState(false)
     const [isProjectTaskManageModal, setIsProjectTaskManageModal] = useState(false)
     const [projectTaskIndex, setProjectTaskIndex] = useState<number>()
