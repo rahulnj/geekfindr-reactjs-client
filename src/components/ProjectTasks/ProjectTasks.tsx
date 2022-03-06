@@ -46,8 +46,6 @@ const ProjectTasks = () => {
                 isProjectTaskManageModal={isProjectTaskManageModal}
                 setIsProjectTaskManageModal={setIsProjectTaskManageModal}
                 projectTaskIndex={projectTaskIndex} />
-
-
             <div className='projecttasks'>
                 <div className="projecttasks_header">
                     <h3>Tasks</h3>
@@ -70,18 +68,16 @@ const ProjectTasks = () => {
                                 </p>
                             </div>
                             <div className='projecttasks_singletask_center'>
-
                                 {
-                                    task?.type === 'development' && <SiSpeedtest /> ||
-                                    task?.type === 'design' && <SiAffinitydesigner /> ||
-                                    task?.type === 'testing' && <SiSpeedtest size={24} fill='green' /> ||
-                                    task?.type === 'deployment' && <AiOutlineDeploymentUnit size={24} fill='green' /> ||
-                                    task?.type === 'feature' && <MdOutlineFeaturedPlayList size={24} fill='green' /> ||
-                                    task?.type === 'hotfix' && <MdNotificationImportant size={24} fill='green' /> ||
-                                    task?.type === 'issue' && <GoIssueOpened size={24} fill='green' /> ||
-                                    task?.type === 'bug' && <AiFillBug size={24} fill='red' />
+                                    task?.type === 'development' && <div className='projecttasks_singletask_center_icons'><SiSpeedtest size={24} /> Development</div> ||
+                                    task?.type === 'design' && <div className='projecttasks_singletask_center_icons'> <SiAffinitydesigner size={24} />Design</div> ||
+                                    task?.type === 'testing' && <div className='projecttasks_singletask_center_icons'> <SiSpeedtest size={24} fill='green' />Testing</div> ||
+                                    task?.type === 'deployment' && <div className='projecttasks_singletask_center_icons'><AiOutlineDeploymentUnit size={24} fill='green' />Deployment</div> ||
+                                    task?.type === 'feature' && <div className='projecttasks_singletask_center_icons'><MdOutlineFeaturedPlayList size={24} fill='green' />Feature</div> ||
+                                    task?.type === 'hotfix' && <div className='projecttasks_singletask_center_icons'> <MdNotificationImportant size={24} fill='green' />Hotfix</div> ||
+                                    task?.type === 'issue' && <div className='projecttasks_singletask_center_icons'> <GoIssueOpened size={24} fill='green' />Issue</div> ||
+                                    task?.type === 'bug' && <div className='projecttasks_singletask_center_icons'><AiFillBug size={24} fill='red' />Bug</div>
                                 }
-
                             </div>
                             <div className='projecttasks_singletask_right'>
                                 <button className="projecttasks_buttonassign"
@@ -91,7 +87,6 @@ const ProjectTasks = () => {
                         </div>
                     ))
                 }
-
             </div>
         </>
     )
