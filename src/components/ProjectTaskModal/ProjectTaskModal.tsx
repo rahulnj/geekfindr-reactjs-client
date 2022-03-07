@@ -21,12 +21,20 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
     let { data: projectDetails }: any = useTypedSelector(
         (state) => state.GetProjectDetails
     )
-    let options: string[] = []
-    options = projectDetails?.project?.team?.map((user: any) => {
+
+    //To check weather the multiselect contains users below the admin hirerachy
+    let options: any = []
+    if (projectDetails?.role === 'admin') {
+        options = projectDetails?.project?.team?.filter((user: any) => (
+            user?.role != 'admin'
+        ))
+    }
+    //To check weather the multiselect option contains current username or owner name
+    options = options?.filter((user: any) => (
+        user?.user?.id != CurrentUser?.id && user?.user?.id != projectDetails?.project?.owner?.id
+    )).map((user: any) => {
         return { username: user?.user?.username, id: user?.user?.id }
-
     })
-
     let updatedSelectedUsers: string[] = [];
     updatedSelectedUsers = selectedUsers?.map((user: any) => (
         user.id
