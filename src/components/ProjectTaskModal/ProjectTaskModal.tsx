@@ -5,6 +5,8 @@ import Multiselect from 'multiselect-react-dropdown';
 import { ProjectTaskModalProps, UserData } from '../../models'
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
+import validator from '@brocode/simple-react-form-validation-helper';
+import Swal from 'sweetalert2';
 
 
 
@@ -14,7 +16,9 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
     const { ProjectTask } = useActions()
 
     const [title, setTitle] = useState('')
+    const [titleError, setTitleError] = useState('')
     const [description, setDescription] = useState('')
+    const [descriptionError, setDescriptionError] = useState('')
     const [type, setType] = useState('')
     const [selectedUsers, setSelectedUsers] = useState([])
 
@@ -41,20 +45,51 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
     updatedSelectedUsers = selectedUsers?.map((user: any) => (
         user.id
     ))
-    const CreateProjectTask = () => {
-        const task = {
-            title,
-            description,
-            users: updatedSelectedUsers,
-            type
-        }
 
-        ProjectTask({
-            token: CurrentUser?.token,
-            projectId: projectDetails?.project?.id,
-            task
-        })
-        setIsProjectTaskModal(false)
+    //To check if there is same project task name assigned 
+
+    let projectTaskNames: string[] = []
+    projectDetails?.project?.task?.forEach((task: any) => {
+        projectTaskNames.push(task?.title)
+    })
+
+    const OnChangeDescriptionValidator = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+        setDescription(e.target.value);
+        validator.addressInputBlurHandler(e.target.value, setDescriptionError)
+    }
+    const OnBlurDescriptionValidator = (e: React.FocusEvent<HTMLTextAreaElement>): void => {
+        validator.addressInputBlurHandler(e.target.value, setDescriptionError)
+    }
+
+    const OnChangeTaskTitleValidator = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setTitle(e.target.value);
+        validator.nameInputChangeHandler(e.target.value, setTitleError)
+        if (projectTaskNames.includes(e.target.value)) {
+            setTitleError('Task name already exists')
+        }
+    }
+    const OnBlurTaskTitleValidator = (e: React.FocusEvent<HTMLInputElement>): void => {
+        validator.nameInputBlurHandler(e.target.value, setTitleError)
+    }
+
+    const CreateProjectTask = () => {
+        if (!titleError && !descriptionError && title != '' && description != '') {
+            const task = {
+                title,
+                description,
+                users: updatedSelectedUsers,
+                type
+            }
+
+            ProjectTask({
+                token: CurrentUser?.token,
+                projectId: projectDetails?.project?.id,
+                task
+            })
+            setIsProjectTaskModal(false)
+        } else {
+            Swal.fire("please add a task")
+        }
     }
     return (
         <div className="projecttaskmodal">
@@ -62,14 +97,16 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
                 <div className='projecttaskmodal_left_inputs'>
                     <label className='projecttaskmodal_left_inputs_label'>Task Title</label>
                     <input className='projecttaskmodal_left_inputs_input' type="text"
-                        onChange={(e) => setTitle(e.target.value)}
+                        onChange={OnChangeTaskTitleValidator} onBlur={OnBlurTaskTitleValidator}
                     />
+                    <p className='projecttaskmodal_errorlabel'>{titleError}</p>
                 </div>
                 <div className='projecttaskmodal_left_inputs'>
                     <label className='projecttaskmodal_left_inputs_label'>Description</label>
                     <textarea className='projecttaskmodal_left_inputs_textarea' placeholder='Add Bio'
-                        onChange={(e) => setDescription(e.target.value)}
+                        onChange={OnChangeDescriptionValidator} onBlur={OnBlurDescriptionValidator}
                     />
+                    <p className='projecttaskmodal_errorlabel'>{descriptionError}</p>
                 </div>
                 <div className='projecttaskmodal_left_inputs'>
                     <label className='projecttaskmodal_left_inputs_label'>Type</label>

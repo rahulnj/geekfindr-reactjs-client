@@ -93,11 +93,19 @@ const ProjectTasks = () => {
                                     >Manage</button>
                                 </div>
                                 :
-                                <div className='projecttasks_singletask_right'>
-                                    <button className="projecttasks_buttonassign"
-                                        onClick={() => manageProjectTask(index)}
-                                    >View</button>
-                                </div>
+                                (task?.users?.includes(CurrentUser?.id) && (!task?.isComplete)) ?
+                                    <>
+                                        <div className='projecttasks_singletask_right'>
+                                            <button className="projecttasks_buttonassign"
+                                                onClick={() => manageProjectTask(index)}
+                                            >pending</button>
+                                        </div>
+                                    </> :
+                                    <div className='projecttasks_singletask_right'>
+                                        <button className="projecttasks_buttonassign"
+                                            onClick={() => manageProjectTask(index)}
+                                        >View</button>
+                                    </div>
                             }
 
                         </div>

@@ -126,6 +126,13 @@
         align-items: flex-start;
         flex: 6;
     }
+    &_errorlabel {
+        align-items: center;
+        display: flex;
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+    }
 }
 .radio_container_projecttask {
     width: 100%;
