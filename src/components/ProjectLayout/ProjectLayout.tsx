@@ -45,7 +45,7 @@ const ProjectLayout = () => {
                 <h3>{projectDetails?.project?.name}</h3>
                 <div className="projectlayout_header_time">
                     <p>Started</p>
-                    <p><Moment fromNow>{projectDetails?.project?.updatedAt}</Moment></p>
+                    <p><Moment fromNow>{projectDetails?.project?.createdAt}</Moment></p>
                 </div>
             </div>
             <div className='projectlayout_wrapper'>

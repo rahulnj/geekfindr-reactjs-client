@@ -56,9 +56,10 @@ const ProjectTasks = () => {
                 <div className="projecttasks_header">
                     <h3>Tasks</h3>
                     <div className='projecttasks_input'>
-                        <button className="projecttasks_buttonassign"
+                        {(projectDetails?.role === 'owner' || projectDetails?.role === 'admin') && <button className="projecttasks_buttonassign"
                             onClick={() => setIsProjectTaskModal(true)}
                         >+ Assign Tasks</button>
+                        }
                     </div>
                 </div>
                 <hr />
@@ -85,7 +86,7 @@ const ProjectTasks = () => {
                                     task?.type === 'bug' && <div className='projecttasks_singletask_center_icons'><AiFillBug size={24} fill='red' />Bug</div>
                                 }
                             </div>
-                            {(task?.assignor === CurrentUser?.id) ?
+                            {(task?.assignor?.id === CurrentUser?.id) ?
                                 <div className='projecttasks_singletask_right'>
                                     <button className="projecttasks_buttonassign"
                                         onClick={() => manageProjectTask(index)}

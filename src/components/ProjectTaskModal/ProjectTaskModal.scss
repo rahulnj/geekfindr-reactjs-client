@@ -61,6 +61,18 @@
                 transition: 0.4s;
             }
         }
+        &_assignor {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            img {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
         &_actions {
             display: flex;
             flex-direction: column;

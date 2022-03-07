@@ -25,16 +25,20 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
     const [selectedUsers, setSelectedUsers] = useState([])
     const [selectedRadioBtn, setSelectedRadioBtn] = useState('')
     const [assignor, setAssignor] = useState('')
+    const [assignorId, setAssignorId] = useState('')
+    const [assignorImg, setAssignorImg] = useState('')
     const [isComplete, setIsComplete] = useState(false)
-
+    const [isTaskComplete, setIsTaskComplete] = useState(false)
     useEffect(() => {
         if (projectDetails?.project?.task[projectTaskIndex]) {
             setTitle(projectDetails?.project?.task[projectTaskIndex]?.title)
             setDescription(projectDetails?.project?.task[projectTaskIndex]?.description)
             setType(projectDetails?.project?.task[projectTaskIndex]?.type)
             setAssignor(projectDetails?.project?.task[projectTaskIndex]?.assignor)
-            setIsComplete(projectDetails?.project?.task[projectTaskIndex]?.isComplete)
-
+            setIsTaskComplete(projectDetails?.project?.task[projectTaskIndex]?.isComplete)
+            setAssignor(projectDetails?.project?.task[projectTaskIndex]?.assignor?.username)
+            setAssignorImg(projectDetails?.project?.task[projectTaskIndex]?.assignor?.avatar)
+            setAssignorId(projectDetails?.project?.task[projectTaskIndex]?.assignor?.id)
             let updatedAlreadySelectedUsers: any = []
             for (let i = 0; i < (alreadySelectedUsers.length); i++) {
                 for (let j = 0; j < (projectDetails?.project?.team?.length); j++) {
@@ -66,6 +70,7 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
             setIsComplete(true)
         }
     }
+    console.log(projectDetails);
 
     const handleIsComplete = () => {
         ProjectTaskIsComplete({
@@ -155,12 +160,13 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
             <div className="projecttaskmodal_manage">
                 <div className='projecttaskmodal_left_inputs'>
                     <label className='projecttaskmodal_left_inputs_label'>Assigned By</label>
-                    <input className='projecttaskmodal_left_inputs_input' type="text"
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
+                    <div className='projecttaskmodal_left_assignor'>
+                        <img src={assignorImg} alt="" />
+                        <h3>{assignor}</h3>
+                    </div>
                 </div>
                 <div className="radio_container_projecttask">
-                    {isComplete ?
+                    {isTaskComplete ?
                         <div className="radio_container_projecttask_icon">
                             <BsBookmarkCheckFill size={24} fill='green' />Completed</div>
                         :
@@ -174,8 +180,9 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
                         </form>}
                 </div>
                 <div className='projecttaskmodal_left_actions'>
-                    <button className="button-edit" onClick={handleDeleteTask}>Delete Task</button>
-                    {!isComplete && <div className='projecttaskmodal_left_actions_manage'>
+                    {(projectDetails?.role === 'owner' || assignorId === CurrentUser?.id) &&
+                        <button className="button-edit" onClick={handleDeleteTask}>Delete Task</button>}
+                    {!isTaskComplete && <div className='projecttaskmodal_left_actions_manage'>
                         <button className="button-skip" onClick={() => setIsProjectTaskManageModal(false)}>Cancel</button>
                         <button type='button' className="button-submit"
                             onClick={handleIsComplete}

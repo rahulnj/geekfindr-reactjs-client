@@ -21,9 +21,10 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
     let { data: projectDetails }: any = useTypedSelector(
         (state) => state.GetProjectDetails
     )
-
-    const options = projectDetails?.project?.team?.map((user: any) => {
+    let options: string[] = []
+    options = projectDetails?.project?.team?.map((user: any) => {
         return { username: user?.user?.username, id: user?.user?.id }
+
     })
 
     let updatedSelectedUsers: string[] = [];
