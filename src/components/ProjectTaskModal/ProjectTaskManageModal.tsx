@@ -119,20 +119,20 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
                     <label className='projecttaskmodal_left_inputs_label'>Task Title</label>
                     <input className='projecttaskmodal_left_inputs_input' type="text"
                         value={title} onChange={(e) => setTitle(e.target.value)}
-                    />
+                        disabled />
                 </div>
                 <div className='projecttaskmodal_left_inputs'>
                     <label className='projecttaskmodal_left_inputs_label'>Description</label>
                     <textarea className='projecttaskmodal_left_inputs_textarea' placeholder='Add Bio'
                         value={description} onChange={(e) => setDescription(e.target.value)}
-                    />
+                        disabled />
                 </div>
                 <div className='projecttaskmodal_left_inputs'>
                     <label className='projecttaskmodal_left_inputs_label'>Type</label>
                     <select placeholder='Type'
                         onChange={(e) => setType(e.target.value)}
                         value={type}
-                    >Type
+                        disabled >Type
                         <option value="">select</option>
                         <option value="development">development</option>
                         <option value="design">design</option>
@@ -170,24 +170,35 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
                         <div className="radio_container_projecttask_icon">
                             <BsBookmarkCheckFill size={24} fill='green' />Completed</div>
                         :
-                        <form className='radio_container_form'>
-                            <label className='radio_container_label'>
-                                <input className='radio_container_input' type="radio" value='complete' name="radio" checked={isRadioSelected('complete')}
-                                    onChange={handleRadioClick}
-                                />
-                                <span className='radio_container_span'>Completed</span>
-                            </label>
-                        </form>}
+                        projectDetails?.project?.task[projectTaskIndex]?.users?.map((id: string) => {
+                            if (id === CurrentUser?.id) {
+                                return (<form className='radio_container_form' >
+                                    <label className='radio_container_label'>
+                                        <input className='radio_container_input' type="radio" value='complete' name="radio" checked={isRadioSelected('complete')}
+                                            onChange={handleRadioClick}
+                                        />
+                                        <span className='radio_container_span'>Completed</span>
+                                    </label>
+                                </form>)
+                            }
+                        })
+                    }
                 </div>
                 <div className='projecttaskmodal_left_actions'>
                     {(projectDetails?.role === 'owner' || assignorId === CurrentUser?.id) &&
                         <button className="button-edit" onClick={handleDeleteTask}>Delete Task</button>}
-                    {!isTaskComplete && <div className='projecttaskmodal_left_actions_manage'>
-                        <button className="button-skip" onClick={() => setIsProjectTaskManageModal(false)}>Cancel</button>
-                        <button type='button' className="button-submit"
-                            onClick={handleIsComplete}
-                        >Submit</button>
-                    </div>}
+                    {!isTaskComplete &&
+                        projectDetails?.project?.task[projectTaskIndex]?.users?.map((id: string) => {
+                            if (id === CurrentUser?.id) {
+                                return (<div className='projecttaskmodal_left_actions_manage'>
+                                    <button className="button-skip" onClick={() => setIsProjectTaskManageModal(false)}>Cancel</button>
+                                    <button type='button' className="button-submit"
+                                        onClick={handleIsComplete}
+                                    >Submit</button>
+                                </div>)
+                            }
+                        })
+                    }
                 </div>
             </div>
         </div >

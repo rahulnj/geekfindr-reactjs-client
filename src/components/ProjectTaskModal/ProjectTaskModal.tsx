@@ -22,12 +22,14 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
         (state) => state.GetProjectDetails
     )
 
-    //To check weather the multiselect contains users below the admin hirerachy
+    //To check weather the multiselect contains only users below the admin hirerachy
     let options: any = []
     if (projectDetails?.role === 'admin') {
         options = projectDetails?.project?.team?.filter((user: any) => (
             user?.role != 'admin'
         ))
+    } else {
+        options = projectDetails?.project?.team
     }
     //To check weather the multiselect option contains current username or owner name
     options = options?.filter((user: any) => (
