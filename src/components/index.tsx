@@ -39,3 +39,7 @@ export { default as ProjectTaskModal } from './ProjectTaskModal/ProjectTaskModal
 export { default as ProjectTaskManageModal } from './ProjectTaskModal/ProjectTaskManageModal';
 export { default as ChatUsersList } from './ChatUsersList/ChatUsersList';
 export { default as ChatMessage } from './ChatMessage/ChatMessage';
+export { default as ChatHeader } from './ChatMessage/ChatHeader';
+export { default as ChatContent } from './ChatMessage/ChatContent';
+export { default as ChatFooter } from './ChatMessage/ChatFooter';
+export { default as ChatItem } from './ChatMessage/ChatItem';

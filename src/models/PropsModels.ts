@@ -77,3 +77,9 @@ export interface ProjectTaskManageModalProps {
     setIsProjectTaskManageModal: React.Dispatch<React.SetStateAction<boolean>>
     projectTaskIndex: number
 }
+
+export interface ChatItemProps {
+    key: number
+    type: string
+    msg: string
+}

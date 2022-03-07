@@ -1,11 +1,17 @@
 import React from 'react'
+import { ChatContent, ChatHeader } from '..'
+import ChatFooter from './ChatFooter'
 
 import './_ChatMessage.scss'
+
+
 
 const ChatMessage = () => {
     return (
         <div className='chatmessage'>
-            ChatMessage
+            <ChatHeader />
+            <ChatContent />
+            <ChatFooter />
         </div>
     )
 }
