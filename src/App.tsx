@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { AuthState } from './models';
 
 import { Layout } from './components';
-import { AuthScreen, EditDetailsScreen, HomeScreen, PageNotFound, ProfileScreen, ProjectScreen } from './screens'
+import { AuthScreen, ChatScreen, EditDetailsScreen, HomeScreen, PageNotFound, ProfileScreen, ProjectScreen } from './screens'
 
 import { useTypedSelector } from './hooks/useTypedSelector';
 
@@ -70,6 +70,12 @@ const App: React.FC = () => {
         <Route path='/project/:projectId' element={
           <Layout project>
             <ProjectScreen />
+          </Layout>
+        }>
+        </Route>
+        <Route path='/chat' element={
+          <Layout project>
+            <ChatScreen />
           </Layout>
         }>
         </Route>

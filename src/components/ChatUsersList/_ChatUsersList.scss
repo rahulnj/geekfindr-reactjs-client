@@ -1,0 +1,91 @@
+@import "../../_base.scss";
+.chatuserslist {
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+    border: 1px solid blue;
+
+    &_header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: max-content;
+        width: 100%;
+        padding: 10px;
+        background: #eeeeee;
+        img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        &_icons {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            // padding-right: 10px;
+        }
+    }
+    &_searchbox {
+        background: #fffefe;
+        &_wrapper {
+            background-color: $main-color;
+            width: auto;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            padding: 4px 18px;
+            margin: 8px 25px;
+            input {
+                width: 100%;
+                background: transparent;
+                padding: 10px;
+                outline: none;
+                border: 0;
+            }
+        }
+    }
+    &_singleusers {
+        display: flex;
+        align-items: center;
+        padding: 0 0.5rem;
+        cursor: pointer;
+        transition: 0.3s;
+        &_profileimg {
+            position: relative;
+            overflow: visible;
+            padding: 0.3rem 0;
+            img {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            &.active {
+                width: 0.8rem;
+                height: 0.8rem;
+                border-radius: 50%;
+                border: 3px solid rgb(255, 255, 255);
+                background: rgb(3, 245, 3);
+                position: absolute;
+                bottom: 5px;
+                right: 0;
+            }
+        }
+        &_details {
+            padding: 0.3rem 0;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0 0.5rem;
+        }
+    }
+    &_singleusers:hover {
+        background: rgb(173, 82, 233);
+    }
+    hr {
+        margin: 1px auto;
+        width: 95%;
+        opacity: 0.5;
+    }
+}

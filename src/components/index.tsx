@@ -37,3 +37,5 @@ export { default as DragAndDrop } from './ProjectTodo/DragAndDrop';
 export { default as ReadOnly } from './ProjectTodo/ReadOnly';
 export { default as ProjectTaskModal } from './ProjectTaskModal/ProjectTaskModal';
 export { default as ProjectTaskManageModal } from './ProjectTaskModal/ProjectTaskManageModal';
+export { default as ChatUsersList } from './ChatUsersList/ChatUsersList';
+export { default as ChatMessage } from './ChatMessage/ChatMessage';
