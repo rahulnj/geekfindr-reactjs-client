@@ -64,6 +64,13 @@ export interface UserData {
     }
 }
 
+export interface SearchedUserData {
+    username: string
+    role: string
+    id: string
+    avatar: string
+}
+
 
 
 

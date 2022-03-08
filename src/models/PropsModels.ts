@@ -83,3 +83,7 @@ export interface ChatItemProps {
     type: string
     msg: string
 }
+
+export interface SearchProps {
+    setWordEntered: React.Dispatch<React.SetStateAction<string>>
+}

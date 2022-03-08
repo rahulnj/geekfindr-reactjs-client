@@ -12,7 +12,8 @@ import request from '../../api';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
 
-import { UserData } from '../../models';
+import { SearchProps, UserData } from '../../models';
+import { useSearch } from '../../hooks/useSearch';
 
 const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
@@ -20,42 +21,14 @@ const Search: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const InitialUpdate = useRef(true);
+    const { filteredData, setFilteredData, setWordEntered, wordEntered } = useSearch()
 
-    const [filteredData, setFilteredData] = useState([]);
-    const [wordEntered, setWordEntered] = useState("");
 
     const HandleSearchInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchWord = e.target.value;
         setWordEntered(searchWord)
     }
 
-    useEffect(() => {
-        if (InitialUpdate.current) {
-            InitialUpdate.current = false;
-            return;
-        }
-        const CancelToken = axios.CancelToken.source()
-        const fetchUsers = async () => {
-            try {
-                const { data: usersData } = await request.get(`/api/v1/profiles?searchUserName=${wordEntered}`, {
-                    cancelToken: CancelToken.token,
-                    headers: {
-                        'Authorization': `Bearer ${CurrentUser?.token}`,
-                    },
-                })
-                setFilteredData(usersData)
-            } catch (err) {
-                if (axios.isCancel(Error)) {
-                    return;
-                }
-            }
-        }
-        fetchUsers()
-        return () => {
-            CancelToken.cancel()
-        }
-    }, [wordEntered])
 
 
     const clearInput = () => {

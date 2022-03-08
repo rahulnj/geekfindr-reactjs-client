@@ -48,6 +48,13 @@
                 border: 0;
             }
         }
+        &_closeicon {
+            cursor: pointer;
+        }
+    }
+    &_users {
+        overflow: auto;
+        height: 100%;
     }
     &_singleusers {
         display: flex;
