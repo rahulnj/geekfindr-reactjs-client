@@ -1,0 +1,44 @@
+@import "../../_base.scss";
+.createchat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+    height: 100%;
+    &_wrapper {
+        display: flex;
+        flex-direction: column;
+        width: max-content;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    &_inputs {
+        display: flex;
+        flex-direction: column;
+        padding: 0 10px;
+        &_label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+            transition: 0.4s;
+        }
+        &_input {
+            height: 45px;
+            width: 100%;
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid $main-color;
+            padding-left: 15px;
+            font-size: 14px;
+            transition: 0.4s;
+        }
+        &_input:focus {
+            box-shadow: $main-shadow;
+        }
+        &_input:focus-within label {
+            color: $button-color;
+        }
+    }
+}

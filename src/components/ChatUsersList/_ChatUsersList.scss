@@ -26,6 +26,9 @@
             align-items: center;
             // padding-right: 10px;
         }
+        &_icon {
+            cursor: pointer;
+        }
     }
     &_searchbox {
         background: #fffefe;

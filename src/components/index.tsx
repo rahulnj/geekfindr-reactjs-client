@@ -43,3 +43,4 @@ export { default as ChatHeader } from './ChatMessage/ChatHeader';
 export { default as ChatContent } from './ChatMessage/ChatContent';
 export { default as ChatFooter } from './ChatMessage/ChatFooter';
 export { default as ChatItem } from './ChatMessage/ChatItem';
+export { default as CreateChatModal } from './CreateChatModal/CreateChatModal';

@@ -12,7 +12,7 @@ import {
     PostUploadModal,
     ProjectDescriptionModal,
     ProjectTaskManageModal,
-    ProjectTaskModal
+    ProjectTaskModal, CreateChatModal
 } from '..';
 
 
@@ -25,7 +25,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     setIsProjectDescriptionModal, setProjectDescriptionLoading,
     isProjectTaskModal, setIsProjectTaskModal,
     isProjectTaskManageModal, setIsProjectTaskManageModal,
-    projectTaskIndex
+    projectTaskIndex, isChatModal, setIsChatModal
 }: any) => {
 
     const Modalref = useRef<any>()
@@ -55,6 +55,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         MODAL = isProjectTaskModal
     } else if (isProjectTaskManageModal) {
         MODAL = isProjectTaskManageModal
+    } else if (isChatModal) {
+        MODAL = isChatModal
     }
 
 
@@ -78,6 +80,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                     setIsProjectTaskModal(false)
                 } else if (isProjectTaskManageModal) {
                     setIsProjectTaskManageModal(false)
+                } else if (isChatModal) {
+                    setIsChatModal(false)
                 }
             }
         }
@@ -92,7 +96,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         isCommentModalOpened, setIsCommentModalOpened,
         isProjectDescriptionModal, setIsProjectDescriptionModal,
         isProjectTaskModal, setIsProjectTaskModal,
-        isProjectTaskManageModal, setIsProjectTaskManageModal]);
+        isProjectTaskManageModal, setIsProjectTaskManageModal,
+        isChatModal, setIsChatModal]);
 
     if (!isModalOpened &&
         !isEditModalOpened &&
@@ -101,7 +106,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         !isCommentModalOpened &&
         !isProjectDescriptionModal &&
         !isProjectTaskModal &&
-        !isProjectTaskManageModal
+        !isProjectTaskManageModal &&
+        !isChatModal
     ) {
         return null;
     }
@@ -140,6 +146,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                 {isProjectTaskModal && <ProjectTaskModal setIsProjectTaskModal={setIsProjectTaskModal} />}
                 {isProjectTaskManageModal && <ProjectTaskManageModal setIsProjectTaskManageModal={setIsProjectTaskManageModal}
                     projectTaskIndex={projectTaskIndex} />}
+                {isChatModal && <CreateChatModal />}
             </div>
         </>,
         document.getElementById('modal') as HTMLElement
