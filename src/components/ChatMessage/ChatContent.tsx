@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ChatItem } from '..'
+import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { UserData } from '../../models';
 import './_ChatMessage.scss'
 const ChatContent = ({ socket, conversationId }: any) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+    const { GetConversations } = useActions()
     const chatItems = [
         {
             key: 1,
@@ -56,11 +58,48 @@ const ChatContent = ({ socket, conversationId }: any) => {
             msg: "I'm taliking about the tutorial",
         },
     ];
+    const [messages, setMessages] = useState()
+    let { data: conversations }: any = useTypedSelector(
+        (state) => state.GetConversations
+    );
 
-    // socket.current.on("message", (data: any) => {
-    //     console.log(data);
+    conversations?.map((msg: any) => {
 
-    // })
+    })
+
+    let arrivalMsg = true;
+    conversations = conversations?.map((chat: any) => {
+        if (chat?.senderId !== CurrentUser?.id) {
+            return { ...chat, arrivalMsg: true }
+        } else {
+            return { ...chat, arrivalMsg: false }
+        }
+    })
+
+
+
+
+
+    console.log(conversations);
+
+    useEffect(() => {
+        if (conversationId) {
+            GetConversations({
+                token: CurrentUser?.token,
+                conversationId
+            })
+        }
+    }, [conversationId])
+
+    useEffect(() => {
+        if (socket.current) {
+            socket.current.on("message", (msg: any) => {
+                console.log(msg);
+            })
+        }
+    }, [conversationId])
+
+
 
 
 

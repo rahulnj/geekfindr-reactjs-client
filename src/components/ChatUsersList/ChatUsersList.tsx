@@ -33,8 +33,6 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
         (state) => state.GetMyChats
     );
 
-    console.log(myChats);
-
 
 
     const clearInput = () => {
@@ -72,7 +70,6 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
     })
 
     const joinConversation = (id: string) => {
-        console.log("joined", id);
         setconversationId(id)
 
         socket.current.emit("join_conversation", {

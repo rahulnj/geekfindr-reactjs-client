@@ -1,7 +1,7 @@
 import { Dispatch } from "redux"
 import request from "../../api"
-import { CreateConversationOrRoomAction, GetMyChatsAction } from "../action-models"
-import { CreateConversationOrRoomActionType, GetMyChatsActionType } from "../actiontypes"
+import { CreateConversationOrRoomAction, GetConversationsAction, GetMyChatsAction } from "../action-models"
+import { CreateConversationOrRoomActionType, GetConversationsActionType, GetMyChatsActionType } from "../actiontypes"
 
 export const CreateConversationOrRoom = ({ token, conversationObj }: any) => {
     return async (dispatch: Dispatch<CreateConversationOrRoomAction>) => {
@@ -54,6 +54,33 @@ export const GetMyChats = ({ token }: any) => {
             console.log(error);
             dispatch({
                 type: GetMyChatsActionType.GET_MY_CHATS_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
+export const GetConversations = ({ token, conversationId }: any) => {
+    return async (dispatch: Dispatch<GetConversationsAction>) => {
+        dispatch({
+            type: GetConversationsActionType.GET_CONVERSATIONS_REQUEST
+        })
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.get(`/api/v1/chats/conversations/${conversationId}/messages`, config)
+            dispatch({
+                type: GetConversationsActionType.GET_CONVERSATIONS_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: GetConversationsActionType.GET_CONVERSATIONS_FAIL,
                 payload: error
             })
         }

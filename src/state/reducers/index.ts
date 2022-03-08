@@ -6,6 +6,7 @@ import {
 } from "./AuthReducer";
 import {
     CreateConversationOrRoomReducer,
+    GetConversationsReducer,
     GetMyChatsReducer
 } from "./ChatReducer";
 
@@ -79,6 +80,7 @@ const rootReducer = combineReducers({
     ProjectDelete: ProjectDeleteReducer,
     CreateConversationOrRoom: CreateConversationOrRoomReducer,
     GetMyChats: GetMyChatsReducer,
+    GetConversations: GetConversationsReducer,
 })
 
 export default rootReducer;

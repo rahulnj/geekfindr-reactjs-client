@@ -26,7 +26,6 @@ const ChatMessage = ({ socket, conversationId }: any) => {
                 reciever = chat?.participants?.filter((participant: any) => participant?.id != CurrentUser?.id)
                 return { ...chat, reciever }
             })
-            console.log(updatedChatDetails);
             setChatUser(updatedChatDetails[0])
         }
     }, [conversationId])
@@ -40,7 +39,7 @@ const ChatMessage = ({ socket, conversationId }: any) => {
             {conversationId ?
                 <>
                     <ChatHeader chatUser={chatUser} />
-                    <ChatContent conversationId={conversationId} />
+                    <ChatContent socket={socket} conversationId={conversationId} />
                     <ChatFooter socket={socket} />
                 </>
                 :
