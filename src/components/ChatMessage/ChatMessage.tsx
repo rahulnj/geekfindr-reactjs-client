@@ -7,6 +7,11 @@ import './_ChatMessage.scss'
 
 
 const ChatMessage = () => {
+
+
+
+
+
     return (
         <div className='chatmessage'>
             <ChatHeader />
