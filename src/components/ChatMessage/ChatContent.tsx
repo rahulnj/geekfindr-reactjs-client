@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ChatItem } from '..'
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { UserData } from '../../models';
 import './_ChatMessage.scss'
-const ChatContent = () => {
+const ChatContent = ({ socket, conversationId }: any) => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const chatItems = [
         {
             key: 1,
@@ -53,6 +56,15 @@ const ChatContent = () => {
             msg: "I'm taliking about the tutorial",
         },
     ];
+
+    // socket.current.on("message", (data: any) => {
+    //     console.log(data);
+
+    // })
+
+
+
+
     return (
         <div className='chatcontent'>
             <div className='chatcontent_items'>

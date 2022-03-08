@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { BsPlusSquareFill } from 'react-icons/bs'
 import { FaPaperPlane } from 'react-icons/fa'
 
@@ -9,21 +9,20 @@ import { UserData } from '../../models';
 
 
 
-const ChatFooter = () => {
+const ChatFooter = ({ socket }: any) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+    const [message, setMessage] = useState('')
 
 
-    const socket = io(
-        "http://www.geekfindr-dev-app.xyz/api/v1/chats/socket.io/", {
-        transports: ["websocket"],
-    });
-
-    socket.on("connect", () => {
-        console.log("connected");
 
 
-    });
 
+    const sendMessage = () => {
+        console.log("send");
+        socket.current.emit("message", {
+            message
+        })
+    }
 
 
     return (
@@ -35,8 +34,11 @@ const ChatFooter = () => {
                 <input
                     type="text"
                     placeholder="Type a message here"
+                    onChange={(e) => setMessage(e.target.value)}
                 />
-                <button className="btnSendMsg" id="sendMsgBtn">
+                <button className="btnSendMsg" id="sendMsgBtn"
+                    onClick={sendMessage}
+                >
                     <FaPaperPlane className='sendicon' size={24} />
                 </button>
             </div>

@@ -17,10 +17,13 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Moment from 'react-moment';
 
 
-const ChatUsersList = () => {
+const ChatUsersList = ({ socket, setconversationId }: any) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+
     const { CreateConversationOrRoom, GetMyChats } = useActions();
     const [isChatModal, setIsChatModal] = useState(false)
+
+
     const { filteredData, setFilteredData, setWordEntered, wordEntered } = useSearch();
 
     let { success: CreateChatSuccess }: any = useTypedSelector(
@@ -60,12 +63,22 @@ const ChatUsersList = () => {
         })
 
     }
+
     let reciever: {} = {}
     let updatedChatList: string[] = []
     updatedChatList = myChats?.map((chat: any) => {
         reciever = chat?.participants?.filter((participant: any) => participant?.id != CurrentUser?.id)
         return { ...chat, reciever }
     })
+
+    const joinConversation = (id: string) => {
+        console.log("joined", id);
+        setconversationId(id)
+
+        socket.current.emit("join_conversation", {
+            conversationId: id
+        })
+    }
 
     return (
         <>
@@ -112,7 +125,9 @@ const ChatUsersList = () => {
                     <hr />
                     {updatedChatList.map((chat: any) => {
                         if (chat?.isRoom) {
-                            return (<div className="chatuserslist_singleusers" >
+                            return (<div className="chatuserslist_singleusers"
+                                key={chat?.id}
+                            >
                                 <div className="chatuserslist_singleusers_profileimg">
                                     <img src={chat?.reciever[0]?.avatar} alt="" />
                                     <div className='chatuserslist_singleusers_profileimg active'></div>
@@ -126,7 +141,10 @@ const ChatUsersList = () => {
                                 </div>
                             </div>)
                         } else {
-                            return (<div className="chatuserslist_singleusers" >
+                            return (<div className="chatuserslist_singleusers"
+                                onClick={() => joinConversation(chat?.id)}
+                                key={chat?.id}
+                            >
                                 <div className="chatuserslist_singleusers_profileimg">
                                     <img src={chat?.reciever[0]?.avatar} alt="" />
                                     <div className='chatuserslist_singleusers_profileimg active'></div>

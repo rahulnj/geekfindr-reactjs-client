@@ -1,4 +1,10 @@
 @import "../../_base.scss";
+.nochat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
 .chatmessage {
     display: flex;
     flex-direction: column;
