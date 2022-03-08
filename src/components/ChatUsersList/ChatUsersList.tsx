@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import './_ChatUsersList.scss'
 
@@ -10,18 +10,62 @@ import { BiSearch } from 'react-icons/bi';
 import Modal from '../Modal/Modal';
 import { HiUserGroup } from 'react-icons/hi';
 import { useSearch } from '../../hooks/useSearch';
-import { SearchedUserData } from '../../models';
+import { SearchedUserData, UserData } from '../../models';
 import { GrFormClose } from 'react-icons/gr';
+import { useActions } from '../../hooks/useActions';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import Moment from 'react-moment';
 
 
 const ChatUsersList = () => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
+    const { CreateConversationOrRoom, GetMyChats } = useActions();
     const [isChatModal, setIsChatModal] = useState(false)
     const { filteredData, setFilteredData, setWordEntered, wordEntered } = useSearch()
-    console.log(filteredData);
+
+    let { success: CreateChatSuccess }: any = useTypedSelector(
+        (state) => state.CreateConversationOrRoom
+    );
+    let { data: myChats }: any = useTypedSelector(
+        (state) => state.GetMyChats
+    );
+
+
+
+
     const clearInput = () => {
         setFilteredData([]);
         setWordEntered("");
     };
+
+    useEffect(() => {
+        GetMyChats({
+            token: CurrentUser?.token
+        })
+    }, [CreateChatSuccess])
+
+
+    const createUserConversation = (id: string) => {
+        const conversationObj = {
+            isRoom: false,
+            roomName: '',
+            participants: [id]
+        }
+
+
+        CreateConversationOrRoom({
+            token: CurrentUser?.token,
+            conversationObj
+        })
+
+    }
+    let reciever: {} = {}
+    let updatedChatList: string[] = []
+    updatedChatList = myChats?.map((chat: any) => {
+        reciever = chat?.participants?.filter((participant: any) => participant?.id != CurrentUser?.id)
+        return { ...chat, reciever }
+    })
+    console.log(updatedChatList);
     return (
         <>
             <Modal isChatModal={isChatModal} setIsChatModal={setIsChatModal} />
@@ -48,7 +92,7 @@ const ChatUsersList = () => {
 
 
                     {filteredData?.map((user: SearchedUserData) => (
-                        <div className="chatuserslist_singleusers">
+                        <div className="chatuserslist_singleusers" key={user?.id}>
                             <div className="chatuserslist_singleusers_profileimg">
                                 <img src={user?.avatar} alt="" />
                             </div>
@@ -57,25 +101,33 @@ const ChatUsersList = () => {
                                     <h5>{user?.username}</h5>
                                     <p>{user?.role}</p>
                                 </div>
-                                <BsPlusLg size={18} />
+                                <BsPlusLg size={18}
+                                    onClick={() => createUserConversation(user?.id)}
+                                />
                             </div>
                         </div>
                     ))
                     }
                     <hr />
-                    <div className="chatuserslist_singleusers">
-                        <div className="chatuserslist_singleusers_profileimg">
-                            <img src={post} alt="" />
-                            <div className='chatuserslist_singleusers_profileimg active'></div>
-                        </div>
-                        <div className='chatuserslist_singleusers_details'>
-                            <div>
-                                <h6>Robo Cop</h6>
-                                <p >Hey, you're arrested!</p>
+                    {updatedChatList.map((chat: any) => (
+
+                        <div className="chatuserslist_singleusers" >
+                            <div className="chatuserslist_singleusers_profileimg">
+                                <img src={chat?.reciever[0]?.avatar} alt="" />
+                                <div className='chatuserslist_singleusers_profileimg active'></div>
                             </div>
-                            <span>13:21</span>
+                            <div className='chatuserslist_singleusers_details'>
+                                <div>
+                                    <h5>{chat?.reciever[0]?.username}</h5>
+                                    <p >Hey, you're arrested!</p>
+                                </div>
+                                <span><Moment fromNow>{chat?.updatedAt}</Moment></span>
+                            </div>
                         </div>
-                    </div>
+                    ))
+
+
+                    }
                     <hr />
                 </div>
             </div>

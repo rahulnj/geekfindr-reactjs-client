@@ -1,4 +1,4 @@
-import { CreateConversationOrRoomActionType } from "../actiontypes";
+import { CreateConversationOrRoomActionType, GetMyChatsActionType } from "../actiontypes";
 
 //Action model for creating a conversation or a room
 
@@ -20,3 +20,24 @@ export type CreateConversationOrRoomAction =
     | CreateConversationOrRoomRequestAction
     | CreateConversationOrRoomSuccessAction
     | CreateConversationOrRoomFailAction
+
+//Action models for getting currentuser conversations.
+
+interface GetMyChatsRequestAction {
+    type: GetMyChatsActionType.GET_MY_CHATS_REQUEST
+}
+
+interface GetMyChatsSuccessAction {
+    type: GetMyChatsActionType.GET_MY_CHATS_SUCCESS
+    payload: string[]
+}
+
+interface GetMyChatsFailAction {
+    type: GetMyChatsActionType.GET_MY_CHATS_FAIL
+    payload: string[]
+}
+
+export type GetMyChatsAction =
+    | GetMyChatsRequestAction
+    | GetMyChatsSuccessAction
+    | GetMyChatsFailAction

@@ -4,7 +4,10 @@ import {
     UserSigninAuthReducer,
     UserRegisterAuthReducer
 } from "./AuthReducer";
-import { CreateConversationOrRoomReducer } from "./ChatReducer";
+import {
+    CreateConversationOrRoomReducer,
+    GetMyChatsReducer
+} from "./ChatReducer";
 
 import {
     FollowUserReducer,
@@ -75,6 +78,7 @@ const rootReducer = combineReducers({
     ProjectTaskDelete: ProjectTaskDeleteReducer,
     ProjectDelete: ProjectDeleteReducer,
     CreateConversationOrRoom: CreateConversationOrRoomReducer,
+    GetMyChats: GetMyChatsReducer,
 })
 
 export default rootReducer;

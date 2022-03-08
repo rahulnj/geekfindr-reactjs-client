@@ -41,4 +41,5 @@ export {
 } from './ProjectActions';
 export {
     CreateConversationOrRoom,
+    GetMyChats
 } from './ChatActions'
