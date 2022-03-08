@@ -1,8 +1,30 @@
 import { Dispatch } from "redux";
 import request from "../../api";
 import { UserData } from "../../models";
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectDeleteAction, ProjectTaskAction, ProjectTaskDeleteAction, ProjectTaskIsCompleteAction, ProjectTodoAction } from "../action-models/ProjectAction";
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectDeleteActionType, ProjectTaskActionType, ProjectTaskDeleteActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType";
+import {
+    AddProjectDescriptionAction,
+    GetMyrojectAction,
+    GetProjectDetailsAction,
+    LeaveOrRemoveMembersAction,
+    ManageTeamRoleAction,
+    ProjectDeleteAction,
+    ProjectTaskAction,
+    ProjectTaskDeleteAction,
+    ProjectTaskIsCompleteAction,
+    ProjectTodoAction
+} from "../action-models";
+import {
+    AddProjectDescriptionActionType,
+    GetMyProjectActionType,
+    GetProjectDetailsActionType,
+    LeaveOrRemoveMembersActionType,
+    ManageTeamRoleActionType,
+    ProjectDeleteActionType,
+    ProjectTaskActionType,
+    ProjectTaskDeleteActionType,
+    ProjectTaskIsCompleteActionType,
+    ProjectTodoActionType
+} from "../actiontypes";
 
 
 
@@ -24,8 +46,6 @@ export const GetMyProject = ({ token }: any) => {
                 type: GetMyProjectActionType.GET_MYPROJECT_SUCCESS,
                 payload: data
             })
-            // console.log(data);
-
         } catch (error: any) {
             console.log(error);
             dispatch({

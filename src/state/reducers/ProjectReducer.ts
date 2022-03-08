@@ -1,6 +1,28 @@
 import { ProjectState } from "../../models"
-import { AddProjectDescriptionAction, GetMyrojectAction, GetProjectDetailsAction, LeaveOrRemoveMembersAction, ManageTeamRoleAction, ProjectDeleteAction, ProjectTaskAction, ProjectTaskDeleteAction, ProjectTaskIsCompleteAction, ProjectTodoAction } from "../action-models/ProjectAction"
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectDeleteActionType, ProjectTaskActionType, ProjectTaskDeleteActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes/ProjectActionType"
+import {
+    AddProjectDescriptionAction,
+    GetMyrojectAction,
+    GetProjectDetailsAction,
+    LeaveOrRemoveMembersAction,
+    ManageTeamRoleAction,
+    ProjectDeleteAction,
+    ProjectTaskAction,
+    ProjectTaskDeleteAction,
+    ProjectTaskIsCompleteAction,
+    ProjectTodoAction
+} from "../action-models"
+import {
+    AddProjectDescriptionActionType,
+    GetMyProjectActionType,
+    GetProjectDetailsActionType,
+    LeaveOrRemoveMembersActionType,
+    ManageTeamRoleActionType,
+    ProjectDeleteActionType,
+    ProjectTaskActionType,
+    ProjectTaskDeleteActionType,
+    ProjectTaskIsCompleteActionType,
+    ProjectTodoActionType
+} from "../actiontypes"
 
 const initialState = {
     data: [],
