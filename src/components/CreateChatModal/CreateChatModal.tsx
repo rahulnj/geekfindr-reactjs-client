@@ -3,9 +3,12 @@ import React, { useEffect, useState } from 'react'
 import './_CreateChatModal.scss'
 import Multiselect from 'multiselect-react-dropdown';
 import { useSearch } from '../../hooks/useSearch';
-import { UserData } from '../../models';
+import { CreateChatModalProps, UserData } from '../../models';
 import { useActions } from '../../hooks/useActions';
-const CreateChatModal = () => {
+
+
+
+const CreateChatModal: React.FC<CreateChatModalProps> = ({ setIsChatModal }) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { CreateConversationOrRoom } = useActions();
     const [isRoom, setIsRoom] = useState(false)
@@ -36,6 +39,7 @@ const CreateChatModal = () => {
             token: CurrentUser?.token,
             conversationObj
         })
+        setIsChatModal(false)
     }
 
     return (
@@ -60,7 +64,9 @@ const CreateChatModal = () => {
                     />
                 </div>
                 <div className='projecttaskmodal_left_actions'>
-                    <button className="button-skip">Cancel</button>
+                    <button className="button-skip"
+                        onClick={() => setIsChatModal(false)}
+                    >Cancel</button>
                     <button type='button' className="button-submit"
                         onClick={createRoomConversation}
                     >Create</button>

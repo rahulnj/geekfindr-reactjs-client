@@ -87,3 +87,7 @@ export interface ChatItemProps {
 export interface SearchProps {
     setWordEntered: React.Dispatch<React.SetStateAction<string>>
 }
+
+export interface CreateChatModalProps {
+    setIsChatModal: React.Dispatch<React.SetStateAction<boolean>>
+}

@@ -146,7 +146,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                 {isProjectTaskModal && <ProjectTaskModal setIsProjectTaskModal={setIsProjectTaskModal} />}
                 {isProjectTaskManageModal && <ProjectTaskManageModal setIsProjectTaskManageModal={setIsProjectTaskManageModal}
                     projectTaskIndex={projectTaskIndex} />}
-                {isChatModal && <CreateChatModal />}
+                {isChatModal && <CreateChatModal setIsChatModal={setIsChatModal} />}
             </div>
         </>,
         document.getElementById('modal') as HTMLElement
