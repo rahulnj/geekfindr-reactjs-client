@@ -21,7 +21,7 @@ const ChatUsersList = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { CreateConversationOrRoom, GetMyChats } = useActions();
     const [isChatModal, setIsChatModal] = useState(false)
-    const { filteredData, setFilteredData, setWordEntered, wordEntered } = useSearch()
+    const { filteredData, setFilteredData, setWordEntered, wordEntered } = useSearch();
 
     let { success: CreateChatSuccess }: any = useTypedSelector(
         (state) => state.CreateConversationOrRoom
@@ -30,6 +30,7 @@ const ChatUsersList = () => {
         (state) => state.GetMyChats
     );
 
+    console.log(myChats);
 
 
 
@@ -65,7 +66,7 @@ const ChatUsersList = () => {
         reciever = chat?.participants?.filter((participant: any) => participant?.id != CurrentUser?.id)
         return { ...chat, reciever }
     })
-    console.log(updatedChatList);
+
     return (
         <>
             <Modal isChatModal={isChatModal} setIsChatModal={setIsChatModal} />
@@ -109,22 +110,37 @@ const ChatUsersList = () => {
                     ))
                     }
                     <hr />
-                    {updatedChatList.map((chat: any) => (
-
-                        <div className="chatuserslist_singleusers" >
-                            <div className="chatuserslist_singleusers_profileimg">
-                                <img src={chat?.reciever[0]?.avatar} alt="" />
-                                <div className='chatuserslist_singleusers_profileimg active'></div>
-                            </div>
-                            <div className='chatuserslist_singleusers_details'>
-                                <div>
-                                    <h5>{chat?.reciever[0]?.username}</h5>
-                                    <p >Hey, you're arrested!</p>
+                    {updatedChatList.map((chat: any) => {
+                        if (chat?.isRoom) {
+                            return (<div className="chatuserslist_singleusers" >
+                                <div className="chatuserslist_singleusers_profileimg">
+                                    <img src={chat?.reciever[0]?.avatar} alt="" />
+                                    <div className='chatuserslist_singleusers_profileimg active'></div>
                                 </div>
-                                <span><Moment fromNow>{chat?.updatedAt}</Moment></span>
-                            </div>
-                        </div>
-                    ))
+                                <div className='chatuserslist_singleusers_details'>
+                                    <div>
+                                        <h5>{chat?.roomName}</h5>
+                                        <p>{chat?.reciever?.length} members</p>
+                                    </div>
+                                    <span><Moment fromNow>{chat?.updatedAt}</Moment></span>
+                                </div>
+                            </div>)
+                        } else {
+                            return (<div className="chatuserslist_singleusers" >
+                                <div className="chatuserslist_singleusers_profileimg">
+                                    <img src={chat?.reciever[0]?.avatar} alt="" />
+                                    <div className='chatuserslist_singleusers_profileimg active'></div>
+                                </div>
+                                <div className='chatuserslist_singleusers_details'>
+                                    <div>
+                                        <h5>{chat?.reciever[0]?.username}</h5>
+                                        <p >Hey, you're arrested!</p>
+                                    </div>
+                                    <span><Moment fromNow>{chat?.updatedAt}</Moment></span>
+                                </div>
+                            </div>)
+                        }
+                    })
 
 
                     }
