@@ -127,7 +127,7 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
                             >
                                 <div className="chatuserslist_singleusers_profileimg">
                                     <img src={chat?.reciever[0]?.avatar} alt="" />
-                                    <div className='chatuserslist_singleusers_profileimg active'></div>
+                                    {/* <div className='chatuserslist_singleusers_profileimg active'></div> */}
                                 </div>
                                 <div className='chatuserslist_singleusers_details'>
                                     <div>
@@ -144,7 +144,7 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
                             >
                                 <div className="chatuserslist_singleusers_profileimg">
                                     <img src={chat?.reciever[0]?.avatar} alt="" />
-                                    <div className='chatuserslist_singleusers_profileimg active'></div>
+                                    {/* <div className='chatuserslist_singleusers_profileimg active'></div> */}
                                 </div>
                                 <div className='chatuserslist_singleusers_details'>
                                     <div>

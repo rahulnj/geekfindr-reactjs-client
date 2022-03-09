@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { ChatItem } from '..'
-import { useActions } from '../../hooks/useActions';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { UserData } from '../../models';
+import React, { useEffect, useRef, useState } from 'react'
+
 import './_ChatMessage.scss'
 
+import { ChatItem } from '..'
 
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { UserData } from '../../models';
 
 
 
@@ -15,15 +15,12 @@ const ChatContent = ({ socket, conversationId }: any) => {
     let { data: conversations, success: conversationsSuccess }: any = useTypedSelector(
         (state) => state.GetConversations
     );
-    const [messageList, setMessageList] = useState<any>([])
+    const [messageList, setMessageList] = useState<string[]>([])
+    const scrollRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
         setMessageList(conversations)
     }, [conversationId, conversationsSuccess])
-
-    console.log(messageList);
-
-
 
     useEffect(() => {
         if (socket.current) {
@@ -35,10 +32,6 @@ const ChatContent = ({ socket, conversationId }: any) => {
         }
     }, [])
 
-    console.log(messageList);
-
-
-
     let updatedConversations: string[] = []
     updatedConversations = messageList?.map((chat: any) => {
         if (chat?.senderId !== CurrentUser?.id) {
@@ -47,10 +40,12 @@ const ChatContent = ({ socket, conversationId }: any) => {
             return { ...chat, arrivalMsg: false }
         }
     })
+
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messageList]);
+
     console.log(updatedConversations);
-
-
-
 
 
     return (
@@ -59,9 +54,11 @@ const ChatContent = ({ socket, conversationId }: any) => {
                 {
                     updatedConversations?.map((msg: any) => (
                         <ChatItem
+                            scrollRef={scrollRef}
                             key={msg?.id ? msg?.id : Math.random()}
                             arrivalMsg={msg?.arrivalMsg}
                             message={msg?.message}
+                            updatedAt={msg?.updatedAt}
                         />
                     ))
                 }

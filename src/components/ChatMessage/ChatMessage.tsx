@@ -16,10 +16,6 @@ const ChatMessage = ({ socket, conversationId, messageList, setMessageList }: an
     let { data: myChats }: any = useTypedSelector(
         (state) => state.GetMyChats
     );
-    let { data: conversations, success: conversationsSuccess, loading: conversationsLoading }: any = useTypedSelector(
-        (state) => state.GetConversations
-    );
-
 
     useEffect(() => {
         if (conversationId) {
@@ -50,7 +46,6 @@ const ChatMessage = ({ socket, conversationId, messageList, setMessageList }: an
                 <div className='nochat'>
                     <h3>loading</h3>
                 </div>
-
             }
         </div>
     )

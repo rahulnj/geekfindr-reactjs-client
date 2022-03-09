@@ -10,18 +10,15 @@ import { UserData } from '../../models';
 
 
 const ChatFooter = ({ socket, messageList, setMessageList, updatedConversations }: any) => {
-    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
     const [message, setMessage] = useState('')
-
-
-
 
     const sendMessage = () => {
         console.log("send");
         socket.current.emit("message", {
             message
         })
+        setMessage('')
     }
 
 
@@ -29,12 +26,14 @@ const ChatFooter = ({ socket, messageList, setMessageList, updatedConversations 
         <div className="content__footer">
             <div className="sendNewMessage">
                 <button className="addFiles">
-                    <BsPlusSquareFill className='sendicon' size={24} />
+                    {/* <BsPlusSquareFill className='sendicon' size={24} /> */}
                 </button>
                 <input
                     type="text"
                     placeholder="Type a message here"
                     onChange={(e) => setMessage(e.target.value)}
+                    value={message}
+                    onKeyPress={(e) => { e.key === "Enter" && sendMessage() }}
                 />
                 <button className="btnSendMsg" id="sendMsgBtn"
                     onClick={sendMessage}

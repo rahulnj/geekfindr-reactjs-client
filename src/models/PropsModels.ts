@@ -82,6 +82,8 @@ export interface ChatItemProps {
     key: number
     arrivalMsg: boolean
     message: string
+    scrollRef: any
+    updatedAt: string
 }
 
 export interface SearchProps {

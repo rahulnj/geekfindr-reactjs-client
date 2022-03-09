@@ -10,6 +10,7 @@ import './_ChatScreen.scss'
 const ChatScreen: React.FC = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const socket = useRef<any>()
+    const { GetConversations } = useActions()
     const [conversationId, setconversationId] = useState('')
 
     useEffect(() => {
@@ -39,22 +40,14 @@ const ChatScreen: React.FC = () => {
 
     }, [])
 
-    const { GetConversations } = useActions()
-    let { data: conversations, success: conversationsSuccess, loading: conversationsLoading }: any = useTypedSelector(
-        (state) => state.GetConversations
-    );
     useEffect(() => {
         if (conversationId) {
             GetConversations({
                 token: CurrentUser?.token,
                 conversationId
             })
-            // setMessageList(conversations)
         }
     }, [conversationId])
-
-    console.log(conversations);
-
 
     return (
         <div className='chatscreen'>
@@ -65,4 +58,4 @@ const ChatScreen: React.FC = () => {
     )
 }
 
-export default ChatScreen
+export default ChatScreen;
