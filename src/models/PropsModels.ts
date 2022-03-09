@@ -79,11 +79,9 @@ export interface ProjectTaskManageModalProps {
 }
 
 export interface ChatItemProps {
-    key: number
-    arrivalMsg: boolean
-    message: string
+    updatedConversations: string[]
     scrollRef: any
-    updatedAt: string
+    conversationId: string
 }
 
 export interface SearchProps {

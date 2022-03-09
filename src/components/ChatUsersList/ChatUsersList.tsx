@@ -71,7 +71,6 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
 
     const joinConversation = (id: string) => {
         setconversationId(id)
-
         socket.current.emit("join_conversation", {
             conversationId: id
         })
@@ -120,13 +119,16 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
                     ))
                     }
                     <hr />
-                    {updatedChatList.map((chat: any) => {
+                    {updatedChatList?.reverse().map((chat: any) => {
+                        console.log(chat);
+
                         if (chat?.isRoom) {
                             return (<div className="chatuserslist_singleusers"
                                 key={chat?.id}
+                                onClick={() => joinConversation(chat?.id)}
                             >
                                 <div className="chatuserslist_singleusers_profileimg">
-                                    <img src={chat?.reciever[0]?.avatar} alt="" />
+                                    <HiUserGroup className="chatuserslist_header_icon" size={28} />
                                     {/* <div className='chatuserslist_singleusers_profileimg active'></div> */}
                                 </div>
                                 <div className='chatuserslist_singleusers_details'>
@@ -149,15 +151,12 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
                                 <div className='chatuserslist_singleusers_details'>
                                     <div>
                                         <h5>{chat?.reciever[0]?.username}</h5>
-                                        <p >Hey, you're arrested!</p>
                                     </div>
                                     <span><Moment fromNow>{chat?.updatedAt}</Moment></span>
                                 </div>
                             </div>)
                         }
                     })
-
-
                     }
                     <hr />
                 </div>

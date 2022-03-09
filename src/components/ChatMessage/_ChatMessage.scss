@@ -47,7 +47,7 @@
         }
         &_details {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
         }
         &_icons {
             display: flex;
@@ -75,6 +75,14 @@
     transition: all 0.3s ease;
     transform-origin: right;
 
+    img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        padding: 0.3rem;
+    }
+
     &.other {
         flex-direction: row-reverse;
         transform-origin: left;
@@ -94,8 +102,14 @@
         justify-content: space-between;
         display: flex;
         margin-top: 10px;
-        span {
-            font-size: 14px;
+        &_name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #d7dcfa;
+            user-select: none;
+        }
+        &_time {
+            font-size: 0.75rem;
             color: #d7dcfa;
             user-select: none;
         }

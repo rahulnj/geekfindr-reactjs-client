@@ -15,6 +15,9 @@ const ChatContent = ({ socket, conversationId }: any) => {
     let { data: conversations, success: conversationsSuccess }: any = useTypedSelector(
         (state) => state.GetConversations
     );
+    let { data: myChats }: any = useTypedSelector(
+        (state) => state.GetMyChats
+    );
     const [messageList, setMessageList] = useState<string[]>([])
     const scrollRef = useRef<HTMLDivElement>();
 
@@ -41,28 +44,23 @@ const ChatContent = ({ socket, conversationId }: any) => {
         }
     })
 
+    //     updatedConversations = updatedConversations?.map((conversation: any) => {
+    //         conversation?.id ==
+    // })
+
+
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messageList]);
 
-    console.log(updatedConversations);
-
-
     return (
         <div className='chatcontent'>
             <div className='chatcontent_items'>
-                {
-                    updatedConversations?.map((msg: any) => (
-                        <ChatItem
-                            scrollRef={scrollRef}
-                            key={msg?.id ? msg?.id : Math.random()}
-                            arrivalMsg={msg?.arrivalMsg}
-                            message={msg?.message}
-                            updatedAt={msg?.updatedAt}
-                        />
-                    ))
-                }
-
+                <ChatItem
+                    scrollRef={scrollRef}
+                    updatedConversations={updatedConversations}
+                    conversationId={conversationId}
+                />
             </div>
         </div>
     )
