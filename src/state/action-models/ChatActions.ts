@@ -1,3 +1,4 @@
+import { Conversation, CreateConversationOrRoomData, GetMyChatsData } from "../../models";
 import { CreateConversationOrRoomActionType, GetConversationsActionType, GetMyChatsActionType } from "../actiontypes";
 
 //Action model for creating a conversation or a room
@@ -8,7 +9,7 @@ interface CreateConversationOrRoomRequestAction {
 
 interface CreateConversationOrRoomSuccessAction {
     type: CreateConversationOrRoomActionType.CREATE_CONVERSATION_OR_ROOM_SUCCESS
-    payload: string[]
+    payload: CreateConversationOrRoomData
 }
 
 interface CreateConversationOrRoomFailAction {
@@ -29,7 +30,7 @@ interface GetMyChatsRequestAction {
 
 interface GetMyChatsSuccessAction {
     type: GetMyChatsActionType.GET_MY_CHATS_SUCCESS
-    payload: string[]
+    payload: GetMyChatsData[]
 }
 
 interface GetMyChatsFailAction {
@@ -50,7 +51,7 @@ interface GetConversationsRequestAction {
 
 interface GetConversationsSuccessAction {
     type: GetConversationsActionType.GET_CONVERSATIONS_SUCCESS
-    payload: string[]
+    payload: Conversation[]
 }
 
 interface GetConversationsFailAction {

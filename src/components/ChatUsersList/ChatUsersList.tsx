@@ -10,7 +10,7 @@ import { BiSearch } from 'react-icons/bi';
 import Modal from '../Modal/Modal';
 import { HiUserGroup } from 'react-icons/hi';
 import { useSearch } from '../../hooks/useSearch';
-import { SearchedUserData, UserData } from '../../models';
+import { CreateConversationOrRoomState, GetMyChatState, SearchedUserData, UserData } from '../../models';
 import { GrFormClose } from 'react-icons/gr';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
@@ -26,10 +26,10 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
 
     const { filteredData, setFilteredData, setWordEntered, wordEntered } = useSearch();
 
-    let { success: CreateChatSuccess }: any = useTypedSelector(
+    let { success: CreateChatSuccess }: CreateConversationOrRoomState = useTypedSelector(
         (state) => state.CreateConversationOrRoom
     );
-    let { data: myChats }: any = useTypedSelector(
+    let { data: myChats }: GetMyChatState = useTypedSelector(
         (state) => state.GetMyChats
     );
 

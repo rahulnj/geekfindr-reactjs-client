@@ -48,12 +48,5 @@ export interface ProjectState {
     success?: boolean
 }
 
-//State Models used in the ChatReducer
 
-export interface ChatState {
-    data: string[]
-    error: string[] | null
-    loading: boolean
-    success?: boolean
-}
 

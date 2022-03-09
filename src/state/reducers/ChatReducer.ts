@@ -1,4 +1,4 @@
-import { ChatState } from "../../models"
+import { GetConversationsState, GetMyChatState, CreateConversationOrRoomState } from "../../models"
 import { CreateConversationOrRoomAction, GetConversationsAction, GetMyChatsAction } from "../action-models"
 import { CreateConversationOrRoomActionType, GetConversationsActionType, GetMyChatsActionType } from "../actiontypes";
 
@@ -12,9 +12,9 @@ const initialState = {
 
 
 export const CreateConversationOrRoomReducer = (
-    state: ChatState = initialState,
+    state: CreateConversationOrRoomState = initialState,
     action: CreateConversationOrRoomAction
-): ChatState => {
+): CreateConversationOrRoomState => {
     switch (action.type) {
         case CreateConversationOrRoomActionType.CREATE_CONVERSATION_OR_ROOM_REQUEST:
             return { ...state, loading: true, success: false, error: null, data: [] }
@@ -28,9 +28,9 @@ export const CreateConversationOrRoomReducer = (
 }
 
 export const GetMyChatsReducer = (
-    state: ChatState = initialState,
+    state: GetMyChatState = initialState,
     action: GetMyChatsAction
-): ChatState => {
+): GetMyChatState => {
     switch (action.type) {
         case GetMyChatsActionType.GET_MY_CHATS_REQUEST:
             return { ...state, loading: true, success: false, error: null, data: [] }
@@ -44,9 +44,9 @@ export const GetMyChatsReducer = (
 }
 
 export const GetConversationsReducer = (
-    state: ChatState = initialState,
+    state: GetConversationsState = initialState,
     action: GetConversationsAction
-): ChatState => {
+): GetConversationsState => {
     switch (action.type) {
         case GetConversationsActionType.GET_CONVERSATIONS_REQUEST:
             return { ...state, loading: true, success: false, error: null, data: [] }

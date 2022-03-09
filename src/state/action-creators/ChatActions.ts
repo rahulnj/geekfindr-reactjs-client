@@ -1,5 +1,7 @@
 import { Dispatch } from "redux"
 import request from "../../api"
+import { Conversation, CreateConversationOrRoomData, CreateConversationOrRoomState, GetMyChatsData } from "../../models"
+
 import { CreateConversationOrRoomAction, GetConversationsAction, GetMyChatsAction } from "../action-models"
 import { CreateConversationOrRoomActionType, GetConversationsActionType, GetMyChatsActionType } from "../actiontypes"
 
@@ -15,11 +17,12 @@ export const CreateConversationOrRoom = ({ token, conversationObj }: any) => {
             },
         };
         try {
-            const { data } = await request.post('/api/v1/chats/conversations', conversationObj, config)
+            const { data } = await request.post<CreateConversationOrRoomData>('/api/v1/chats/conversations', conversationObj, config)
             dispatch({
                 type: CreateConversationOrRoomActionType.CREATE_CONVERSATION_OR_ROOM_SUCCESS,
                 payload: data
             })
+            console.log(data);
 
 
         } catch (error: any) {
@@ -44,12 +47,11 @@ export const GetMyChats = ({ token }: any) => {
             },
         };
         try {
-            const { data } = await request.get('/api/v1/chats/my-conversations', config)
+            const { data } = await request.get<GetMyChatsData[]>('/api/v1/chats/my-conversations', config)
             dispatch({
                 type: GetMyChatsActionType.GET_MY_CHATS_SUCCESS,
                 payload: data
             })
-
         } catch (error: any) {
             console.log(error);
             dispatch({
@@ -72,7 +74,7 @@ export const GetConversations = ({ token, conversationId }: any) => {
             },
         };
         try {
-            const { data } = await request.get(`/api/v1/chats/conversations/${conversationId}/messages`, config)
+            const { data } = await request.get<Conversation[]>(`/api/v1/chats/conversations/${conversationId}/messages`, config)
             dispatch({
                 type: GetConversationsActionType.GET_CONVERSATIONS_SUCCESS,
                 payload: data
