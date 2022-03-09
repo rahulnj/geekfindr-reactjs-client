@@ -98,10 +98,10 @@ const Signup: React.FC = () => {
             <div className='signup_error'>{BlankFieldError}</div>
             <div className='signup_error'>{error}</div>
             <input type="submit" className="signup_btn" value="Sign up" />
-            <p className="signup_socialtext">Or Sign up with social platforms</p>
+            {/* <p className="signup_socialtext">Or Sign up with social platforms</p>
             <div className="signup_socialmedia">
                 <BsGithub className='signup_icon' />
-            </div>
+            </div> */}
         </form >
 
     )

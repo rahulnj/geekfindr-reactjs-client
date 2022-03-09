@@ -82,7 +82,7 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
             <Modal isChatModal={isChatModal} setIsChatModal={setIsChatModal} />
             <div className='chatuserslist'>
                 <div className="chatuserslist_header">
-                    <img src={post} alt="" />
+                    <img src={CurrentUser?.avatar} alt="" />
                     <div className="chatuserslist_header_icons">
                         <HiUserGroup className="chatuserslist_header_icon" size={28}
                             onClick={() => setIsChatModal(true)}

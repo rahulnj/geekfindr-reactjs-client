@@ -24,6 +24,26 @@
         align-items: center;
         justify-content: space-between;
         padding: 10px;
+        &_view {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            h4 {
+                font-size: 1rem;
+            }
+            span {
+                background: $background-color;
+                border-radius: 20px;
+                padding: 8px 10px;
+                transition: 0.3s;
+            }
+            span:hover {
+                opacity: 0.8;
+                box-shadow: $main-color;
+                background: $main-color;
+            }
+        }
     }
     &_search {
         background-color: $main-color;
