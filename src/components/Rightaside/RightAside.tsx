@@ -23,8 +23,6 @@ const RightAside = ({ profile, userProfile }: ProfileRightAsideProps) => {
                     <input type="text" placeholder='Search Messages' />
                 </div> */}
                 <Messages />
-                <Messages />
-                <Messages />
                 <div className="rightaside_wrapper_messages_heading_view">
                     <span
                         onClick={() => navigate('/chat')}
