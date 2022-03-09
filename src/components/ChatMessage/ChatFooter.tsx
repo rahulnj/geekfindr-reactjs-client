@@ -9,10 +9,10 @@ import { UserData } from '../../models';
 
 
 
-const ChatFooter = ({ socket }: any) => {
+const ChatFooter = ({ socket, messageList, setMessageList, updatedConversations }: any) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-    const [message, setMessage] = useState('')
 
+    const [message, setMessage] = useState('')
 
 
 

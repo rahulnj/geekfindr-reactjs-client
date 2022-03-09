@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ChatContent, ChatHeader } from '..'
+import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { UserData } from '../../models'
 import ChatFooter from './ChatFooter'
@@ -8,12 +9,17 @@ import './_ChatMessage.scss'
 
 
 
-const ChatMessage = ({ socket, conversationId }: any) => {
+const ChatMessage = ({ socket, conversationId, messageList, setMessageList }: any) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const [chatUser, setChatUser] = useState<any>([])
+    const { GetConversations } = useActions()
     let { data: myChats }: any = useTypedSelector(
         (state) => state.GetMyChats
     );
+    let { data: conversations, success: conversationsSuccess, loading: conversationsLoading }: any = useTypedSelector(
+        (state) => state.GetConversations
+    );
+
 
     useEffect(() => {
         if (conversationId) {
@@ -30,17 +36,15 @@ const ChatMessage = ({ socket, conversationId }: any) => {
         }
     }, [conversationId])
 
-
-
-
-
     return (
         <div className='chatmessage'>
             {conversationId ?
                 <>
                     <ChatHeader chatUser={chatUser} />
-                    <ChatContent socket={socket} conversationId={conversationId} />
-                    <ChatFooter socket={socket} />
+                    <ChatContent socket={socket} conversationId={conversationId}
+                        messageList={messageList} setMessageList={setMessageList}
+                    />
+                    <ChatFooter socket={socket} messageList={messageList} setMessageList={setMessageList} />
                 </>
                 :
                 <div className='nochat'>

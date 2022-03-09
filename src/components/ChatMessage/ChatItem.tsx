@@ -2,12 +2,12 @@ import React from 'react'
 import { ChatItemProps } from '../../models'
 import './_ChatMessage.scss'
 
-const ChatItem = ({ key, msg, type }: ChatItemProps) => {
+const ChatItem = ({ key, arrivalMsg, message }: ChatItemProps) => {
     return (
-        <div className={type === 'other' ? 'chatitem other' : 'chatitem'}
+        <div className={arrivalMsg ? 'chatitem other' : 'chatitem'}
             key={key}>
-            <div className={type === 'other' ? 'chatitem_content' : 'chatitem_contentme'}>
-                <div className="chatitem_chatmsg">{msg}</div>
+            <div className={arrivalMsg ? 'chatitem_content' : 'chatitem_contentme'}>
+                <div className="chatitem_chatmsg">{message}</div>
                 <div className="chatitem_chatmeta">
                     <span>16 mins ago</span>
                     <span>Seen 1.03PM</span>

@@ -80,8 +80,8 @@ export interface ProjectTaskManageModalProps {
 
 export interface ChatItemProps {
     key: number
-    type: string
-    msg: string
+    arrivalMsg: boolean
+    message: string
 }
 
 export interface SearchProps {
