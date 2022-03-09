@@ -44,11 +44,6 @@ const ChatContent = ({ socket, conversationId }: any) => {
         }
     })
 
-    //     updatedConversations = updatedConversations?.map((conversation: any) => {
-    //         conversation?.id ==
-    // })
-
-
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messageList]);

@@ -24,7 +24,7 @@ const Layout = ({ children, project }: LayoutProps) => {
     }
 
     return (
-        <>
+        <div className="layout">
             <Modal isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened} />
             <Header handleToggleSidebar={handleToggleSidebar} ToggleAddPostModal={ToggleAddPostModal} />
             <div className='layout_container'>
@@ -32,7 +32,7 @@ const Layout = ({ children, project }: LayoutProps) => {
                 {children}
             </div>
 
-        </>
+        </div>
     )
 }
 

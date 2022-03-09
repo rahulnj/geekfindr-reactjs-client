@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 
-// import { io } from "socket.io-client";
 import { BsPlusSquareFill } from 'react-icons/bs'
 import { FaPaperPlane } from 'react-icons/fa'
 
 import './_ChatMessage.scss'
-import { UserData } from '../../models';
+import Swal from 'sweetalert2';
+import Toast from '../Toast/Toast';
+import { toast } from 'react-toastify';
 
 
 
@@ -15,10 +16,12 @@ const ChatFooter = ({ socket, messageList, setMessageList, updatedConversations 
 
     const sendMessage = () => {
         console.log("send");
-        socket.current.emit("message", {
-            message
-        })
-        setMessage('')
+        if (message.length !== 0) {
+            socket.current.emit("message", {
+                message
+            })
+            setMessage('')
+        }
     }
 
 

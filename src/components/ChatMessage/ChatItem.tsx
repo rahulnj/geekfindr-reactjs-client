@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import Moment from 'react-moment'
-import { JsxChild, JsxElement } from 'typescript'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { ChatItemProps, UserData } from '../../models'
 import './_ChatMessage.scss'
@@ -50,7 +49,7 @@ const ChatItem = ({ scrollRef, conversationId, updatedConversations }: ChatItemP
                 </div>
                 {
                     currentChat?.[0]?.participants?.map((participant: any) => {
-                        if (participant?.id === conversation?.senderId) {
+                        if (participant?.id === conversation?.senderId && participant?.id !== CurrentUser?.id) {
                             return (<img src={participant?.avatar} alt="" />)
                         }
                     })

@@ -120,8 +120,6 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
                     }
                     <hr />
                     {updatedChatList?.reverse().map((chat: any) => {
-                        console.log(chat);
-
                         if (chat?.isRoom) {
                             return (<div className="chatuserslist_singleusers"
                                 key={chat?.id}
