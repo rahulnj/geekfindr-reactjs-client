@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { ProfileProps, UserData, UsersState } from '../../models'
+import { ProfileProps, UserData } from '../../models'
 import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'
 
@@ -14,7 +14,10 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
     const [followersModal, setFollowersModal] = useState(false)
     const [followingModal, setFollowingModal] = useState(false)
 
-    const { GetUserFollowers, GetFollowingUsers, FollowUser, UserProfileDetails: UserProfileDetail } = useActions();
+    const { GetUserFollowers,
+        GetFollowingUsers,
+        FollowUser,
+        UserProfileDetails: UserProfileDetail } = useActions();
     const navigate = useNavigate()
 
     const { data: user }: any = useTypedSelector(
@@ -74,14 +77,14 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
 
     const HandleFollowUser = async (id: string) => {
         FollowUser({
-            token: user.token,
-            id
+            token: user?.token,
+            userId: id
         })
     }
 
     const ShowFollowersList = () => {
         GetUserFollowers({
-            token: user.token,
+            token: user?.token,
             userId: user.id,
         })
         setFollowersModal(true)

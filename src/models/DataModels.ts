@@ -54,14 +54,7 @@ export interface EditPostModalState {
 
 
 
-export interface FollowersModal {
-    followersModal?: boolean
-    followingModal?: boolean
-    username?: string
-    role?: string
-    userId?: string
-    avatar?: string
-}
+
 
 
 

@@ -1,6 +1,6 @@
 import { Dispatch } from "redux"
 import request from "../../api"
-import { UserData } from "../../models";
+import { FollowersData, GetUserFollowersActionData, UserData } from "../../models";
 import { FollowUserAction, GetFollowingUsersAction, GetUserFollowersAction } from "../action-models"
 import { FollowUserActionType, GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes"
 
@@ -8,7 +8,7 @@ import { FollowUserActionType, GetFollowingUsersActionType, GetUserFollowersActi
 
 const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
-export const GetUserFollowers = ({ token, userId }: any) => {
+export const GetUserFollowers = ({ token, userId }: GetUserFollowersActionData) => {
     return async (dispatch: Dispatch<GetUserFollowersAction>) => {
         dispatch({
             type: GetUserFollowersActionType.GET_USERFOLLOWERS_REQUEST
@@ -16,11 +16,11 @@ export const GetUserFollowers = ({ token, userId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
-            const { data } = await request.get(`/api/v1/profiles/${userId}/followers`, config)
+            const { data } = await request.get<FollowersData[]>(`/api/v1/profiles/${userId}/followers`, config)
             dispatch({
                 type: GetUserFollowersActionType.GET_USERFOLLOWERS_SUCCESS,
                 payload: data
@@ -35,7 +35,7 @@ export const GetUserFollowers = ({ token, userId }: any) => {
     }
 }
 
-export const GetFollowingUsers = ({ token, userId }: any) => {
+export const GetFollowingUsers = ({ token, userId }: GetUserFollowersActionData) => {
     return async (dispatch: Dispatch<GetFollowingUsersAction>) => {
         dispatch({
             type: GetFollowingUsersActionType.GET_FOLLOWINGUSERS_REQUEST
@@ -43,15 +43,16 @@ export const GetFollowingUsers = ({ token, userId }: any) => {
         const config = {
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${CurrentUser?.token}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         try {
-            const { data } = await request.get(`/api/v1/profiles/${userId}/following`, config)
+            const { data } = await request.get<FollowersData[]>(`/api/v1/profiles/${userId}/following`, config)
             dispatch({
                 type: GetFollowingUsersActionType.GET_FOLLOWINGUSERS_SUCCESS,
                 payload: data
             })
+            console.log(data);
         } catch (error: any) {
             console.log(error);
             dispatch({
@@ -62,7 +63,7 @@ export const GetFollowingUsers = ({ token, userId }: any) => {
     }
 }
 
-export const FollowUser = ({ token, id }: any) => {
+export const FollowUser = ({ token, userId }: GetUserFollowersActionData) => {
     return async (dispatch: Dispatch<FollowUserAction>) => {
         dispatch({
             type: FollowUserActionType.FOLLOW_USER_REQUEST
@@ -74,7 +75,7 @@ export const FollowUser = ({ token, id }: any) => {
             }
         };
         try {
-            const { data } = await request.post('/api/v1/profiles/following', { id: id }, config)
+            const { data } = await request.post('/api/v1/profiles/following', { id: userId }, config)
             dispatch({
                 type: FollowUserActionType.FOLLOW_USER_SUCCESS,
                 payload: data

@@ -19,12 +19,7 @@ export interface PostState {
 
 //State Models used in the FollowersReducer
 
-export interface FollowersState {
-    data: string[]
-    error: string[] | null
-    loading: boolean
-    success?: boolean
-}
+
 
 //State Models used in the ProjectReducer
 

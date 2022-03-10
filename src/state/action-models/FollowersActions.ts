@@ -1,3 +1,4 @@
+import { FollowersData } from "../../models";
 import { FollowUserActionType, GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes";
 
 //Action model to get all user followers
@@ -8,7 +9,7 @@ interface GetUserFollowersRequestAction {
 
 interface GetUserFollowersSuccessAction {
     type: GetUserFollowersActionType.GET_USERFOLLOWERS_SUCCESS
-    payload: string[]
+    payload: FollowersData[] | []
 }
 
 interface GetUserFollowersFailAction {
@@ -30,7 +31,7 @@ interface GetFollowingUsersRequestAction {
 
 interface GetFollowingUsersSuccessAction {
     type: GetFollowingUsersActionType.GET_FOLLOWINGUSERS_SUCCESS
-    payload: string[]
+    payload: FollowersData[] | []
 }
 
 interface GetFollowingUsersFailAction {

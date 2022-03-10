@@ -4,7 +4,6 @@ import { GetUserDetailsActionData, UserData, UserEditProfileDetailsActionData } 
 import { GetUserDetailsAction, UserEditProfileAction, UserProfileDetailsAction } from "../action-models"
 import { GetUserDetailsActionType, UserEditProfileActionType, UserProfileDetailsActionType } from "../actiontypes"
 
-const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
 export const UserProfileDetails = (token: string) => {
 
@@ -80,8 +79,6 @@ export const GetUserDetails = ({ token, userId }: GetUserDetailsActionData) => {
                 type: GetUserDetailsActionType.GET_USERDETAILS_SUCCESS,
                 payload: data
             });
-            console.log(data);
-
         } catch (error: any) {
             console.log(error);
             dispatch({
