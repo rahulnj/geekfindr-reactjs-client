@@ -1,4 +1,5 @@
-import { ProjectState } from "../../models"
+import { GetMyProjectState, GetProjectDetailState, ProjectState } from "../../models"
+
 import {
     AddProjectDescriptionAction,
     GetMyrojectAction,
@@ -11,6 +12,7 @@ import {
     ProjectTaskIsCompleteAction,
     ProjectTodoAction
 } from "../action-models"
+
 import {
     AddProjectDescriptionActionType,
     GetMyProjectActionType,
@@ -32,9 +34,9 @@ const initialState = {
 }
 
 export const GetMyProjectReducer = (
-    state: ProjectState = initialState,
+    state: GetMyProjectState = initialState,
     action: GetMyrojectAction
-): ProjectState => {
+): GetMyProjectState => {
     switch (action.type) {
         case GetMyProjectActionType.GET_MYPROJECT_REQUEST:
             return { ...state, loading: true, error: null, data: [] }
@@ -48,9 +50,9 @@ export const GetMyProjectReducer = (
 }
 
 export const GetProjectDetailsReducer = (
-    state: ProjectState = initialState,
+    state: GetProjectDetailState = initialState,
     action: GetProjectDetailsAction
-): ProjectState => {
+): GetProjectDetailState => {
     switch (action.type) {
         case GetProjectDetailsActionType.GET_PROJECT_DETAILS_REQUEST:
             return { ...state, success: false, loading: true, error: null, data: [] }

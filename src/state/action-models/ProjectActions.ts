@@ -1,5 +1,6 @@
 //Action models for getting my projects
 
+import { GetMyProjectData, ProjectDetails } from "../../models";
 import {
     AddProjectDescriptionActionType,
     GetMyProjectActionType,
@@ -19,7 +20,7 @@ interface GetMyrojectRequestAction {
 
 interface GetMyrojectSuccessAction {
     type: GetMyProjectActionType.GET_MYPROJECT_SUCCESS
-    payload: string[]
+    payload: GetMyProjectData[]
 }
 
 interface GetMyrojectFailAction {
@@ -40,7 +41,7 @@ interface GetProjectDetailsRequestAction {
 
 interface GetProjectDetailsSuccessAction {
     type: GetProjectDetailsActionType.GET_PROJECT_DETAILS_SUCCESS
-    payload: string[]
+    payload: ProjectDetails
 }
 
 interface GetProjectDetailsFailAction {

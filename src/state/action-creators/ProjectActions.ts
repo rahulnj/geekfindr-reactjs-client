@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import request from "../../api";
-import { UserData } from "../../models";
+import { AddProjectDescriptionActionData, DeleteProjectActionData, GetMyProjectActionData, GetMyProjectData, GetProjectDetailsActionData, LeaveOrRemoveMembersActionData, ManageTeamRoleActionData, ProjectDetails, ProjectTaskActionData, ProjectTaskDeleteActionData, ProjectTaskIsCompleteActionData, ProjectTodoActionData } from "../../models";
+
 import {
     AddProjectDescriptionAction,
     GetMyrojectAction,
@@ -13,6 +14,7 @@ import {
     ProjectTaskIsCompleteAction,
     ProjectTodoAction
 } from "../action-models";
+
 import {
     AddProjectDescriptionActionType,
     GetMyProjectActionType,
@@ -26,10 +28,7 @@ import {
     ProjectTodoActionType
 } from "../actiontypes";
 
-
-
-
-export const GetMyProject = ({ token }: any) => {
+export const GetMyProject = ({ token }: GetMyProjectActionData) => {
     return async (dispatch: Dispatch<GetMyrojectAction>) => {
         dispatch({
             type: GetMyProjectActionType.GET_MYPROJECT_REQUEST
@@ -41,7 +40,7 @@ export const GetMyProject = ({ token }: any) => {
             },
         };
         try {
-            const { data } = await request.get('/api/v1/projects/my-projects', config)
+            const { data } = await request.get<GetMyProjectData[]>('/api/v1/projects/my-projects', config)
             dispatch({
                 type: GetMyProjectActionType.GET_MYPROJECT_SUCCESS,
                 payload: data
@@ -56,7 +55,7 @@ export const GetMyProject = ({ token }: any) => {
     }
 }
 
-export const GetProjectDetails = ({ token, projectId }: any) => {
+export const GetProjectDetails = ({ token, projectId }: GetProjectDetailsActionData) => {
     return async (dispatch: Dispatch<GetProjectDetailsAction>) => {
         dispatch({
             type: GetProjectDetailsActionType.GET_PROJECT_DETAILS_REQUEST
@@ -68,7 +67,7 @@ export const GetProjectDetails = ({ token, projectId }: any) => {
             },
         };
         try {
-            const { data } = await request.get(`/api/v1/projects/${projectId}`, config)
+            const { data } = await request.get<ProjectDetails>(`/api/v1/projects/${projectId}`, config)
             dispatch({
                 type: GetProjectDetailsActionType.GET_PROJECT_DETAILS_SUCCESS,
                 payload: data
@@ -83,7 +82,7 @@ export const GetProjectDetails = ({ token, projectId }: any) => {
     }
 }
 
-export const AddProjectDescription = ({ token, description, projectId }: any) => {
+export const AddProjectDescription = ({ token, description, projectId }: AddProjectDescriptionActionData) => {
     return async (dispatch: Dispatch<AddProjectDescriptionAction>) => {
         dispatch({
             type: AddProjectDescriptionActionType.ADD_PROJECT_DESCRIPTION_REQUEST
@@ -113,7 +112,7 @@ export const AddProjectDescription = ({ token, description, projectId }: any) =>
     }
 }
 
-export const ManageTeamRole = ({ projectId, memberId, role, token }: any) => {
+export const ManageTeamRole = ({ projectId, memberId, role, token }: ManageTeamRoleActionData) => {
     return async (dispatch: Dispatch<ManageTeamRoleAction>) => {
         dispatch({
             type: ManageTeamRoleActionType.MANAGE_TEAM_ROLE_REQUEST
@@ -142,7 +141,7 @@ export const ManageTeamRole = ({ projectId, memberId, role, token }: any) => {
     }
 }
 
-export const LeaveOrRemoveMembers = ({ projectId, memberId, token }: any) => {
+export const LeaveOrRemoveMembers = ({ projectId, memberId, token }: LeaveOrRemoveMembersActionData) => {
     return async (dispatch: Dispatch<LeaveOrRemoveMembersAction>) => {
         dispatch({
             type: LeaveOrRemoveMembersActionType.LEAVE_OR_REMOVE_MEMBERS_REQUEST
@@ -170,7 +169,7 @@ export const LeaveOrRemoveMembers = ({ projectId, memberId, token }: any) => {
     }
 }
 
-export const ProjectTodo = ({ projectId, token, Todo }: any) => {
+export const ProjectTodo = ({ projectId, token, Todo }: ProjectTodoActionData) => {
     return async (dispatch: Dispatch<ProjectTodoAction>) => {
         dispatch({
             type: ProjectTodoActionType.PROJECT_TODO_REQUEST
@@ -197,7 +196,7 @@ export const ProjectTodo = ({ projectId, token, Todo }: any) => {
     }
 }
 
-export const ProjectTask = ({ token, projectId, task }: any) => {
+export const ProjectTask = ({ token, projectId, task }: ProjectTaskActionData) => {
     return async (dispatch: Dispatch<ProjectTaskAction>) => {
         dispatch({
             type: ProjectTaskActionType.PROJECT_TASK_REQUEST
@@ -225,7 +224,7 @@ export const ProjectTask = ({ token, projectId, task }: any) => {
     }
 }
 
-export const ProjectTaskIsComplete = ({ token, projectId, title, isComplete }: any) => {
+export const ProjectTaskIsComplete = ({ token, projectId, title, isComplete }: ProjectTaskIsCompleteActionData) => {
     return async (dispatch: Dispatch<ProjectTaskIsCompleteAction>) => {
         dispatch({
             type: ProjectTaskIsCompleteActionType.PROJECT_TASK_ISCOMPLETE_REQUEST
@@ -252,7 +251,7 @@ export const ProjectTaskIsComplete = ({ token, projectId, title, isComplete }: a
     }
 }
 
-export const ProjectTaskDelete = ({ token, projectId, title }: any) => {
+export const ProjectTaskDelete = ({ token, projectId, title }: ProjectTaskDeleteActionData) => {
     return async (dispatch: Dispatch<ProjectTaskDeleteAction>) => {
         dispatch({
             type: ProjectTaskDeleteActionType.PROJECT_TASK_DELETE_REQUEST
@@ -279,7 +278,7 @@ export const ProjectTaskDelete = ({ token, projectId, title }: any) => {
     }
 }
 
-export const DeleteProject = ({ token, projectId }: any) => {
+export const DeleteProject = ({ token, projectId }: DeleteProjectActionData) => {
     return async (dispatch: Dispatch<ProjectDeleteAction>) => {
         dispatch({
             type: ProjectDeleteActionType.PROJECT_DELETE_REQUEST
