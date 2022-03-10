@@ -6,7 +6,7 @@ import { AiFillGithub, AiFillLinkedin } from "react-icons/ai"
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions';
-import { UserData } from '../../models';
+import { editProfileData, UserData } from '../../models';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -137,17 +137,20 @@ const UserDetailsForm: React.FC = () => {
 
     const EditUserProfileDetails = (e: React.SyntheticEvent) => {
         e.preventDefault();
-        const editProfileData = {
+        const editProfileData: editProfileData = {
             role: position,
             bio: bio,
             organizations: updatedOrganization,
             skills: [],
             experience: experience,
             education: updatedEducation,
-            works: [{}],
+            works: [],
             socials: [{ github: github }, { linkedin: linkedin }]
         }
-        UserEditProfileDetails({ token: CurrentUser.token, editProfileData: editProfileData })
+        UserEditProfileDetails({
+            token: CurrentUser.token,
+            editProfileData: editProfileData
+        })
         navigate(`/profile/${CurrentUser?.id}`)
     }
 

@@ -23,13 +23,13 @@ export const useSearch = () => {
         const CancelToken = axios.CancelToken.source()
         const fetchUsers = async () => {
             try {
-                const { data: usersData } = await request.get(`/api/v1/profiles?searchUserName=${wordEntered}`, {
+                const { data } = await request.get(`/api/v1/profiles?searchUserName=${wordEntered}`, {
                     cancelToken: CancelToken.token,
                     headers: {
                         'Authorization': `Bearer ${CurrentUser?.token}`,
                     },
                 })
-                setFilteredData(usersData)
+                setFilteredData(data)
             } catch (err) {
                 if (axios.isCancel(Error)) {
                     return;

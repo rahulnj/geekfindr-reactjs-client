@@ -1,5 +1,5 @@
 import {
-    UserProfileDetailsData
+    UserData,
 } from "../../models";
 import {
     UserProfileDetailsActionType,
@@ -15,7 +15,7 @@ interface UserProfileDetailsRequestAction {
 
 interface UserProfileDetailsSuccessAction {
     type: UserProfileDetailsActionType.USER_PROFILE_DETAILS_SUCCESS
-    payload: UserProfileDetailsData
+    payload: UserData
 }
 
 interface UserProfileDetailsFailAction {
@@ -37,7 +37,7 @@ interface UserEditProfileRequestAction {
 
 interface UserEditProfileSuccessAction {
     type: UserEditProfileActionType.USER_EDIT_PROFILE_SUCCESS
-    payload: UserProfileDetailsData
+    payload: UserData
 }
 
 interface UserEditProfileFailAction {
@@ -58,7 +58,7 @@ interface GetUserDetailsRequestAction {
 
 interface GetUserDetailsSuccessAction {
     type: GetUserDetailsActionType.GET_USERDETAILS_SUCCESS
-    payload: UserProfileDetailsData
+    payload: UserData
 }
 
 interface GetUserDetailsFailAction {
