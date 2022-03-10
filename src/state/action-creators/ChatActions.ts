@@ -1,11 +1,15 @@
 import { Dispatch } from "redux"
 import request from "../../api"
-import { Conversation, CreateConversationOrRoomData, CreateConversationOrRoomState, GetMyChatsData } from "../../models"
+import { Conversation, CreateConversationOrRoomActionData, CreateConversationOrRoomData, CreateConversationOrRoomState, GetMyChatsData } from "../../models"
 
 import { CreateConversationOrRoomAction, GetConversationsAction, GetMyChatsAction } from "../action-models"
 import { CreateConversationOrRoomActionType, GetConversationsActionType, GetMyChatsActionType } from "../actiontypes"
 
-export const CreateConversationOrRoom = ({ token, conversationObj }: any) => {
+
+
+
+
+export const CreateConversationOrRoom = ({ token, conversationObj }: CreateConversationOrRoomActionData) => {
     return async (dispatch: Dispatch<CreateConversationOrRoomAction>) => {
         dispatch({
             type: CreateConversationOrRoomActionType.CREATE_CONVERSATION_OR_ROOM_REQUEST

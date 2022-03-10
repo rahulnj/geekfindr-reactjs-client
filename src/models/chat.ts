@@ -80,3 +80,15 @@ export interface ChatItemProps {
 export interface ChatFooterProps {
     socket: any
 }
+
+export interface CreateConversationOrRoomActionData {
+    token: string
+    conversationObj: conversationObj
+}
+
+
+export interface conversationObj {
+    isRoom: boolean
+    roomName: string
+    participants: string[]
+}

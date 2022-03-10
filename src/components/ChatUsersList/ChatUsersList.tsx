@@ -13,6 +13,7 @@ import Modal from '../Modal/Modal';
 import { HiUserGroup } from 'react-icons/hi';
 import {
     ChatUsersListProps,
+    conversationObj,
     CreateConversationOrRoomState,
     GetMyChatsData, GetMyChatState,
     Participant,
@@ -57,7 +58,7 @@ const ChatUsersList: React.FC<ChatUsersListProps> = ({ socket, setconversationId
 
 
     const createUserConversation = (id: string) => {
-        const conversationObj = {
+        const conversationObj: conversationObj = {
             isRoom: false,
             roomName: '',
             participants: [id]

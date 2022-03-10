@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './_CreateChatModal.scss'
 import Multiselect from 'multiselect-react-dropdown';
 import { useSearch } from '../../hooks/useSearch';
-import { CreateChatModalProps, UserData } from '../../models';
+import { conversationObj, CreateChatModalProps, UserData } from '../../models';
 import { useActions } from '../../hooks/useActions';
 
 
@@ -11,7 +11,6 @@ import { useActions } from '../../hooks/useActions';
 const CreateChatModal: React.FC<CreateChatModalProps> = ({ setIsChatModal }) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { CreateConversationOrRoom } = useActions();
-    const [isRoom, setIsRoom] = useState(false)
     const [roomName, setRoomName] = useState('')
     const [selectedUsers, setSelectedUsers] = useState([])
     const { filteredData, setFilteredData, setWordEntered, wordEntered } = useSearch();
@@ -29,7 +28,7 @@ const CreateChatModal: React.FC<CreateChatModalProps> = ({ setIsChatModal }) => 
         const updatedSelectedUsers = selectedUsers?.map((user: any) => (
             user.id
         ))
-        const conversationObj = {
+        const conversationObj: conversationObj = {
             isRoom: true,
             roomName,
             participants: updatedSelectedUsers
