@@ -1,6 +1,17 @@
 //Action models for getting my projects
 
-import { AddProjectDescriptionActionType, GetMyProjectActionType, GetProjectDetailsActionType, LeaveOrRemoveMembersActionType, ManageTeamRoleActionType, ProjectDeleteActionType, ProjectTaskActionType, ProjectTaskDeleteActionType, ProjectTaskIsCompleteActionType, ProjectTodoActionType } from "../actiontypes";
+import {
+    AddProjectDescriptionActionType,
+    GetMyProjectActionType,
+    GetProjectDetailsActionType,
+    LeaveOrRemoveMembersActionType,
+    ManageTeamRoleActionType,
+    ProjectDeleteActionType,
+    ProjectTaskActionType,
+    ProjectTaskDeleteActionType,
+    ProjectTaskIsCompleteActionType,
+    ProjectTodoActionType
+} from "../actiontypes";
 
 interface GetMyrojectRequestAction {
     type: GetMyProjectActionType.GET_MYPROJECT_REQUEST

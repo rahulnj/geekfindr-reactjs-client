@@ -120,10 +120,10 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                     CreatePost({
                         postData: postData,
                         navigate,
-                        setIsModalOpened,
                         token: CurrentUser?.token
                     })
                     setLoading(false)
+                    setIsModalOpened(false)
                 }
             } catch (error) {
                 console.log(error);
@@ -194,9 +194,9 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                 userId: CurrentUser?.id,
                 token: CurrentUser?.token,
                 postId,
-                navigate,
-                setIsEditModalOpened
+                navigate
             })
+            setIsEditModalOpened(false)
         }
     }
 

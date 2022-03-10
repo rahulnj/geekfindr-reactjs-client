@@ -1,5 +1,10 @@
 import { FollowersData } from "../../models";
-import { FollowUserActionType, GetFollowingUsersActionType, GetUserFollowersActionType } from "../actiontypes";
+
+import {
+    FollowUserActionType,
+    GetFollowingUsersActionType,
+    GetUserFollowersActionType
+} from "../actiontypes";
 
 //Action model to get all user followers
 

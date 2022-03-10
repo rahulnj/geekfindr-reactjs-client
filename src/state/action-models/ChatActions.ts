@@ -1,5 +1,14 @@
-import { Conversation, CreateConversationOrRoomData, GetMyChatsData } from "../../models";
-import { CreateConversationOrRoomActionType, GetConversationsActionType, GetMyChatsActionType } from "../actiontypes";
+import {
+    Conversation,
+    CreateConversationOrRoomData,
+    GetMyChatsData
+} from "../../models";
+
+import {
+    CreateConversationOrRoomActionType,
+    GetConversationsActionType,
+    GetMyChatsActionType
+} from "../actiontypes";
 
 //Action model for creating a conversation or a room
 

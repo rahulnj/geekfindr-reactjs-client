@@ -10,12 +10,7 @@
 
 //State Models used in the PostReducer
 
-export interface PostState {
-    data: string[]
-    error: string[] | null
-    loading: boolean
-    success?: boolean
-}
+
 
 //State Models used in the FollowersReducer
 

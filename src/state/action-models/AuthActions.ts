@@ -1,5 +1,8 @@
 import { UserAuthData } from "../../models"
-import { UserSigninActionType, UserSignupActionType } from "../actiontypes"
+import {
+    UserSigninActionType,
+    UserSignupActionType
+} from "../actiontypes"
 
 
 //Action Models for the user signup in the AuthReducer.

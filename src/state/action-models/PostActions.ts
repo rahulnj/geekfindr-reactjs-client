@@ -1,4 +1,9 @@
 import {
+    PostComment,
+    PostData
+} from '../../models';
+
+import {
     CreatePostActionType,
     DeletePostActionType,
     EditPostActionType,
@@ -21,7 +26,7 @@ interface CreatePostRequestAction {
 
 interface CreatePostSuccessAction {
     type: CreatePostActionType.CREATE_POST_SUCCESS
-    payload: string[]
+    payload: PostData[]
 }
 
 interface CreatePostFailAction {
@@ -42,7 +47,7 @@ interface GetFeedRequestAction {
 
 interface GetFeedSuccessAction {
     type: GetFeedActionType.GET_FEED_SUCCESS
-    payload: string[]
+    payload: PostData[]
 }
 
 interface GetFeedFailAction {
@@ -63,7 +68,7 @@ interface GetMyPostRequestAction {
 
 interface GetMyPostSuccessAction {
     type: GetMyPostsActionType.GET_MYPOST_SUCCESS
-    payload: string[]
+    payload: PostData[] | []
 }
 
 interface GetMyPostFailAction {
@@ -84,7 +89,7 @@ interface EditPostRequestAction {
 
 interface EditPostSuccessAction {
     type: EditPostActionType.EDIT_POST_SUCCESS
-    payload: string[]
+    payload: PostData[] | []
 }
 
 interface EditPostFailAction {
@@ -127,7 +132,7 @@ interface GetPostLikesRequestAction {
 
 interface GetPostLikesSuccessAction {
     type: GetPostLikesActionType.GET_LIKES_SUCCESS
-    payload: string[]
+    payload: string[] | []
 }
 
 interface GetPostLikesFailAction {
@@ -149,7 +154,7 @@ interface GetPostCommentsRequestAction {
 
 interface GetPostCommentsSuccessAction {
     type: GetPostCommentsActionType.GET_COMMENTS_SUCCESS
-    payload: string[]
+    payload: PostComment[] | []
 }
 
 interface GetPostCommentsFailAction {
@@ -170,7 +175,7 @@ interface PostLikeRequestAction {
 
 interface PostLikeSuccessAction {
     type: PostLikeActionType.POST_LIKE_SUCCESS
-    payload: string[]
+    payload: {}
 }
 
 interface PostLikeFailAction {
@@ -191,7 +196,7 @@ interface PostCommentRequestAction {
 
 interface PostCommentSuccessAction {
     type: PostCommentActionType.POST_COMMENT_SUCCESS
-    payload: string[]
+    payload: {}
 }
 
 interface PostCommentFailAction {
@@ -212,7 +217,7 @@ interface GetUsersPostsRequestAction {
 
 interface GetUsersPostsSuccessAction {
     type: GetUsersPostsActionType.GET_USERSPOST_SUCCESS
-    payload: string[]
+    payload: PostData[] | []
 }
 
 interface GetUsersPostsFailAction {
@@ -233,7 +238,7 @@ interface TeamJoinRequestAction {
 
 interface TeamJoinSuccessAction {
     type: TeamJoinActionType.TEAM_JOIN_SUCCESS
-    payload: string[]
+    payload: {}
 }
 
 interface TeamJoinFailAction {

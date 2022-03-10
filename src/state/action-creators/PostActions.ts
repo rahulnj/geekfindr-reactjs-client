@@ -1,24 +1,52 @@
 import { Dispatch } from "redux"
-
 import request from "../../api"
-import { UserData } from "../../models";
 
 import {
-    CreatePostAction, DeletePostAction, EditPostAction,
-    GetFeedAction, GetMyPostAction, GetPostCommentsAction,
-    GetPostLikesAction, GetUsersPostsAction, PostCommentAction, PostLikeAction, TeamJoinAction
+    CommentPostActionData,
+    CreatePostActionData,
+    DeletePostActionData,
+    EditedPostDataActionData,
+    GetFeedPostsActionData,
+    GetMyPostActionData,
+    GetPostLikesActionData,
+    GetUsersPostsActionData,
+    PostComment,
+    PostData,
+    TeamJoinActionData
+} from "../../models"
+
+import {
+    CreatePostAction,
+    DeletePostAction,
+    EditPostAction,
+    GetFeedAction,
+    GetMyPostAction,
+    GetPostCommentsAction,
+    GetPostLikesAction,
+    GetUsersPostsAction,
+    PostCommentAction,
+    PostLikeAction,
+    TeamJoinAction
 } from "../action-models"
 
 import {
-    CreatePostActionType, DeletePostActionType, EditPostActionType,
-    GetFeedActionType, GetMyPostsActionType, GetPostCommentsActionType,
-    GetPostLikesActionType, GetUsersPostsActionType, PostCommentActionType, PostLikeActionType, TeamJoinActionType
+    CreatePostActionType,
+    DeletePostActionType,
+    EditPostActionType,
+    GetFeedActionType,
+    GetMyPostsActionType,
+    GetPostCommentsActionType,
+    GetPostLikesActionType,
+    GetUsersPostsActionType,
+    PostCommentActionType,
+    PostLikeActionType,
+    TeamJoinActionType
 } from "../actiontypes"
 
 
 
 
-export const CreatePost = ({ postData, navigate, setIsModalOpened, token }: any) => {
+export const CreatePost = ({ postData, navigate, token }: CreatePostActionData) => {
     return async (dispatch: Dispatch<CreatePostAction>) => {
         dispatch({
             type: CreatePostActionType.CREATE_POST_REQUEST
@@ -31,13 +59,10 @@ export const CreatePost = ({ postData, navigate, setIsModalOpened, token }: any)
         };
         try {
             const { data } = await request.post('/api/v1/posts/', postData, config)
-            console.log(data);
-
             dispatch({
                 type: CreatePostActionType.CREATE_POST_SUCCESS,
                 payload: data
             })
-            setIsModalOpened(false)
             navigate('/')
         } catch (error: any) {
             console.log(error);
@@ -50,7 +75,7 @@ export const CreatePost = ({ postData, navigate, setIsModalOpened, token }: any)
     }
 }
 
-export const GetFeedPosts = ({ token, limit, lastId }: any) => {
+export const GetFeedPosts = ({ token, limit, lastId }: GetFeedPostsActionData) => {
     return async (dispatch: Dispatch<GetFeedAction>) => {
         dispatch({
             type: GetFeedActionType.GET_FEED_REQUEST
@@ -80,7 +105,7 @@ export const GetFeedPosts = ({ token, limit, lastId }: any) => {
     }
 }
 
-export const GetMyPost = ({ token }: any) => {
+export const GetMyPost = ({ token }: GetMyPostActionData) => {
     return async (dispatch: Dispatch<GetMyPostAction>) => {
         dispatch({
             type: GetMyPostsActionType.GET_MYPOST_REQUEST
@@ -92,7 +117,7 @@ export const GetMyPost = ({ token }: any) => {
             },
         };
         try {
-            const { data } = await request.get('/api/v1/posts/my-posts', config)
+            const { data } = await request.get<PostData[]>('/api/v1/posts/my-posts', config)
             dispatch({
                 type: GetMyPostsActionType.GET_MYPOST_SUCCESS,
                 payload: data
@@ -107,7 +132,7 @@ export const GetMyPost = ({ token }: any) => {
     }
 }
 
-export const EditPost = ({ EditedPostData, postId, navigate, setIsEditModalOpened, token, userId }: any) => {
+export const EditPost = ({ EditedPostData, postId, navigate, token, userId }: EditedPostDataActionData) => {
     return async (dispatch: Dispatch<EditPostAction>) => {
         dispatch({
             type: EditPostActionType.EDIT_POST_REQUEST
@@ -124,7 +149,6 @@ export const EditPost = ({ EditedPostData, postId, navigate, setIsEditModalOpene
                 type: EditPostActionType.EDIT_POST_SUCCESS,
                 payload: data
             })
-            setIsEditModalOpened(false)
             navigate(`/profile/${userId}`)
         } catch (error: any) {
             console.log(error);
@@ -136,7 +160,7 @@ export const EditPost = ({ EditedPostData, postId, navigate, setIsEditModalOpene
     }
 }
 
-export const DeletePost = ({ postId, token, navigate, userId }: any) => {
+export const DeletePost = ({ postId, token, navigate, userId }: DeletePostActionData) => {
     return async (dispatch: Dispatch<DeletePostAction>) => {
         dispatch({
             type: DeletePostActionType.DELETE_POST_REQUEST
@@ -164,7 +188,7 @@ export const DeletePost = ({ postId, token, navigate, userId }: any) => {
     }
 }
 
-export const GetPostLikes = ({ token, postId }: any) => {
+export const GetPostLikes = ({ token, postId }: GetPostLikesActionData) => {
     return async (dispatch: Dispatch<GetPostLikesAction>) => {
         dispatch({
             type: GetPostLikesActionType.GET_LIKES_REQUEST
@@ -181,8 +205,6 @@ export const GetPostLikes = ({ token, postId }: any) => {
                 type: GetPostLikesActionType.GET_LIKES_SUCCESS,
                 payload: data
             })
-            console.log(data, "likes");
-
         } catch (error: any) {
             console.log(error);
             dispatch({
@@ -193,7 +215,7 @@ export const GetPostLikes = ({ token, postId }: any) => {
     }
 }
 
-export const GetPostComments = ({ token, postId }: any) => {
+export const GetPostComments = ({ token, postId }: GetPostLikesActionData) => {
     return async (dispatch: Dispatch<GetPostCommentsAction>) => {
         dispatch({
             type: GetPostCommentsActionType.GET_COMMENTS_REQUEST
@@ -205,13 +227,11 @@ export const GetPostComments = ({ token, postId }: any) => {
             },
         };
         try {
-            const { data } = await request.get(`/api/v1/posts/${postId}/comments`, config)
+            const { data } = await request.get<PostComment[]>(`/api/v1/posts/${postId}/comments`, config)
             dispatch({
                 type: GetPostCommentsActionType.GET_COMMENTS_SUCCESS,
                 payload: data
             })
-            console.log(data, "comments");
-
         } catch (error: any) {
             console.log(error);
             dispatch({
@@ -222,7 +242,7 @@ export const GetPostComments = ({ token, postId }: any) => {
     }
 }
 
-export const LikePost = ({ token, postId }: any) => {
+export const LikePost = ({ token, postId }: GetPostLikesActionData) => {
     return async (dispatch: Dispatch<PostLikeAction>) => {
         dispatch({
             type: PostLikeActionType.POST_LIKE_REQUEST,
@@ -238,8 +258,6 @@ export const LikePost = ({ token, postId }: any) => {
                 type: PostLikeActionType.POST_LIKE_SUCCESS,
                 payload: data
             })
-            console.log(data, "liked response");
-
         } catch (error: any) {
             console.log(error);
             dispatch({
@@ -250,7 +268,7 @@ export const LikePost = ({ token, postId }: any) => {
     }
 }
 
-export const CommentPost = ({ token, postId, comment }: any) => {
+export const CommentPost = ({ token, postId, comment }: CommentPostActionData) => {
     return async (dispatch: Dispatch<PostCommentAction>) => {
         dispatch({
             type: PostCommentActionType.POST_COMMENT_REQUEST,
@@ -268,7 +286,6 @@ export const CommentPost = ({ token, postId, comment }: any) => {
                 type: PostCommentActionType.POST_COMMENT_SUCCESS,
                 payload: data
             })
-            console.log(data, "Comment response");
         } catch (error: any) {
             console.log(error);
             dispatch({
@@ -279,7 +296,7 @@ export const CommentPost = ({ token, postId, comment }: any) => {
     }
 }
 
-export const GetUsersPosts = ({ token, userId }: any) => {
+export const GetUsersPosts = ({ token, userId }: GetUsersPostsActionData) => {
     return async (dispatch: Dispatch<GetUsersPostsAction>) => {
         dispatch({
             type: GetUsersPostsActionType.GET_USERSPOST_REQUEST
@@ -291,7 +308,7 @@ export const GetUsersPosts = ({ token, userId }: any) => {
             },
         };
         try {
-            const { data } = await request.get(`/api/v1/posts/by-users/${userId}`, config)
+            const { data } = await request.get<PostData[]>(`/api/v1/posts/by-users/${userId}`, config)
             dispatch({
                 type: GetUsersPostsActionType.GET_USERSPOST_SUCCESS,
                 payload: data
@@ -306,7 +323,7 @@ export const GetUsersPosts = ({ token, userId }: any) => {
     }
 }
 
-export const TeamJoinRequest = ({ token, projectId: id }: any) => {
+export const TeamJoinRequest = ({ token, projectId: id }: TeamJoinActionData) => {
     return async (dispatch: Dispatch<TeamJoinAction>) => {
         dispatch({
             type: TeamJoinActionType.TEAM_JOIN_REQUEST

@@ -86,6 +86,15 @@ export interface CreateConversationOrRoomActionData {
     conversationObj: conversationObj
 }
 
+export interface GetConversationsActionData {
+    token: string
+    conversationId: string
+}
+
+export interface GetMyChatsActionData {
+    token: string
+}
+
 
 export interface conversationObj {
     isRoom: boolean

@@ -67,30 +67,7 @@ export interface profileinfo {
 
 //Poststate Models used in the state
 
-export interface PostData {
-    comments: string[]
-    createdAt?: string
-    description: string
-    id: string
-    isOrganization?: boolean
-    isProject: boolean
-    likeCount: number
-    commentCount: number
-    mediaType?: string
-    mediaURL: string
-    owner?: {
-        avatar: string
-        id: string
-        username: string
-    }
-    teamJoinRequests?: string[]
-    updatedAt?: string
-    isLiked?: boolean
-    isRequested?: boolean
-    isJoined?: boolean
-    likes?: string[]
-    ref?: any
-}
+
 
 export interface Todo {
     id: number

@@ -1,6 +1,32 @@
-import { PostState } from "../../models"
-import { CreatePostAction, DeletePostAction, EditPostAction, GetFeedAction, GetMyPostAction, GetPostCommentsAction, GetPostLikesAction, GetUsersPostsAction, PostCommentAction, PostLikeAction, TeamJoinAction } from "../action-models"
-import { CreatePostActionType, DeletePostActionType, EditPostActionType, GetFeedActionType, GetMyPostsActionType, GetPostCommentsActionType, GetPostLikesActionType, GetUsersPostsActionType, PostCommentActionType, PostLikeActionType, TeamJoinActionType } from "../actiontypes";
+import { CommentPostState, DeletePostState, GetCommentPostState, GetLikesState, GetUsersPostState, LikePostState, PostState, TeamJoinRequestState } from "../../models"
+
+import {
+    CreatePostAction,
+    DeletePostAction,
+    EditPostAction,
+    GetFeedAction,
+    GetMyPostAction,
+    GetPostCommentsAction,
+    GetPostLikesAction,
+    GetUsersPostsAction,
+    PostCommentAction,
+    PostLikeAction,
+    TeamJoinAction
+} from "../action-models"
+
+import {
+    CreatePostActionType,
+    DeletePostActionType,
+    EditPostActionType,
+    GetFeedActionType,
+    GetMyPostsActionType,
+    GetPostCommentsActionType,
+    GetPostLikesActionType,
+    GetUsersPostsActionType,
+    PostCommentActionType,
+    PostLikeActionType,
+    TeamJoinActionType
+} from "../actiontypes";
 
 
 
@@ -76,9 +102,9 @@ export const EditPostReducer = (
 }
 
 export const DeletePostReducer = (
-    state: PostState = initialState,
+    state: DeletePostState = initialState,
     action: DeletePostAction
-): PostState => {
+): DeletePostState => {
     switch (action.type) {
         case DeletePostActionType.DELETE_POST_REQUEST:
             return { ...state, loading: true, error: null }
@@ -92,9 +118,9 @@ export const DeletePostReducer = (
 }
 
 export const GetLikesReducer = (
-    state: PostState = initialState,
+    state: GetLikesState = initialState,
     action: GetPostLikesAction
-): PostState => {
+): GetLikesState => {
     switch (action.type) {
         case GetPostLikesActionType.GET_LIKES_REQUEST:
             return { ...state, loading: true, error: null }
@@ -108,9 +134,9 @@ export const GetLikesReducer = (
 }
 
 export const GetCommentsReducer = (
-    state: PostState = initialState,
+    state: GetCommentPostState = initialState,
     action: GetPostCommentsAction
-): PostState => {
+): GetCommentPostState => {
     switch (action.type) {
         case GetPostCommentsActionType.GET_COMMENTS_REQUEST:
             return { ...state, loading: true, error: null }
@@ -124,9 +150,9 @@ export const GetCommentsReducer = (
 }
 
 export const PostLikeReducer = (
-    state: PostState = initialState,
+    state: LikePostState = initialState,
     action: PostLikeAction
-): PostState => {
+): LikePostState => {
     switch (action.type) {
         case PostLikeActionType.POST_LIKE_REQUEST:
             return { ...state, loading: true, error: null }
@@ -140,9 +166,9 @@ export const PostLikeReducer = (
 }
 
 export const PostCommentReducer = (
-    state: PostState = initialState,
+    state: CommentPostState = initialState,
     action: PostCommentAction
-): PostState => {
+): CommentPostState => {
     switch (action.type) {
         case PostCommentActionType.POST_COMMENT_REQUEST:
             return { ...state, success: false, loading: true, error: null }
@@ -156,9 +182,9 @@ export const PostCommentReducer = (
 }
 
 export const GetUsersPostsReducer = (
-    state: PostState = initialState,
+    state: GetUsersPostState = initialState,
     action: GetUsersPostsAction
-): PostState => {
+): GetUsersPostState => {
     switch (action.type) {
         case GetUsersPostsActionType.GET_USERSPOST_REQUEST:
             return { ...state, success: false, loading: true, error: null, data: [] }
@@ -172,9 +198,9 @@ export const GetUsersPostsReducer = (
 }
 
 export const TeamJoinRequestReducer = (
-    state: PostState = initialState,
+    state: TeamJoinRequestState = initialState,
     action: TeamJoinAction
-): PostState => {
+): TeamJoinRequestState => {
     switch (action.type) {
         case TeamJoinActionType.TEAM_JOIN_REQUEST:
             return { ...state, loading: true, error: null }

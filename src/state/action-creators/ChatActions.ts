@@ -1,12 +1,25 @@
 import { Dispatch } from "redux"
 import request from "../../api"
-import { Conversation, CreateConversationOrRoomActionData, CreateConversationOrRoomData, CreateConversationOrRoomState, GetMyChatsData } from "../../models"
+import {
+    Conversation,
+    CreateConversationOrRoomActionData,
+    CreateConversationOrRoomData,
+    GetConversationsActionData,
+    GetMyChatsActionData,
+    GetMyChatsData
+} from "../../models"
 
-import { CreateConversationOrRoomAction, GetConversationsAction, GetMyChatsAction } from "../action-models"
-import { CreateConversationOrRoomActionType, GetConversationsActionType, GetMyChatsActionType } from "../actiontypes"
+import {
+    CreateConversationOrRoomAction,
+    GetConversationsAction,
+    GetMyChatsAction
+} from "../action-models"
 
-
-
+import {
+    CreateConversationOrRoomActionType,
+    GetConversationsActionType,
+    GetMyChatsActionType
+} from "../actiontypes"
 
 
 export const CreateConversationOrRoom = ({ token, conversationObj }: CreateConversationOrRoomActionData) => {
@@ -39,7 +52,7 @@ export const CreateConversationOrRoom = ({ token, conversationObj }: CreateConve
     }
 }
 
-export const GetMyChats = ({ token }: any) => {
+export const GetMyChats = ({ token }: GetMyChatsActionData) => {
     return async (dispatch: Dispatch<GetMyChatsAction>) => {
         dispatch({
             type: GetMyChatsActionType.GET_MY_CHATS_REQUEST
@@ -66,7 +79,7 @@ export const GetMyChats = ({ token }: any) => {
     }
 }
 
-export const GetConversations = ({ token, conversationId }: any) => {
+export const GetConversations = ({ token, conversationId }: GetConversationsActionData) => {
     return async (dispatch: Dispatch<GetConversationsAction>) => {
         dispatch({
             type: GetConversationsActionType.GET_CONVERSATIONS_REQUEST

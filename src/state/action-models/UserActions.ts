@@ -1,6 +1,7 @@
 import {
     UserData,
 } from "../../models";
+
 import {
     UserProfileDetailsActionType,
     UserEditProfileActionType,
