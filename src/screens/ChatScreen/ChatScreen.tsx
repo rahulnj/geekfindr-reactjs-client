@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { io } from 'socket.io-client';
+import { SocketOptions } from 'socket.io-client/build/esm/socket';
 import { ChatMessage, ChatUsersList } from '../../components'
 import { useActions } from '../../hooks/useActions';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { UserData } from '../../models';
 
 import './_ChatScreen.scss'
@@ -34,10 +34,9 @@ const ChatScreen: React.FC = () => {
             }, 5000);
         });
 
-        socket.current.on("disconnect", (reason: any) => {
+        socket.current.on("disconnect", (reason: SocketOptions) => {
             console.log("disconnected", reason);
         });
-
     }, [])
 
     useEffect(() => {
@@ -52,8 +51,7 @@ const ChatScreen: React.FC = () => {
     return (
         <div className='chatscreen'>
             <ChatUsersList socket={socket} setconversationId={setconversationId} />
-            <ChatMessage socket={socket} conversationId={conversationId}
-            />
+            <ChatMessage socket={socket} conversationId={conversationId} />
         </div>
     )
 }

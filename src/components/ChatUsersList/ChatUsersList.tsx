@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from 'react'
+import Moment from 'react-moment';
 
 import './_ChatUsersList.scss'
-
-import post from '../../assets/persons/1.jpeg'
 
 import { BsPlusLg } from 'react-icons/bs'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BiSearch } from 'react-icons/bi';
-import Modal from '../Modal/Modal';
-import { HiUserGroup } from 'react-icons/hi';
-import { useSearch } from '../../hooks/useSearch';
-import { ChatUsersListProps, CreateConversationOrRoomState, GetMyChatsData, GetMyChatState, Participant, SearchedUserData, UserData } from '../../models';
 import { GrFormClose } from 'react-icons/gr';
+
+import Modal from '../Modal/Modal';
+
+import { HiUserGroup } from 'react-icons/hi';
+import {
+    ChatUsersListProps,
+    CreateConversationOrRoomState,
+    GetMyChatsData, GetMyChatState,
+    Participant,
+    SearchedUserData,
+    UserData
+} from '../../models';
+
+import { useSearch } from '../../hooks/useSearch';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import Moment from 'react-moment';
 
 
-const ChatUsersList: React.FC<any> = ({ socket, setconversationId }) => {
+
+const ChatUsersList: React.FC<ChatUsersListProps> = ({ socket, setconversationId }) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
     const { CreateConversationOrRoom, GetMyChats } = useActions();

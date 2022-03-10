@@ -78,11 +78,7 @@ export interface ProjectTaskManageModalProps {
     projectTaskIndex: number
 }
 
-export interface ChatItemProps {
-    updatedConversations: string[]
-    scrollRef: any
-    conversationId: string
-}
+
 
 export interface SearchProps {
     setWordEntered: React.Dispatch<React.SetStateAction<string>>

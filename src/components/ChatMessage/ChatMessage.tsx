@@ -1,33 +1,45 @@
 import React, { useEffect, useState } from 'react'
-import { ChatContent, ChatHeader } from '..'
-import { useActions } from '../../hooks/useActions'
-import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { GetMyChatsData, GetMyChatState, UserData } from '../../models'
-import ChatFooter from './ChatFooter'
 
 import './_ChatMessage.scss'
 
+import {
+    ChatContent,
+    ChatHeader,
+    ChatFooter
+} from '..'
+
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+
+import {
+    ChatMessageProps,
+    GetMyChatsData,
+    GetMyChatState,
+    Participant,
+    UserData
+} from '../../models'
 
 
-const ChatMessage = ({ socket, conversationId, messageList, setMessageList }: any) => {
+const ChatMessage: React.FC<ChatMessageProps> = ({ socket, conversationId }) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-    const [chatUser, setChatUser] = useState<any>([])
-    let { data: myChats }: any = useTypedSelector(
+    const [chatUser, setChatUser] = useState<GetMyChatsData>()
+    let { data: myChats, error: myChatsError, loading: myChatsLoading }: GetMyChatState = useTypedSelector(
         (state) => state.GetMyChats
     );
 
     useEffect(() => {
         if (conversationId) {
-            myChats = myChats?.filter((chat: any) => (
+            myChats = myChats?.filter((chat: GetMyChatsData) => (
                 chat?.id === conversationId
             ))
-            let updatedChatDetails: string[] = [];
-            let reciever: {} = {}
-            updatedChatDetails = myChats?.map((chat: any) => {
-                reciever = chat?.participants?.filter((participant: any) => participant?.id != CurrentUser?.id)
+            let updatedChatDetails;
+            let reciever;
+            updatedChatDetails = myChats?.map((chat: GetMyChatsData) => {
+                reciever = chat?.participants?.filter((participant: Participant) => participant?.id != CurrentUser?.id)
                 return { ...chat, reciever }
             })
-            setChatUser(updatedChatDetails[0])
+            console.log(updatedChatDetails?.[0]);
+
+            setChatUser(updatedChatDetails?.[0])
         }
     }, [conversationId])
 
@@ -36,10 +48,8 @@ const ChatMessage = ({ socket, conversationId, messageList, setMessageList }: an
             {conversationId ?
                 <>
                     <ChatHeader chatUser={chatUser} />
-                    <ChatContent socket={socket} conversationId={conversationId}
-                        messageList={messageList} setMessageList={setMessageList}
-                    />
-                    <ChatFooter socket={socket} messageList={messageList} setMessageList={setMessageList} />
+                    <ChatContent socket={socket} conversationId={conversationId} />
+                    <ChatFooter socket={socket} />
                 </>
                 :
                 <div className='nochat'>
@@ -50,4 +60,4 @@ const ChatMessage = ({ socket, conversationId, messageList, setMessageList }: an
     )
 }
 
-export default ChatMessage
+export default ChatMessage;

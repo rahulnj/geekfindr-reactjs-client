@@ -1,14 +1,11 @@
 import React from 'react'
+
 import './_ChatMessage.scss'
 
-import post from '../../assets/persons/1.jpeg'
-import { HiOutlineRefresh, HiUserGroup } from 'react-icons/hi'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { HiUserGroup } from 'react-icons/hi'
+import { ChatHeaderProps } from '../../models'
 
-const ChatHeader = ({ chatUser }: any) => {
-
-
+const ChatHeader: React.FC<ChatHeaderProps> = ({ chatUser }) => {
     return (
         <div className='chatmessage_header'>
             <div className='chatmessage_header_wrapper'>
@@ -18,7 +15,6 @@ const ChatHeader = ({ chatUser }: any) => {
                             :
                             <img src={chatUser?.reciever?.[0]?.avatar} alt="" />
                     }
-
                 </div>
                 <div className='chatmessage_header_details'>
                     {
@@ -29,10 +25,9 @@ const ChatHeader = ({ chatUser }: any) => {
                 </div>
             </div>
             <div className="chatmessage_header_icons">
-                {/* <HiOutlineRefresh size={28} /> */}
             </div>
         </div>
     )
 }
 
-export default ChatHeader
+export default ChatHeader;

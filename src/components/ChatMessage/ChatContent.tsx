@@ -5,20 +5,20 @@ import './_ChatMessage.scss'
 import { ChatItem } from '..'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { UserData } from '../../models';
+import { ChatMessageProps, Conversation, GetConversationsState, GetMyChatState, SocketResponseMessage, UserData } from '../../models';
 
 
 
-const ChatContent = ({ socket, conversationId }: any) => {
+const ChatContent: React.FC<ChatMessageProps> = ({ socket, conversationId }) => {
 
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-    let { data: conversations, success: conversationsSuccess }: any = useTypedSelector(
+    let { data: conversations, success: conversationsSuccess }: GetConversationsState = useTypedSelector(
         (state) => state.GetConversations
     );
-    let { data: myChats }: any = useTypedSelector(
+    let { data: myChats }: GetMyChatState = useTypedSelector(
         (state) => state.GetMyChats
     );
-    const [messageList, setMessageList] = useState<string[]>([])
+    const [messageList, setMessageList] = useState<Conversation[]>([])
     const scrollRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
@@ -27,16 +27,15 @@ const ChatContent = ({ socket, conversationId }: any) => {
 
     useEffect(() => {
         if (socket.current) {
-            socket.current.on("message", (msg: any) => {
-                console.log(msg);
+            socket.current.on("message", (msg: SocketResponseMessage) => {
                 const updatedMsg = { senderId: msg?.userId, message: msg?.message, updatedAt: msg?.time }
-                setMessageList((message: any): any => [...message, updatedMsg])
+                setMessageList((message): Conversation[] => [...message, updatedMsg])
             })
         }
     }, [])
 
-    let updatedConversations: string[] = []
-    updatedConversations = messageList?.map((chat: any) => {
+    let updatedConversations;
+    updatedConversations = messageList?.map((chat: Conversation) => {
         if (chat?.senderId !== CurrentUser?.id) {
             return { ...chat, arrivalMsg: true }
         } else {

@@ -7,15 +7,15 @@ import './_ChatMessage.scss'
 import Swal from 'sweetalert2';
 import Toast from '../Toast/Toast';
 import { toast } from 'react-toastify';
+import { ChatFooterProps } from '../../models';
 
 
 
-const ChatFooter = ({ socket, messageList, setMessageList, updatedConversations }: any) => {
+const ChatFooter: React.FC<ChatFooterProps> = ({ socket }) => {
 
     const [message, setMessage] = useState('')
 
     const sendMessage = () => {
-        console.log("send");
         if (message.length !== 0) {
             socket.current.emit("message", {
                 message
@@ -23,7 +23,6 @@ const ChatFooter = ({ socket, messageList, setMessageList, updatedConversations 
             setMessage('')
         }
     }
-
 
     return (
         <div className="content__footer">
