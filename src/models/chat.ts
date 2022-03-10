@@ -1,18 +1,18 @@
-export interface GetMyChatsData {
-    id: string
-    createdAt: string
-    isRoom: boolean
-    updatedAt: string
-    participants: Participant[]
-}
-
 export interface CreateConversationOrRoomData {
     isRoom: boolean
     participants: string[]
     roomName: string
 }
 
-
+export interface GetMyChatsData {
+    id: string
+    createdAt: string
+    isRoom: boolean
+    roomName: string
+    updatedAt: string
+    participants: Participant[]
+    reciever?: Participant[]
+}
 
 export interface Participant {
     avatar: string
@@ -20,13 +20,22 @@ export interface Participant {
     username: string
 }
 
+export interface Conversation {
+    conversationId: string
+    createdAt: string
+    id: string
+    message: string
+    senderId: string
+    updatedAt: string
+}
 
 export interface GetMyChatState {
-    data: GetMyChatsData[] | string[]
+    data: GetMyChatsData[] | []
     error: string[] | null
     loading: boolean
     success?: boolean
 }
+
 export interface GetConversationsState {
     data: Conversation[] | string[]
     error: string[] | null
@@ -41,13 +50,9 @@ export interface CreateConversationOrRoomState {
     success?: boolean
 }
 
-
-export interface Conversation {
-    conversationId: string
-    createdAt: string
-    id: string
-    message: string
-    senderId: string
-    updatedAt: string
+export interface ChatUsersListProps {
+    socket: string
+    setconversationId: React.Dispatch<React.SetStateAction<string>>
 }
+
 

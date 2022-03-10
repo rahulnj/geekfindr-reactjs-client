@@ -10,14 +10,14 @@ import { BiSearch } from 'react-icons/bi';
 import Modal from '../Modal/Modal';
 import { HiUserGroup } from 'react-icons/hi';
 import { useSearch } from '../../hooks/useSearch';
-import { CreateConversationOrRoomState, GetMyChatState, SearchedUserData, UserData } from '../../models';
+import { ChatUsersListProps, CreateConversationOrRoomState, GetMyChatsData, GetMyChatState, Participant, SearchedUserData, UserData } from '../../models';
 import { GrFormClose } from 'react-icons/gr';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Moment from 'react-moment';
 
 
-const ChatUsersList = ({ socket, setconversationId }: any) => {
+const ChatUsersList: React.FC<any> = ({ socket, setconversationId }) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
     const { CreateConversationOrRoom, GetMyChats } = useActions();
@@ -29,7 +29,7 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
     let { success: CreateChatSuccess }: CreateConversationOrRoomState = useTypedSelector(
         (state) => state.CreateConversationOrRoom
     );
-    let { data: myChats }: GetMyChatState = useTypedSelector(
+    let { data: myChats, error: myChatsError, loading: myChatsLoading }: GetMyChatState = useTypedSelector(
         (state) => state.GetMyChats
     );
 
@@ -62,10 +62,9 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
 
     }
 
-    let reciever: {} = {}
-    let updatedChatList: string[] = []
-    updatedChatList = myChats?.map((chat: any) => {
-        reciever = chat?.participants?.filter((participant: any) => participant?.id != CurrentUser?.id)
+    let reciever = []
+    let updatedChatList = myChats?.map((chat: GetMyChatsData) => {
+        reciever = chat?.participants?.filter((participant: Participant) => participant?.id != CurrentUser?.id)
         return { ...chat, reciever }
     })
 
@@ -120,7 +119,7 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
                     <div className='chatuserslist_singleusers_title'>
                         <h4>Rooms</h4>
                     </div>
-                    {updatedChatList?.reverse().map((chat: any) => {
+                    {updatedChatList?.reverse().map((chat: GetMyChatsData) => {
                         if (chat?.isRoom) {
                             return (
 
@@ -145,19 +144,19 @@ const ChatUsersList = ({ socket, setconversationId }: any) => {
                     <div className='chatuserslist_singleusers_title'>
                         <h4>Chats</h4>
                     </div>
-                    {updatedChatList?.reverse().map((chat: any) => {
+                    {updatedChatList?.reverse().map((chat: GetMyChatsData) => {
                         if (!chat?.isRoom) {
                             return (
                                 <div className="chatuserslist_singleusers"
                                     onClick={() => joinConversation(chat?.id)}
                                     key={chat?.id}>
                                     <div className="chatuserslist_singleusers_profileimg">
-                                        <img src={chat?.reciever[0]?.avatar} alt="" />
+                                        <img src={chat?.reciever?.[0]?.avatar} alt="" />
                                         {/* <div className='chatuserslist_singleusers_profileimg active'></div> */}
                                     </div>
                                     <div className='chatuserslist_singleusers_details'>
                                         <div>
-                                            <h5>{chat?.reciever[0]?.username}</h5>
+                                            <h5>{chat?.reciever?.[0]?.username}</h5>
                                         </div>
                                         <span><Moment fromNow>{chat?.updatedAt}</Moment></span>
                                     </div>

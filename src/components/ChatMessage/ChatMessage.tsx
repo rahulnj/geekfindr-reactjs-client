@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ChatContent, ChatHeader } from '..'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { UserData } from '../../models'
+import { GetMyChatsData, GetMyChatState, UserData } from '../../models'
 import ChatFooter from './ChatFooter'
 
 import './_ChatMessage.scss'
@@ -12,7 +12,6 @@ import './_ChatMessage.scss'
 const ChatMessage = ({ socket, conversationId, messageList, setMessageList }: any) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const [chatUser, setChatUser] = useState<any>([])
-    const { GetConversations } = useActions()
     let { data: myChats }: any = useTypedSelector(
         (state) => state.GetMyChats
     );
