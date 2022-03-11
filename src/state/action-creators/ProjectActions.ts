@@ -209,7 +209,6 @@ export const ProjectTask = ({ token, projectId, task }: ProjectTaskActionData) =
         };
         try {
             const { data } = await request.post(`/api/v1/projects/${projectId}/tasks`, task, config)
-            console.log(data);
             dispatch({
                 type: ProjectTaskActionType.PROJECT_TASK_SUCCESS,
                 payload: data

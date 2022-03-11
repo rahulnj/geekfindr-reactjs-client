@@ -3,7 +3,7 @@ import './_Sidebar.scss'
 import { FiHome, FiSettings } from 'react-icons/fi'
 import { BsChatLeft } from 'react-icons/bs'
 import { GrProjects } from 'react-icons/gr'
-import { SidebarProps, UserData } from '../../models'
+import { GetMyProjectState, PostState, ProjectState, SidebarProps, UserData } from '../../models'
 
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
@@ -31,13 +31,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
             window.removeEventListener('resize', listener)
         }
     }, [])
-    const { data: myProjects, loading: myProjectsLoading }: any = useTypedSelector(
+    const { data: myProjects, loading: myProjectsLoading }: GetMyProjectState = useTypedSelector(
         (state) => state.GetMyProject
     )
-    const { loading: createPostLoading, success: createPostSuccess }: any = useTypedSelector(
+    const { loading: createPostLoading, success: createPostSuccess }: PostState = useTypedSelector(
         (state) => state.CreatePost
     )
-    const { success: projectDeleteSuccess }: any = useTypedSelector(
+    const { success: projectDeleteSuccess }: ProjectState = useTypedSelector(
         (state) => state.ProjectDelete
     )
     useEffect(() => {
@@ -60,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
                     <h4>Projects</h4>
                     {/* <span>see all</span> */}
                 </div>
-                {!myProjectsLoading ? myProjects?.map((project: any) => (
+                {!myProjectsLoading ? myProjects?.map((project) => (
                     (<div className='sidebar_projects' key={project?.project?.id} onClick={() => getProjectDetails(project?.project?.id)}>
                         <div className='sidebar_singleproject'>
                             <img src={createImageFromInitials(400, project?.project?.name, getRandomColor())} alt="" />

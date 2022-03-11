@@ -11,9 +11,11 @@ export interface UserData {
     updatedAt: string
     email: string
     experience: string[]
+    education: string[]
     followers: string[]
     following: string[]
     id: string
+    bio: string
     organizations: string[]
     skills: string[]
     socials: [{ github: string }, { linkedin: string }]

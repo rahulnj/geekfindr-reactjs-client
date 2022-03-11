@@ -2,7 +2,11 @@ import { createPortal } from 'react-dom'
 
 import './_Spinner.scss'
 
-const Spinner = ({ loader }: any) => {
+interface spinner {
+    loader: boolean
+}
+
+const Spinner = ({ loader }: spinner) => {
 
     if (!loader) {
         return null;

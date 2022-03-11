@@ -1,4 +1,13 @@
-import { CommentPostState, DeletePostState, GetCommentPostState, GetLikesState, GetUsersPostState, LikePostState, PostState, TeamJoinRequestState } from "../../models"
+import {
+    CommentPostState,
+    DeletePostState,
+    GetCommentPostState,
+    GetLikesState,
+    GetUsersPostState,
+    LikePostState,
+    PostState,
+    TeamJoinRequestState
+} from "../../models"
 
 import {
     CreatePostAction,

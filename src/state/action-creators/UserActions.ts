@@ -1,12 +1,26 @@
 import { Dispatch } from "redux"
 import request from "../../api"
-import { GetUserDetailsActionData, UserData, UserEditProfileDetailsActionData } from "../../models";
-import { GetUserDetailsAction, UserEditProfileAction, UserProfileDetailsAction } from "../action-models"
-import { GetUserDetailsActionType, UserEditProfileActionType, UserProfileDetailsActionType } from "../actiontypes"
+
+import {
+    GetUserDetailsActionData,
+    UserData,
+    UserEditProfileDetailsActionData
+} from "../../models";
+
+import {
+    GetUserDetailsAction,
+    UserEditProfileAction,
+    UserProfileDetailsAction
+} from "../action-models"
+
+import {
+    GetUserDetailsActionType,
+    UserEditProfileActionType,
+    UserProfileDetailsActionType
+} from "../actiontypes"
 
 
 export const UserProfileDetails = (token: string) => {
-
     return async (dispatch: Dispatch<UserProfileDetailsAction>) => {
         dispatch({
             type: UserProfileDetailsActionType.USER_PROFILE_DETAILS_REQUEST

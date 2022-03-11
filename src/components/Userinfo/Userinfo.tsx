@@ -6,7 +6,7 @@ import { GiOfficeChair } from 'react-icons/gi'
 import { GrOrganization, GrCertificate } from 'react-icons/gr'
 import { FaBusinessTime } from 'react-icons/fa'
 import { IoIosArrowForward } from 'react-icons/io'
-import { ProfileRightAsideProps, UserData } from '../../models';
+import { ProfileRightAsideProps, UserData, UsersState } from '../../models';
 import { Params, useParams } from 'react-router-dom';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
@@ -16,10 +16,10 @@ const Userinfo = ({ userProfile }: ProfileRightAsideProps) => {
 
     const { userId }: Readonly<Params<string>> = useParams()
     const { GetUserDetails, UserProfileDetails } = useActions()
-    let { data: currentUserDetails, loading: currentUserDetailsLoading }: any = useTypedSelector(
+    let { data: currentUserDetails, loading: currentUserDetailsLoading }: UsersState = useTypedSelector(
         (state) => state.UserProfileDetails
     )
-    let { data: usersDetails, loading: UsersDetailsLoading }: any = useTypedSelector(
+    let { data: usersDetails, loading: UsersDetailsLoading }: UsersState = useTypedSelector(
         (state) => state.GetUserDetails
     )
     if (!userProfile) {
@@ -45,7 +45,7 @@ const Userinfo = ({ userProfile }: ProfileRightAsideProps) => {
                 <li><GrOrganization className='userinfo_icons' size={26} />
                     <details className='userinfo_details'>
                         <summary className='userinfo_summary'>Organization<IoIosArrowForward className='arrow' /></summary>
-                        {usersDetails?.organizations?.map((organization: string[]) => (
+                        {usersDetails?.organizations?.map((organization) => (
                             <div className="detailscontent">
                                 <p>{organization}</p>
                             </div>
@@ -66,7 +66,7 @@ const Userinfo = ({ userProfile }: ProfileRightAsideProps) => {
                 <li><GrCertificate className='userinfo_icons' size={26} />
                     <details className='userinfo_details'>
                         <summary className='userinfo_summary'>Education<IoIosArrowForward className='arrow' /></summary>
-                        {usersDetails?.organizations?.map((education: string[]) => (
+                        {usersDetails?.organizations?.map((education) => (
                             <div className="detailscontent">
                                 <p>{education}</p>
                             </div>
