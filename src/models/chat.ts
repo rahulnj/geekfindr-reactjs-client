@@ -57,6 +57,13 @@ export interface CreateConversationOrRoomState {
     success?: boolean
 }
 
+export interface AddMembersToRoomState {
+    data: string[]
+    error: string[] | null
+    loading: boolean
+    success?: boolean
+}
+
 export interface ChatUsersListProps {
     socket: any
     setconversationId: React.Dispatch<React.SetStateAction<string>>
@@ -95,6 +102,11 @@ export interface GetMyChatsActionData {
     token: string
 }
 
+export interface AddMembersToRoomActionData {
+    conversationId: string
+    members: string
+    token: string
+}
 
 export interface conversationObj {
     isRoom: boolean

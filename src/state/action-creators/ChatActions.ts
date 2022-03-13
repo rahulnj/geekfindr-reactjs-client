@@ -1,6 +1,7 @@
 import { Dispatch } from "redux"
 import request from "../../api"
 import {
+    AddMembersToRoomActionData,
     Conversation,
     CreateConversationOrRoomActionData,
     CreateConversationOrRoomData,
@@ -10,12 +11,14 @@ import {
 } from "../../models"
 
 import {
+    AddMembersToRoomAction,
     CreateConversationOrRoomAction,
     GetConversationsAction,
     GetMyChatsAction
 } from "../action-models"
 
 import {
+    AddMembersToRoomActionType,
     CreateConversationOrRoomActionType,
     GetConversationsActionType,
     GetMyChatsActionType
@@ -100,6 +103,33 @@ export const GetConversations = ({ token, conversationId }: GetConversationsActi
             console.log(error);
             dispatch({
                 type: GetConversationsActionType.GET_CONVERSATIONS_FAIL,
+                payload: error
+            })
+        }
+    }
+}
+
+export const AddMembersToRoom = ({ token, members, conversationId }: AddMembersToRoomActionData) => {
+    return async (dispatch: Dispatch<AddMembersToRoomAction>) => {
+        dispatch({
+            type: AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_REQUEST
+        })
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        try {
+            const { data } = await request.patch(`/api/v1/chats/api/v1/chats/conversations/${conversationId}/participants`, members, config)
+            dispatch({
+                type: AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_SUCCESS,
+                payload: data
+            })
+        } catch (error: any) {
+            console.log(error);
+            dispatch({
+                type: AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_FAIL,
                 payload: error
             })
         }

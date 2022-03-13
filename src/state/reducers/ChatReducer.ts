@@ -1,6 +1,6 @@
-import { GetConversationsState, GetMyChatState, CreateConversationOrRoomState } from "../../models"
-import { CreateConversationOrRoomAction, GetConversationsAction, GetMyChatsAction } from "../action-models"
-import { CreateConversationOrRoomActionType, GetConversationsActionType, GetMyChatsActionType } from "../actiontypes";
+import { GetConversationsState, GetMyChatState, CreateConversationOrRoomState, AddMembersToRoomState } from "../../models"
+import { AddMembersToRoomAction, CreateConversationOrRoomAction, GetConversationsAction, GetMyChatsAction } from "../action-models"
+import { AddMembersToRoomActionType, CreateConversationOrRoomActionType, GetConversationsActionType, GetMyChatsActionType } from "../actiontypes";
 
 const initialState = {
     data: [],
@@ -53,6 +53,22 @@ export const GetConversationsReducer = (
         case GetConversationsActionType.GET_CONVERSATIONS_SUCCESS:
             return { ...state, loading: false, success: true, error: null, data: action.payload }
         case GetConversationsActionType.GET_CONVERSATIONS_FAIL:
+            return { ...state, loading: false, error: action.payload, data: [] }
+        default:
+            return state;
+    }
+}
+
+export const AddMembersToRoomReducer = (
+    state: AddMembersToRoomState = initialState,
+    action: AddMembersToRoomAction
+): AddMembersToRoomState => {
+    switch (action.type) {
+        case AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_REQUEST:
+            return { ...state, loading: true, success: false, error: null, data: [] }
+        case AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_SUCCESS:
+            return { ...state, loading: false, success: true, error: null, data: action.payload }
+        case AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_FAIL:
             return { ...state, loading: false, error: action.payload, data: [] }
         default:
             return state;

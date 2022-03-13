@@ -42,5 +42,6 @@ export {
 export {
     CreateConversationOrRoom,
     GetMyChats,
-    GetConversations
+    GetConversations,
+    AddMembersToRoom
 } from './ChatActions'

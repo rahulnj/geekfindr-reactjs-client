@@ -4,7 +4,9 @@ import {
     UserSigninAuthReducer,
     UserRegisterAuthReducer
 } from "./AuthReducer";
+
 import {
+    AddMembersToRoomReducer,
     CreateConversationOrRoomReducer,
     GetConversationsReducer,
     GetMyChatsReducer
@@ -29,6 +31,7 @@ import {
     PostLikeReducer,
     TeamJoinRequestReducer,
 } from "./PostReducer";
+
 import {
     AddProjectDescriptionReducer,
     GetMyProjectReducer,
@@ -81,6 +84,7 @@ const rootReducer = combineReducers({
     CreateConversationOrRoom: CreateConversationOrRoomReducer,
     GetMyChats: GetMyChatsReducer,
     GetConversations: GetConversationsReducer,
+    AddMembersToRoom: AddMembersToRoomReducer,
 })
 
 export default rootReducer;

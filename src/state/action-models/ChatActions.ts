@@ -5,6 +5,7 @@ import {
 } from "../../models";
 
 import {
+    AddMembersToRoomActionType,
     CreateConversationOrRoomActionType,
     GetConversationsActionType,
     GetMyChatsActionType
@@ -72,3 +73,24 @@ export type GetConversationsAction =
     | GetConversationsRequestAction
     | GetConversationsSuccessAction
     | GetConversationsFailAction
+
+//Action models for adding members to the room
+
+interface AddMembersToRoomRequestAction {
+    type: AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_REQUEST
+}
+
+interface AddMembersToRoomSuccessAction {
+    type: AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_SUCCESS
+    payload: string[]
+}
+
+interface AddMembersToRoomFailAction {
+    type: AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_FAIL
+    payload: string[]
+}
+
+export type AddMembersToRoomAction =
+    | AddMembersToRoomRequestAction
+    | AddMembersToRoomSuccessAction
+    | AddMembersToRoomFailAction
