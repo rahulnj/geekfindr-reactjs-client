@@ -42,9 +42,7 @@ const ChatItem = ({ scrollRef, conversationId, updatedConversations }: ChatItemP
                                 }
                             })
                         }
-                        <span className="chatitem_chatmeta_time"><Moment fromNow>
-                            {conversation?.updatedAt}
-                        </Moment></span>
+                        <span className="chatitem_chatmeta_time"><Moment format='h:mm a'>{conversation?.updatedAt}</Moment></span>
                     </div>
                 </div>
                 {

@@ -9,7 +9,7 @@
     &_header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-end;
         height: max-content;
         width: 100%;
         padding: 10px;
@@ -24,7 +24,7 @@
             display: flex;
             gap: 0.5rem;
             align-items: center;
-            // padding-right: 10px;
+            padding: 5px 0;
         }
         &_icon {
             cursor: pointer;
