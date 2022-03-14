@@ -12,8 +12,10 @@ import {
     PostUploadModal,
     ProjectDescriptionModal,
     ProjectTaskManageModal,
-    ProjectTaskModal, CreateChatModal
+    ProjectTaskModal, CreateChatModal,
+    RoomModal
 } from '..';
+
 
 
 const Modal = ({ isModalOpened, setIsModalOpened,
@@ -25,7 +27,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     setIsProjectDescriptionModal, setProjectDescriptionLoading,
     isProjectTaskModal, setIsProjectTaskModal,
     isProjectTaskManageModal, setIsProjectTaskManageModal,
-    projectTaskIndex, isChatModal, setIsChatModal
+    projectTaskIndex, isChatModal, setIsChatModal,
+    isRoomModal, setIsRoomModal, chatUser
 }: any) => {
 
     const Modalref = useRef<any>()
@@ -57,6 +60,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         MODAL = isProjectTaskManageModal
     } else if (isChatModal) {
         MODAL = isChatModal
+    } else if (isRoomModal) {
+        MODAL = isRoomModal
     }
 
 
@@ -82,6 +87,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                     setIsProjectTaskManageModal(false)
                 } else if (isChatModal) {
                     setIsChatModal(false)
+                } else if (isRoomModal) {
+                    setIsRoomModal(false)
                 }
             }
         }
@@ -97,7 +104,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         isProjectDescriptionModal, setIsProjectDescriptionModal,
         isProjectTaskModal, setIsProjectTaskModal,
         isProjectTaskManageModal, setIsProjectTaskManageModal,
-        isChatModal, setIsChatModal]);
+        isChatModal, setIsChatModal,
+        isRoomModal, setIsRoomModal]);
 
     if (!isModalOpened &&
         !isEditModalOpened &&
@@ -107,7 +115,8 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         !isProjectDescriptionModal &&
         !isProjectTaskModal &&
         !isProjectTaskManageModal &&
-        !isChatModal
+        !isChatModal &&
+        !isRoomModal
     ) {
         return null;
     }
@@ -115,7 +124,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     return createPortal(
         <>
             <div className="modal_overlay"></div>
-            <div className={(followersModal || followingModal) ? "modal-sm" : "modal-lg"}
+            <div className={(followersModal || followingModal || isRoomModal) ? "modal-sm" : "modal-lg"}
                 ref={Modalref}>
                 {followersModal &&
                     Followers.map((user: UserData) => (
@@ -147,6 +156,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                 {isProjectTaskManageModal && <ProjectTaskManageModal setIsProjectTaskManageModal={setIsProjectTaskManageModal}
                     projectTaskIndex={projectTaskIndex} />}
                 {isChatModal && <CreateChatModal setIsChatModal={setIsChatModal} />}
+                {isRoomModal && <RoomModal chatUser={chatUser} />}
             </div>
         </>,
         document.getElementById('modal') as HTMLElement

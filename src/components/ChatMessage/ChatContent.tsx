@@ -28,6 +28,8 @@ const ChatContent: React.FC<ChatMessageProps> = ({ socket, conversationId }) => 
     useEffect(() => {
         if (socket.current) {
             socket.current.on("message", (msg: SocketResponseMessage) => {
+                console.log(msg);
+
                 const updatedMsg = { senderId: msg?.userId, message: msg?.message, updatedAt: msg?.time }
                 setMessageList((message): Conversation[] => [...message, updatedMsg])
             })

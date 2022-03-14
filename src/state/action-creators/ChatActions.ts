@@ -109,7 +109,7 @@ export const GetConversations = ({ token, conversationId }: GetConversationsActi
     }
 }
 
-export const AddMembersToRoom = ({ token, members, conversationId }: AddMembersToRoomActionData) => {
+export const AddMembersToRoom = ({ token, memberId, conversationId }: AddMembersToRoomActionData) => {
     return async (dispatch: Dispatch<AddMembersToRoomAction>) => {
         dispatch({
             type: AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_REQUEST
@@ -121,7 +121,8 @@ export const AddMembersToRoom = ({ token, members, conversationId }: AddMembersT
             },
         };
         try {
-            const { data } = await request.patch(`/api/v1/chats/api/v1/chats/conversations/${conversationId}/participants`, members, config)
+            const { data } = await request.patch(`/api/v1/chats/api/v1/chats/conversations/${conversationId}/participants`,
+                { memberId: memberId }, config)
             dispatch({
                 type: AddMembersToRoomActionType.ADD_MEMBERS_TO_ROOM_SUCCESS,
                 payload: data

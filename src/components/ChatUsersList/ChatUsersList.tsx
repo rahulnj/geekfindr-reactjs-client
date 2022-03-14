@@ -91,9 +91,8 @@ const ChatUsersList: React.FC<ChatUsersListProps> = ({ socket, setconversationId
             <div className='chatuserslist'>
                 <div className="chatuserslist_header">
                     <div className="chatuserslist_header_icons">
-                        <HiUserGroup className="chatuserslist_header_icon" size={32}
-                            onClick={() => setIsChatModal(true)}
-                        />
+                        <button className="btnadd" role="button" onClick={() => setIsChatModal(true)}>
+                            <span className="btntext">Create Room</span></button>
                         {/* <GiHamburgerMenu className="chatuserslist_header_icon" size={28} /> */}
                     </div>
                 </div>

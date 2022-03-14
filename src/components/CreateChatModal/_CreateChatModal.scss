@@ -48,3 +48,27 @@
     overflow-y: auto;
     max-height: 50px;
 }
+.button-submit {
+    background-color: $button-color;
+    border: 1px solid rgb(209, 213, 219);
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    padding: 0.48rem 1rem;
+    text-align: center;
+    text-decoration: none #d1d5db solid;
+    text-decoration-thickness: auto;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+.createchath3 {
+    margin: 1rem;
+}

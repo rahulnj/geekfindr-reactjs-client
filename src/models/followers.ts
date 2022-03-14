@@ -12,6 +12,8 @@ export interface FollowersData {
     username: string
 }
 
+
+
 export interface FollowersModal {
     followersModal?: boolean
     followingModal?: boolean

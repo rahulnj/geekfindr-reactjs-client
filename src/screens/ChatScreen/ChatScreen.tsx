@@ -12,6 +12,7 @@ const ChatScreen: React.FC = () => {
     const socket = useRef<any>()
     const { GetConversations } = useActions()
     const [conversationId, setconversationId] = useState('')
+    console.log(conversationId);
 
     useEffect(() => {
         socket.current = io(
