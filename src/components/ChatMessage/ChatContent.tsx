@@ -31,7 +31,7 @@ const ChatContent: React.FC<ChatMessageProps> = ({ socket, conversationId }) => 
                 console.log(msg);
                 console.log(conversationId);
                 if (conversationId === msg?.conversationId) {
-                    console.log("conversation matched", msg?.conversationId);
+                    console.log("conversation matched", conversationId);
                     const updatedMsg = {
                         senderId: msg?.userId, message: msg?.message,
                         updatedAt: msg?.time, conversationId: msg?.conversationId
@@ -39,12 +39,12 @@ const ChatContent: React.FC<ChatMessageProps> = ({ socket, conversationId }) => 
                     setMessageList((message): Conversation[] => [...message, updatedMsg])
                 } else {
 
-                    console.log("conversation unmatched", msg?.conversationId);
+                    console.log("conversation unmatched", conversationId);
 
                 }
             })
         }
-    }, [])
+    }, [conversationId])
 
     let updatedConversations;
     updatedConversations = messageList?.map((chat: Conversation) => {
