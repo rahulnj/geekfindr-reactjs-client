@@ -80,9 +80,11 @@ const ChatUsersList: React.FC<ChatUsersListProps> = ({ socket, setconversationId
 
     const joinConversation = (id: string) => {
         setconversationId(id)
-        socket.current.emit("join_conversation", {
-            conversationId: id
-        })
+        if (socket.current) {
+            socket.current.emit("join_conversation", {
+                conversationId: id
+            })
+        }
     }
 
     return (

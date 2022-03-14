@@ -34,6 +34,7 @@ export interface SocketResponseMessage {
     message: string
     time: string
     userId: string
+    conversationId: string
 }
 
 export interface GetMyChatState {
@@ -90,6 +91,7 @@ export interface RoomModalProps {
 
 export interface ChatFooterProps {
     socket: any
+    conversationId: string
 }
 
 export interface CreateConversationOrRoomActionData {

@@ -6,6 +6,7 @@ import { ChatItem } from '..'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { ChatMessageProps, Conversation, GetConversationsState, GetMyChatState, SocketResponseMessage, UserData } from '../../models';
+import { setUncaughtExceptionCaptureCallback } from 'process';
 
 
 
@@ -15,9 +16,7 @@ const ChatContent: React.FC<ChatMessageProps> = ({ socket, conversationId }) => 
     let { data: conversations, success: conversationsSuccess }: GetConversationsState = useTypedSelector(
         (state) => state.GetConversations
     );
-    let { data: myChats }: GetMyChatState = useTypedSelector(
-        (state) => state.GetMyChats
-    );
+
     const [messageList, setMessageList] = useState<Conversation[]>([])
     const scrollRef = useRef<HTMLDivElement>();
 
@@ -25,13 +24,24 @@ const ChatContent: React.FC<ChatMessageProps> = ({ socket, conversationId }) => 
         setMessageList(conversations)
     }, [conversationId, conversationsSuccess])
 
+
     useEffect(() => {
         if (socket.current) {
             socket.current.on("message", (msg: SocketResponseMessage) => {
                 console.log(msg);
+                console.log(conversationId);
+                if (conversationId === msg?.conversationId) {
+                    console.log("conversation matched", msg?.conversationId);
+                    const updatedMsg = {
+                        senderId: msg?.userId, message: msg?.message,
+                        updatedAt: msg?.time, conversationId: msg?.conversationId
+                    }
+                    setMessageList((message): Conversation[] => [...message, updatedMsg])
+                } else {
 
-                const updatedMsg = { senderId: msg?.userId, message: msg?.message, updatedAt: msg?.time }
-                setMessageList((message): Conversation[] => [...message, updatedMsg])
+                    console.log("conversation unmatched", msg?.conversationId);
+
+                }
             })
         }
     }, [])

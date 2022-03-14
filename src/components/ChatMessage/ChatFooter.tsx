@@ -11,14 +11,15 @@ import { ChatFooterProps } from '../../models';
 
 
 
-const ChatFooter: React.FC<ChatFooterProps> = ({ socket }) => {
+const ChatFooter: React.FC<ChatFooterProps> = ({ socket, conversationId }) => {
 
     const [message, setMessage] = useState('')
 
     const sendMessage = () => {
         if (message.length !== 0) {
             socket.current.emit("message", {
-                message
+                message,
+                conversationId
             })
             setMessage('')
         }

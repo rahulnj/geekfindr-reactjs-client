@@ -49,7 +49,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ socket, conversationId }) => 
                 <>
                     <ChatHeader chatUser={chatUser} />
                     <ChatContent socket={socket} conversationId={conversationId} />
-                    <ChatFooter socket={socket} />
+                    <ChatFooter socket={socket} conversationId={conversationId} />
                 </>
                 :
                 <div className='nochat'>
