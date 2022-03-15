@@ -1,4 +1,4 @@
-import { Todo } from ".";
+import { SingleTodo } from ".";
 
 export interface LayoutProps {
     children: JSX.Element[] | JSX.Element
@@ -58,10 +58,10 @@ export interface ProjectDescriptionModalProps {
 }
 
 export interface ProjectTodoDragandDropProps {
-    noStatus: Todo[]
-    nextUp: Todo[]
-    inProgress: Todo[]
-    completed: Todo[]
+    noStatus: SingleTodo[]
+    nextUp: SingleTodo[]
+    inProgress: SingleTodo[]
+    completed: SingleTodo[]
 }
 
 export interface ProfileRightAsideProps {

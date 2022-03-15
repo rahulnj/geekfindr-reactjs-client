@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { UserData } from '../../models'
+import { GetProjectDetailState, ProjectState, UserData } from '../../models'
 
 import './_ProjectDescription.scss'
 
@@ -13,16 +13,16 @@ const ProjectDescription: React.FC = () => {
     const { projectId }: Readonly<Params<string>> = useParams()
     const navigate = useNavigate()
     const { GetProjectDetails, DeleteProject } = useActions();
-    const { data: projectDetails }: any = useTypedSelector(
+    const { data: projectDetails }: GetProjectDetailState = useTypedSelector(
         (state) => state.GetProjectDetails
     )
-    const { success: ProjectTodoSuccess }: any = useTypedSelector(
+    const { success: ProjectTodoSuccess }: ProjectState = useTypedSelector(
         (state) => state.ProjectTodo
     )
-    const { success: projectDescriptionSuccess }: any = useTypedSelector(
+    const { success: projectDescriptionSuccess }: ProjectState = useTypedSelector(
         (state) => state.AddProjectDescription
     )
-    const { success: projectDeleteSuccess }: any = useTypedSelector(
+    const { success: projectDeleteSuccess }: ProjectState = useTypedSelector(
         (state) => state.ProjectDelete
     )
     const [isProjectDescriptionModal, setIsProjectDescriptionModal] = useState(false)

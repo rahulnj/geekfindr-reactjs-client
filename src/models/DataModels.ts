@@ -69,7 +69,3 @@ export interface profileinfo {
 
 
 
-export interface Todo {
-    id: number
-    todo: string
-}

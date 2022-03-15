@@ -5,7 +5,7 @@ import { Params, useParams } from 'react-router-dom';
 import { DragAndDrop, ReadOnly } from '..';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { Todo, UserData } from '../../models';
+import { GetProjectDetailState, ProjectState, SingleTodo, UserData } from '../../models';
 
 import './_ProjectTodo.scss'
 
@@ -15,43 +15,45 @@ const ProjectTodo = () => {
     const { projectId }: Readonly<Params<string>> = useParams()
     const { ProjectTodo } = useActions();
 
-    const { success: ProjectTodoSuccess }: any = useTypedSelector(
+    const { success: ProjectTodoSuccess }: ProjectState = useTypedSelector(
         (state) => state.ProjectTodo
     )
-    const { data: projectDetails }: any = useTypedSelector(
+    const { data: projectDetails }: GetProjectDetailState = useTypedSelector(
         (state) => state.GetProjectDetails
     )
+    console.log(projectDetails);
+
 
     const [todo, setTodo] = useState('')
-    const [noStatus, setNoStatus] = useState<Todo[]>([])
-    const [nextUp, setNextUp] = useState<Todo[]>([])
-    const [inProgress, setInProgress] = useState<Todo[]>([])
-    const [completed, setCompleted] = useState<Todo[]>([])
+    const [noStatus, setNoStatus] = useState<SingleTodo[]>([])
+    const [nextUp, setNextUp] = useState<SingleTodo[]>([])
+    const [inProgress, setInProgress] = useState<SingleTodo[]>([])
+    const [completed, setCompleted] = useState<SingleTodo[]>([])
 
 
 
     useEffect(() => {
         let fetchedNoStatus, fetchedNextUp, fetchedInProgress, fetchedCompleted;
-        fetchedNoStatus = projectDetails?.project?.todo[0]?.tasks?.map((todo: any) => {
+        fetchedNoStatus = projectDetails?.project?.todo[0]?.tasks?.map((todo) => {
             return { id: Math.random().toString(36).substr(2, 9), todo: todo }
         })
         if (fetchedNoStatus) {
             setNoStatus(fetchedNoStatus)
         }
-        fetchedNextUp = projectDetails?.project?.todo[1]?.tasks?.map((todo: any) => {
+        fetchedNextUp = projectDetails?.project?.todo[1]?.tasks?.map((todo) => {
             return { id: Math.random().toString(36).substr(2, 9), todo: todo }
         })
         if (fetchedNextUp) {
             setNextUp(fetchedNextUp)
         }
 
-        fetchedInProgress = projectDetails?.project?.todo[2]?.tasks?.map((todo: any) => {
+        fetchedInProgress = projectDetails?.project?.todo[2]?.tasks?.map((todo) => {
             return { id: Math.random().toString(36).substr(2, 9), todo: todo }
         })
         if (fetchedInProgress) {
             setInProgress(fetchedInProgress)
         }
-        fetchedCompleted = projectDetails?.project?.todo[3]?.tasks?.map((todo: any) => {
+        fetchedCompleted = projectDetails?.project?.todo[3]?.tasks?.map((todo) => {
             return { id: Math.random().toString(36).substr(2, 9), todo: todo }
         })
         if (fetchedCompleted) {
@@ -61,7 +63,7 @@ const ProjectTodo = () => {
     const handleAddTodo = () => {
         if (todo) {
             setNoStatus([...noStatus, {
-                id: Date.now(), todo
+                id: Math.random().toString(36).substr(2, 9), todo
             }])
             setTodo('')
         }
@@ -109,19 +111,19 @@ const ProjectTodo = () => {
         setCompleted(iscompleted)
 
         let updatedNostatus: string[] = [];
-        nostatus.forEach((todo: any) => {
+        nostatus.forEach((todo) => {
             updatedNostatus.push(todo.todo)
         })
         let updatedNextup: string[] = [];
-        nextup.forEach((todo: any) => {
+        nextup.forEach((todo) => {
             updatedNextup.push(todo.todo)
         })
         let updatedInprogress: string[] = [];
-        inprogress.forEach((todo: any) => {
+        inprogress.forEach((todo) => {
             updatedInprogress.push(todo.todo)
         })
         let updatedCompleted: string[] = [];
-        iscompleted.forEach((todo: any) => {
+        iscompleted.forEach((todo) => {
             updatedCompleted.push(todo.todo)
         })
 

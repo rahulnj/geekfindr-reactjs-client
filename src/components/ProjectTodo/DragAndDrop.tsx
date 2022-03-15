@@ -1,8 +1,7 @@
-import React from 'react'
 import './_ProjectTodo.scss'
 import { Draggable, DraggableProvided, DroppableProvided } from "react-beautiful-dnd";
 import { Droppable } from 'react-beautiful-dnd'
-import { ProjectTodoDragandDropProps, Todo } from '../../models';
+import { ProjectTodoDragandDropProps } from '../../models';
 
 
 
@@ -20,7 +19,7 @@ const DragAndDrop = ({ noStatus, nextUp, inProgress, completed }: ProjectTodoDra
                             <h3>No Status</h3>
                         </div>
                         <hr />
-                        {noStatus?.map((todo: Todo, index) => (
+                        {noStatus?.map((todo, index) => (
                             <Draggable draggableId={todo.id.toString()} index={index} >
                                 {(provided: DraggableProvided) => (
                                     <div key={todo?.id} className='projecttodo_singletodo'
@@ -46,7 +45,7 @@ const DragAndDrop = ({ noStatus, nextUp, inProgress, completed }: ProjectTodoDra
                             <h3>Next Up</h3>
                         </div>
                         <hr />
-                        {nextUp?.map((todo: Todo, index) => (
+                        {nextUp?.map((todo, index) => (
                             <Draggable draggableId={todo.id.toString()} index={index} >
                                 {(provided: DraggableProvided) => (
                                     <div key={todo?.id} className='projecttodo_singletodo'
@@ -73,7 +72,7 @@ const DragAndDrop = ({ noStatus, nextUp, inProgress, completed }: ProjectTodoDra
                             <h3>In Progress</h3>
                         </div>
                         <hr />
-                        {inProgress?.map((todo: Todo, index) => (
+                        {inProgress?.map((todo, index) => (
                             <Draggable draggableId={todo.id.toString()} index={index} >
                                 {(provided: DraggableProvided) => (
                                     <div key={todo?.id} className='projecttodo_singletodo'
@@ -99,7 +98,7 @@ const DragAndDrop = ({ noStatus, nextUp, inProgress, completed }: ProjectTodoDra
                             <h3>Completed</h3>
                         </div>
                         <hr />
-                        {completed?.map((todo: Todo, index) => (
+                        {completed?.map((todo, index) => (
                             <Draggable draggableId={todo.id.toString()} index={index} >
                                 {(provided: DraggableProvided) => (
                                     <div key={todo?.id} className='projecttodo_singletodo'

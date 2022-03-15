@@ -15,7 +15,7 @@ export interface GetMyProjectState {
 }
 
 export interface GetProjectDetailState {
-    data: ProjectDetails | {}
+    data: ProjectDetails
     error: string[] | null
     loading: boolean
     success?: boolean
@@ -91,7 +91,7 @@ export interface GetMyProjectData {
     role: string
 }
 
-export type role = 'owner' | 'admin' | 'collaborator';
+export type role = 'owner' | 'admin' | 'collaborator' | 'joinRequest';
 export type title = 'noStatus' | 'nextUp' | 'inProgress' | 'completed';
 
 export interface ProjectDetails {
@@ -101,15 +101,19 @@ export interface ProjectDetails {
         id: string
         name: string
         owner: Owner
-        task: task[]
-        team: team[]
-        todo: todo[]
+        task: Task[]
+        team: Team[]
+        todo: Todo[]
         updatedAt: string
     }
     role: role
+    isOwner?: boolean
+    isAdmin?: boolean
+    isCollaborator?: boolean
+    isjoinRequest?: boolean
 }
 
-export interface task {
+export interface Task {
     assignor: Owner
     description: string
     isComplete: boolean
@@ -119,13 +123,19 @@ export interface task {
 }
 
 
-export interface team {
+export interface Team {
     role: role
     user: Owner
 }
 
-export interface todo {
+export interface Todo {
     tasks: string[]
     title: title
 }
+
+export interface SingleTodo {
+    id: string
+    todo: string
+}
+
 

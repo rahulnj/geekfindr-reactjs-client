@@ -72,6 +72,8 @@ export const GetProjectDetails = ({ token, projectId }: GetProjectDetailsActionD
                 type: GetProjectDetailsActionType.GET_PROJECT_DETAILS_SUCCESS,
                 payload: data
             })
+            console.log(data);
+
         } catch (error: any) {
             console.log(error);
             dispatch({

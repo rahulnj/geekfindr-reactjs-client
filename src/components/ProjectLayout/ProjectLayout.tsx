@@ -5,10 +5,11 @@ import './_ProjectLayout.scss'
 import { ProjectDescription, ProjectTasks, ProjectTeam, ProjectTodo } from '..'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import Moment from 'react-moment'
+import { GetProjectDetailState } from '../../models'
 
 
 const ProjectLayout = () => {
-    const { data: projectDetails }: any = useTypedSelector(
+    const { data: projectDetails }: GetProjectDetailState = useTypedSelector(
         (state) => state.GetProjectDetails
     )
     const [descriptionActive, setDescriptionActive] = useState(true)

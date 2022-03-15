@@ -1,4 +1,4 @@
-import { GetMyProjectState, GetProjectDetailState, ProjectState } from "../../models"
+import { GetMyProjectState, GetProjectDetailState, ProjectDetails, ProjectState } from "../../models"
 
 import {
     AddProjectDescriptionAction,
@@ -33,6 +33,13 @@ const initialState = {
     success: false
 }
 
+const projectDetailsInitialState = {
+    data: {} as ProjectDetails,
+    error: null,
+    loading: false,
+    success: false
+}
+
 export const GetMyProjectReducer = (
     state: GetMyProjectState = initialState,
     action: GetMyrojectAction
@@ -50,16 +57,16 @@ export const GetMyProjectReducer = (
 }
 
 export const GetProjectDetailsReducer = (
-    state: GetProjectDetailState = initialState,
+    state: GetProjectDetailState = projectDetailsInitialState,
     action: GetProjectDetailsAction
 ): GetProjectDetailState => {
     switch (action.type) {
         case GetProjectDetailsActionType.GET_PROJECT_DETAILS_REQUEST:
-            return { ...state, success: false, loading: true, error: null, data: [] }
+            return { ...state, success: false, loading: true, error: null, data: {} as ProjectDetails }
         case GetProjectDetailsActionType.GET_PROJECT_DETAILS_SUCCESS:
             return { ...state, success: true, loading: false, error: null, data: action.payload }
         case GetProjectDetailsActionType.GET_PROJECT_DETAILS_FAIL:
-            return { ...state, loading: false, error: action.payload, data: [] }
+            return { ...state, loading: false, error: action.payload, data: {} as ProjectDetails }
         default:
             return state;
     }

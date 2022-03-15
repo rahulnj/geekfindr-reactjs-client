@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 import './_ProjectTeam.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { UserData } from '../../models';
+import { GetProjectDetailState, ProjectState, UserData } from '../../models';
 import { useActions } from '../../hooks/useActions';
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
@@ -14,13 +14,13 @@ const ProjectTeam = () => {
     const { projectId }: Readonly<Params<string>> = useParams()
     const { GetProjectDetails, ManageTeamRole, LeaveOrRemoveMembers } = useActions()
     const navigate = useNavigate()
-    let { data: projectDetails }: any = useTypedSelector(
+    let { data: projectDetails }: GetProjectDetailState = useTypedSelector(
         (state) => state.GetProjectDetails
     )
-    let { success: LeaveOrRemoveSuccess }: any = useTypedSelector(
+    let { success: LeaveOrRemoveSuccess }: ProjectState = useTypedSelector(
         (state) => state.LeaveOrRemoveMembers
     )
-    let { success: ManageTeamRoleSuccess }: any = useTypedSelector(
+    let { success: ManageTeamRoleSuccess }: ProjectState = useTypedSelector(
         (state) => state.ManageTeamRole
     )
 
@@ -32,7 +32,7 @@ const ProjectTeam = () => {
     }, [LeaveOrRemoveSuccess, ManageTeamRoleSuccess])
 
     let isOwner = true;
-    projectDetails?.project?.team?.every((member: any) => {
+    projectDetails?.project?.team?.every((member) => {
         isOwner = member?.role === 'owner' && member?.user?.id === CurrentUser?.id
         if (isOwner === true) {
             return false
@@ -42,7 +42,7 @@ const ProjectTeam = () => {
     projectDetails = { ...projectDetails, isOwner: isOwner }
 
     let isAdmin = true;
-    projectDetails?.project?.team?.every((member: any) => {
+    projectDetails?.project?.team?.every((member) => {
         isAdmin = member?.role === 'admin' && member?.user?.id === CurrentUser?.id
         if (isAdmin == true) {
             return false
@@ -52,7 +52,7 @@ const ProjectTeam = () => {
     projectDetails = { ...projectDetails, isAdmin: isAdmin }
 
     let isCollaborator = true;
-    projectDetails?.project?.team?.every((member: any) => {
+    projectDetails?.project?.team?.every((member) => {
         isCollaborator = member?.role === 'collaborator' && member?.user?.id === CurrentUser?.id
         if (isCollaborator === true) {
             return false
@@ -62,7 +62,7 @@ const ProjectTeam = () => {
     projectDetails = { ...projectDetails, isCollaborator: isCollaborator }
 
     let isJoinRequest = true;
-    projectDetails?.project?.team?.every((member: any) => {
+    projectDetails?.project?.team?.every((member) => {
         isJoinRequest = member?.role === 'joinRequest' && member?.user?.id === CurrentUser?.id
         if (isJoinRequest === true) {
             return false
@@ -160,7 +160,7 @@ const ProjectTeam = () => {
             </div>
             <hr />
             {
-                projectDetails?.project?.team?.map((teammates: any) => (
+                projectDetails?.project?.team?.map((teammates) => (
                     <>
                         <div className="projectteam_user" key={teammates?.user?.id}>
                             <div className="projectteam_user_left">

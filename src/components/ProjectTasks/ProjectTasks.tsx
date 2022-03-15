@@ -6,7 +6,7 @@ import { SiAffinitydesigner, SiSpeedtest } from 'react-icons/si'
 import { Params, useParams } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { UserData } from '../../models'
+import { GetProjectDetailState, ProjectState, UserData } from '../../models'
 import Modal from '../Modal/Modal'
 
 import './_ProjectTasks.scss'
@@ -15,17 +15,18 @@ import './_ProjectTasks.scss'
 const ProjectTasks = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { projectId }: Readonly<Params<string>> = useParams()
-    const { ProjectTask, GetProjectDetails } = useActions()
-    let { data: projectDetails }: any = useTypedSelector(
+    const { GetProjectDetails } = useActions()
+
+    let { data: projectDetails }: GetProjectDetailState = useTypedSelector(
         (state) => state.GetProjectDetails
     )
-    const { success: projectTaskSuccess }: any = useTypedSelector(
+    const { success: projectTaskSuccess }: ProjectState = useTypedSelector(
         (state) => state.ProjectTask
     )
-    const { success: projectTaskIsCompleteSuccess }: any = useTypedSelector(
+    const { success: projectTaskIsCompleteSuccess }: ProjectState = useTypedSelector(
         (state) => state.ProjectTaskIsComplete
     )
-    const { success: projectTaskDeleteSuccess }: any = useTypedSelector(
+    const { success: projectTaskDeleteSuccess }: ProjectState = useTypedSelector(
         (state) => state.ProjectTaskDelete
     )
     useEffect(() => {
@@ -64,7 +65,7 @@ const ProjectTasks = () => {
                 </div>
                 <hr />
                 {
-                    projectDetails?.project?.task?.map((task: any, index: number) => (
+                    projectDetails?.project?.task?.map((task, index) => (
                         <div className='projecttasks_singletask' key={index}>
                             <div className='projecttasks_singletask_left'>
                                 <h3>
