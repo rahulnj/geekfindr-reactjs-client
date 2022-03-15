@@ -119,3 +119,10 @@ export interface conversationObj {
     roomName: string
     participants: string[]
 }
+
+export interface SearchedUserData {
+    username: string
+    role: string
+    id: string
+    avatar: string
+}

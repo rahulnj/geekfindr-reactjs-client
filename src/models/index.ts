@@ -1,4 +1,3 @@
-export * from './DataModels';
 export * from './PropsModels';
 export * from './chat';
 export * from './auth';

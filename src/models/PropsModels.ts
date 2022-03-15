@@ -87,3 +87,21 @@ export interface SearchProps {
 export interface CreateChatModalProps {
     setIsChatModal: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+export interface AddPostModal {
+    ToggleAddPostModal: (boolean?: boolean) => void;
+    handleToggleSidebar: (boolean?: boolean) => void;
+}
+
+
+
+export interface AddPostModalState {
+    isModalOpened: boolean
+    setIsModalOpened: React.Dispatch<React.SetStateAction<boolean>>
+
+}
+
+export interface EditPostModalState {
+    isEditModalOpened: boolean
+    setIsEditModalOpened: React.Dispatch<React.SetStateAction<boolean>>
+}
