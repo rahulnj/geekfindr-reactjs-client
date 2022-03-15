@@ -22,7 +22,7 @@ const HomePosts = ({ CommentHandler }: HomePostProps): any => {
         (state) => state.GetMyProject
     )
     const { LikePost, TeamJoinRequest } = useActions()
-    const [lastPostId, setLastPostId] = useState('')
+    const [lastPostId, setLastPostId] = useState<any>()
     const observer = useRef<any>()
 
     let { feedPosts, hasMore, loading, setFeedPosts } = useInfiniteScroll({ lastPostId })

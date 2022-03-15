@@ -5,10 +5,10 @@ import request from '../api';
 import { PostData, UserData } from '../models';
 
 interface useInfiniteScrollProps {
-    lastPostId: string
+    lastPostId: any
 }
 
-export const useInfiniteScroll = ({ lastPostId: lastId }: useInfiniteScrollProps) => {
+export const useInfiniteScroll = ({ lastPostId }: useInfiniteScrollProps) => {
 
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
@@ -24,7 +24,7 @@ export const useInfiniteScroll = ({ lastPostId: lastId }: useInfiniteScrollProps
                 const { data } = await request.get<PostData[]>('/api/v1/posts/my-feed', {
                     params: {
                         limit: 5,
-                        lastId: lastId
+                        lastId: lastPostId
                     },
                     headers: {
                         "Content-type": "application/json",
@@ -41,7 +41,7 @@ export const useInfiniteScroll = ({ lastPostId: lastId }: useInfiniteScrollProps
             }
         }
         fetchFeed()
-    }, [lastId])
+    }, [lastPostId])
 
     return { feedPosts, hasMore, loading, setFeedPosts };
 }
