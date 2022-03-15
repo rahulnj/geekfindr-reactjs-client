@@ -27,7 +27,7 @@ export interface PostUploadModalProps {
 
 export interface CommentProps {
     commentPostId: string
-    commentPostImg: string
+    commentPostImg: string | undefined
 }
 
 export interface HomePostProps {

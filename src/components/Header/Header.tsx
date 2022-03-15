@@ -13,7 +13,7 @@ import { FaSignOutAlt } from 'react-icons/fa'
 import { MdSettings } from 'react-icons/md'
 
 
-import { AddPostModal } from '../../models'
+import { AddPostModal, UserData } from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
@@ -24,14 +24,10 @@ import { Search } from '..'
 
 
 const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModal }) => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const ref = useRef<any>();
     const [ToggleHeader, setToggleHeader] = useState<boolean>(false)
-    const { UserLogout, GetMyPost } = useActions();
-
-    const { user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
-
+    const { UserLogout } = useActions();
 
     const navigate = useNavigate()
     const SignOutHandler = (e: React.FormEvent) => {
@@ -61,7 +57,7 @@ const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModa
     }, [ToggleHeader]);
 
     const ProfileHandler = () => {
-        navigate(`/profile/${user?.id}`)
+        navigate(`/profile/${CurrentUser?.id}`)
     }
 
     return (
@@ -78,15 +74,15 @@ const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModa
                 <button className='header_nav_right_button' onClick={() => ToggleAddPostModal()}>Add Post</button>
 
                 <div className='header_nav_right_userinfo' onClick={ProfileHandler}>
-                    <img className='header_nav_right_userinfo_userImg' src={user?.avatar} alt="" />
-                    <span>Hi,{user?.username}</span>
+                    <img className='header_nav_right_userinfo_userImg' src={CurrentUser?.avatar} alt="" />
+                    <span>Hi,{CurrentUser?.username}</span>
                 </div>
 
                 <AiOutlineCaretDown onClick={ToggleHeaderDropDown} className='header_nav_right_arrow' />
             </div>
             <div ref={ref} className={ToggleHeader ? "header_menu active" : "header_menu"}>
                 <h3>
-                    {user?.username}
+                    {CurrentUser?.username}
                     <br />
                     <span>Web developer</span>
                 </h3>

@@ -6,7 +6,7 @@ import Multiselect from 'multiselect-react-dropdown';
 
 import { useActions } from '../../hooks/useActions';
 
-import { ProjectTaskManageModalProps, UserData } from '../../models';
+import { GetProjectDetailState, Owner, ProjectTaskManageModalProps, UserData } from '../../models';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { Params, useParams } from 'react-router-dom';
 import { BsBookmarkCheckFill } from 'react-icons/bs';
@@ -15,7 +15,7 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { projectId }: Readonly<Params<string>> = useParams()
     const { ProjectTaskIsComplete, ProjectTaskDelete } = useActions()
-    let { data: projectDetails }: any = useTypedSelector(
+    let { data: projectDetails }: GetProjectDetailState = useTypedSelector(
         (state) => state.GetProjectDetails
     )
 
@@ -24,11 +24,10 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
     const [type, setType] = useState('')
     const [selectedUsers, setSelectedUsers] = useState([])
     const [selectedRadioBtn, setSelectedRadioBtn] = useState('')
-    const [assignor, setAssignor] = useState('')
-    const [assignorId, setAssignorId] = useState('')
-    const [assignorImg, setAssignorImg] = useState('')
+    const [assignor, setAssignor] = useState({ username: '', avatar: '', id: '' })
     const [isComplete, setIsComplete] = useState(false)
     const [isTaskComplete, setIsTaskComplete] = useState(false)
+
     useEffect(() => {
         if (projectDetails?.project?.task[projectTaskIndex]) {
             setTitle(projectDetails?.project?.task[projectTaskIndex]?.title)
@@ -36,9 +35,6 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
             setType(projectDetails?.project?.task[projectTaskIndex]?.type)
             setAssignor(projectDetails?.project?.task[projectTaskIndex]?.assignor)
             setIsTaskComplete(projectDetails?.project?.task[projectTaskIndex]?.isComplete)
-            setAssignor(projectDetails?.project?.task[projectTaskIndex]?.assignor?.username)
-            setAssignorImg(projectDetails?.project?.task[projectTaskIndex]?.assignor?.avatar)
-            setAssignorId(projectDetails?.project?.task[projectTaskIndex]?.assignor?.id)
             let updatedAlreadySelectedUsers: any = []
             for (let i = 0; i < (alreadySelectedUsers.length); i++) {
                 for (let j = 0; j < (projectDetails?.project?.team?.length); j++) {
@@ -55,7 +51,7 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
     }, [projectDetails, projectTaskIndex])
 
     let alreadySelectedUsers: any = []
-    alreadySelectedUsers = projectDetails?.project?.task[projectTaskIndex]?.users?.map((user: any) => {
+    alreadySelectedUsers = projectDetails?.project?.task[projectTaskIndex]?.users?.map((user) => {
         return { id: user }
     })
 
@@ -161,8 +157,8 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
                 <div className='projecttaskmodal_left_inputs'>
                     <label className='projecttaskmodal_left_inputs_label'>Assigned By</label>
                     <div className='projecttaskmodal_left_assignor'>
-                        <img src={assignorImg} alt="" />
-                        <h3>{assignor}</h3>
+                        <img src={assignor?.avatar} alt="" />
+                        <h3>{assignor?.username}</h3>
                     </div>
                 </div>
                 <div className="radio_container_projecttask">
@@ -170,7 +166,7 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
                         <div className="radio_container_projecttask_icon">
                             <BsBookmarkCheckFill size={24} fill='green' />Completed</div>
                         :
-                        projectDetails?.project?.task[projectTaskIndex]?.users?.map((id: string) => {
+                        projectDetails?.project?.task[projectTaskIndex]?.users?.map((id) => {
                             if (id === CurrentUser?.id) {
                                 return (<form className='radio_container_form' >
                                     <label className='radio_container_label'>
@@ -185,7 +181,7 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
                     }
                 </div>
                 <div className='projecttaskmodal_left_actions'>
-                    {(projectDetails?.role === 'owner' || assignorId === CurrentUser?.id) &&
+                    {(projectDetails?.role === 'owner' || assignor?.id === CurrentUser?.id) &&
                         <button className="button-edit" onClick={handleDeleteTask}>Delete Task</button>}
                     {!isTaskComplete &&
                         projectDetails?.project?.task[projectTaskIndex]?.users?.map((id: string) => {

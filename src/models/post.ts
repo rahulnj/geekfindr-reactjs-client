@@ -130,14 +130,22 @@ export interface PostData {
     mediaType?: string
     mediaURL: string
     owner?: Owner
-    teamJoinRequests?: string[]
+    teamJoinRequests?: JoinRequests[]
     teamJoinRequestCount?: number
     updatedAt?: string
     isLiked?: boolean
     isRequested?: boolean
     isJoined?: boolean
-    likes?: string[]
+    likes?: Like[]
     ref?: any
+}
+
+interface Like {
+    owner: string
+}
+
+interface JoinRequests {
+    owner: string
 }
 
 export interface Owner {

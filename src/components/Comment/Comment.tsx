@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Params, useParams } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { CommentProps, UserData } from '../../models'
+import { CommentPostState, CommentProps, GetCommentPostState, GetUsersPostState, PostData, PostState, UserData } from '../../models'
 
 import './_Comment.scss'
 
@@ -10,23 +10,21 @@ const Comment = ({ commentPostId, commentPostImg }: CommentProps) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { userId }: Readonly<Params<string>> = useParams()
     const [comment, setComment] = useState('')
-    const [commentPost, setCommentPost] = useState<any>('')
+    const [commentPost, setCommentPost] = useState<any>([])
 
     const { CommentPost, GetPostComments } = useActions();
 
-    const { user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
-    const { data: comments }: any = useTypedSelector(
+
+    const { data: comments }: GetCommentPostState = useTypedSelector(
         (state) => state.GetPostComments
     )
-    const { success: commentSuccess }: any = useTypedSelector(
+    const { success: commentSuccess }: CommentPostState = useTypedSelector(
         (state) => state.CommentPost
     )
-    let { data: Posts }: any = useTypedSelector(
+    let { data: Posts }: PostState = useTypedSelector(
         (state) => state.GetMyPost
     )
-    let { data: UsersPosts }: any = useTypedSelector(
+    let { data: UsersPosts }: GetUsersPostState = useTypedSelector(
         (state) => state.GetUsersPosts
     )
 
@@ -38,14 +36,14 @@ const Comment = ({ commentPostId, commentPostImg }: CommentProps) => {
 
     useEffect(() => {
         GetPostComments({
-            token: user.token,
+            token: CurrentUser?.token,
             postId: commentPostId
         })
     }, [commentSuccess])
 
     useEffect(() => {
         const commentPostDetails = Posts?.filter(
-            (post: any) => post.id === commentPostId
+            (post) => post.id === commentPostId
         )
         setCommentPost(commentPostDetails[0])
     }, [])
@@ -53,7 +51,7 @@ const Comment = ({ commentPostId, commentPostImg }: CommentProps) => {
 
     const PostCommentHandler = (id: string) => {
         CommentPost({
-            token: user.token,
+            token: CurrentUser?.token,
             postId: id,
             comment,
         })
@@ -80,7 +78,7 @@ const Comment = ({ commentPostId, commentPostImg }: CommentProps) => {
                             >post</button>
                         </div>
                         <div className='comment_listwrapper'>
-                            {comments?.map((comment: any, index: number) => (
+                            {comments?.map((comment, index) => (
                                 <Fragment key={index}>
                                     <div className="comment_list">
                                         <div className="comment_profileimg">

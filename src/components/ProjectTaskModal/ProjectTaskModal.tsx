@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import './ProjectTaskModal.scss'
 import Multiselect from 'multiselect-react-dropdown';
-import { ProjectTaskModalProps, UserData } from '../../models'
+import { GetProjectDetailState, Options, ProjectTaskModalProps, UserData } from '../../models'
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
 import validator from '@brocode/simple-react-form-validation-helper';
@@ -22,34 +22,34 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
     const [type, setType] = useState('')
     const [selectedUsers, setSelectedUsers] = useState([])
 
-    let { data: projectDetails }: any = useTypedSelector(
+    let { data: projectDetails }: GetProjectDetailState = useTypedSelector(
         (state) => state.GetProjectDetails
     )
 
     //To check weather the multiselect contains only users below the admin hirerachy
-    let options: any = []
+    let options = []
     if (projectDetails?.role === 'admin') {
-        options = projectDetails?.project?.team?.filter((user: any) => (
+        options = projectDetails?.project?.team?.filter((user) => (
             user?.role != 'admin'
         ))
     } else {
         options = projectDetails?.project?.team
     }
     //To check weather the multiselect option contains current username or owner name
-    options = options?.filter((user: any) => (
+    options = options?.filter((user) => (
         user?.user?.id != CurrentUser?.id && user?.user?.id != projectDetails?.project?.owner?.id
-    )).map((user: any) => {
+    )).map((user) => {
         return { username: user?.user?.username, id: user?.user?.id }
     })
     let updatedSelectedUsers: string[] = [];
-    updatedSelectedUsers = selectedUsers?.map((user: any) => (
-        user.id
+    updatedSelectedUsers = selectedUsers?.map((user: Options) => (
+        user?.id
     ))
 
     //To check if there is same project task name assigned 
 
     let projectTaskNames: string[] = []
-    projectDetails?.project?.task?.forEach((task: any) => {
+    projectDetails?.project?.task?.forEach((task) => {
         projectTaskNames.push(task?.title)
     })
 

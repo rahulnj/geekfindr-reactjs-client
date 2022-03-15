@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import './_Modal.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { UserData } from '../../models';
+import { FollowersState } from '../../models';
 
 import {
     Comment,
@@ -15,6 +15,7 @@ import {
     ProjectTaskModal, CreateChatModal,
     RoomModal
 } from '..';
+import { ModalProps } from '../../models/Modal';
 
 
 
@@ -24,7 +25,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
     followingModal, setFollowingModal,
     isCommentModalOpened, setIsCommentModalOpened,
     commentPostId, commentPostImg, isProjectDescriptionModal,
-    setIsProjectDescriptionModal, setProjectDescriptionLoading,
+    setIsProjectDescriptionModal,
     isProjectTaskModal, setIsProjectTaskModal,
     isProjectTaskManageModal, setIsProjectTaskManageModal,
     projectTaskIndex, isChatModal, setIsChatModal,
@@ -33,10 +34,10 @@ const Modal = ({ isModalOpened, setIsModalOpened,
 
     const Modalref = useRef<any>()
 
-    const { data: Followers }: any = useTypedSelector(
+    const { data: Followers }: FollowersState = useTypedSelector(
         (state) => state.GetUserFollowers
     )
-    const { data: Followings }: any = useTypedSelector(
+    const { data: Followings }: FollowersState = useTypedSelector(
         (state) => state.GetFollowingUsers
     )
 
@@ -127,7 +128,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
             <div className={(followersModal || followingModal || isRoomModal) ? "modal-sm" : "modal-lg"}
                 ref={Modalref}>
                 {followersModal &&
-                    Followers.map((user: UserData) => (
+                    Followers.map((user) => (
                         <Messages followersModal={followersModal}
                             key={user.id}
                             username={user.username}
@@ -138,7 +139,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
                     ))
                 }
                 {followingModal &&
-                    Followings.map((user: UserData) => (
+                    Followings.map((user) => (
                         <Messages followingModal={followingModal}
                             key={user.id}
                             username={user.username}

@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react'
 
 import request from '../api';
 
-import { UserData } from '../models';
+import { PostData, UserData } from '../models';
 
+interface useInfiniteScrollProps {
+    lastPostId: string
+}
 
+export const useInfiniteScroll = ({ lastPostId: lastId }: useInfiniteScrollProps) => {
 
-export const useInfiniteScroll = ({ lastPostId: lastId }: any) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
-    const [feedPosts, setFeedPosts] = useState<any>([])
+    const [feedPosts, setFeedPosts] = useState<PostData[]>([])
     const [hasMore, setHasMore] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -18,7 +21,7 @@ export const useInfiniteScroll = ({ lastPostId: lastId }: any) => {
         setLoading(true)
         const fetchFeed = async () => {
             try {
-                const { data } = await request.get('/api/v1/posts/my-feed', {
+                const { data } = await request.get<PostData[]>('/api/v1/posts/my-feed', {
                     params: {
                         limit: 5,
                         lastId: lastId
@@ -28,7 +31,7 @@ export const useInfiniteScroll = ({ lastPostId: lastId }: any) => {
                         Authorization: `Bearer ${CurrentUser?.token}`,
                     },
                 })
-                setFeedPosts((prevPosts: any) => {
+                setFeedPosts((prevPosts) => {
                     return [...new Set([...prevPosts, ...data])]
                 })
                 setHasMore(data.length > 0)

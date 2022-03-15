@@ -25,5 +25,5 @@ export interface FollowersModal {
 
 export interface GetUserFollowersActionData {
     token: string
-    userId: string
+    userId: string | undefined
 }

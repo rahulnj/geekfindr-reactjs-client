@@ -7,7 +7,7 @@ import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 import { BiComment, BiEdit } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 
-import { PostData, ProfileProps } from '../../models'
+import { AuthState, CommentPostState, DeletePostState, GetUsersPostState, LikePostState, PostData, PostState, ProfileProps, UserData } from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
@@ -18,39 +18,32 @@ import { Modal, Spinner, HomePost, PostSkeleton } from '..'
 
 
 const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
+    const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
 
     const [isEditModalOpened, setIsEditModalOpened] = useState(false)
     const [isCommentModalOpened, setIsCommentModalOpened] = useState(false)
     const [commentPostId, setCommentPostId] = useState('')
     const [commentPostImg, setCommentPostImg] = useState('')
 
-
     const { userId }: Readonly<Params<string>> = useParams()
-    const { LikePost,
-        GetUsersPosts,
-        GetMyPost,
-        TeamJoinRequest
-    } = useActions();
+    const { LikePost, GetUsersPosts, GetMyPost, TeamJoinRequest } = useActions();
 
-    const { user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
-    let { data: ProfilePosts, loading: ProfilePostsLoading, success: ProfilePostsSuccess }: any = useTypedSelector(
+    let { data: ProfilePosts, loading: ProfilePostsLoading, success: ProfilePostsSuccess }: PostState = useTypedSelector(
         (state) => state.GetMyPost
     )
-    let { data: SearchedUsersPosts, loading: SearchedUsersPostsLoading, success: SeachedUsersPostsSuccess }: any = useTypedSelector(
+    let { data: SearchedUsersPosts, loading: SearchedUsersPostsLoading, success: SeachedUsersPostsSuccess }: GetUsersPostState = useTypedSelector(
         (state) => state.GetUsersPosts
     )
-    const { success: EditPostSuccess }: any = useTypedSelector(
+    const { success: EditPostSuccess }: PostState = useTypedSelector(
         (state) => state.EditPost
     )
-    const { success: LikeSuccess, loading: likeLoading }: any = useTypedSelector(
+    const { success: LikeSuccess, loading: likeLoading }: LikePostState = useTypedSelector(
         (state) => state.LikePost
     )
-    const { success: DeleteSuccess }: any = useTypedSelector(
+    const { success: DeleteSuccess }: DeletePostState = useTypedSelector(
         (state) => state.DeletePost
     )
-    const { success: CommentSuccess }: any = useTypedSelector(
+    const { success: CommentSuccess }: CommentPostState = useTypedSelector(
         (state) => state.CommentPost
     )
     if (userProfile) {
@@ -62,19 +55,19 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     useEffect(() => {
         if (userProfile) {
             GetUsersPosts({
-                token: user?.token,
+                token: CurrentUser?.token,
                 userId
             })
         } else {
             GetMyPost({
-                token: user?.token,
+                token: CurrentUser?.token,
             })
         }
     }, [LikeSuccess, DeleteSuccess, EditPostSuccess, CommentSuccess])
 
     const PostLikeHandler = (id: string) => {
         LikePost({
-            token: user?.token,
+            token: CurrentUser?.token,
             postId: id
         })
     }
@@ -88,12 +81,12 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
     }
 
     ProfilePosts = ProfilePosts?.map((post: PostData) => {
-        let isLiked = post?.likes?.find((like: any) => (like?.owner === user?.id))
+        let isLiked = post?.likes?.find((like) => (like?.owner === CurrentUser?.id))
         return { ...post, isLiked: !!isLiked }
     })
     const handleTeamJoinRequest = (projectId: string) => {
         TeamJoinRequest({
-            token: user?.token,
+            token: CurrentUser?.token,
             projectId
         })
     }
@@ -105,10 +98,6 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
 
         const { DeletePost } = useActions();
         const navigate = useNavigate();
-
-        const { user }: any = useTypedSelector(
-            (state) => state.UserSignin
-        )
 
         const ref = useRef<any>();
         const [toggleOptions, setToggleOptions] = useState(false)
@@ -129,7 +118,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                 confirmButtonText: 'Delete'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    DeletePost({ postId: id, token: user.token, navigate, userId: user.id })
+                    DeletePost({ postId: id, token: CurrentUser?.token, navigate, userId: CurrentUser?.id })
                     setToggleOptions(false)
                     Swal.fire(
                         'Deleted!',
@@ -159,7 +148,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                     <div className="post_wrapper">
                         <div className="post_top">
                             <div className="post_top_left">
-                                <img src={user?.avatar} alt="" />
+                                <img src={CurrentUser?.avatar} alt="" />
                                 <div className='post_top_left_details'>
                                     <p className="post_top_left_username">{owner?.username}</p>
                                     <span className="post_top_left_date"><Moment fromNow>{createdAt}</Moment></span>

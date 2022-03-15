@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { ProfileProps, UserData } from '../../models'
+import { FollowersState, GetUsersPostState, PostState, ProfileProps, UserData, UsersState } from '../../models'
 import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'
 
@@ -20,30 +20,26 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
         UserProfileDetails: UserProfileDetail } = useActions();
     const navigate = useNavigate()
 
-    const { data: user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
-
-    const { data: UsersPosts }: any = useTypedSelector(
+    const { data: UsersPosts }: GetUsersPostState = useTypedSelector(
         (state) => state.GetUsersPosts
     )
 
-    const { data: MyPosts }: any = useTypedSelector(
+    const { data: MyPosts }: PostState = useTypedSelector(
         (state) => state.GetMyPost
     )
 
-    let { data: Followings }: any = useTypedSelector(
+    let { data: Followings }: FollowersState = useTypedSelector(
         (state) => state.GetFollowingUsers
     )
 
-    let { data: UserDetails }: any = useTypedSelector(
+    let { data: UserDetails }: UsersState = useTypedSelector(
         (state) => state.GetUserDetails
     )
 
-    let { data: UserProfileDetails }: any = useTypedSelector(
+    let { data: UserProfileDetails }: UsersState = useTypedSelector(
         (state) => state.UserProfileDetails
     )
-    const { success: FollowUserSuccess }: any = useTypedSelector(
+    const { success: FollowUserSuccess }: FollowersState = useTypedSelector(
         (state) => state.FollowUser
     )
 
@@ -55,16 +51,16 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
     useEffect(() => {
 
         GetFollowingUsers({
-            token: user.token,
-            userId: user.id,
+            token: CurrentUser.token,
+            userId: CurrentUser.id,
         })
 
     }, [FollowUserSuccess])
 
     if (typeof (UserDetails?.id) !== 'undefined') {
-        if (UserDetails?.id !== user?.id) {
+        if (UserDetails?.id !== CurrentUser?.id) {
             let isFollowing = false;
-            Followings?.every((following: UserData) => {
+            Followings?.every((following) => {
                 isFollowing = following?.id === UserDetails?.id
                 if (isFollowing == true) {
                     return false;
@@ -75,25 +71,25 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
         }
     }
 
-    const HandleFollowUser = async (id: string) => {
+    const HandleFollowUser = async (id: string | undefined) => {
         FollowUser({
-            token: user?.token,
+            token: CurrentUser?.token,
             userId: id
         })
     }
 
     const ShowFollowersList = () => {
         GetUserFollowers({
-            token: user?.token,
-            userId: user.id,
+            token: CurrentUser?.token,
+            userId: CurrentUser.id,
         })
         setFollowersModal(true)
     }
 
     const ShowFollowingList = () => {
         GetFollowingUsers({
-            token: user.token,
-            userId: user.id,
+            token: CurrentUser.token,
+            userId: CurrentUser.id,
         })
         setFollowingModal(true)
     }

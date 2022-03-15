@@ -86,7 +86,7 @@ export interface ChatItemProps {
 }
 
 export interface RoomModalProps {
-    chatUser: GetMyChatsData
+    chatUser: GetMyChatsData | undefined
 }
 
 export interface ChatFooterProps {
@@ -109,7 +109,7 @@ export interface GetMyChatsActionData {
 }
 
 export interface AddMembersToRoomActionData {
-    conversationId: string
+    conversationId: string | undefined
     memberId: string
     token: string
 }

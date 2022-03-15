@@ -25,10 +25,13 @@ export interface UserData {
     token: string
     role?: string
     owner?: string
+    followersCount: number
+    followingCount: number
     likes?: {
         owner: string
         id: string
     }
+    isFollowing?: boolean
 }
 
 

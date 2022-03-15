@@ -138,4 +138,8 @@ export interface SingleTodo {
     todo: string
 }
 
+export interface Options {
+    username: string
+    id: string
+}
 

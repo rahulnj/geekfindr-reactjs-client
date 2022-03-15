@@ -11,7 +11,7 @@ const RoomModal = ({ chatUser }: RoomModalProps) => {
     const { AddMembersToRoom } = useActions()
     const [selectedUser, setSelectedUser] = useState<any>({})
     const { filteredData, setFilteredData, setWordEntered, wordEntered }: any = useSearch();
-    console.log(chatUser);
+
 
     let options = filteredData;
     //To check weather the multiselect option contains current username 

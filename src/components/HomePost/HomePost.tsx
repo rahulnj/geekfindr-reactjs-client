@@ -10,21 +10,19 @@ import { useActions } from "../../hooks/useActions"
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll"
 import { useTypedSelector } from "../../hooks/useTypedSelector"
 
-import { HomePostProps, PostData, UserData } from "../../models"
+import { GetMyProjectState, HomePostProps, PostData, UserData } from "../../models"
 import { IoIosCheckmarkCircle, IoMdCheckmarkCircleOutline } from "react-icons/io"
 
 
-const HomePosts = ({ CommentHandler }: HomePostProps) => {
+const HomePosts = ({ CommentHandler }: HomePostProps): any => {
 
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
-    const { user }: any = useTypedSelector(
-        (state) => state.UserSignin
-    )
-    const { data: myProjects }: any = useTypedSelector(
+
+    const { data: myProjects }: GetMyProjectState = useTypedSelector(
         (state) => state.GetMyProject
     )
     const { LikePost, TeamJoinRequest } = useActions()
-    const [lastPostId, setLastPostId] = useState()
+    const [lastPostId, setLastPostId] = useState('')
     const observer = useRef<any>()
 
     let { feedPosts, hasMore, loading, setFeedPosts } = useInfiniteScroll({ lastPostId })
@@ -54,13 +52,13 @@ const HomePosts = ({ CommentHandler }: HomePostProps) => {
         setFeedPosts(updatedFeed)
 
         LikePost({
-            token: user?.token,
+            token: CurrentUser?.token,
             postId: id
         })
     }
 
     feedPosts = feedPosts?.map((post: PostData) => {
-        let isLiked = post?.likes?.find((like: any) => (like?.owner === CurrentUser?.id))
+        let isLiked = post?.likes?.find((like) => (like?.owner === CurrentUser?.id))
         return { ...post, isLiked: !!isLiked }
     })
 
@@ -76,16 +74,16 @@ const HomePosts = ({ CommentHandler }: HomePostProps) => {
         setFeedPosts(updatedFeed)
 
         TeamJoinRequest({
-            token: user?.token,
+            token: CurrentUser?.token,
             projectId
         })
     }
     feedPosts = feedPosts?.map((post: PostData) => {
-        let isRequested = post?.teamJoinRequests?.find((requests: any) => (requests?.owner === CurrentUser?.id))
+        let isRequested = post?.teamJoinRequests?.find((requests) => (requests?.owner === CurrentUser?.id))
         return { ...post, isRequested: !!isRequested }
     })
 
-    const myProjectIdList = myProjects?.map((project: any) => {
+    const myProjectIdList = myProjects?.map((project) => {
         return project?.project?.id
     })
 
