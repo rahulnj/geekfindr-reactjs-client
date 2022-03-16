@@ -60,8 +60,8 @@ const ProjectDescription: React.FC = () => {
                     <h3>{projectDetails?.project?.name}</h3>
                     <div>
                         {projectDetails?.project?.description?.length != 0 && projectDetails?.role === 'owner' &&
-                            <button className="btnadd" role="button" onClick={() => setIsProjectDescriptionModal(true)}>
-                                <span className="btntext">+ Edit Description</span></button>
+                            <button className="btnadds" role="button" onClick={() => setIsProjectDescriptionModal(true)}>
+                                <span className="btntexts">+ Edit Description</span></button>
                         }
                         <button className="btndlt" role="button" onClick={handleDeleteProject}>
                             <span className="btntextdlt">Delete Project</span></button>
@@ -71,8 +71,8 @@ const ProjectDescription: React.FC = () => {
                 <hr />
                 {projectDetails?.project?.description?.length === 0 && projectDetails?.role === 'owner' ?
                     <div className='projectdescription_button'>
-                        <button className="btnadd" role="button" onClick={() => setIsProjectDescriptionModal(true)}>
-                            <span className="btntext">+ Add Description</span></button>
+                        <button className="btnadds" role="button" onClick={() => setIsProjectDescriptionModal(true)}>
+                            <span className="btntexts">+ Add Description</span></button>
                     </div>
                     : <> <div className="projectdescription_short">
                         <span>{projectDetails?.project?.description}</span>

@@ -21,6 +21,7 @@ const ChatContent: React.FC<ChatMessageProps> = ({ socket, conversationId }) => 
     const scrollRef = useRef<HTMLDivElement>();
 
     useEffect(() => {
+        console.log(conversations);
         setMessageList(conversations)
     }, [conversationId, conversationsSuccess])
 

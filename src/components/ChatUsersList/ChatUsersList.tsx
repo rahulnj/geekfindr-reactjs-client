@@ -129,55 +129,29 @@ const ChatUsersList: React.FC<ChatUsersListProps> = ({ socket, setconversationId
                     <div className='chatuserslist_singleusers_title'>
                         <h4>Rooms</h4>
                     </div>
-                    {updatedChatList?.reverse().map((chat: GetMyChatsData) => {
-                        if (chat?.isRoom) {
-                            return (
+                    {updatedChatList?.reverse().map((chat) => (
 
-                                <div className="chatuserslist_singleusers"
-                                    key={chat?.id}
-                                    onClick={() => joinConversation(chat?.id)}>
-                                    <div className="chatuserslist_singleusers_profileimg">
-                                        <HiUserGroup className="chatuserslist_header_icon" size={28} />
-                                        {/* <div className='chatuserslist_singleusers_profileimg active'></div> */}
-                                    </div>
-                                    <div className='chatuserslist_singleusers_details'>
-                                        <div>
-                                            <h5>{chat?.roomName}</h5>
-                                            <p>{chat?.reciever?.length} members</p>
-                                        </div>
-                                        <span><Moment fromNow>{chat?.updatedAt}</Moment></span>
-                                    </div>
-                                </div>)
-                        }
-                    })
-                    }
-                    <div className='chatuserslist_singleusers_title'>
-                        <h4>Chats</h4>
-                    </div>
-                    {updatedChatList?.reverse().map((chat: GetMyChatsData) => {
-                        if (!chat?.isRoom) {
-                            return (
-                                <div className="chatuserslist_singleusers"
-                                    onClick={() => joinConversation(chat?.id)}
-                                    key={chat?.id}>
-                                    <div className="chatuserslist_singleusers_profileimg">
-                                        <img src={chat?.reciever?.[0]?.avatar} alt="" />
-                                        {/* <div className='chatuserslist_singleusers_profileimg active'></div> */}
-                                    </div>
-                                    <div className='chatuserslist_singleusers_details'>
-                                        <div>
-                                            <h5>{chat?.reciever?.[0]?.username}</h5>
-                                        </div>
-                                        <span><Moment fromNow>{chat?.updatedAt}</Moment></span>
-                                    </div>
+
+                        <div className="chatuserslist_singleusers"
+                            key={chat?.id}
+                            onClick={() => joinConversation(chat?.id)}>
+                            <div className="chatuserslist_singleusers_profileimg">
+                                {chat?.isRoom ? <HiUserGroup className="chatuserslist_header_icon" size={28} />
+                                    : <img src={chat?.reciever?.[0]?.avatar} alt="" />}
+                            </div>
+                            <div className='chatuserslist_singleusers_details'>
+                                <div>
+                                    <h5>{chat?.isRoom ? chat?.roomName : chat?.reciever?.[0]?.username}</h5>
+                                    <p>{chat?.isRoom ? chat?.reciever?.length : ''} members</p>
                                 </div>
-                            )
-                        }
-                    })
-
+                                <span><Moment fromNow>{chat?.updatedAt}</Moment></span>
+                            </div>
+                        </div>
+                    ))
                     }
 
-                    <hr />
+
+
                 </div>
             </div>
         </>

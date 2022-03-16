@@ -94,6 +94,7 @@ const HomePosts = ({ CommentHandler }: HomePostProps): any => {
         return { ...post, isJoined: !!isJoined }
     })
 
+    console.log(feedPosts);
 
     return (
         (!loading) ?
