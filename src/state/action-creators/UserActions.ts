@@ -102,3 +102,4 @@ export const GetUserDetails = ({ token, userId }: GetUserDetailsActionData) => {
         }
     }
 }
+
