@@ -40,66 +40,49 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Routes>
-        <Route path='/' element={
-          <Suspense fallback={<Spinner loader={true} />}>
+      <Suspense fallback={<Spinner loader={true} />}>
+        <Routes>
+          <Route path='/' element={
             <Layout>
               <HomeScreen />
             </Layout>
-          </Suspense>
-
-        } />
-        <Route path='/auth' element={
-          <Suspense fallback={<Spinner loader={true} />}>
+          } />
+          <Route path='/auth' element={
             <AuthScreen />
-          </Suspense>
-        } />
-        <Route path='/profile/:id' element={
-          <Suspense fallback={<Spinner loader={true} />}>
+          } />
+          <Route path='/profile/:id' element={
             <Layout>
               <ProfileScreen />
             </Layout>
-          </Suspense>
-        } />
-        <Route path='/userprofile/:userId' element={
-          <Suspense fallback={<Spinner loader={true} />}>
+          } />
+          <Route path='/userprofile/:userId' element={
             <Layout>
               <ProfileScreen userProfile />
             </Layout>
-          </Suspense>
-        } />
-        <Route path='/editprofile/:id' element={
-          <Suspense fallback={<Spinner loader={true} />}>
+          } />
+          <Route path='/editprofile/:id' element={
             <EditDetailsScreen />
-          </Suspense>
-        } />
-        <Route path='/editpost/:postId' element={
-          <Suspense fallback={<Spinner loader={true} />}>
+          } />
+          <Route path='/editpost/:postId' element={
             <Layout>
               <ProfileScreen />
             </Layout>
-          </Suspense>
-        } />
-        <Route path='/project/:projectId' element={
-          <Suspense fallback={<Spinner loader={true} />}>
+          } />
+          <Route path='/project/:projectId' element={
             <Layout project>
               <ProjectScreen />
             </Layout>
-          </Suspense>
-        } />
-        <Route path='/chat' element={
-          <Suspense fallback={<Spinner loader={true} />}>
+          } />
+          <Route path='/chat' element={
             <Layout project>
               <ChatScreen />
             </Layout>
-          </Suspense>
-        } />
-        <Route path='*' element={
-          <Suspense fallback={<Spinner loader={true} />}>
+          } />
+          <Route path='*' element={
             <PageNotFound />
-          </Suspense>
-        } />
-      </Routes>
+          } />
+        </Routes>
+      </Suspense>
     </>
   );
 }
