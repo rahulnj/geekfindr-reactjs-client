@@ -9,7 +9,9 @@ import { useNavigate } from 'react-router-dom'
 
 
 
-const RightAside = ({ profile, userProfile }: ProfileRightAsideProps) => {
+const RightAside = ({ profile, userProfile }: ProfileRightAsideProps): any => {
+
+
     const navigate = useNavigate()
 
     const HomeRightAside = () => {
@@ -41,7 +43,9 @@ const RightAside = ({ profile, userProfile }: ProfileRightAsideProps) => {
             </>
         )
     }
-
+    if (Math.random() > 0.5) {
+        return new Error("Test Error Boundary")
+    }
     return (
         <div className={profile ? 'profilerightaside' : 'rightaside'}>
             <div className="rightaside_wrapper">

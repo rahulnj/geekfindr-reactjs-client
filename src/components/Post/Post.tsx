@@ -138,7 +138,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
             }
             document.addEventListener("mousedown", checkIfClickedOutside)
             return () => {
-                document.addEventListener("mousedown", checkIfClickedOutside)
+                document.removeEventListener("mousedown", checkIfClickedOutside)
             }
         }, [toggleOptions])
 
@@ -199,9 +199,7 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
             </>
         )
     }
-
     return (
-
         <>
             <Spinner loader={likeLoading} />
             <Modal isEditModalOpened={isEditModalOpened} setIsEditModalOpened={setIsEditModalOpened}
@@ -225,16 +223,12 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                     )))
                     :
                     <PostSkeleton />
-
-
                 :
                 <HomePost
                     setIsCommentModalOpened={setIsCommentModalOpened}
                     setCommentPostId={setCommentPostId}
                     CommentHandler={CommentHandler}
                 />
-
-
             }
         </>
     )

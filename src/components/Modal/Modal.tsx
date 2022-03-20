@@ -95,7 +95,7 @@ const Modal = ({ isModalOpened, setIsModalOpened,
         }
         document.addEventListener("mousedown", checkIfClickedOutsideModal)
         return () => {
-            document.addEventListener("mousedown", checkIfClickedOutsideModal)
+            document.removeEventListener("mousedown", checkIfClickedOutsideModal)
         };
     }, [isModalOpened, setIsModalOpened,
         isEditModalOpened, setIsEditModalOpened,
