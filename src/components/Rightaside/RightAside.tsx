@@ -43,9 +43,7 @@ const RightAside = ({ profile, userProfile }: ProfileRightAsideProps): any => {
             </>
         )
     }
-    if (Math.random() > 0.5) {
-        return new Error("Test Error Boundary")
-    }
+
     return (
         <div className={profile ? 'profilerightaside' : 'rightaside'}>
             <div className="rightaside_wrapper">
