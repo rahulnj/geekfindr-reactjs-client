@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { AuthState } from './models';
 
-import { Layout, Spinner } from './components';
+import { Layout, ProjectDescription, ProjectTasks, ProjectTeam, ProjectTodo, Spinner } from './components';
 
 import { useTypedSelector } from './hooks/useTypedSelector';
 
@@ -68,11 +68,25 @@ const App: React.FC = () => {
               <ProfileScreen />
             </Layout>
           } />
-          <Route path='/project/:projectId' element={
+          <Route path='/project' element={
             <Layout project>
               <ProjectScreen />
             </Layout>
-          } />
+          }>
+            <Route path='description/:projectId' element={
+              <ProjectDescription />
+            } />
+            <Route path='team/:projectId' element={
+              <ProjectTeam />
+            } />
+            <Route path='todo/:projectId' element={
+              <ProjectTodo />
+            } />
+            <Route path='tasks/:projectId' element={
+              <ProjectTasks />
+            } />
+
+          </Route>
           <Route path='/chat' element={
             <Layout project>
               <ChatScreen />

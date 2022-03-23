@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 
+import { NavLink, Outlet } from 'react-router-dom'
+
 import './_ProjectLayout.scss'
 
-import { ProjectDescription, ProjectTasks, ProjectTeam, ProjectTodo } from '..'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import Moment from 'react-moment'
 import { GetProjectDetailState } from '../../models'
@@ -51,51 +52,39 @@ const ProjectLayout = () => {
             </div>
             <div className='projectlayout_wrapper'>
                 <div className="projectlayout_titles">
-                    <div className={descriptionActive ? 'projectlayout_title-1 active' : 'projectlayout_title-1'}
+                    <NavLink to={`/project/description/${projectDetails?.project?.id}`}
+                        className={descriptionActive ? 'projectlayout_title-1 active' : 'projectlayout_title-1'}
                         onClick={() => SelectActiveSection('description')}
                     >
                         <span>
-                            <h3>Description</h3>
+                            <h2>Description</h2>
                         </span>
-                    </div>
-                    <div className={teamActive ? 'projectlayout_title-2 active' : 'projectlayout_title-2'}
+                    </NavLink>
+                    <NavLink to={`/project/team/${projectDetails?.project?.id}`}
+                        className={teamActive ? 'projectlayout_title-2 active' : 'projectlayout_title-2'}
                         onClick={() => SelectActiveSection('team')}
                     >
                         <span>
-                            <h3>Team</h3>
+                            <h2>Team</h2>
                         </span>
-                    </div>
-                    <div className={todoActive ? 'projectlayout_title-3 active' : 'projectlayout_title-3'}
+                    </NavLink>
+                    <NavLink to={`/project/todo/${projectDetails?.project?.id}`}
+                        className={todoActive ? 'projectlayout_title-3 active' : 'projectlayout_title-3'}
                         onClick={() => SelectActiveSection('todo')}
                     >
                         <span>
-                            <h3>Todo</h3>
+                            <h2>Todo</h2>
                         </span>
-                    </div>
-                    <div className={taskActive ? 'projectlayout_title-4 active' : 'projectlayout_title-4'}
+                    </NavLink>
+                    <NavLink to={`/project/tasks/${projectDetails?.project?.id}`} className={taskActive ? 'projectlayout_title-4 active' : 'projectlayout_title-4'}
                         onClick={() => SelectActiveSection('tasks')}
                     >
                         <span>
-                            <h3>Tasks</h3>
+                            <h2 >Tasks</h2>
                         </span>
-                    </div>
+                    </NavLink>
                 </div>
-                {
-                    descriptionActive && (
-                        <ProjectDescription />
-                    )}
-                {
-                    teamActive && (
-                        <ProjectTeam />
-                    )}
-                {
-                    todoActive && (
-                        <ProjectTodo />
-                    )}
-                {
-                    taskActive && (
-                        <ProjectTasks />
-                    )}
+                <Outlet />
             </div>
         </div>
     )

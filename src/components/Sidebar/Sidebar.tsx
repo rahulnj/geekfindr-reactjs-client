@@ -49,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
             token: CurrentUser?.token,
             projectId
         })
-        navigate(`/project/${projectId}`)
+        navigate(`/project/description/${projectId}`)
     }
     return (
         <div className={isSidebar ? "sidebar open" : "sidebar"}
@@ -98,13 +98,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebar, handleToggleSidebar, proje
                         </a>
                     </li>
                 </ul>
-                {/* <button className="sidebar_button">Show More</button>
-                <hr className="sidebar_hr" /> */}
-                {/* <ul className="sidebarFriendList">
-                    {Users.map((u) => (
-                        <CloseFriend key={u.id} user={u} />
-                    ))}
-                </ul> */}
             </div>
         </div >
     )
