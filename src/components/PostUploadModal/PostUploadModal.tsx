@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Params, useNavigate, useParams } from 'react-router-dom';
 
 import './_PostUploadModal.scss'
-import ReactCrop, { Crop } from 'react-image-crop';
+import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { BsUpload } from 'react-icons/bs'
@@ -18,7 +18,7 @@ import validator from '@brocode/simple-react-form-validation-helper';
 
 
 
-const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: PostUploadModalProps) => {
+const PostUploadModal = ({ setIsModalOpened, isEditModalOpened, setIsEditModalOpened }: PostUploadModalProps) => {
 
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const navigate = useNavigate();
@@ -40,13 +40,61 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
     const [selectedRadioBtn, setSelectedRadioBtn] = useState('post')
     const [isProject, setIsProject] = useState(false)
     const [blankFieldError, setBlankFieldError] = useState('')
+    const InitialUpdate = useRef(true);
 
     const { data: ProfilePosts }: any = useTypedSelector(
         (state) => state.GetMyPost
     )
 
-
     const { CreatePost, EditPost } = useActions();
+
+    useEffect(() => {
+        const EditPostDetails = ProfilePosts.filter(
+            (post: any) => post.id === postId
+        )
+
+        setEditPost(EditPostDetails[0])
+        setDescription(EditPostDetails[0]?.description)
+
+    }, [postId, isEditModalOpened, ProfilePosts])
+
+    useEffect(() => {
+        if (InitialUpdate.current) {
+            InitialUpdate.current = false;
+            return;
+        }
+        const CancelToken = axios.CancelToken.source()
+        const fetchProjectNames = async () => {
+            try {
+                const { data } = await request.get('/api/v1/projects/projectNames', {
+                    cancelToken: CancelToken.token,
+                    headers: {
+                        "Content-type": "application/json",
+                        Authorization: `Bearer ${CurrentUser?.token}`,
+                    },
+                })
+                console.log(data);
+                let CheckProjectNameAlreadyExist = data?.filter((name: string) => (
+                    name === projectName
+                ))
+                if (CheckProjectNameAlreadyExist.length > 0) {
+                    setisProjectNameTaken(true)
+                } else {
+                    setisProjectNameTaken(false)
+                }
+            } catch (error) {
+                if (axios.isCancel(Error)) {
+                    return;
+                }
+                console.log(error);
+            }
+        }
+        fetchProjectNames()
+
+        return () => {
+            CancelToken.cancel()
+        }
+    }, [projectName])
 
     const uploadFileForPost = (e: any) => {
         const file = e.target.files[0]
@@ -68,16 +116,12 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
             }
             return new File([u8arr], filename, { type: mime });
         }
+
         if (description === '') {
             setBlankFieldError('Fill the fields')
         } else if (!descriptionError && !projectNameError && !isProjectNameTaken) {
-
-
             setLoading(true)
-
-
             const convertedCroppedImage = convertdataURLtoFile(croppedImage, fileName);
-
             const config = {
                 headers: {
                     'Content-Type': 'image/jpeg'
@@ -96,9 +140,9 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                 })
 
                 if (uploadconfig.data.key) {
-
                     await axios.put(uploadconfig.data.url, convertedCroppedImage, config);
                     let postData;
+
                     if (isProject) {
                         postData = {
                             mediaType: "image",
@@ -117,6 +161,7 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
                             isOrganization: false
                         }
                     }
+
                     CreatePost({
                         postData: postData,
                         navigate,
@@ -157,7 +202,6 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
             crop.width,
             crop.height
         );
-
         const base64Image = canvas.toDataURL("image/jpeg");
         setCroppedImage(base64Image)
     }
@@ -168,17 +212,6 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
         }
         return;
     }
-
-    useEffect(() => {
-        const EditPostDetails = ProfilePosts.filter(
-            (post: any) => post.id === postId
-        )
-
-        setEditPost(EditPostDetails[0])
-        setDescription(EditPostDetails[0]?.description)
-
-    }, [postId, isEditModalOpened, ProfilePosts])
-
 
     const UploadEditedPost = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -210,44 +243,6 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
             setIsProject(false)
         }
     }
-    const InitialUpdate = useRef(true);
-    useEffect(() => {
-        if (InitialUpdate.current) {
-            InitialUpdate.current = false;
-            return;
-        }
-        const CancelToken = axios.CancelToken.source()
-        const fetchProjectNames = async () => {
-            try {
-                const { data } = await request.get('/api/v1/projects/projectNames', {
-                    cancelToken: CancelToken.token,
-                    headers: {
-                        "Content-type": "application/json",
-                        Authorization: `Bearer ${CurrentUser?.token}`,
-                    },
-                })
-                console.log(data);
-                let CheckProjectNameAlreadyExist = data?.filter((name: string) => (
-                    name === projectName
-                ))
-                if (CheckProjectNameAlreadyExist.length > 0) {
-                    setisProjectNameTaken(true)
-                } else {
-                    setisProjectNameTaken(false)
-                }
-            } catch (error) {
-                if (axios.isCancel(Error)) {
-                    return;
-                }
-                console.log(error);
-            }
-        }
-        fetchProjectNames()
-
-        return () => {
-            CancelToken.cancel()
-        }
-    }, [projectName])
 
     const OnChangeDescriptionValidator = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
         setDescription(e.target.value);
@@ -264,8 +259,6 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
     const OnBlurProjectNameValidator = (e: React.FocusEvent<HTMLInputElement>): void => {
         validator.nameInputBlurHandler(e.target.value, setProjectNameError)
     }
-
-
 
     return (
         <>
@@ -360,7 +353,6 @@ const PostUploadModal = ({ isModalOpened, setIsModalOpened, isEditModalOpened, s
 
                                         <button className="postmodal_descriptionarea_actions_cancel" onClick={() => setIsModalOpened(false)}>Cancel</button>
                                         <button className="postmodal_descriptionarea_actions_post" onClick={uploadPost}>Post</button>
-
                                     </>
                                 )}
                         </div>

@@ -1,7 +1,6 @@
-
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { GetProjectDetailState, Todo } from '../../models'
 import './_ProjectTodo.scss'
+import { GetProjectDetailState } from '../../models'
 
 
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Multiselect from 'multiselect-react-dropdown'
 import './_CreateChatModal.scss'
 import { useSearch } from '../../hooks/useSearch';
-import { FollowersData, RoomModalProps, UserData } from '../../models';
+import { RoomModalProps, UserData } from '../../models';
 import { useActions } from '../../hooks/useActions';
 
 const RoomModal = ({ chatUser }: RoomModalProps) => {
@@ -10,7 +10,7 @@ const RoomModal = ({ chatUser }: RoomModalProps) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const { AddMembersToRoom } = useActions()
     const [selectedUser, setSelectedUser] = useState<any>({})
-    const { filteredData, setFilteredData, setWordEntered, wordEntered }: any = useSearch();
+    const { filteredData, setWordEntered }: any = useSearch();
 
 
     let options = filteredData;

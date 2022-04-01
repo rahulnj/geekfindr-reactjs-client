@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
-import { DragDropContext, Droppable, DroppableProvided, DropResult } from "react-beautiful-dnd";
+import {
+    DragDropContext,
+    Droppable,
+    DroppableProvided,
+    DropResult
+} from "react-beautiful-dnd";
 import { Params, useParams } from 'react-router-dom';
 import { DragAndDrop, ReadOnly } from '..';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { GetProjectDetailState, ProjectState, SingleTodo, UserData } from '../../models';
+import {
+    GetProjectDetailState,
+    SingleTodo,
+    UserData
+} from '../../models';
 
 import './_ProjectTodo.scss'
 
@@ -15,9 +24,6 @@ const ProjectTodo = () => {
     const { projectId }: Readonly<Params<string>> = useParams()
     const { ProjectTodo } = useActions();
 
-    const { success: ProjectTodoSuccess }: ProjectState = useTypedSelector(
-        (state) => state.ProjectTodo
-    )
     const { data: projectDetails }: GetProjectDetailState = useTypedSelector(
         (state) => state.GetProjectDetails
     )

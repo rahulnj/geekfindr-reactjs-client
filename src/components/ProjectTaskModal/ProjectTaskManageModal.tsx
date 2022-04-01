@@ -6,7 +6,12 @@ import Multiselect from 'multiselect-react-dropdown';
 
 import { useActions } from '../../hooks/useActions';
 
-import { GetProjectDetailState, Owner, ProjectTaskManageModalProps, UserData } from '../../models';
+import {
+    GetProjectDetailState,
+    ProjectTaskManageModalProps,
+    UserData
+} from '../../models';
+
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { Params, useParams } from 'react-router-dom';
 import { BsBookmarkCheckFill } from 'react-icons/bs';
@@ -66,7 +71,6 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
             setIsComplete(true)
         }
     }
-    console.log(projectDetails);
 
     const handleIsComplete = () => {
         ProjectTaskIsComplete({
@@ -78,6 +82,7 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
             }
         })
     }
+
     const handleDeleteTask = () => {
         Swal.fire({
             title: 'Are you sure?',
@@ -104,8 +109,6 @@ const ProjectTaskManageModal = ({ setIsProjectTaskManageModal, projectTaskIndex 
                 setIsProjectTaskManageModal(true)
             }
         })
-
-
     }
 
     return (

@@ -1,10 +1,9 @@
 import './_RightAside.scss'
 
-import { FriendRequest, Messages, Userinfo } from '..'
+import { Messages, Userinfo } from '..'
 
-import { ProfileProps, ProfileRightAsideProps } from '../../models'
+import { ProfileRightAsideProps } from '../../models'
 
-import { BiEdit, BiSearch } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -20,10 +19,6 @@ const RightAside = ({ profile, userProfile }: ProfileRightAsideProps): any => {
                 <div className="rightaside_wrapper_messages_heading">
                     <h4>Messages</h4>
                 </div>
-                {/* <div className="rightaside_wrapper_messages_search">
-                    <BiSearch />
-                    <input type="text" placeholder='Search Messages' />
-                </div> */}
                 <Messages />
                 <div className="rightaside_wrapper_messages_heading_view">
                     <span

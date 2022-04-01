@@ -7,14 +7,33 @@ import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 import { BiComment, BiEdit } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 
-import { AuthState, CommentPostState, DeletePostState, GetUsersPostState, LikePostState, PostData, PostState, ProfileProps, UserData } from '../../models'
+import {
+    CommentPostState,
+    DeletePostState,
+    GetUsersPostState,
+    LikePostState,
+    PostData,
+    PostState,
+    ProfileProps,
+    UserData
+} from '../../models'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
 import Moment from 'react-moment';
 import { useActions } from '../../hooks/useActions'
-import { Link, Params, useNavigate, useParams } from 'react-router-dom'
-import { Modal, Spinner, HomePost, PostSkeleton } from '..'
+import {
+    Link,
+    Params,
+    useNavigate,
+    useParams
+} from 'react-router-dom'
+import {
+    Modal,
+    Spinner,
+    HomePost,
+    PostSkeleton
+} from '..'
 
 
 const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
@@ -84,17 +103,18 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
         let isLiked = post?.likes?.find((like) => (like?.owner === CurrentUser?.id))
         return { ...post, isLiked: !!isLiked }
     })
-    const handleTeamJoinRequest = (projectId: string) => {
-        TeamJoinRequest({
-            token: CurrentUser?.token,
-            projectId
-        })
-    }
 
-
-    const MyProfilePosts = ({ description, isProject, likeCount,
-        commentCount, mediaURL, createdAt,
-        comments, id, owner, isLiked }: PostData) => {
+    const MyProfilePosts = ({
+        description,
+        isProject,
+        likeCount,
+        commentCount,
+        mediaURL,
+        createdAt,
+        id,
+        owner,
+        isLiked
+    }: PostData) => {
 
         const { DeletePost } = useActions();
         const navigate = useNavigate();
@@ -168,7 +188,6 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                                         <li onClick={DeleteMyPost}><MdOutlineDeleteOutline size={21} className='post_top_right_options_icons' />
                                             <span className='post_top_right_options_link2'>Delete</span></li>
                                     }
-
                                 </ul>
                             </div>}
                         </div>
@@ -187,12 +206,6 @@ const Post: React.FC<ProfileProps> = ({ profile, userProfile }) => {
                                 <div className='post_bottom_left_icons'><BiComment size={21} className='post_bottom_left_icon'
                                     onClick={() => CommentHandler(id, mediaURL)} />{commentCount}</div>
                             </div>
-                            {/* {isProject &&
-                                <div className="post_bottom_right">
-                                    <AiOutlineUsergroupAdd className='post_bottom_left_icon' size={28}
-                                        onClick={() => handleTeamJoinRequest(id)}
-                                    />
-                                </div>} */}
                         </div>
                     </div>
                 </div>

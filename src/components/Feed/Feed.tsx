@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './_Feed.scss'
-import { Post, Share } from '../index'
-import { PostState, ProfileProps } from '../../models'
-import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { useActions } from '../../hooks/useActions'
-
-
-
-
+import { Post } from '../index'
+import { ProfileProps } from '../../models'
 
 const Feed: React.FC<ProfileProps> = ({ profile, userProfile }) => {
 

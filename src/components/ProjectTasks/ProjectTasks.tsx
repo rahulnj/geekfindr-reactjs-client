@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from 'react'
+import './_ProjectTasks.scss'
 import { AiFillBug, AiOutlineDeploymentUnit } from 'react-icons/ai'
 import { GoIssueOpened } from 'react-icons/go'
-import { MdNotificationImportant, MdOutlineFeaturedPlayList } from 'react-icons/md'
+
+import {
+    MdNotificationImportant,
+    MdOutlineFeaturedPlayList
+} from 'react-icons/md'
+
 import { SiAffinitydesigner, SiSpeedtest } from 'react-icons/si'
 import { Params, useParams } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { GetProjectDetailState, ProjectState, UserData } from '../../models'
+
+import {
+    GetProjectDetailState,
+    ProjectState,
+    UserData
+} from '../../models'
+
 import Modal from '../Modal/Modal'
 
-import './_ProjectTasks.scss'
 
 
 const ProjectTasks = () => {
@@ -108,7 +119,6 @@ const ProjectTasks = () => {
                                         >View</button>
                                     </div>
                             }
-
                         </div>
                     ))
                 }

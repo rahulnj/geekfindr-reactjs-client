@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import './_CreateChatModal.scss'
 import Multiselect from 'multiselect-react-dropdown';
@@ -13,12 +13,12 @@ const CreateChatModal: React.FC<CreateChatModalProps> = ({ setIsChatModal }) => 
     const { CreateConversationOrRoom } = useActions();
     const [roomName, setRoomName] = useState('')
     const [selectedUsers, setSelectedUsers] = useState([])
-    const { filteredData, setFilteredData, setWordEntered, wordEntered } = useSearch();
+    const { filteredData, setWordEntered } = useSearch();
 
     let options: any = filteredData;
     //To check weather the multiselect option contains current username 
     options = options?.filter((user: any) => (
-        user?.id != CurrentUser?.id
+        user?.id !== CurrentUser?.id
     )).map((user: any) => {
         return { username: user?.username, id: user?.id }
     })

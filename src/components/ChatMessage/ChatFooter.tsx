@@ -1,12 +1,8 @@
 import React, { useState } from 'react'
 
-import { BsPlusSquareFill } from 'react-icons/bs'
 import { FaPaperPlane } from 'react-icons/fa'
 
 import './_ChatMessage.scss'
-import Swal from 'sweetalert2';
-import Toast from '../Toast/Toast';
-import { toast } from 'react-toastify';
 import { ChatFooterProps } from '../../models';
 
 
@@ -29,7 +25,6 @@ const ChatFooter: React.FC<ChatFooterProps> = ({ socket, conversationId }) => {
         <div className="content__footer">
             <div className="sendNewMessage">
                 <button className="addFiles">
-                    {/* <BsPlusSquareFill className='sendicon' size={24} /> */}
                 </button>
                 <input
                     type="text"

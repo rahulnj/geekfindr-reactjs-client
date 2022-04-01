@@ -1,9 +1,13 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useEffect } from 'react'
 import Swal from 'sweetalert2'
 import './_ProjectTeam.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { GetProjectDetailState, ProjectState, UserData } from '../../models';
+import {
+    GetProjectDetailState,
+    ProjectState,
+    UserData
+} from '../../models';
 import { useActions } from '../../hooks/useActions';
 import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 import { AiOutlineCloseCircle } from 'react-icons/ai';

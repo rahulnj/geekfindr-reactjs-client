@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import './_FollowCounter.scss'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { FollowersState, GetUsersPostState, PostState, ProfileProps, UserData, UsersState } from '../../models'
+import {
+    FollowersState,
+    GetUsersPostState,
+    PostState,
+    ProfileProps,
+    UserData,
+    UsersState
+} from '../../models'
 import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'
 
@@ -17,7 +24,8 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
     const { GetUserFollowers,
         GetFollowingUsers,
         FollowUser,
-        UserProfileDetails: UserProfileDetail } = useActions();
+        UserProfileDetails: UserProfileDetail
+    } = useActions();
     const navigate = useNavigate()
 
     const { data: UsersPosts }: GetUsersPostState = useTypedSelector(
@@ -47,7 +55,6 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
         UserDetails = UserProfileDetails
     }
 
-
     useEffect(() => {
 
         GetFollowingUsers({
@@ -62,7 +69,7 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
             let isFollowing = false;
             Followings?.every((following) => {
                 isFollowing = following?.id === UserDetails?.id
-                if (isFollowing == true) {
+                if (isFollowing === true) {
                     return false;
                 }
                 return true;
@@ -118,7 +125,6 @@ const FollowCount = ({ userProfile }: ProfileProps) => {
                                 <p>Posts</p>
                             </div>}
                         {userProfile ? <div className='followcounter_wrapper_left_items'
-
                         >
                             <span>{UserDetails?.followersCount}</span>
                             <p>followers</p>

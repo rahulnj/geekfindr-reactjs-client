@@ -29,7 +29,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ chatUser }) => {
                     </div>
                 </div>
                 <div className="chatmessage_header_icons">
-                    <button className="btnadd" role="button"
+                    <button className="btnadd"
                         onClick={() => setIsRoomModal(true)}>
                         <span className="btntext">Add Members</span></button>
                 </div>

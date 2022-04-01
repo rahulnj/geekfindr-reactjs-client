@@ -4,7 +4,6 @@ import Moment from 'react-moment';
 import './_ChatUsersList.scss'
 
 import { BsPlusLg } from 'react-icons/bs'
-import { GiHamburgerMenu } from "react-icons/gi";
 import { BiSearch } from 'react-icons/bi';
 import { GrFormClose } from 'react-icons/gr';
 
@@ -34,12 +33,12 @@ const ChatUsersList: React.FC<ChatUsersListProps> = ({ socket, setconversationId
     const [isChatModal, setIsChatModal] = useState(false)
 
 
-    const { filteredData, setFilteredData, setWordEntered, wordEntered } = useSearch();
+    const { filteredData, setFilteredData, setWordEntered } = useSearch();
 
     let { success: CreateChatSuccess }: CreateConversationOrRoomState = useTypedSelector(
         (state) => state.CreateConversationOrRoom
     );
-    let { data: myChats, error: myChatsError, loading: myChatsLoading }: GetMyChatState = useTypedSelector(
+    let { data: myChats }: GetMyChatState = useTypedSelector(
         (state) => state.GetMyChats
     );
 
@@ -74,7 +73,7 @@ const ChatUsersList: React.FC<ChatUsersListProps> = ({ socket, setconversationId
 
     let reciever = []
     let updatedChatList = myChats?.map((chat: GetMyChatsData) => {
-        reciever = chat?.participants?.filter((participant: Participant) => participant?.id != CurrentUser?.id)
+        reciever = chat?.participants?.filter((participant: Participant) => participant?.id !== CurrentUser?.id)
         return { ...chat, reciever }
     })
 
@@ -95,7 +94,6 @@ const ChatUsersList: React.FC<ChatUsersListProps> = ({ socket, setconversationId
                     <div className="chatuserslist_header_icons">
                         <button className="btnadd" role="button" onClick={() => setIsChatModal(true)}>
                             <span className="btntext">Create Room</span></button>
-                        {/* <GiHamburgerMenu className="chatuserslist_header_icon" size={28} /> */}
                     </div>
                 </div>
                 <div className='chatuserslist_searchbox'>
@@ -103,7 +101,7 @@ const ChatUsersList: React.FC<ChatUsersListProps> = ({ socket, setconversationId
                         <BiSearch />
                         <input placeholder="Search Users..." type="text"
                             onChange={(e) => setWordEntered(e.target.value)} />
-                        {filteredData.length != 0 && < GrFormClose className='chatuserslist_searchbox_closeicon'
+                        {filteredData.length !== 0 && < GrFormClose className='chatuserslist_searchbox_closeicon'
                             size={26} opacity={0.5} onClick={clearInput} />}
                     </div>
                 </div>
@@ -130,8 +128,6 @@ const ChatUsersList: React.FC<ChatUsersListProps> = ({ socket, setconversationId
                         <h4>Rooms</h4>
                     </div>
                     {updatedChatList?.reverse().map((chat) => (
-
-
                         <div className="chatuserslist_singleusers"
                             key={chat?.id}
                             onClick={() => joinConversation(chat?.id)}>

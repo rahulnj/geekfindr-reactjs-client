@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { Params, useNavigate, useParams } from 'react-router-dom'
+
+import './_ProjectDescription.scss'
+
+import {
+    Params,
+    useNavigate,
+    useParams
+} from 'react-router-dom'
+
 import Swal from 'sweetalert2'
 import { Modal } from '..'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { GetProjectDetailState, ProjectState, UserData } from '../../models'
 
-import './_ProjectDescription.scss'
+import {
+    GetProjectDetailState,
+    ProjectState,
+    UserData
+} from '../../models'
+
 
 const ProjectDescription: React.FC = () => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
@@ -59,7 +71,7 @@ const ProjectDescription: React.FC = () => {
                 <div className="projectdescription_header">
                     <h3>{projectDetails?.project?.name}</h3>
                     <div>
-                        {projectDetails?.project?.description?.length != 0 && projectDetails?.role === 'owner' &&
+                        {projectDetails?.project?.description?.length !== 0 && projectDetails?.role === 'owner' &&
                             <button className="btnadds" role="button" onClick={() => setIsProjectDescriptionModal(true)}>
                                 <span className="btntexts">+ Edit Description</span></button>
                         }

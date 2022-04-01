@@ -1,5 +1,9 @@
 import './_ProjectTodo.scss'
-import { Draggable, DraggableProvided, DroppableProvided } from "react-beautiful-dnd";
+import {
+    Draggable,
+    DraggableProvided,
+    DroppableProvided
+} from "react-beautiful-dnd";
 import { Droppable } from 'react-beautiful-dnd'
 import { ProjectTodoDragandDropProps } from '../../models';
 
@@ -77,8 +81,7 @@ const DragAndDrop = ({ noStatus, nextUp, inProgress, completed }: ProjectTodoDra
                                 {(provided: DraggableProvided) => (
                                     <div key={todo?.id} className='projecttodo_singletodo'
                                         ref={provided.innerRef} {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                    >
+                                        {...provided.dragHandleProps}>
                                         {todo?.todo}
                                     </div>
                                 )}
@@ -88,7 +91,6 @@ const DragAndDrop = ({ noStatus, nextUp, inProgress, completed }: ProjectTodoDra
                     </div>
                 )}
             </Droppable>
-
             <Droppable droppableId='completed'>
                 {(provided: DroppableProvided) => (
                     <div className="projecttodo_wrapper_completed"
@@ -114,7 +116,6 @@ const DragAndDrop = ({ noStatus, nextUp, inProgress, completed }: ProjectTodoDra
                     </div>
                 )}
             </Droppable>
-
         </div>
     )
 }

@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Params, useParams } from 'react-router-dom';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { GetProjectDetailState, ProjectDescriptionModalProps, UserData } from '../../models';
+
+import {
+    GetProjectDetailState,
+    ProjectDescriptionModalProps,
+    UserData
+} from '../../models';
 
 import './_ProjectDescriptionModal.scss'
 
@@ -16,6 +21,7 @@ const ProjectDescriptionModal: React.FC<ProjectDescriptionModalProps> = ({ setIs
     const { data: projectDetails }: GetProjectDetailState = useTypedSelector(
         (state) => state.GetProjectDetails
     )
+
     useEffect(() => {
         setDescription(projectDetails?.project?.description)
     }, [])

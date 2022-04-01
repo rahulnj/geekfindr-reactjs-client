@@ -5,8 +5,7 @@ import './_ChatMessage.scss'
 import { ChatItem } from '..'
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { ChatMessageProps, Conversation, GetConversationsState, GetMyChatState, SocketResponseMessage, UserData } from '../../models';
-import { setUncaughtExceptionCaptureCallback } from 'process';
+import { ChatMessageProps, Conversation, GetConversationsState, SocketResponseMessage, UserData } from '../../models';
 
 
 
@@ -29,10 +28,8 @@ const ChatContent: React.FC<ChatMessageProps> = ({ socket, conversationId }) => 
     useEffect(() => {
         if (socket.current) {
             socket.current.on("message", (msg: SocketResponseMessage) => {
-                console.log(msg);
-                console.log(conversationId);
+
                 if (conversationId === msg?.conversationId) {
-                    console.log("conversation matched", conversationId);
                     const updatedMsg = {
                         senderId: msg?.userId, message: msg?.message,
                         updatedAt: msg?.time, conversationId: msg?.conversationId

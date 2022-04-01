@@ -5,7 +5,6 @@ import './_Header.scss'
 
 import logo from '../../images/logo.png'
 import sublogo from '../../images/sublogo.png'
-import search from '../../images/search.png'
 
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { AiOutlineCaretDown } from 'react-icons/ai'
@@ -15,7 +14,6 @@ import { MdSettings } from 'react-icons/md'
 
 import { AddPostModal, UserData } from '../../models'
 
-import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
 import { Search } from '..'
 
@@ -24,25 +22,17 @@ import { Search } from '..'
 
 
 const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModal }) => {
+
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const ref = useRef<any>();
     const [ToggleHeader, setToggleHeader] = useState<boolean>(false)
     const { UserLogout } = useActions();
 
     const navigate = useNavigate()
-    const SignOutHandler = (e: React.FormEvent) => {
-
-        e.preventDefault();
-        navigate('/auth')
-        UserLogout()
-
-    }
 
     const ToggleHeaderDropDown = () => {
         setToggleHeader(value => !value)
     }
-
-
 
     useEffect(() => {
         const checkIfClickedOutside = (e: MouseEvent) => {
@@ -58,6 +48,12 @@ const Header: React.FC<AddPostModal> = ({ handleToggleSidebar, ToggleAddPostModa
 
     const ProfileHandler = () => {
         navigate(`/profile/${CurrentUser?.id}`)
+    }
+
+    const SignOutHandler = (e: React.FormEvent) => {
+        e.preventDefault();
+        navigate('/auth')
+        UserLogout()
     }
 
     return (

@@ -21,7 +21,7 @@ const ChatItem = ({ scrollRef, conversationId, updatedConversations }: ChatItemP
 
             let reciever;
             currentChat = currentChat?.map((chat: GetMyChatsData) => {
-                reciever = chat?.participants?.filter((participant: Participant) => participant?.id != CurrentUser?.id)
+                reciever = chat?.participants?.filter((participant: Participant) => participant?.id !== CurrentUser?.id)
                 return { ...chat, reciever }
             })
             setCurrentChat(currentChat)

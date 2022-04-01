@@ -2,7 +2,14 @@ import React, { useState } from 'react'
 
 import './ProjectTaskModal.scss'
 import Multiselect from 'multiselect-react-dropdown';
-import { GetProjectDetailState, Options, ProjectTaskModalProps, UserData } from '../../models'
+
+import {
+    GetProjectDetailState,
+    Options,
+    ProjectTaskModalProps,
+    UserData
+} from '../../models'
+
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useActions } from '../../hooks/useActions';
 import validator from '@brocode/simple-react-form-validation-helper';
@@ -37,7 +44,7 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
     }
     //To check weather the multiselect option contains current username or owner name
     options = options?.filter((user) => (
-        user?.user?.id != CurrentUser?.id && user?.user?.id != projectDetails?.project?.owner?.id
+        user?.user?.id !== CurrentUser?.id && user?.user?.id !== projectDetails?.project?.owner?.id
     )).map((user) => {
         return { username: user?.user?.username, id: user?.user?.id }
     })
@@ -73,7 +80,7 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
     }
 
     const CreateProjectTask = () => {
-        if (!titleError && !descriptionError && title != '' && description != '') {
+        if (!titleError && !descriptionError && title !== '' && description !== '') {
             const task = {
                 title,
                 description,

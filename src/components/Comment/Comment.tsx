@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Params, useParams } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { CommentPostState, CommentProps, GetCommentPostState, GetUsersPostState, PostData, PostState, UserData } from '../../models'
+import { CommentPostState, CommentProps, GetCommentPostState, GetUsersPostState, PostState, UserData } from '../../models'
 
 import './_Comment.scss'
 
@@ -100,8 +100,6 @@ const Comment = ({ commentPostId, commentPostImg }: CommentProps) => {
                     </div>
                 </div>
             </div>
-
-
         </>
     )
 }

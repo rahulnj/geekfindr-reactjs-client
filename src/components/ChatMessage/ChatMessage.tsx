@@ -22,7 +22,7 @@ import {
 const ChatMessage: React.FC<ChatMessageProps> = ({ socket, conversationId }) => {
     const CurrentUser: UserData = JSON.parse(localStorage.getItem("gfr-user") as string);
     const [chatUser, setChatUser] = useState<GetMyChatsData>()
-    let { data: myChats, error: myChatsError, loading: myChatsLoading }: GetMyChatState = useTypedSelector(
+    let { data: myChats }: GetMyChatState = useTypedSelector(
         (state) => state.GetMyChats
     );
 
@@ -34,7 +34,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ socket, conversationId }) => 
             let updatedChatDetails;
             let reciever;
             updatedChatDetails = myChats?.map((chat: GetMyChatsData) => {
-                reciever = chat?.participants?.filter((participant: Participant) => participant?.id != CurrentUser?.id)
+                reciever = chat?.participants?.filter((participant: Participant) => participant?.id !== CurrentUser?.id)
                 return { ...chat, reciever }
             })
             console.log(updatedChatDetails?.[0]);
