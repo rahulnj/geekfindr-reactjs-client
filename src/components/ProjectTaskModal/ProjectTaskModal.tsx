@@ -37,7 +37,7 @@ const ProjectTaskModal = ({ setIsProjectTaskModal }: ProjectTaskModalProps) => {
     let options = []
     if (projectDetails?.role === 'admin') {
         options = projectDetails?.project?.team?.filter((user) => (
-            user?.role != 'admin'
+            user?.role !== 'admin'
         ))
     } else {
         options = projectDetails?.project?.team
